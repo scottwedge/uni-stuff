@@ -1,0 +1,95 @@
+\documentclass[ngerman]{gdb-aufgabenblatt}
+\usepackage{paralist}
+
+\renewcommand{\Aufgabenblatt}{4}
+\renewcommand{\Ausgabedatum}{Mi. 27.11.2013}
+\renewcommand{\Abgabedatum}{Do. 12.12.2013}
+\renewcommand{\Gruppe}{Dammer, Teuteberg, Wilhelm}
+
+
+\begin{document}
+
+\section{Relationenalgebra}
+
+\begin{compactenum}[(a)]
+	\item Welche Obstsorten wurden von einem Entdecker mit Vorname Horst entdeckt? 
+	\begin{align*}
+	 &\projektion{Sorte}(Obst\verbund{Entdecker=PNR} \selektion{Vorname=\wert{Horst}}(Person))
+	\\  
+\end{align*}\
+	\item 
+	\begin{align*}
+ 	&\projektion{Vorname,Nachname}(Person\verbund{PNR=Person} \selektion{Symptom=\wert{Halskratzen}}(Allergie))
+	\\  
+\end{align*}\\
+\item 
+	\begin{align*}
+ 	&\projektion{Sorte,Nachname}\projektion{Sorte,Nachname}(Person\verbund{PNR=Person} \selektion{Symptom=\wert{Halskratzen}}(Allergie))
+	\\  
+\end{align*}\
+\end{compactenum}
+
+
+
+
+
+
+\section{Beispiel f�r Ausdruck der Relationenalgebra}
+
+\begin{align*}
+ &\projektion{Rasse, Geschlecht}((Wolf\verbund{Wolf.WID=Haustier.HID} (\selektion{Name=\wert{Hasso}}Haustiere)) \natverbund Person)
+\\  &=\{ \wert{Steppenwolf}, \wert{m} \}
+\end{align*}
+
+
+
+
+\newpage
+\section{Beispiel f�r SQL-Anfrage}
+
+\begin{verbatim}
+SELECT 
+  h.Name,
+  h.Rasse
+FROM 
+  Haustier h,
+  Person p
+WHERE
+  h.Herrchen = p.PID AND
+  p.Vorname LIKE "P%"
+\end{verbatim}
+
+
+
+
+
+
+
+
+\section{Beispiel f�r Operatorbaum}
+
+\begin{tikzpicture}
+\node (Haustier) {Haustier};
+\node (Wolf) [left=25mm of Haustier] {Wolf};
+\node (join1) [above=20mm of $(Haustier)!.5!(Wolf)$] {$\verbund{Wolf.WID=Haustier.HID}$};
+\node (selektion1) [above=of join1] {$\selektion{Name=\wert{Hasso}}$};
+\node (projektion) [above=of selektion1] {$\projektion{Rasse}$};
+\node (final) [above=of projektion] {};
+
+\path (Haustier) edge node[smallr,near start,above right] {?? Tupel\\?? Attribute} (join1);
+\path (Wolf) edge node[smalll,near start,above left] {?? Tupel\\?? Attribute} (join1);
+\path (join1) edge node[smallr,near start,above left] {?? Tupel\\?? Attribute} (selektion1);
+\path (selektion1) edge node[smallr,midway,left] {$??\cdot\frac{??}{??}=??$ Tupel\\?? Attribute} (projektion);
+\path (projektion) edge node[smallr,midway,left] {$??$ Tupel\\1 Attribut} (final);
+\end{tikzpicture}
+
+
+
+
+
+\section{*Thema*}
+
+*L�sung*
+
+
+\end{document}

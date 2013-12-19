@@ -1,0 +1,102 @@
+\documentclass[a4paper,12pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{scrpage2}\pagestyle{scrheadings}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{ulem}
+
+\ihead{Aufgabenblatt 3}
+\ohead{\today}
+\chead{Gruppe Dammer, Teuteberg, Wilhelm}
+\pagestyle{scrheadings}
+
+\begin{document}
+
+\section{Aufgabe 1}
+* L\"osung *
+
+\section{SQL - Schemadefinition}
+\begin{enumerate}
+	\item[a)] 
+	\begin{verbatim}
+	CREATE TABLE Rennfahrer 
+	(RID           INT           PRIMARY KEY,
+	 Vorname       CHAR(30)      NOT NULL,
+	 Nachname      CHAR(30)      NOT NULL,
+	 Geburt        DATE          NOT NULL,
+	 Wohnort       CHAR(50)      NOT NULL,
+	 CONSTRAINT    Rennstall   FOREIGN KEY(Rennstall) 
+	 REFERNCES Rennstall(RSID));
+	 
+	CREATE TABLE Rennstall
+	(RID           INT           PRIMARY KEY,
+	 Name          CHAR(30)      UNIQUE NOT NULL,
+	 Teamchef      CHAR(30)      UNIQUE NOT NULL,
+	 Budget        INT           NOT NULL,
+	 CONSTRAINT Budget CHECK(0 < Budget < 500));
+	 
+	CREATE TABLE Rennort
+	(OID           INT           PRIMARY KEY,
+	 Name          CHAR(30)      UNIQUE NOT NULL, 
+	 Strecke       CAHR(50)      UNIQUE NOT NULL);
+	   
+	CREATE TABLE Platzierung
+	(RID           INT           NOT NULL,           
+	 OID           INT           NOT NULL,
+	 Platz         INT           NOT NULL,
+	 CONSTRAINT RID FOREIGN KEY(Rennfahrer) REFERNCES Rennfahrer(RID),
+	 CONSTRAINT OID FOREIGN KEY(Rennort) REFERNCES Rennort(OID));
+	   	   	
+	\end{verbatim}
+	\item[b)] 
+	\item[c)] INSERT INTO Rennfahrer VALUES\\
+			  (8, "Sebastian", "Vettel", 1987-07-03, "Kemmental (Schweiz)", 2),\\
+			  (6, "Fernando", "Alonso", 1981-07-29, "Lugano (Schweiz)", 5),\\
+			  (8, "Marc", "Webber", 1976-08-27, "Aston Clinton (UK)", 2),\\
+			  (9, "Lewis", "Hamilton", 1985-01-07, "Genf (Schweiz)", 31),\\
+			  (20, "Jenson", "Button", 1980-01-19, "Monte Carlo (Monaco)", 31),\\
+			  (21, "Felipe", "Massa", 1982-04-25, "S\"ao Paulo (Brazilien)", 5),\\
+			  (44, "Kimi", "R\"aikk\"onen", 1979-10-17, "Espoo (Finnland)", 34);\\
+			  
+			  INSERT INTO Rennstall VALUES\\
+			  (2, "Red Bull", "Christian Horner", 370),\\
+			  (5, "Ferrari", "Stefano Domenicali", 350),\\
+			  (31, "McLaren", "Martin Whitmarsh", 220),\\
+			  (34, "Lotus F1", "Eric Boullier", 100);\\
+			  
+			  INSERT INTO Rennort VALUES\\
+			  (4, "Australian GP", "Albert Park Circuit"),\\
+			  (15, "Malaysia GP", "Sepang International Circuit"),\\
+			  (34, "China GP", "Shanghai International Circuit");\\
+			  
+			  INSERT INTO Platzierung VALUES\\
+			  (8, 4, 6),\\
+			  (4, 15, 1),\\
+			  (20, 15, 17),\\
+			  (4, 4, 3),\\
+			  (6, 4, 2),\\
+			  (8, 15, 2),\\
+			  (6, 21, 1),\\
+			  (9, 4, 5),\\
+			  (21, 15, 5),\\
+			  (20, 4, 9),\\
+			  (21, 4, 4);\\
+			     
+	\item[d.1)] DELETE FROM Rennfahrer WHERE Vorname LIKE F\%
+	\item[d.2)] DROP TABLE Rennstall\\
+				DROP TABLE Rennfahrer\\
+	            DROP TABLE Rennort\\
+		        DROP TABLE Platzierung
+	
+
+\end{enumerate} 	
+	
+
+
+\end{document}

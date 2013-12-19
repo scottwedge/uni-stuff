@@ -1,0 +1,242 @@
+\documentclass[ngerman]{gdb-aufgabenblatt}
+\usepackage{paralist}
+
+\renewcommand{\Aufgabenblatt}{4}
+\renewcommand{\Ausgabedatum}{Mi. 27.11.2013}
+\renewcommand{\Abgabedatum}{Do. 12.12.2013}
+\renewcommand{\Gruppe}{Dammer, Teuteberg, Wilhelm}
+
+
+\begin{document}
+
+\section{Relationenalgebra}
+
+\begin{compactenum}[(a)]
+	\item Welche Obstsorten wurden von einem Entdecker mit Vorname Horst entdeckt? 
+	\begin{align*}
+	 &\projektion{Sorte}(Obst\verbund{Entdecker=PNR} \selektion{Vorname=\wert{Horst}}(Person))
+	\\  
+\end{align*}\
+	\item 
+	\begin{align*}
+ 	&\projektion{Vorname,Nachname}(Person\verbund{PNR=Person} \selektion{Symptom=\wert{Halskratzen}}(Allergie))
+	\\  
+\end{align*}\
+	\item 
+	\begin{align*}
+ 	\projektion{Sorte,Nachname}(\projektion{Person,Sorte}(\selektion{Person=Entdecker}(Obst\verbund{ONR=Obst} \selektion{Symptom=\wert{Wurgreiz}}(Allergie)))\\
+ 	\verbund{Person=PNR}(\projektion{PNR,Nachname}(Person))
+	\\  
+\end{align*}\
+\end{compactenum}
+
+
+
+
+
+
+\section{SQL-Schemadefinition}
+\begin{enumerate}
+	\item[a)] 
+	\begin{verbatim}
+	CREATE TABLE Rennfahrer 
+	(RID           INT           PRIMARY KEY,
+	 Vorname       CHAR(30)      NOT NULL,
+	 Nachname      CHAR(30)      NOT NULL,
+	 Geburt        DATE          NOT NULL,
+	 Wohnort       CHAR(50)      NOT NULL,
+	 CONSTRAINT    Rennstall   FOREIGN KEY(Rennstall) 
+	 REFERNCES Rennstall(RSID));
+	 
+	CREATE TABLE Rennstall
+	(RID           INT           PRIMARY KEY,
+	 Name          CHAR(30)      UNIQUE NOT NULL,
+	 Teamchef      CHAR(30)      UNIQUE NOT NULL,
+	 Budget        INT           NOT NULL,
+	 CONSTRAINT Budget CHECK(0 < Budget < 500));
+	 
+	CREATE TABLE Rennort
+	(OID           INT           PRIMARY KEY,
+	 Name          CHAR(30)      UNIQUE NOT NULL, 
+	 Strecke       CAHR(50)      UNIQUE NOT NULL);
+	   
+	CREATE TABLE Platzierung
+	(RID           INT           NOT NULL,           
+	 OID           INT           NOT NULL,
+	 Platz         INT           NOT NULL,
+	 CONSTRAINT RID FOREIGN KEY(Rennfahrer) REFERNCES Rennfahrer(RID),
+	 CONSTRAINT OID FOREIGN KEY(Rennort) REFERNCES Rennort(OID));
+	   	   	
+	\end{verbatim}
+	\item[b)] NO ACTION und RESTRICT sind dasselbe Operationen\\
+			  NO ACTION - jeder Versuch, einen Primärschlüssel zu löschen oder zu ändern, unterbunden wird, wenn es dazu einen Fremschlüsselwert in der referenzierten Tabelle gibt.\\
+			  RESTRICT - weist die Lösch- oder Änderungsoperation auf der Elterntabelle zurück.\\
+	          Resrtictions:Zusammengehörige Spalten im Fremdschlüssel und referenzierten Schlüssel müssen ähnliche Datentypen haben, damit sie sich ohne Typkonvertierung vergleichen lassen. Die Größe und das Vorzeichen von Integer-Typen müssen gleich sein. Die Länge von String-Typen muss nicht unbedingt identisch sein. Wenn Sie SET NULL verlangen, dürfen die Spalten der Kindtabelle nicht als NOT NULL deklariert sein.\\
+	          
+	          
+	\item[c)] INSERT INTO Rennfahrer VALUES\\
+			  (8, "Sebastian", "Vettel", 1987-07-03, "Kemmental (Schweiz)", 2),\\
+			  (6, "Fernando", "Alonso", 1981-07-29, "Lugano (Schweiz)", 5),\\
+			  (8, "Marc", "Webber", 1976-08-27, "Aston Clinton (UK)", 2),\\
+			  (9, "Lewis", "Hamilton", 1985-01-07, "Genf (Schweiz)", 31),\\
+			  (20, "Jenson", "Button", 1980-01-19, "Monte Carlo (Monaco)", 31),\\
+			  (21, "Felipe", "Massa", 1982-04-25, "S\"ao Paulo (Brazilien)", 5),\\
+			  (44, "Kimi", "R\"aikk\"onen", 1979-10-17, "Espoo (Finnland)", 34);\\
+			  
+			  INSERT INTO Rennstall VALUES\\
+			  (2, "Red Bull", "Christian Horner", 370),\\
+			  (5, "Ferrari", "Stefano Domenicali", 350),\\
+			  (31, "McLaren", "Martin Whitmarsh", 220),\\
+			  (34, "Lotus F1", "Eric Boullier", 100);\\
+			  
+			  INSERT INTO Rennort VALUES\\
+			  (4, "Australian GP", "Albert Park Circuit"),\\
+			  (15, "Malaysia GP", "Sepang International Circuit"),\\
+			  (34, "China GP", "Shanghai International Circuit");\\
+			  
+			  INSERT INTO Platzierung VALUES\\
+			  (8, 4, 6),\\
+			  (4, 15, 1),\\
+			  (20, 15, 17),\\
+			  (4, 4, 3),\\
+			  (6, 4, 2),\\
+			  (8, 15, 2),\\
+			  (6, 21, 1),\\
+			  (9, 4, 5),\\
+			  (21, 15, 5),\\
+			  (20, 4, 9),\\
+			  (21, 4, 4);\\
+			     
+	\item[d.1)] DELETE FROM Rennfahrer WHERE Vorname LIKE F\%
+	\item[d.2)] DROP TABLE Platzierung\\
+				DROP TABLE Rennort\\
+	            DROP TABLE Rennstall\\
+		        DROP TABLE Rennfahrer
+		
+\end{enumerate} 
+
+
+\newpage
+\section{SQL-Anfragen}
+
+\begin{compactenum}[(a)]
+\item \begin{verbatim}
+SELECT DISTINCT
+  o.Sorte
+FROM 
+  Obst o,
+  Person p,
+  Allergie a
+WHERE
+  p.Vorname = 'Peter' AND
+  p.Nachname = 'Meyer' AND
+  a.Person = p.PNR AND
+  a.Obst = o.ONR
+ORDER BY
+  o.Sorte DESC
+\end{verbatim}
+\item \begin{verbatim}
+SELECT
+  p.PNR,
+  p.Nachname,
+  COUNT(p.PNR)
+FROM 
+  Person p,
+  Allergie a
+WHERE
+  p.PNR = a.Person
+GROUP BY
+  p.PNR
+\end{verbatim}
+\item \begin{verbatim}
+SELECT
+  p.PNR
+FROM 
+  Person p,
+  Obst o
+WHERE
+  o.Entdecker = p.PNR
+GROUP BY
+  p.PNR
+HAVING
+  COUNT(p.PNR) > 6
+\end{verbatim}
+\item \begin{verbatim}
+SELECT
+  p.Vorname,
+  p.Nachname
+FROM 
+  Person p,
+  Person q,
+  Obst o
+WHERE
+  p.Lieblingsobst = o.ONR AND
+  o.Entdecker = q.PNR AND
+  p.Vorname = q.Vorname
+\end{verbatim}
+\item \begin{verbatim}
+SELECT
+  p.PNR,
+  p.Vorname,
+  p.Nachname
+FROM 
+  Person p
+WHERE
+  p.PNR NOT IN
+  {SELECT 
+     o.Entdecker
+   FROM
+     Obst o}
+\end{verbatim}
+
+\end{compactenum}
+
+
+\section{Optimierung}
+\begin{compactenum}[(a)]
+	\item Operatorbaum f\"ur die vorgegebene Anfrage:
+\end{compactenum}	
+\begin{tikzpicture}
+\node (Obst) {Obst};
+\node (Person) [left=25mm of Obst] {Person};
+\node (join1) [above=20mm of $(Obst)!.5!(Person)$] {$\verbund{Lieblingsobst=ONR}$};
+\node (selektion1) [above=of join1] {$\selektion{Sorte=\wert{K\%}}$};
+\node (projektion) [above=of selektion1] {$\projektion{PNR,Vorname,Nachname}$};
+\node (final) [above=of projektion] {};
+
+\path (Obst) edge node[smallr,near start,above right] {25 Tupel\\3 Attribute} (join1);
+\path (Person) edge node[smalll,near start,above left] {2000 Tupel\\5 Attribute} (join1);
+\path (join1) edge node[smallr,near start,above left] {2000 Tupel\\8 Attribute} (selektion1);
+\path (selektion1) edge node[smallr,midway,left] {$2000\cdot\frac{5}{25}=400$ Tupel\\8 Attribute} (projektion);
+\path (projektion) edge node[smallr,midway,left] {$400$ Tupel\\3 Attribut} (final);
+\end{tikzpicture}
+\newpage
+\begin{compactenum}[(b)]
+\item Optimierung:
+\end{compactenum}
+
+\begin{tikzpicture}
+\node (Obst) {Obst};
+\node (Person) [left=25mm of Obst] {Person};
+\node (selektion1) [above=of Obst] {$\selektion{Sorte=\wert{K\%}}$};
+
+\node (join1) [above=25mm of $(selektion1)!.5!(Person)$] {$\verbund{Lieblingsobst=ONR}$};
+\node (projektion1) [above=of join1] {$\projektion{PNR,Vorname,Nachname}$};
+\node (final) [above=of projektion1] {};
+
+\path (Obst) edge node[smallr,near start,above right] {25 Tupel\\3 Attribute} (selektion1);
+\path (Person) edge node[smalll,near start,above left] {2000 Tupel\\5 Attribute} (join1);
+\path (selektion1) edge node[smallr,near start,right] {$25\cdot\frac{5}{25}=5$ Tupel\\3 Attribute} (join1);
+
+\path(join1) edge node[smallr,near start,above left] {$2000\cdot\frac{1}{5}=400$Tupel\\ 8 Attribute} (projektion1);
+\path (projektion1) edge node[smallr,midway,left] {$400$ Tupel\\3 Attribut} (final);
+\end{tikzpicture}
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,179 @@
+\documentclass[ngerman]{gdb-aufgabenblatt}
+
+
+\renewcommand{\Aufgabenblatt}{3}
+\renewcommand{\Ausgabedatum}{Mi. 16.10.2013}
+\renewcommand{\Abgabedatum}{Fr. 01.11.2013}
+\renewcommand{\Gruppe}{Dammer, Teuteberg, Wilhelm}
+
+
+\begin{document}
+
+
+\section{Beispiel f\"ur ER-Diagramm}
+
+\begin{center}
+\begin{tikzpicture}
+
+\node[entity] (e1) {E1};
+\node[attribut] (e1-a1) [above left =5mm and 4mm of e1.north] {\underline{A1}} edge (e1);
+\node[attribut] (e1-a2)  [above right=5mm and 4mm of e1.north] {A2} edge (e1);
+\node[multivalentattribut] (e1-a3)  [right=5mm of e1] {A3} edge (e1);
+
+\node[entity] (e2) [below left =1cm and 1mm of e1.south] {E1} edge [erbt] (e1);
+\node[entity] (e3)      [below right=1cm and 1mm of e1.south] {E3} edge [erbt] (e1);
+\node[entity] (e4) [right =7cm of e3] {E4};
+
+\node[weakentity] (e5) [below =3cm of e3] {E5};
+\node[attribut] (e5-a1)  [right=5mm of e5] {\dashuline{A1}} edge (e5);
+
+\node[relationship] (r1) [right=2cm of e3] {R1};
+\path (r1) edge node[at end,anchor=north west] {$[0;2]$} (e3);
+\path (r1) edge node[at end,anchor=north east] {$[7;9]$} (e4);
+
+
+\node[weakrelationship] (r2) [below=1cm of e3] {R2};
+\path (r2) edge node[at end,anchor=north west] {$1$} (e3);
+\path (r2) edge node[at end,anchor=south east] {$8$} (e5);
+
+
+
+\end{tikzpicture}
+\end{center}
+
+
+
+
+
+
+\section{Logischer Entwurf}
+
+\begin{RMSchma}
+Film(\soliduline{Titel}, \dashuline{Name $\rightarrow$ Regisseur.Name}, Zusammenfassung, 1.Drehtag, letzter Drehtag)
+
+Charakter(\soliduline{CID}, Name, Charakterbeschreibung)
+
+Genre(\soliduline{Name})
+
+Regisseur(\soliduline{Name}, \dashuline{Name $\rightarrow$ Genre.Name}) oder Regisseur(\soliduline{\dashuline{Name $\rightarrow$ Person.Name}}, \dashuline{Name $\rightarrow$ Genre.Name})
+
+Schauspieler(\soliduline{Name}) oder Schauspieler(\soliduline{\dashuline{Name $\rightarrow$ Person.Name}})
+
+Person(\soliduline{Name}, DOB,Geschlecht)
+
+Markenzeichen(\soliduline{\dashuline{Name $\rightarrow$ Schauspieler.Name}, Zeichen})
+
+geh\"ort zu(\soliduline{\dashuline{Titel $\rightarrow$ Film.Titel}, \dashuline{Name $\rightarrow$ Genre.Name}})
+
+spielt(\soliduline{\dashuline{Name $\rightarrow$ Schauspieler.Name}, \dashuline{CID $\rightarrow$ Charakter.CID}, \dashuline{Titel $\rightarrow$ Film.Titel}}, Drehbeginn, Drehende, Gage)
+
+\end{RMSchma}
+
+
+
+
+
+
+\section{Relationale Algebra und SQl}
+
+\begin{align*}
+  \item[a)]
+  \begin{enumerate}
+   \item [i)] Finde alle (Namen) Rennfahrer, die 1 Platz in ``Malaysia GP'' genommen haben.
+   \item[ii)] Finde alle Rennfahrer, die in Rennstall mit Budget kleiner 350 teilgenommen haben.
+   \item[iii)] Finde alle Teams (Rennstall), deren Rennfahrern ein Paltz in ``Australian GP" genommen haben.
+  \end{enumerate}
+  \item[b)]
+  \begin{enumerate}
+   \item[i)] &\projektion{Rennstall.Name}(\selektion}{Geburt>=1985}(Rennfahrer \verbund Rennstall))
+   \\ &=\{ \wert(Red Bull), \wert(McLaren) \} 
+   
+   \item[ii)] &\projektion{Voraname,Nachname,Geburt}((\selektion{Rennstall=31}Rennfahrer) \verbund \selektion{OID=4}Platzierung) 
+   \\ &=\{ \wert(Lewis Hamilton 1985-01-07), \wert(Jenson Button 1980-01-19) \}
+   
+   \item[iii)] &(Rennfahrer)-(\projektion{RID,Vorname,Nachname,Geburt,Wohnort,Rennstall}(Rennfahrer \verbund Platzierung)
+   \\ &= \{ \wert(44 Kimi R\'aikk\'onen 1979-10-17 Espoo(Finnland) 34) \}
+   
+   \item[iv)] &\projektion{Vorname,Nachname}(\selektion{Rennstall=\projektion{Rennstall}(\selektion{RID=20}Rennfahrer)})
+   \\ &=\{ \wert(Lewis Hamilton) \}
+  \end{enumerate}
+  \item[c)]
+  \begin{enumerate}
+   \item[i)] 
+   \begin{verbatim}
+    SELECT
+      rf.Vorname, rf.Nachname, rf.Geburt
+    FROM
+      Rennfahrer rf,
+      Platzierung pl,
+    WHERE
+      pl.OID = 4 AND
+      rf.Rennstall = 31
+   \end{verbatim}
+   
+   \item[ii)]
+   \begin{verbatim}
+    SELECT
+      Vorname, Nachname
+    FROM
+      Rennfahrer
+    WHERE
+      Rennfahrer.Rennstall = 31 AND
+      Rennfahrer.Vorname != "Button"
+   \end{verbatim}
+  \end{enumerate}
+\end{align*}
+
+\section{Algebraische Optimierung}
+\begin{enumerate}
+ \item[a)]
+ \begin{tikzpicture}
+ \node (Rennfahrer) {Rennfahrer};
+ \node (Platzierung) [right=25mm of Rennfahrer] {Platzierung};
+ \node (Rennort) [right=27mm of Platzierung] {Rennort};
+ \node (j1) [above=20mm of $(Rennfahrer)!.5!(Platzierung)$] {$\verbund$};
+ \node (j2) [above=22mm of j1] {$\verbund$};
+ \node (sigma1) [above=of j2] {$\selektion{Platz<11}$};
+ \node (sigma2) [above=of sigma1] {$\selektion{Name="China GP"}$};
+ \node (pi1) [above=of sigma2] {$\projektion{Wohnort}$};
+ \node (final) [above=of pi1] {};
+ 
+ \path (Rennfahrer) edge node[smallr,near start,above right] {?? Tupel\\?? Attribute} (j1);
+ \path (Platzierung) edge node[smallr,near start,above left] {?? Tupel\\?? Attribute} (j1);
+ \path (j1) edge node[smallr,near start,above right] {?? Tupel\\?? Attribute} (j2);
+ \path (Rennort) edge node[smallr,near start,above left] {?? Tupel\\?? Attribute} (j2);
+ \path (j2) edge node[smallr,midway,left] {$??\cdot\frac{??}{??}=??$ Tupel\\?? Attribute} (sigma1);
+ \path (sigma1) edge node[smallr,midway,left] {$??\cdot\frac{??}{??}=??$ Tupel\\?? Attribute} (sigma2);
+ \path (sigma2) edge node[smallr,midway,left] {$??\cdot\frac{??}{??}=??$ Tupel\\?? Attribute} (pi1);
+ \path (pi1) edge node[smallr,midway,left] {$??\cdot\frac{??}{??}=??$ Tupel\\?? Attribute} (final);
+ 
+ \end{tikzpicture}
+ 
+ \item[b)]
+ \begin{tikzpicture}
+ \node (Rennfahrer) {Rennfahrer};
+ \node (Platzierung) [right=25mm of Rennfahrer] {Platzierung};
+ \node (Rennort) [right=27mm of Platzierung] {Rennort};
+ \node (sigma1) [above=20mm of Platzierung] {$\selektion{Platz<11}$};
+ \node (sigma2) [above=20mm of Rennort] {$\selektion{Name="China GP"}$};
+ \node (j1) [above=20mm of $(sigma1)!.5!(sigma2)$] {$\verbund$};
+ \node (j2) [above=20mm of $(Rennfahrer)!.5!(j1)$] {$\verbund$};
+ \node (pi1) [above=20mm of j2] {$\projektion{Wohnort}$};
+ 
+ \path (Platzierung) edge node[smallr,midway,left] {$??\cdot\frac{??}{??}=??$ Tupel\\?? Attribute} (sigma1);
+ \path (Rennort) edge node[smallr,midway,left] {$??\cdot\frac{??}{??}=??$ Tupel\\?? Attribute} (sigma2);
+ \path (sigma1) edge node[smallr,near start,above right] {?? Tupel\\?? Attribute} (j1);
+ \path (sigma2) edge node[smallr,near start,above left] {?? Tupel\\?? Attribute} (j1);
+ \path (Rennfahrer) edge node[smallr,near start,above right] {?? Tupel\\?? Attribute} (j2);
+ \path (j1) edge node[smallr,near start,above left] {?? Tupel\\?? Attribute} (j2);
+ \path (j2) edge node[smallr,midway,left]{$??\cdot\frac{??}{??}=??$ Tupel\\?? Attribute} (pi1);
+ 
+ \end{tikzpicture}
+ \item Ausdruck b) hat den höchsten Optimierungsgrad: Nach der Optimierungsheuristik I, 
+ werden Selektionen möglichst früh ausgeführt, nach II werden die Projektionen möglichst früh ausgeführt und nach III 
+ werden Operatoren Selektion und Projektion verknüpft. In Ausdruck a) werden erst die Relationen verknüpft und dann 
+ die Selektionen und Projektionen durchgeführt, das ist nicht effizient. \\
+  
+
+\end{enumerate}
+\end{document}
