@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+
+\title{\textbf{Bottomsystem: Datamining, Dataprocessing, Supporting the Descisionmaking}}
+\author{Alisa Dammer}
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Nowadays the way how trading looks have changed through varios programms, trading bots, amount of data that needs to be processed in several miliseconds. Although the methodes and models got to become really fast and highly precisse in theirs computations. However, the amount of data to process increases with drastic speed. The descisionmaking requires more time to get all the information feedback (support) that is needed. Terms "Big Data" and "Data mining" now play cruicial role in trading.\\
+An especially difficult task in tarding is not only to collect all nesussary information, but also to distinguish between sources and the relevance of information. In the system, where every peace of information can be represented as a composition of other information pieces, the reduction of information is one of the most impodtant tasks. Of course, we can say, that we will need all the information, that has at least 0.05\% influence ratio on the subject of primar reasearch, but the amount of data will be immense and the time of calculations, processing will also be long, and this consequence is highly undesirable because in trading time is money.\\
+Another difficult is information form. Most of modern analytical tools and programms for forecasting work with digits, time series.
+\textcolor{red}{The are not that many programs and tools, that work directly with text of different formats.}\\
+
+In this bachelor work I decided to try to create such a tool that will dig for relevant information sources in text-form afetr the information is collected, the programm will extract the core information (\textcolor{red}{possibility to set searchable information})and "translate" it into digits, so that the result can be used further by different independed programs, machines and also people.\\
+In this bachalor work many limitations will be set, because the main purpose of the work is to check wether the idea will work out on relative small amount of data and for relative narrow analysis - desicion making for one stock (for example). 
+\newpage
+\section{Limitations for the system and data minig}
+As was mentioned in introduction, this work will meet many restrictions and limitations in order to reduce the complexity, runtime and make it more transparent. \\
+First of all the top limitation in a pyrimide is to choose the primar index (stock ration, interest, price of an  obligation), wich descision to buy/sell we will support. (\textcolor{red}{here give examples of possible primar indexes. The pyramid of parametergroth can be added to demonstrate why limitations are important, at the same time give the O-notation, maybe o-notation as well})\\
+After choosing the primar index, we will have to choose a composition of other indexes, that will present the main index as correct as possible. The limitations for this stage are:
+\begin{enumerate}
+	\item The number of compositors should be pretty small. Let's say between 3 and 5 (Here is wery importatnt to remebber, that the processing of each parameter is working with N text-sources wich leads to M*N complexity increase just on this stage. Here M - is amount of compositors, first-level parameters, N - the number of texts processed) \textcolor{red}{establish crosscorelation matrix, maybe also weighted cross corellation matrix (influence of the inexes on each other among other "subompositors")}.\\
+	\item The compositors itself should be as simple as it gets. By simple here I mean that the index can be examined selfseficiently, not pairwise. The reason for this limitation is again complexity and runtime reduction. (see figure with complexity-pyramid above)\\
+	\item The number of the text-files reviewed for each compositor should be restricted. Here let's set the number to 25-50 texts. All found textes will be processed and ach text gets and unique id. The way how this IDs are composed defines the number of limitations\\
+		\begin{enumerate}
+		\item The information from every text analysed is extracted into several indexes: ID and desirable estimation (forecast for specific index \textcolor{red}{here again not to forget. What to do with cross information. What if on text contains 90\% info about index1 and 10\% about index2, 80/20 etc. How do indexes interact with each other? Weighted importance index - weighted crosscorrelation?}) and saved into undependent arrays.
+		\item The ID contains the information about the content (\textcolor{red}{here not yet sure how this information will be presented: number of keywords with distance between them, the amount of "noise" etc.}). This information is needed while mining, the system will do following thing: If the list of text's ids is empty, the text will be explored, and proper ID is assigned, ID is added to the special array. Next text is explored, ID is assigned but now the ID's array is not empty, so new ID will be compared with existing ones. If they match, than the counter for this ID is increased, but ID itself is not added to the array. (\textcolor{red}{here array.count(x) is not equal to [id,(count, weight)], because we have ration for sources and the same text in facebook won't have the same importance, as posted in business magazines about stock exchange}). If the ID is unique, it will be added to the array.
+		\end{enumerate}  
+Texts itself won't be saved anywhere, because of rights policy and space saving. Instead (\textcolor{blue}{subarray or multidimensioanl array for ID?}) we will save the link to the source as a part of unige ID (\textcolor{blue}{currently I see ID as a number, where fisrt 3-4 digits present the link to the source, and the rest presents the content})\\
+\textcolor{red}{here graphically show how increasing number of textes influence spacing and runtime}
+\end{enumerate}
+These were main limitations for data mining. (\textcolor{red}{types of sources  will be better to describe in the "Data Mining" chaper, otherwise the information will be logically mixed, which is unepriciated here a lot})
+
+
+\newpage
+\section{Data Mining}
+After setting limitations for the number of parameters, we start an important step - searching and choosing proper information sourses. 
+There are three main types of sources, that will be
+reviewed. They are: \\
+\begin{enumerate}
+	\item Official business articles and govermnet"s reports - theese sources are selfseficient separated peces of informatiom with the highest priority. The highest priority is given acctually to official reports, because it is not an interpretation in any form, but the truth. But the actual and uptodate reports are important for the fine tuning of the priority list and thus importance-weights matrix. (\textcolor{blue}{additional array for fine tunning}) For estimation I consider separate statements and announcements and official goverment's forecasts as a good and trusted source (but still not an absolte truth).\\
+	 \item The second type of texts are articles in specialized magazines (it can be a serie of articles, or debate-like article but with lear conclusion). This source is different from the first one, because it requires preprocessing to find one text and also, the level of experts there can be considered a bit lower, than from prevous source. At the same time the experts published in magazines are different, that mean, that not only institutes (publishing institute here) have ranks, but also individuals can have quite havy weight and their oppinion may be considered more important as, for axample, an article in non-specialized magazine. (\textcolor{red}{probably specialization here should influence the ratio})
+	 \item The third type of the information sources is social - social media, like Facebook, blogs, livejournals and tweeter. These sources are pretty sticky - you can't check the personality behind the text (u can't always belive, that the person behind the text should be ranked high or as a "noise"). Moreover, normally "exclusive" information is pretty rarely leaks from the original source. My data mining machine is not that powerfull and as was mentioned above it is pretty restricted. 
+\textcolor{blue}{Thus I decided not to use this source, to decrease runtime and increase transparancy - there will be huge problems with rating such texts (also retweets are an enomorous headace)}	
+\end{enumerate}
+
+\end{document}
