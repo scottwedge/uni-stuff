@@ -1,66 +1,68 @@
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{color}
+\usepackage{mathtools}
 
-\title{\textbf{Bottomsystem: Datamining, Dataprocessing, Supporting the Descisionmaking}}
+\title{\textbf{Bottom-system: Data Mining, Data Processing, Supporting the Decision-making}}
 \author{Alisa Dammer}
 \begin{document}
 
 \maketitle
 
 \section{Introduction}
-The newest trend in stock movements prediction is taking social opinion into account. It was noticed that stock chages are heavily influenced by peoples expectation and general mood.
-One of the programs that works with sentiment data processing is called StockPulse. According to infromation given on the official web site, the whole process is broken into 7 Steps:\\
+The newest trend in stock movements prediction is taking social opinion into account. It was noticed that stock changes are heavily influenced by peoples expectation and general mood.
+One of the programs that works with sentiment data processing is called 
+"StockPulse". According to the information given on the official web site, the whole process is broken into 7 Steps:\\
 \begin{enumerate}
 	\item Data collection
-	\item Spamfilter (Data selection)
+	\item Spam-filter (Data selection)
 	\item Mood detection
 	\item Topic - assigning title to message (Message coding?)
-	\item Relevance assignmnet (Message rating)
+	\item Relevance assignment (Message rating)
 	\item Aggregation and analyses
 	\item Trend signal
 \end{enumerate}
-The main focus of the system is to support trader's descision, but this data is mostly useful for short-term descisions. For example, the program work with data for specified indexes and search only texts that are directly connectd to main index.\\
+The main focus of the system is to support trader's decision, but this data is mostly useful for short-term decisions. For example, the program work with data for specified indexes and search only texts that are directly connected to main index.\\
 \textcolor{green}{In this work I would like to check the chain of small hypothesis: }
 \begin{enumerate}
 	\item Every index can be presented as a composition of other indexes (Here meaningful composition with limited number of compositors is meant).
 	\item Some of the sub-indexes can have postponed impact on main index 
-	\item The analysis of each sub-index can give extra advantage for trader in mid-term - such data processing can support strategic descisions in mid-term (long-term)
+	\item The analysis of each sub-index can give extra advantage for trader in mid-term - such data processing can support strategic decisions in mid-term (long-term)
 \end{enumerate}
 In order to check the hypothesis certain system will be buil that deals with every stage mentioned above. But first of all limitations for the system need to be set.
 
 \newpage
-\section{Limitations for the system and data minig}
-As was mentioned in introduction, this work will meet many restrictions and limitations in order to reduce the complexity, runtime and make it more transparent. \\
-First of all the top limitation is to choose the primar index (stock ration, interest, price of an  obligation), wich descision to buy/sell we will support. Also this index schould be ralative easily presented as a composition. (\textcolor{red}{here give examples of possible primar indexes and choose one to work with. The pyramid of parametergroth can be added to demonstrate why limitations are important, at the same time give the O-notation, maybe o-notation as well})\\
+\section{Limitations for the system and Data-mining}
+As was mentioned in introduction, this work will meet many restrictions and limitations in order to reduce the complexity, run-time and make it more transparent. \\
+First of all the top limitation is to choose the primary index (stock ration, interest, price of an  obligation). Also this index should be relatively easy to present as a composition. (\textcolor{red}{here give examples of possible primary indexes and choose one to work with. The pyramid o the increasing parameter's number can be added to graphically demonstrate why limitations are important, at the same time give the O-notation, maybe o-notation as well})\\
 After choosing the primary index, we will have to choose a composition of other indexes, that will present the main index as correct as possible. The limitations for this stage are:
 \begin{enumerate}
-	\item The number of compositors should be pretty small. Let's say between 3 and 5 (Here is wery importatnt to remebber, that the processing of each parameter is working with N text-sources wich leads to M*N complexity increase just on this stage. Here M - is amount of compositors, first-level parameters, N - the number of texts processed) \textcolor{red}{establish crosscorelation matrix, maybe also weighted cross corellation matrix (influence of the inexes on each other among other "subompositors")}.\\
-	\item The compositors itself should be as simple as it gets. By simple here I mean that the index can be examined selfseficiently, not pairwise. The reason for this limitation is again complexity and runtime reduction. (see figure with complexity-pyramid above). \textcolor{blue}{Do we include negative-impact-indexes? Only if tjey are obvious}\\
-	\item The number of the text-files reviewed for each compositor should be restricted. Here let's set the number to 25-50 texts. All found textes will be processed and each text will get an unique id. The way how these IDs are composed defines the number of futher limitations (transparency and complexity reduction)\\
+	\item The number of compositors should be pretty small. Let's say between 3 and 5 (Here is very important to remember that the processing of each parameter is working with N text-sources which leads to M*N complexity increase just on this stage. Here M - is amount of compositors, first-level parameters, N - the number of texts processed) \textcolor{red}{establish some sort of cross-correlation matrix)}.\\
+	\item The compositors itself should be as simple as it gets. Their own influence should be significant and those indexes should not be closely correlated to each other. The reason for this limitation is again complexity and run-time reduction. (see figure with complexity-pyramid above). \textcolor{blue}{Do we include negative-impact-indexes? Only if they are obvious}\\
+	\item The number of the text-files reviewed for each compositor should be restricted. Here let's set the number to 25-50 texts. All found texts will be processed and each text will get an unique id. The way how these IDs are composed defines the number of further limitations (transparency and complexity reduction)\\
 	\begin{enumerate}
-		\item The information from every text analysed is extracted into several indexes: ID and desirable estimation (forecast for specific index \textcolor{red}{here again not to forget. What to do with cross information. What if on text contains 90\% info about index1 and 10\% about index2, 80/20 etc. How do indexes interact with each other? Weighted importance index - weighted crosscorrelation?}) and saved into undependent arrays.
-		\item The ID contains the information about the content (\textcolor{red}{here not yet sure how this information will be presented: number of keywords with distance between them, the amount of "noise" etc.}). This information is needed while mining, the system will do following thing: If the list of text's ids is empty, the text will be explored, and proper ID is assigned, ID is added to the special array. Next text is explored, ID is assigned but now the ID's array is not empty, so new ID will be compared with existing ones. If they match, than the counter for this ID is increased, but ID itself is not added to the array. (\textcolor{red}{here array.count(x) is not equal to [id,(count, weight)], because we have ration for sources and the same text in facebook won't have the same importance, as posted in business magazines about stock exchange}). If the ID is unique, it will be added to the array.
+		\item The information from every text analyzed is extracted into several indexes: ID and desirable estimation (forecast for specific index \textcolor{red}{here again not to forget. What to do with cross information. What if on text contains 90\% info about index(1) and 10\% about index(2), 80/20 etc. How do indexes interact with each other? Weighted importance index - weighted cross-correlation?}) and saved into independent arrays.
+		\item The ID contains the information about the content (\textcolor{red}{here not yet sure how this information will be presented: number of keywords with distance between them, the amount of "noise" etc.}). This information is needed while mining, the system will do following thing: If the list of text's ids is empty, the text will be explored, and proper ID is assigned, ID is added to the special array. Next text is explored, ID is assigned but now the ID's array is not empty, so new ID will be compared with existing ones. If they match, than the counter for this ID is increased, but ID itself is not added to the array. (\textcolor{red}{here array.count(x) is not equal to [id,(count, weight)], because we have ration for sources and the same text in Facebook won't have the same importance, as posted in business magazines about stock exchange}). If the ID is unique, it will be added to the array.
 	\end{enumerate}  
-Texts itself won't be saved anywhere, because of the rights policy and space saving. Instead (\textcolor{blue}{subarray or multidimensioanl array for ID?}) we will save the text's link (url) the source as a part of unige ID (\textcolor{blue}{currently I see ID as a number, where fisrt 3-4 digits present the link to the source, and the rest presents the content, url will be somehow })\\
-\textcolor{red}{here graphically show how increasing number of textes influence spacing and runtime}
+Texts itself won't be saved anywhere, because of the rights policy and space saving. Instead (\textcolor{blue}{sub-array or multidimensional array for ID?}) we will save the text's link (URL) the source as a part of unique ID (\textcolor{blue}{currently I see ID as a number, where first 3-4 digits present the link to the source, and the rest presents the content, the URL will be assigned an unique ID})\\
+\textcolor{red}{here graphically show how increasing number of texts influence spacing and run-time}
 \end{enumerate}
-These were main limitations for data mining. (\textcolor{red}{types of sources  will be better to describe in the "Data Mining" chaper, otherwise the information will be logically mixed, which is unepriciated here a lot})
+These were main limitations for data mining. (\textcolor{red}{types of sources  will be better to describe in the "Data Mining" chapter, otherwise the information will be logically mixed, which is not appreciated here at all})
 
 \newpage
 \section{Data Mining}
-After setting limitations for the number of parameters, we start an important step - searching and choosing proper information sourses. 
+After setting limitations for the number of parameters, we start an important step - searching and choosing proper information sources. 
 There are three main types of sources, only two will be used in this work.\\
 \begin{enumerate}
-	\item Official business articles and govermnet's reports - theese sources are selfseficient separated peces of informatiom with the highest priority. The highest priority is given acctually to official reports, because it is not an interpretation in any form, but the truth. But the actual and uptodate reports are important for the fine tuning of the priority list and thus importance-weights matrix. (\textcolor{blue}{additional array for fine tunning}) For estimation I consider separate statements and announcements and official goverment's forecasts as a good and trusted source (but still not an absolte truth).\\
-	 \item The second type of texts are articles in specialized magazines (it can be a serie of articles, or debate-like article but with lear conclusion). This source is different from the first one, because it requires preprocessing to find one text and also, the level of experts there can be considered a bit lower, than from prevous source. At the same time the experts published in magazines are different, that mean, that not only institutes (publishing institute here) have ranks, but also individuals can have quite havy weight and their oppinion may be considered more important as, for axample, an article in non-specialized magazine. (\textcolor{red}{probably specialization here should influence the ratio})
-	 \item The third type of the information sources is social - social media, like Facebook, blogs, livejournals and tweeter. These sources are pretty sticky - you can't check the personality behind the text (u can't always belive, that the person behind the text should be ranked high or as a "noise"). Moreover, normally "exclusive" information is pretty rarely leaks from the original source. My data mining machine is not that powerfull and as was mentioned above it is pretty restricted. 
-\textcolor{blue}{Thus I decided not to use this source, to decrease runtime and increase transparancy - there will be huge problems with rating such texts (also retweets are an enomorous headace)}	
+	\item Official business articles and government's reports - these sources are self-sufficient separated pieces of the information with the highest priority. The highest priority is given to the official reports, because it is not an interpretation in any form, but the fact - raw numbers. Actual and up-to-date reports are important for the fine tuning of the priority list and thus importance-weight matrix. (\textcolor{blue}{additional array for fine-tuning}) For estimation I consider separate statements and announcements and official government's forecasts as a good and trusted source (but still not an absolute truth).\\
+	 \item The second type of texts are articles in specialized magazines (it can be a bunch of articles, or debate-like article but with clear conclusion). This source is different from the first one, because it requires pre-processing to find one text and also, the level of experts there can be considered a bit lower in comparison to the previous source. At the same time the experts published in magazines are different, that mean, that not only institutes (publishing institute here) have ranks, but also individuals can have quite a big weight and their opinion may be considered more important as, for example, an article from a non-specialized magazine. (\textcolor{red}{probably specialization here should influence the ratio})
+	 \item The third type of the information sources publicity - social media, like Facebook, blogs, Live-Journals and tweeter. These sources are pretty sticky - you can't check the personality behind the text (u can't always believe, that the person behind the text should be ranked high or as a "spam"). 
+\textcolor{blue}{Thus I decided not to use this source, to decrease run-time and increase transparency - there will be huge problems with rating such texts (also re-tweets are an enormous headache)}	
 \end{enumerate}
 
 \newpage
 \section{Data processing}
-The main idea is to break main index into several sub-indexes in order to get some additional "hidden" inforamtion, that i not discussed now, but will have huge impact in the future.\\
+The main idea is to break main index into several sub-indexes in order to get some additional "hidden" information, that i not discussed now, but will have huge impact in the future.\\
 Separate data processing as an output will have confidence interval for each of the sub-indexes. And than, \textcolor{red}{the way the index is broken into several indexes and the way all results are integrated into one forecast are different} separate results will be integrated into one forecast that will contain following information: forecast itself, probability and all th for several time steps. So the general output should look like an array ordered by time.\\
-\textcolor{red}{I haven't consider the way to integrate separate results yet. I will need some guidance here as fisrt step I will do it manually based on some logic and original model, that was used in composition.}
+\textcolor{red}{I haven't consider the way to integrate separate results yet. I will need some guidance here as first step I will do it manually based on some logic and original model, that was used in composition.}
 \end{document}
