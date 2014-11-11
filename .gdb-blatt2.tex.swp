@@ -1,0 +1,38 @@
+\documentclass[ngerman]{article}
+\usepackage{paralist}
+\usepackage{graphicx}
+
+%\renewcommand{\Aufgabenblatt}{1}
+%\renewcommand{\Ausgabedatum}{Mi. 30.10.2013}
+%\renewcommand{\Abgabedatum}{Do. 14.11.2013}
+%\renewcommand{\Gruppe}{Dammer, Teuteberg, Wilhelm}
+
+
+\begin{document}
+
+
+\section{Informationsmodellierung: Erstellung eines ER-Modells}
+
+\centerline{\includegraphics[scale=0.2]{Aufgabe1HA2.eps}}
+\begin{compactenum}[(b)]
+	\item Ein Schauspieler kann nicht eine Rolle im Film spielen, falls der letzter Drehtag des Films fr\"uher als Drehebeginn des Schauspielers ist. \\
+	\item Der Regesseur kann nicht den Film produzieren, dessen letzter Drehtag fr\"uher als GeburtsDatum von dem Regisseur ist.\\
+	
+\end{compactenum}
+
+\section{Informationsmodellierung: Beschreibung von ER-Modellen}
+
+*Lösung*
+
+
+\section{Schl\"usselkandidaten}
+\begin{compactenum}[(a)]
+	\item Ein Schl\"usselkandidat muss eindeutig und minimal sein. Die Eigenschaft "'eindeutig"' bedeutet, dass ein Schl\"usselkandidat eine Entit\"at zweifelsfrei identifizieren kann. Im Bespiel der Tabelle w\"are ein eindeutiger Kandidat die Telefonnummer, da diese f\"ur alle Tupel eindeutig ist. \\
+	Die Eigenschaft "'minimal"' bedeutet, dass der gew\"ahlte Schl\"usselkandidat der kleinstm\"ogliche sein muss. Eine Kombination aus Vor- und Nachname in der Tabelle w\"urde zwar die Eigenschaft "'eindeutig"' eines Schl\"usselkandidaten erf\"ullen. Da es aber auch die Telefonnummer als Schl\"usselkandidaten gibt und dabei keine Kombination mit einem weiteren Attribut n\"otig ist, w\"are die Kombination aus Vor- und Nachname f\"ur die Tabelle also nicht minimal. \\
+	M\"ogliche Schl\"usselkandidaten sind also z.B. die Telefonnummer oder die Kombination aus Vorname und Geburtsdatum. \\
+	Die Kombination von Vorname und Hausnummer ist kein geeigneter Schl\"usselkandidat, da sie nicht eindeutig ist. Es gibt zweimal die Kombination von Frida und 8. \\
+	\item Wenn die Liste mit beliebig vielen Eintr\"agen gef\"ullt w\"are, w\"urden sich die vorhandenen Attribute nicht unbedingt als Schl\"usselkandidaten eignen, da Wiederholungen von Attributen oder auch Attribut-Kombinationen nicht ausgeschlossen werden k\"onnen. So k\"onnte es z.B. sein, dass die Telefonnummer als Schl\"usselkandidat gew\"ahlt wurde. Es k\"onnte durchaus sein, dass in der Liste eine weitere Person mit der gleichen Telefonnummer auftaucht (z.B. wegen gleicher Wohnung). Damit w\"aren diese Personen nicht mehr eindeutig identifizierbar.\\
+	Eine L\"osung w\"are das Einf\"uhren eines eindeutigen Attributs, wie beispielsweise einer Personennummer, bei der man sicher sein kann, dass diese nicht wiederholt eingesetzt werden kann. Das w\"are dann ein geeigneter Schl\"usselkandidat.
+\end{compactenum}
+
+\end{document}

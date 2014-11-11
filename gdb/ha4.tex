@@ -11,7 +11,7 @@
 \usepackage{amsmath}
 \usepackage{ulem}
 
-\ihead{Aufgabenblatt 3}
+\ihead{Aufgabenblatt 5}
 \ohead{\today}
 \chead{Gruppe Dammer, Teuteberg, Wilhelm}
 \pagestyle{scrheadings}
@@ -21,82 +21,76 @@
 \section{Aufgabe 1}
 * L\"osung *
 
-\section{SQL - Schemadefinition}
-\begin{enumerate}
-	\item[a)] 
-	\begin{verbatim}
-	CREATE TABLE Rennfahrer 
-	(RID           INT           PRIMARY KEY,
-	 Vorname       CHAR(30)      NOT NULL,
-	 Nachname      CHAR(30)      NOT NULL,
-	 Geburt        DATE          NOT NULL,
-	 Wohnort       CHAR(50)      NOT NULL,
-	 CONSTRAINT    Rennstall   FOREIGN KEY(Rennstall) 
-	 REFERNCES Rennstall(RSID));
-	 
-	CREATE TABLE Rennstall
-	(RID           INT           PRIMARY KEY,
-	 Name          CHAR(30)      UNIQUE NOT NULL,
-	 Teamchef      CHAR(30)      UNIQUE NOT NULL,
-	 Budget        INT           NOT NULL,
-	 CONSTRAINT Budget CHECK(0 < Budget < 500));
-	 
-	CREATE TABLE Rennort
-	(OID           INT           PRIMARY KEY,
-	 Name          CHAR(30)      UNIQUE NOT NULL, 
-	 Strecke       CAHR(50)      UNIQUE NOT NULL);
-	   
-	CREATE TABLE Platzierung
-	(RID           INT           NOT NULL,           
-	 OID           INT           NOT NULL,
-	 Platz         INT           NOT NULL,
-	 CONSTRAINT RID FOREIGN KEY(Rennfahrer) REFERNCES Rennfahrer(RID),
-	 CONSTRAINT OID FOREIGN KEY(Rennort) REFERNCES Rennort(OID));
-	   	   	
-	\end{verbatim}
-	\item[b)] 
-	\item[c)] INSERT INTO Rennfahrer VALUES\\
-			  (8, "Sebastian", "Vettel", 1987-07-03, "Kemmental (Schweiz)", 2),\\
-			  (6, "Fernando", "Alonso", 1981-07-29, "Lugano (Schweiz)", 5),\\
-			  (8, "Marc", "Webber", 1976-08-27, "Aston Clinton (UK)", 2),\\
-			  (9, "Lewis", "Hamilton", 1985-01-07, "Genf (Schweiz)", 31),\\
-			  (20, "Jenson", "Button", 1980-01-19, "Monte Carlo (Monaco)", 31),\\
-			  (21, "Felipe", "Massa", 1982-04-25, "S\"ao Paulo (Brazilien)", 5),\\
-			  (44, "Kimi", "R\"aikk\"onen", 1979-10-17, "Espoo (Finnland)", 34);\\
-			  
-			  INSERT INTO Rennstall VALUES\\
-			  (2, "Red Bull", "Christian Horner", 370),\\
-			  (5, "Ferrari", "Stefano Domenicali", 350),\\
-			  (31, "McLaren", "Martin Whitmarsh", 220),\\
-			  (34, "Lotus F1", "Eric Boullier", 100);\\
-			  
-			  INSERT INTO Rennort VALUES\\
-			  (4, "Australian GP", "Albert Park Circuit"),\\
-			  (15, "Malaysia GP", "Sepang International Circuit"),\\
-			  (34, "China GP", "Shanghai International Circuit");\\
-			  
-			  INSERT INTO Platzierung VALUES\\
-			  (8, 4, 6),\\
-			  (4, 15, 1),\\
-			  (20, 15, 17),\\
-			  (4, 4, 3),\\
-			  (6, 4, 2),\\
-			  (8, 15, 2),\\
-			  (6, 21, 1),\\
-			  (9, 4, 5),\\
-			  (21, 15, 5),\\
-			  (20, 4, 9),\\
-			  (21, 4, 4);\\
-			     
-	\item[d.1)] DELETE FROM Rennfahrer WHERE Vorname LIKE F\%
-	\item[d.2)] DROP TABLE Rennstall\\
-				DROP TABLE Rennfahrer\\
-	            DROP TABLE Rennort\\
-		        DROP TABLE Platzierung
-	
+\section{Aufgabe 2}
+*L\"osung*
 
-\end{enumerate} 	
+\section{Serialisierbarkeit und Anomalien} 	
+\begin{enumerate}
+\subsection*{S1}
+	\item[a)]
+	\(S_1\) = \(r_1\)(B)\(r_1\)(A)\(w_1\)(A)\(r_2\)(A)\(w_2\)(B)\(w_2\)(A)\\
+	1: \(r_1\)(B)  B = 10\\
+	2: \(r_1\)(A)  A = 5\\
+	3: \(w_1\)(A)  A = A + 180 + B = 195\\
+	4: \(r_2\)(A)  A = A ge\"anderte = 195\\
+	5: \(w_2\)(B)  B = alte A = 195\\
+	6: \(w_2\)(A)  A = A + 110 = 195 + 110 = 305\\
+	A = 305\\
+	B = 195
 	
+	\item[b)]
+	\(T_1\) wird komplett vor \(T_2\) durchgeführt.
+	
+	\item[c)]
+	Seriell, denn \(T_2\) wird vollkommen vor \(T_1\) ausgeführt.
+	
+\subsection*{S2}
+	\item[a)]
+	A = 195\\
+	B = 10
+	\item[b)]
+	\(T_1\) überschreibt alle Änderungen, die \(T_2\) gemacht hat: \\
+	zuerst wurde A und B von \(T_1\) und \(T_2\) gelesen (die Werte sind gleich), aber \(T_1\) wird nach \(T_2\) mit alten Werten durchgeführt. 
+	\item[c)]
+	Hier ist Anomalie "Lost Update" getroffen. Nicht serialisierbar, denn \(T_1\) überschreibt die Änderungen von \(T_2\) vollständig. 
+	
+\subsection*{S3}
+	\item[a)]
+	A = 300\\
+	B = 5
+	\item[b)]
+	\(T_1\) beachtet alle Änderungen, die \(T_2\) gemacht hat. Zuerst gehen write-Operationen von \(T_2\) und dann read-Operationen von \(T_1\).
+	\item[c)]
+	Serialisierbar, denn die Änderungen der Transaktionen werden untereinander berücksichtigt.
+	
+\subsection*{S4}
+	\item[a)]
+	A = 200\\
+	B = 10 
+	\item[b)]
+	\(T_1\) beachtet von \(T_2\) gemachte B-Wert Änderung, aber schreibt A-Wert komplett.
+	\item[c)]
+	Hier wird teilweise (nur A wird überschrieben) Anomalie "Lost Update" getroffen. Nicht serialisierbar, denn Änderungen gehen verloren.
+	
+\subsection*{S5}
+	\item[a)]
+	A = 120\\
+	B = 10	
+	\item[b)]
+	\(T_2\) liest die Werte vor bei \(T_1\) gemachte Änderungen.  
+	\item[c)]
+	Die Änderungen gehen verloren, deswegen nicht serialisierbar (Update Lost).
+		
+\subsection*{S6}
+	\item[a)]
+	A = 380\\
+	B = 10
+	\item[b)]
+	\(T_1\) wird nach der \(T_2\) durchgeführt und berücksichtigt alle Änderungen.
+	\item[c)]
+	Serialisierbar, denn die Änderungen der Transaktionen werden untereinander berücksichtigt.
+	
+\end{enumerate}
 
 
 \end{document}

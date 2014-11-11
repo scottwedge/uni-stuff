@@ -1,0 +1,44 @@
+\documentclass[10pt]{article}
+\author{Alisa Dammer, Sven-Hendrik Haase}
+\title{ISA definition}
+\begin{document}
+\maketitle
+\begin{itemize}
+\section{General information:}
+\item fixed 32-bit instructions \\
+\item 3 instructions format \\
+\item 3-operand load-store architecture \\
+\item 32 general-purpose registers (R0 is always 0) \\
+\item 1 special-purpose register (for multiplication) \\
+\item 32-bits wide words \\
+\item register and immediate modes\\
+
+\section{Instructions:}
+\subsection{arithmetic}
+\item add \\
+\item substract \\
+\item multiply \\
+\item increment \\
+\item dercrement
+\subsection{logic}
+\item and \\
+\item or \\
+\item not \\
+\item left-right shift
+\subsection{data transfer}
+\item load word \\
+\item store word \\
+
+\subsection{conditional branch}
+
+\subsection{unconditional jump}	
+
+\subsection{adressing the instructions}
+\item[R-type:] 31-26 opcode, 25-21 rs, 20-16 rt, 15-11 td, 10-6 shamt, 5-0 func\\
+\item[I-type:] 31-26 opcode, 25-21 rs, 20-16 rt, 15-0 immediate\\
+\item[J-type:] 31-26 opcode, 25-0 address
+	  
+	
+\end{itemize}
+
+\end{document}

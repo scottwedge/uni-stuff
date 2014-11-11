@@ -1,0 +1,13 @@
+from myhdl import *
+
+def TimeCount(tens, ones, tenths, startstop, reset, clock):
+	""" 3 digit time counter in seconds and tenths of a second.
+
+    tens: most significant digit of the seconds
+    ones: least significant digit of the seconds
+    tenths: tenths of a second
+    startstop: input that starts or stops the counter on a posedge
+    reset: reset input
+    clock: 10Hz clock input
+
+    """
