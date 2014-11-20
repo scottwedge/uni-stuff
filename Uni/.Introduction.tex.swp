@@ -32,13 +32,6 @@ The main focus of the system is to support trader's decision by providing them w
 \end{enumerate}
 In order to check the hypothesis certain system will be build that deals with every stage mentioned above. But first of all limitations for the system need to be set.\\
 
-	\item Every index can be presented as a composition of other indexes (Here meaningful composition with limited number of compositors will be used). We do not speak here about stock indexes that are already a composition of several major stocks (S\&P, DowJones, Nikkei etc.)
-	\item Some of the sub-indexes can have postponed impact on main index 
-	\item The analysis of each sub-index can give extra advantage for trader in mid-term - such data processing can support strategic decisions in mid-term (long-term)
-\end{enumerate}
-In order to check the hypothesis certain system will be build that deals with every stage mentioned above. But first of all limitations for the system need to be set.
-
-
 \newpage
 \section{Limitations for the system and Data-mining}
 As was mentioned in introduction, this work will meet many restrictions and limitations in order to reduce the complexity, run-time and make it more transparent. \\
