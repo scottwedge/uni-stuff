@@ -1,0 +1,48 @@
+\documentclass[a4paper,12pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{scrpage2}\pagestyle{scrheadings}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{multicol}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{ulem}
+
+\ihead{Aufgabenblatt 5}
+\ohead{\today}
+\chead{Gruppe Dammer, Teuteberg, Wilhelm}
+\pagestyle{scrheadings}
+
+\begin{document}
+
+\section{Aufgabe 1}
+* L\"osung *
+
+\section{Aufgabe 2}
+*L\"osung*
+
+\section{Aufgabe 3} 	
+*L\"osung*
+
+\section{Aufgabe 4} 	
+\begin{enumerate}
+\item[a)] {B}; {A,D}
+
+\item[b)] {C}; {E}
+
+\item[c)]
+Zuerst, prüfen wir 1NF:\\
+"Jedes Attribut der Relation muss einen atomaren Wertebereich haben, und die Relation muss frei von Wiederholungsgruppen sein".(Wiki)\\
+Die Relation befindet sich im {\itshape \large 1NF}, da die geschachtelte Wertebereiche enthält.\\
+
+Jetzt prüfen wir 2NF:\\
+"Eine Relation ist in der zweiten Normalform, wenn die erste Normalform vorliegt und kein Nichtschlüsselattribut funktional abhängig von einer echten Teilmenge eines Schlüsselkandidaten ist".(Wiki)\\
+Hier sind die Elemente der Menge {C, E} von den Elementen der Menge {B, AD} funktional abhängig. D.h. R befindet sich nicht in 2NF.\\ 
+Antwort: Die Relation befindet sich in der 1NF
+
+\end{enumerate}
+
+\end{document}
