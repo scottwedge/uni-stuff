@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[16pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{mathtools}
@@ -14,6 +14,8 @@ Here is general idea broken into several steps is described.
 
 \begin{enumerate}
 	\item Main Index is chosen -\textgreater X
+	\item The number of indexes will be limited through: choosing indexes from related markets, indexes from the same market. (no unexpected cross-correlation)
+	\item The number of possible indexes is almost not limited - only impossible or weakly correlated markets are excluded. Chosen indexes and corresponding time-series are saved to an array for further use.
 	\item For the main index X "best-match"-regression will be found through iteration over a number of correlated indexes. The model will be manually limited to N indexes that result in closest trend in comparison to the original index X.    
 	\item For these indexes \[x_{0},...,x_{n}\] texts will be found and analysed, as the output we will get N lists (tuples) \[[probability,\thinspace forecast]_{i}, \thinspace where \thinspace i=\overline{0,n}\] 
 	\item Afterwards all these forecasts will be integrated in one general forecast for main Index X
@@ -51,7 +53,7 @@ Here most obvious problems of the implementation are announced.
 	\item Positive case\\
 This hypothesis is a general assumption, that can give a hint where to look, in order to get additional advantage. Potentially it can be implemented as a module for example for StockPulse, that will deepen the analysis.
 	\item Negative case\\
-In this work i will only consider specific sub-market. And the negative hypothesis can be result of the wrong regression-model, or low number of parameters and no cross-market influence included in the consideration (in this case the model should become larger and complexer).
+In this work we will only consider specific sub-market. And the negative hypothesis can be result of the wrong regression-model, or low number of parameters and no cross-market influence included in the consideration (in this case the model should become larger and complexer).
 \end{enumerate}
 Independent from the result, this work can be helpful in choosing the information for analysing the stock exchange.
 \end{document}
