@@ -1,0 +1,59 @@
+\documentclass[16pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\inputencoding{utf8}
+
+\title{Hypothesis 1: Every index on a stock exchange can be presented as a combination of several other indexes (no time-dependency considered)}
+
+
+\begin{document}
+\maketitle
+\section{General Idea}
+Here is general idea broken into several steps is described.
+
+\begin{enumerate}
+	\item Main Index is chosen -\textgreater X
+	\item The number of indexes will be limited through: choosing indexes from related markets, indexes from the same market. (no unexpected cross-correlation)
+	\item The number of possible indexes is almost not limited - only impossible or weakly correlated markets are excluded. Chosen indexes and corresponding time-series are saved to an array for further use.
+	\item For the main index X "best-match"-regression will be found through iteration over a number of correlated indexes. The model will be manually limited to N indexes that result in closest trend in comparison to the original index X.    
+	\item For these indexes \[x_{0},...,x_{n}\] texts will be found and analysed, as the output we will get N lists (tuples) \[[probability,\thinspace forecast]_{i}, \thinspace where \thinspace i=\overline{0,n}\] 
+	\item Afterwards all these forecasts will be integrated in one general forecast for main Index X
+\end{enumerate}
+This hypothesis mostly aims already existing companies, listed on stock exchanges.  
+
+
+\newpage
+\section{Trivial and non-trivial sub-tasks}
+Probable problems, bottle-neck places and trivial tasks of the work.
+\subsection{Trivial tasks}
+Trivial sub-tasks are steps that are easy to implement, they are normally transparent and run-time is not an import issue.
+\begin{enumerate}
+	\item Crawlers don't have to contain time-parameter (it is somewhat hard to estimate the correct time-period in the past for future without explicitly given time-frames of the forecast).
+	\item The dependencies (at least dependencies with the biggest impact on each other) are mostly established and known. So, probably the amount of indecies that we need to check with decided regression-function will be relative small.
+	\item Also the sub-markets of the indexes are relatively easily separated. And the cross-market correlation in the same time-period should be insignificant.
+	\item Technically the integration of the separate \[forecast_{i}\] should be easier, because of no time-dependency (lags) in the model.
+	\item Based on the previous assumption an interpretation of the results should be easier (the error-finding should more transparent as well) 
+	\item Mood and buzz do not play a crucial role here. Forecast is the needed output format.
+\end{enumerate}  
+
+\subsection{Non-trivial tasks}
+Here most obvious problems of the implementation are announced.
+\begin{enumerate}
+	 \item The input data - where to take the information for model-choosing (indexes, time-series, forecasts)
+	 \item There is no way to state that the list of the indexes we will iterate over, is likely to be complete and no significant information is lost.
+	 \item How to choose "best-match"?
+	 \item Iteration over big number of parameters with the big number of variables (the second number is given explicitly and manually in the beginning, based on "intuition").
+	 \item The classical regression-model is most likely insensitive to market-shifts and economical environment changes (scaling problem).
+\end{enumerate}
+
+\newpage
+\section {Conclusion}
+\begin{enumerate}
+	\item Positive case\\
+This hypothesis is a general assumption, that can give a hint where to look, in order to get additional advantage. Potentially it can be implemented as a module for example for StockPulse, that will deepen the analysis.
+	\item Negative case\\
+In this work we will only consider specific sub-market. And the negative hypothesis can be result of the wrong regression-model, or low number of parameters and no cross-market influence included in the consideration (in this case the model should become larger and complexer).
+\end{enumerate}
+Independent from the result, this work can be helpful in choosing the information for analysing the stock exchange.
+\end{document}
