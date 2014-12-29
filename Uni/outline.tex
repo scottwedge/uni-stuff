@@ -1,0 +1,88 @@
+\documentclass {article}
+\usepackage[utf8]{inputenc}
+
+\title{Bachelor 2015}
+\author{Alisa Dammer}
+
+\begin{document}
+\maketitle
+ 
+\begin{enumerate}
+	\item[1.] Introduction:
+		\begin{enumerate}
+			\item[1.1] Motivation
+			\item[1.2] Overview of the existing approaches, models and programs
+			\item[1.3] Explanation of the Thesis of the Bachelor
+				\begin{enumerate}
+					\item[1.3.1] Theoretical background and the problem statement
+					\item[1.3.2] The program broken into several steps
+						\begin{enumerate}
+							\item[1.3.2.1] Data preparation
+							\item[1.3.2.2] Model fine-tuning
+							\item[1.3.2.3] Checking the hypothesis for specified limitations
+						\end{enumerate}
+				\end{enumerate} 
+		\end{enumerate}
+	\item[2.] The model
+		\begin{enumerate}
+			\item[2.1] Data preparation (correlation matrices and further filtering)
+			\item[2.2] Model specification and limitations
+				\begin{enumerate}
+					\item[2.2.1] Specification of the quality and quantity of the parameters
+					\item[2.2.2] Iterative fine-tuning of the model 
+					\item[2.2.3] Error check
+				\end{enumerate}
+			\item[2.3] Second data processing (sentimental analysis for the found indexes)
+			\item[2.4] Integration of the sub-results into final result
+			\item[2.5] Testing of the result
+		\end{enumerate}
+	\item[3.] Conclusion
+		\begin{enumerate}
+			\item[3.1] The interpretation of the results
+			\item[3.2] Bottle neck and other problems of the model
+			\item[3.3] The potential and further use
+			\item[3.4] Possible improvements
+		\end{enumerate}
+\end{enumerate}
+
+\newpage
+\section{Introduction}
+\subsection{Motivation}
+Big Data\\
+Data mining\\
+Sentiment data analysis
+\subsection{An overview of the existing approaches, models and programs}
+classical econometric - regressions\\
+machine learning\\
+neural networks\\
+Most successful approaches: Top 5
+\subsection{Explanation of the Thesis of the Bachelor}
+The idea how to check the hypothesis broken into several logical steps.
+
+\newpage
+\section{The model}
+\subsection{Data preparation}
+Here independent of the main index (not chosen yet) based on correlation-matrices certain amount of indexes will be taken for further consideration. For example every index with correlation-vector bigger or equal to +-0.3\\
+Some period of the time-series (for all indexes) will be left as test-sample. (let's say about a month-period).
+\subsection{Model specification and limitations}
+First, the equation or the model description will be given, then the number for the parameters will be set (with all necessary explanations).\\
+Second, the automatic optimum finding for given limitations will be maid. (python iterative optimum-finding test). At the end another target function, built from the found optimum will be tested (error check).\\
+Third, texts for the chosen indexes will be analysed. The forecast, probability and maybe buzz will be the results of the sub-chapter.\\
+Forth, the results of the previous stage will be united into one forecast and probability for the main index (index on the left side of the main equation).\\
+Finally, the results of the model will be compared with the actual results that we left as the test-sample.
+
+\newpage
+\section{conclusion}
+\subsection{Interpretation of the results}
+Here the difference of the actual value (test-sample) and our forecasts will be discussed and explained.
+\subsection{Problems}
+Here the biggest difficulties will be stated and also discussed the influence of the strong limitations.
+\subsection{Potential}
+Here most possible use and advantage of the model will be discussed.
+\subsection{Improvements}
+In order to be more useful the program can take several improvements...\\
+Theoretical\\
+Data\\
+Technical
+
+\end{document}
