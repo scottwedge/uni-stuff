@@ -58,13 +58,14 @@ machine learning\\
 neural networks\\
 Most successful approaches: Top 5
 \subsection{Explanation of the Thesis of the Bachelor}
-The idea how to check the hypothesis broken into several logical steps.
+The idea: "how to check the hypothesis" - in several logical steps.
 
 \newpage
 \section{The model}
 \subsection{Data preparation}
 Here independent of the main index (not chosen yet) based on correlation-matrices certain amount of indexes will be taken for further consideration. For example every index with correlation-vector bigger or equal to +-0.3\\
-Some period of the time-series (for all indexes) will be left as test-sample. (let's say about a month-period).
+Some period of the time-series (for all indexes) will be left as test-sample. (let's say about a month-period).\\
+All time series will be cleaned from the noise using following technics: mooving average, extracting a trend line on high frequency long-term data, 
 \subsection{Model specification and limitations}
 First, the equation or the model description will be given, then the number for the parameters will be set (with all necessary explanations).\\
 Second, the automatic optimum finding for given limitations will be maid. (python iterative optimum-finding test). At the end another target function, built from the found optimum will be tested (error check).\\
