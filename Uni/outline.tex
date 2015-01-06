@@ -1,5 +1,7 @@
 \documentclass {article}
 \usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+
 
 \title{Bachelor 2015}
 \author{Alisa Dammer}
@@ -43,6 +45,7 @@
 			\item[3.3] The potential and further use
 			\item[3.4] Possible improvements
 		\end{enumerate}
+	\item[4.] References
 \end{enumerate}
 
 \newpage
@@ -53,7 +56,21 @@ Data mining\\
 Sentiment data analysis
 \subsection{An overview of the existing approaches, models and programs}
 classical econometric - regressions\\
-
+Among the classical econometric approaches two main directions can be called: linear and non-linear regressions. First of all we will consider linear regressions and discuss their advantages and disadvantages.\\
+According to the most common definition, in statistics, linear regression is an approach for modeling the relationship between a scalar dependent variable y and explanatory variable denoted X [1]. There are one-variable regressions called simple linear regressions and multiple regressions, which shows the dependencies of the dependent variable from more than one explanatory variables. The regression equation looks following way:\\
+\[Y = a + bX + \varepsilon\]
+where Y - dependent variable, X - explanatory variable, a - the intercept of regression line, b - the slope of the regression line, $\varepsilon$ - the error term.\\
+The simple linear regression is based on 6 strict assumptions:
+\begin{enumerate}
+	\item Because of the linear form neither parameter a, nor parameter b may have higher power than one.
+	\item The independent variable X is not random.
+	\item The variance is constant. Which means that the expected error value is 0.
+	\item The variance of $\varepsilon$ is constant for all observations.
+	\item Errors are not correlated.
+	\item The error's distribution is normal.
+\end{enumerate}
+The biggest disadvantage of the linear simple regression is the assumptions and the form. The dependency from only one variable can not describe fully all the relationship on the market. Even if you consider an equations system, consisting from linear regressions with different variables, it will lead to unnecessary complexity and not realistic or complete dependencies between variables. The second disadvantage is the assumptions - they are unrealistic in modern world and are appropriate only for very simplified model of he world.\\
+However, the big advantage of the simple linear regression is it's estimators: ordinary lest squares, generalized least squares, instrumental variables, maximum likelihood (ML) and various ML techniques - these are the most known and not too complex approaches to estimate the regression. There also many other different techniques, but we won't discuss them here.\\    
 machine learning\\
 neural networks\\
 Most successful approaches: Top 5
@@ -86,5 +103,11 @@ In order to be more useful the program can take several improvements...\\
 Theoretical\\
 Data\\
 Technical
+
+\newpage
+\section{References}
+\begin{enumerate}
+	\item Wikipedia: linear regeression \url{http://en.wikipedia.org/wiki/Linear_regression}
+\end{enumerate}
 
 \end{document}
