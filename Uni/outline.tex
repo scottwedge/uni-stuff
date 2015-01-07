@@ -1,6 +1,7 @@
 \documentclass {article}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\usepackage{color}
 
 
 \title{Bachelor 2015}
@@ -69,8 +70,19 @@ The simple linear regression is based on 6 strict assumptions:
 	\item Errors are not correlated.
 	\item The error's distribution is normal.
 \end{enumerate}
-The biggest disadvantage of the linear simple regression is the assumptions and the form. The dependency from only one variable can not describe fully all the relationship on the market. Even if you consider an equations system, consisting from linear regressions with different variables, it will lead to unnecessary complexity and not realistic or complete dependencies between variables. The second disadvantage is the assumptions - they are unrealistic in modern world and are appropriate only for very simplified model of he world.\\
-However, the big advantage of the simple linear regression is it's estimators: ordinary lest squares, generalized least squares, instrumental variables, maximum likelihood (ML) and various ML techniques - these are the most known and not too complex approaches to estimate the regression. There also many other different techniques, but we won't discuss them here.\\    
+On one hand the simple linear regression has several disadvantages: the form of the equation (here number of the predicting variables is concerned) and underlying assumptions. The dependency from only one variable can not describe fully all the relationship on the market. Even if you consider an equations system, consisting from linear regressions with different variables, it will lead to unnecessary complexity and not realistic or complete dependencies between variables. The second disadvantage is the assumptions - they are unrealistic in modern world and are appropriate only for very simplified model of he world.\\
+The big advantage of the simple linear regression on the other hand is it's estimators: ordinary lest squares, generalized least squares, instrumental variables, maximum likelihood (ML) and various ML techniques - these are the most known and not too complex approaches to estimate the regression. There also many other different techniques, but we won't discuss them here.\\ 
+Since it is likely to be impossible to build a proper prediction for the variable only with one predicting variable, multiple linear regression was invented. As you can see from the name, multiple linear regression describes relationship between more than one explanatory variables and dependent variable. The form of the equation looks as following:\[ Y = a + b_{1}X_{1}+ ... + b_{n}X_{n}, \thinspace \thinspace where \thinspace \thinspace n \in N\]   
+$b_{i}$ - the "contribution" of the i-th variable to the regression, a -the intercept of the regression line, Y - dependant variable, X - explanatory variables.\\
+Unlike simple linear regression, multiple linear regression does not have the form-disadvantage. However, the linear nature of the regression provides the model with several assumptions:
+\begin{enumerate}
+	\item All $b_{i}$ have the potential of 1 (are linear).
+	\item The residuals are distributed normally. (Residuals - the difference between predicted value and observed value).
+	\item Uncertain number of the explanatory variables X - there is no technique to choose exact number of the variables that will optimally predict the value Y.
+	\item Completely "substitutive" variables X - unnecessary big number of the variables without increasing the accuracy of the prediction.
+	\item Complex form of the variables (X can have a higher-order polynomial form) leads to reduction of transparency and wrong results. 
+	  
+\end{enumerate}
 machine learning\\
 neural networks\\
 Most successful approaches: Top 5
