@@ -87,9 +87,16 @@ The advantage of the multiple linear regression is that it can be tested several
 As an example of the multiple linear regression we can take previous example and extend it. The amount of the precipitation is not the only factor for the harvest to grow. Our Y variable also depends on amount of sunny days ($X_{2}$) and average temperature during the season ($X_{3}$). The higher temperature, the better will be the harvest (in reality this is a non linear dependency; most likely the dependency here takes the form of $(c-d*\sqrt{x})$: the harvest will be big, if the temperature is between certain degrees). The higher number of the sunny days the less rainy days, but higher the temperature. This is an example where two explanatory variables are not complete substitutes, but they have negative dependency with each other, so, their dependency will be explicitly included into the regression. The general form of the equation will take following form:
 \[harvest = |a| + |b_{1}|*rain + |b_{2}|*sun + |b_{3}|*temperature + |b_{12}|*sun*rain + \epsilon\]
 So the multiple linear regression is better for real purposes (real market analysis) in comparison to simple linear regression, but it still contains restrictions that do not allow high accuracy prediction.\\
-Unfortunately the linear character of the dependencies is rare in real life. That is why nonlinear regressions took place in statistical analysis. The general form of the nonlinear regression looks as following:
+Unfortunately the linear character of the dependencies is a rare thing in real life. That is why nonlinear regressions took place in statistical analysis. The general form of the nonlinear regression looks as following:
 \[Y = f(\beta, x'_{i}) + \epsilon'\]
-where f() - nonlinear function, $x'_{i}$ - vector of predictors, $\epsilon$ - vector of parametrs, $\epsilon_{i} \sim N(0, \sigma^2)$.\\
+where f() - nonlinear function, $x'_{i}$ - vector of predictors, $\epsilon$ - vector of parameters, $\epsilon_{i} \sim N(0, \sigma^2)$.\\
+Nonlinera regressions can be divided into two main classes:
+\begin{enumerate}
+	\item Nonlinear dependencies between explanatory variables ($x_{i}$) and dependent variable (Y), linear character of the parameters ($\beta$).
+	\item Linear dependencies between explanatory variables ($x_{i}$) and dependent variable (Y), nonlinear character or the parameters ($\beta$) 
+\end{enumerate} 
+The first class is relatively easy to work with: you can use variables substitution and bring the original equation to linear form and than use same techniques as for linear multiple regression, for example, you can use least squares method. Additional to LS you will need to change the form of the estimates, because they were found not for original form of the variables f(x), but for $f^{-1}(x)$. This x = $f^{-1}(x)$ is a substitute to get the linear form for the regression. [non linear j]\\
+The second class is very difficult to deal with. Because of the nonlinear nature of the parameters, you can not use normal estimation techniques. 
 You can construct nonlinear regression from it's linear form by applying specific nonlinear function to it's parameters. That means, that all the advantages of the linear regressions are also the advantages of the nonlinear models. As you changed the equation you can also change the form of the least squares and use it to find an optimum for your function  
 machine learning\\
 neural networks\\
