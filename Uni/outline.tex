@@ -110,10 +110,17 @@ where $f(n) = \left\{
 As you can see,the normal approach here is is almost impossible to use, moreover, here we see different form of dependencies at one time (normally people use uniform functions like polynomials, logarithms etc.) But this equation can be transformed into linear form via several steps of the variables substitution and transformations, then the LS will be found and the process of "backwards transformation" will be started, until we get the estimates for the original variables.
 
 neural networks\\
-
+The biggest disadvantage of the classical regression models on one hand  is increasing complexity when using too many variables and parameters. Also, they are not flexible enough for a quickly changing and constantly growing and changing financial markets. On the other hand, when using too few parameters and variables the model looses a lot of information and flexibility. Too overcome these problems neural networks are used to make predictions and analyse the increasing amount of data. According to Wikipedia:"In machine learning, artificial neural networks (ANNs) are a family of statistical learning algorithms inspired by biological neural networks (the central nervous systems of animals, in particular the brain) and are used to estimate or approximate functions that can depend on a large number of inputs and are generally unknown. Artificial neural networks are generally presented as systems of interconnected "neurons" which can compute values from inputs, and are capable of machine learning as well as pattern recognition thanks to their adaptive nature" [ANN a]. The ANNs ae used in different spheres where pattern recognition can be used. Only the use of NNs on financial markets is relevant for this work, so we will only consider appropriate forms of the networks and learning-mechanisms.\\
+The basic structure of the ANN consists of 3 layers: input, hidden and output layer. As follows from the name, the bottom layer is a input layer, that sends all the data (in our case prices, time series) to the next level via "synopses". Synopses in ANNs are the dependencies between input units and the units of the hidden layer (a weight-function). For example,
+\[y_{j} = \sum_{i \in I}w_{ij}x_{i} \]
+where $y_{j}$ - an unit in the hidden layer, $w_{ij}$ -weight for input unit i in jth hidden unit (influence if the input node on the hidden node), and $x_{i}$ - input unit.\\
+Next dependeny-level is the transformation the hidden layers into output. (This dependency might look the same as the previous one). As an example of the model following form can be used:
+\[z=f(y)\]
+where z - an output unit, $f$ - a function that transforms all hidden units $y_{j}$ into the output ($y_{j}$ is equals to the sum of the weighted input units, see above), here y is a vector of $y_{j}$, $y=(y_{1},...,y_{n})$.
 machine learning\\
 Most successful approaches: Top 5
 \subsection{Explanation of the Thesis of the Bachelor}
+Choosing the model. ANN is an overkill for the hypothesis but can be used in next step.\\
 The idea: "how to check the hypothesis" - in several logical steps.
 
 \newpage
