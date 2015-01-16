@@ -152,8 +152,23 @@ The whole methodology can be broken into two main algorithms, each algorithm can
 \end{enumerate}
 In simple words, the goal of this bachelor is to test the ability of the sentimental data analysis to make classical regression models more flexible and time-responsive.
 \subsection{Data preparation}
-Here independent of the main index (not chosen yet) based on correlation-matrices certain amount of indexes will be taken for further consideration. For example every index with correlation-vector bigger or equal to +-0.3\\
-Some period of the time-series (for all indexes) will be left as test-sample. (let's say about a month-period).\\
+In this work we decided to test our hypothesis on Intel. Intel is a multinational corporation, with a long history behind.\\
+The most important information for us is:
+\begin{enumerate}
+	\item Intel is included into most global composite indexes.
+	\item Intel is not a diversified company. It's main market is semiconductor chips (we can even extend the market to basic electronics for computers). 
+	\item The Intel's market has pretty clear borders and is not very effected by external factors (government policy). 
+	\item The company is not influenced directly by other huge players of the electronic market (no blocking amount of shares, partnership projects only).
+\end{enumerate}
+Intel suits our analysis, because it is a stable company with data over many years. The correlated indexes are also pretty clear and the amount of explanatory variables can be limited without any drop in accuracy.\\
+As the explanatory variables we will choose following categories:
+\begin{enumerate}
+	\item competitors
+	\item suppliers
+	\item customers
+\end{enumerate} 
+
+ 
 All time series will be cleaned from the noise using following technics: mooving average, extracting a trend line on high frequency long-term data, 
 \subsection{Model specification and limitations}
 First, the equation or the model description will be given, then the number for the parameters will be set (with all necessary explanations).\\
