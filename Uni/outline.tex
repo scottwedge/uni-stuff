@@ -167,8 +167,13 @@ As the explanatory variables we will choose following categories:
 	\item suppliers
 	\item customers
 \end{enumerate} 
-
- 
+The competitors can be found on Wikipedia listed in several tables for years from 1998 to 2013. We used a parser to get following list of manufacturers for the years 2000-2013 for semiconductors market:
+\begin{verbatim}
+['AMD', 'Qualcomm', 'Micron Technology', 'Toshiba Semiconductor', 
+'Hynix', 'Infineon Technologies', 'Intel Corporation', 'STMicroelectronics', 
+'Texas Instruments', 'Samsung Electronics']
+\end{verbatim}
+For these ten companies the daily data from 2000 to 1.01.2015 (31.12.2014) will is collected.
 All time series will be cleaned from the noise using following technics: mooving average, extracting a trend line on high frequency long-term data, 
 \subsection{Model specification and limitations}
 First, the equation or the model description will be given, then the number for the parameters will be set (with all necessary explanations).\\
