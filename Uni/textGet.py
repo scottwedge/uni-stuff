@@ -51,6 +51,6 @@ for key in counter.keys():
 	else:
 		pass
 
-print(final_list, len(final_list))
+print( len(final_list), final_list)
 
 
