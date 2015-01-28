@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 import urllib.request
 
-url = 'http://en.wikipedia.org/wiki/Automotive_industry'
-soup = BeautifulSoup(urllib.request.urlopen(url))
+url_1 = 'http://en.wikipedia.org/wiki/Automotive_industry'
+soup = BeautifulSoup(urllib.request.urlopen(url_1))
 
 ranks = list(range(1, 31))
 output = {rank:[] for rank in ranks}
@@ -20,6 +20,9 @@ list_outers = ['Toyota', 'GM', 'Volkswagen', 'Ford', 'Nissan',
 'BMW', 'Daimler AG', 'Tata', 'Fuji']
 print(len(list_outers))
 		
+url_2 = 'http://www.statista.com/statistics/264366/revenue-of-the-worldwide-leading-aircraft-manufacturers-and-suppliers/'
+soup_2 = BeautifulSoup(urllib.request.urlopen(url_2))
 
+ranks = []
 
 

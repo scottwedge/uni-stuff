@@ -170,8 +170,8 @@ As the explanatory variables we will choose following categories:
 The competitors can be found on Wikipedia listed in several tables for years from 1998 to 2013. We used a parser to get following list of manufacturers for the years 2000-2013 for semiconductors market:
 \begin{verbatim}
 ['AMD', 'Qualcomm', 'Micron Technology', 'Toshiba Semiconductor', 
-'Hynix', 'Infineon Technologies', 'Intel Corporation', 'STMicroelectronics', 
-'Texas Instruments', 'Samsung Electronics']
+'Hynix', 'Infineon Technologies', 'Intel Corporation',
+'STMicroelectronics', 'Texas Instruments', 'Samsung Electronics']
 \end{verbatim}
 For these ten companies the daily data from 2000 to 1.01.2015 (31.12.2014) will is collected.\\
 Customers of the market influence the companies-manufacturers directly. The probability, that at least one customer-company will be used in the final regression, is high. The data for biggest customers-market and the players on the market will be collected the same way, as it was done with the manufacturer-companies.
@@ -184,9 +184,21 @@ Automobile market:
 'Changan', 'Tata', 'Geely', 'BAIC', 'Fuji', 'Great Wall', 'FAW',
 'Mahindra', 'Brilliance', 'Isuzu', 'JAC', 'BYD', 'AvtoVAZ']
 \end{verbatim}
-No data for: Hyundai (since 2012), Suzuki (since 2012), Renault (since 2012), SAIC (not traded), Mazda (since 2010), Dongfeng Motor (since 2012), Mitsubishi (since 2010), Changan (not traded), Geely (since 2010), BAIC (not traded), Great Wall (since 2012), FAW (not traded), Mahindra (since 2010), Brilliance (since 2011), Isuzu (since 2006), Jac (not traded), BYD (not traded), Avtovaz (not significant)\\
+No data for: Hyundai (since 2012), Suzuki (since 2012), Renault (since 2012), SAIC (not traded), Mazda (since 2010), Dongfeng Motor (since 2012), Changan (not traded), Geely (since 2010), BAIC (not traded), Great Wall (since 2012), FAW (not traded), Mahindra (since 2010), Brilliance (since 2011), Isuzu (since 2006), Jac (not traded), BYD (not traded), Avtovaz (not significant)\\
 The only significant players (manufacturers) on the game console market are: Microsoft, Sony and Nintendo.\\ 
-The aviation market is presented by following companies: Airbus, Boing
+The aviation market is presented by following companies: 
+\begin{verbatim}
+['Boeing', 'Airbus', United Technologies', 'Lockheed Martin',
+'Honeywell International', 'Mitsubishi Heavy Industries',
+'General Dynamics', 'BAE Systems', 'Northrop Grumman', 'Finmeccanica',
+'Raytheon', 'Safran SA', 'Rolls Royce', 'Thales', 'Bombardier',
+'Textron', 'Embraer', 'Spirit AeroSystems Holdings, Inc.',
+'Dassault Aviation', 'MTU Aero Engines Holdings']
+\end{verbatim}
+No data for: Airbus(since 2007 on international markets), Finmeccanica (since 2010 on international market), Safran SA (since 2010), Thales (since 2006, currently insignificant amount of trading), Bombardier (since 2009), Dassault Aviation SA (not traded freely any more?), MTU Aero Engines Holdings (since 2010, the volume dropped to 0)
+
+
+No data for diversified companies that hold significant market share in almost all their markets: Mitsubishi (since 2010 on international market, the trading volume is still insignificant), 
 \textcolor{blue}{All time series will be cleaned from the noise using following technics: mooving average, extracting a trend line on high frequency long-term data} 
 \subsection{Model specification and limitations}
 First, the equation or the model description will be given, then the number for the parameters will be set (with all necessary explanations).\\
