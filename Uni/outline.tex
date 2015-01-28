@@ -55,7 +55,7 @@
 	\item[4.] References
 \end{enumerate}
 
-\newpage
+ ewpage
 \section{Introduction}
 \subsection{Motivation}
 Big Data\\
@@ -136,7 +136,7 @@ Generally speaking, all "self-developing" models can be referred to machine lear
 Not only models develop to increase the accuracy of prediction, but also tools and software for data collecting and analysing. The quality and amount of data increases exponentially and old approaches becoming unusable.\\
 relatively new trend in data analysis is the sentimental data analysis. The big role for stock exchange plays the psychological component: the way investors predict and react on certain events, the way they collect and share information. Social media has become a source of important information for decision making in all short-, mid- and long-term. According to Wikipedia:"Sentiment analysis (also known as opinion mining) refers to the use of natural language processing, text analysis and computational linguistics to identify and extract subjective information in source materials" [sentiment a]. The sentimental analysis combines different approaches and models to detect the mood, key words (proper information) and the insensitivity of the discussion (if more than one source is analysed) or the how the object is important for the person. The sentiment data can not only give a prediction for financial tools on the markets, but also give a hint about the components of the whole behaviour. We know, that the price of the share, for example, reflects the real value of the firm, the business reputation (what people expect of the firm), noise and external extreme factors (not ordinary shifts, gaps and jumps). The sentimental data analysis combined with classical fundamental and technical analysis can result in high accuracy prediction for all time periods: also for portfolio strategies and simple trading.
 
-\newpage
+ ewpage
 \section{The model}
 \subsection{Explanation of the Thesis of the Bachelor}
 The Idea of the work is to combine classical technical analysis and sentimental analysis and use them indirectly. The first part is to choose the most appropriate regression for the dependant variable. The result of the first step is the names of the explanatory variables, we will need them for further work. The second step is to get predictions for each explanatory variable using sentimental data analysis. For each of the variables in the found optimum we will search for text data and analyse it for predictions, buzz (how frequent will be discussed the topic) and mood. The third step is to use predicted values of the explanatory variables in the original regression model to get prediction for the dependant variable. At the same time mood from the sentimental data and buzz will fine-tune the parameters in the original equation. As the result we will get new time series for testing (predictions from text analysis) and fine-tuned parameters. In simple words, the sentimental data analysis is used for fine-tuning the parameters and including psychological component to the strict regression model. To validate the final equation test set will be used: the predicted values of the dependant variables will be compared with the actual value. If the difference will stay within 75\% of accuracy, the approach for fine-tuning the parameters of the equation can be considered efficient.\\
@@ -203,6 +203,22 @@ The next market consuming microchips and other Intel-production is Smartphones, 
 'Alcatel', 'ZTE', 'Toshiba', 'Vodafone', 'T-Mobile', 'Gigabyte']
 \end{verbatim} 
 No data for diversified companies that hold significant market share in almost all their markets: Mitsubishi (since 2010 on international market, the trading volume is still insignificant), Samsung (since 2010), HTC (still non-tradable), Huawei (not traded), Xiaomi (not traded), Acer (not traded), Asus (locally traded), ZTE (since 2010), Toshiba (not traded), T-Mobile (not significant), Gigabyte (not traded). \\
+Another huge consumer market for Intel is medical equipment market. The following companies present this sphere:
+\begin{verbatim}
+['Johnson & Johnson', 'General Electric Co.', 'Medtronic Inc.',
+'Siemens AG', 'Baxter International Inc.',
+'Fresenius Medical Care AG & Co.', 'Koninklijke Philips',
+'Cardinal Health Inc.', ' Novartis AG1 ', ' Covidien plc',
+'Stryker Corp.', 'Becton, Dickinson and Co.', 'Boston Scientific Corp.',
+'Essilor International SA', 'Allergan Inc.', 'St. Jude Medical Inc.',
+'3M Co.', 'Abbott Laboratories2', 'Zimmer Holdings Inc.', 'Terumo Corp.',
+'Smith & Nephew plc', 'Toshiba Corp.', 'CareFusion Corp.', 'Getinge AB',
+'Olympus Corp.', 'Bayer AG3', 'CR Bard Inc.', 'Varian Medical Systems Inc.',
+'DENTSPLY International Inc.', 'Ship Healthcare Holdings Inc.',
+'Paul Hartmann AG', 'Hologic Inc.', 'Nipro Corp. 4', 'Coloplast A/S',
+'Sonova Holdings', 'Danaher Corp. 5', 'Edwards Lifesciences',
+'Intuitive Surgical Inc.', 'MIRACA Holdings Inc.']
+\end{verbatim}
 \textcolor{blue}{All time series will be cleaned from the noise using following technics: mooving average, extracting a trend line on high frequency long-term data} 
 \subsection{Model specification and limitations}
 First, the equation or the model description will be given, then the number for the parameters will be set (with all necessary explanations).\\
