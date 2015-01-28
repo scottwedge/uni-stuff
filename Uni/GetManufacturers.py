@@ -18,11 +18,20 @@ for row in table.find_all("tr")[1:31]:
 list_outers = ['Toyota', 'GM', 'Volkswagen', 'Ford', 'Nissan', 
 'Fiat Chrysler Automobiles', 'Honda', 'PSA',
 'BMW', 'Daimler AG', 'Tata', 'Fuji']
-print(len(list_outers))
+
 		
-url_2 = 'http://www.statista.com/statistics/264366/revenue-of-the-worldwide-leading-aircraft-manufacturers-and-suppliers/'
+url_2 = 'http://www.gsmarena.com/makers.php3'
 soup_2 = BeautifulSoup(urllib.request.urlopen(url_2))
 
-ranks = []
+output_diversified = []
+#get needed element
+headline_2 = soup_2.find(id="brandmenu")
+table_2 = headline_2.ul
+for i in table_2.find_all("li"):
+	list_div = i.find_all("a")
+	output_diversified.append(i.text)
+
+print("length:" + str(len(output_diversified)), output_diversified)
+
 
 
