@@ -1,4 +1,4 @@
-\documentclass {article}
+\documentclass[12pt, a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \usepackage{color}
@@ -30,7 +30,12 @@
 							\item[2.0.2.3] Checking the hypothesis for specified limitations
 						\end{enumerate}
 				\end{enumerate} 
-			\item[2.1] Data preparation (correlation matrices and further filtering)
+			\item[2.1] Data preparation (correlation matrices and further filtering)	
+				\begin{enumerate}
+					\item[2.1.1] Choosing dependent markets and companies listed on stock exchange
+					\item[2.1.2] Splitting the data
+					\item[2.1.3] Cut-off: first- and second-order
+				\end{enumerate}
 			\item[2.2] First algorithm
 				\begin{enumerate}
 					\item[2.2.1] Estimating the parameters
@@ -152,8 +157,9 @@ The whole methodology can be broken into two main algorithms, each algorithm can
 \end{enumerate}
 In simple words, the goal of this bachelor is to test the ability of the sentimental data analysis to make classical regression models more flexible and time-responsive.
 \subsection{Data preparation}
+\subsubsection{Dependent markets}
 In this work we decided to test our hypothesis on Intel. Intel is a multinational corporation, with a long history behind.\\
-The most important information for us is:
+The reason why we have chosen Intel is that is quite transparent company. Transparency is defined here as following characteristics:
 \begin{enumerate}
 	\item Intel is included into most global composite indexes.
 	\item Intel is not a diversified company. It's main market is semiconductor chips (we can even extend the market to basic electronics for computers). 
@@ -169,64 +175,59 @@ As the explanatory variables we will choose following categories:
 \end{enumerate} 
 The competitors can be found on Wikipedia listed in several tables for years from 1998 to 2013. We used a parser to get following list of manufacturers for the years 2000-2013 for semiconductors market:
 \begin{verbatim}
-['AMD', 'Qualcomm', 'Micron Technology', 'Toshiba Semiconductor', 
-'Hynix', 'Infineon Technologies', 'Intel Corporation',
-'STMicroelectronics', 'Texas Instruments', 'Samsung Electronics']
+['AMD', 'Qualcomm', 'Micron Technology','Hynix',
+'Infineon Technologies', 'Intel Corporation', 
+'STMicroelectronics', 'Texas Instruments']
 \end{verbatim}
 For these ten companies the daily data from 2000 to 1.01.2015 (31.12.2014) will is collected.\\
 Customers of the market influence the companies-manufacturers directly. The probability, that at least one customer-company will be used in the final regression, is high. The data for biggest customers-market and the players on the market will be collected the same way, as it was done with the manufacturer-companies.
-The semiconductors are the base for different devices, so the potential consumer-markets also differ a lot. In this Bachelor we will concentrate on microchips (CPUs) consumers. Another limitation is the character of the market itself. Nowadays we are surrounded by gadgets with mat least one CPU inside. So, the potential consumers are different on scale, complexity, volume etc.. Here we consider the companies from opened markets (no high entrance barriers, no government orders, no military use, transparent documentation and opend to every type of the investors). Following markets are: Tablets, Smartphones, personal computers, auto-mobiles, video game consoles, medical technologies, Engineering technologies, Aviation. Tablets and personal computers are united into one market-group. Although the smart-phone market is self-sufficient, the players on the market are also have production on personal computers market.\\
+The semiconductors are the base for different devices, so the potential consumer-markets also differ a lot. In this Bachelor we will concentrate on microchips (CPUs) consumers. Another limitation is the character of the market itself. Nowadays we are surrounded by gadgets with mat least one CPU inside. So, the potential consumers are different on scale, complexity, volume etc.. Here we consider the companies from opened markets (no high entrance barriers, no government orders, no military use, transparent documentation and opened to every type of the investors). Following markets are: Tablets, Smartphones, personal computers, auto-mobiles, video game consoles, medical technologies, Engineering technologies, Aviation. Tablets and personal computers are united into one market-group. Although the smart-phone market is self-sufficient, the players on the market are also have production on personal computers market.\\
 Automobile market:
 \begin{verbatim}
-['Toyota', 'GM', 'Volkswagen', 'Hyundai', 'Ford', 'Nissan', 
-'Fiat Chrysler Automobiles', 'Honda', 'Suzuki', 'PSA', 'Renault', 
-'BMW', 'SAIC', 'Daimler AG', 'Mazda', 'Dongfeng Motor', 'Mitsubishi',
-'Changan', 'Tata', 'Geely', 'BAIC', 'Fuji', 'Great Wall', 'FAW',
-'Mahindra', 'Brilliance', 'Isuzu', 'JAC', 'BYD', 'AvtoVAZ']
+['Toyota', 'GM', 'Volkswagen', 'Ford', 'Nissan', 
+'Fiat Chrysler Automobiles', 'Honda', 'PSA', 'BMW',
+'Daimler AG', 'Mitsubishi', 'Tata', 'Fuji']
 \end{verbatim}
-No data for: Hyundai (since 2012), Suzuki (since 2012), Renault (since 2012), SAIC (not traded), Mazda (since 2010), Dongfeng Motor (since 2012), Changan (not traded), Geely (since 2010), BAIC (not traded), Great Wall (since 2012), FAW (not traded), Mahindra (since 2010), Brilliance (since 2011), Isuzu (since 2006), Jac (not traded), BYD (not traded), Avtovaz (not significant)\\
+
 The only significant players (manufacturers) on the game console market are: Microsoft, Sony and Nintendo.\\ 
 The aviation market is presented by following companies: 
 \begin{verbatim}
-['Boeing', 'Airbus', United Technologies', 'Lockheed Martin',
-'Honeywell International', 'Mitsubishi Heavy Industries',
-'General Dynamics', 'BAE Systems', 'Northrop Grumman', 'Finmeccanica',
-'Raytheon', 'Safran SA', 'Rolls Royce', 'Thales', 'Bombardier',
-'Textron', 'Embraer', 'Spirit AeroSystems Holdings, Inc.',
-'Dassault Aviation', 'MTU Aero Engines Holdings']
+['Boeing', 'United Technologies', 'Lockheed Martin',
+'Honeywell International', 'General Dynamics',
+'BAE Systems', 'Northrop Grumman', 'Raytheon',
+'Rolls Royce', 'Textron', 'Embraer', 'Spirit AeroSystems Holdings Inc.']
 \end{verbatim}
-No data for: Airbus(since 2007 on international markets), Finmeccanica (since 2010 on international market), Safran SA (since 2010), Thales (since 2006, currently insignificant amount of trading), Bombardier (since 2009), Dassault Aviation SA (not traded freely any more?), MTU Aero Engines Holdings (since 2010, the volume dropped to 0).\\
-The next market consuming microchips and other Intel-production is Smartphones, Tablets and PCs. These gadgets are not substitutes, but they are all very similar in production-process, end-consumer and functions. Most of the following companies are presented on mentioned markets and have further production markets. That is why we will put them into "Diversified" category. The diversified companies that can influence Intel are:
+The next market consuming microchips and other Intel-production is Smart-phones, Tablets and PCs. These gadgets are not substitutes, but they are all very similar in production-process, end-consumer and functions. Most of the following companies are presented on mentioned markets and have further production markets. That is why we will put them into "Diversified" category. The diversified companies that can influence Intel are:
 \begin{verbatim}
-['Samsung', 'Apple', 'Microsoft', 'Nokia', 'Sony', 'LG', 'HTC',
-'Motorola', 'Huawei', 'Lenovo', 'Xiaomi', 'Acer', 'Asus', 'BlackBerry',
-'Alcatel', 'ZTE', 'Toshiba', 'Vodafone', 'T-Mobile', 'Gigabyte']
+['Samsung', 'Apple', 'Microsoft', 'Nokia', 'Sony', 'LG',
+'Motorola',  'Lenovo',  'BlackBerry', 'Alcatel', 'Vodafone']
 \end{verbatim} 
-No data for diversified companies that hold significant market share in almost all their markets: Mitsubishi (since 2010 on international market, the trading volume is still insignificant), Samsung (since 2010), HTC (still non-tradable), Huawei (not traded), Xiaomi (not traded), Acer (not traded), Asus (locally traded), ZTE (since 2010), Toshiba (not traded), T-Mobile (not significant), Gigabyte (not traded). \\
 Another huge consumer market for Intel is medical equipment market. The following companies present this sphere:
 \begin{verbatim}
 ['Johnson & Johnson', 'General Electric Co.', 'Medtronic Inc.',
-'Siemens AG', 'Baxter International Inc.',
+'Siemens AG', 'Baxter International Inc.', 
 'Fresenius Medical Care AG & Co.', 'Koninklijke Philips',
-'Cardinal Health Inc.', 'Novartis AG', 'Covidien plc', 'Stryker Corp.',
+'Cardinal Health Inc.', 'Novartis AG', 'Stryker Corp.',
 'Becton, Dickinson and Co.', 'Boston Scientific Corp.',
-'Essilor International SA', 'Allergan Inc.', 'St. Jude Medical Inc.',
-'3M Co.', 'Abbott Laboratories', 'Zimmer Holdings Inc.', 'Terumo Corp.',
-'Smith & Nephew plc', 'CareFusion Corp.', 'Getinge AB',
-'Olympus Corp.', 'Bayer AG', 'CR Bard Inc.', 'Varian Medical Systems Inc.',
-'DENTSPLY International Inc.', 'Ship Healthcare Holdings Inc.',
-'Paul Hartmann AG', 'Hologic Inc.', 'Nipro Corp.', 'Coloplast A/S',
-'Sonova Holdings', 'Danaher Corp.', 'Edwards Lifesciences',
-'Intuitive Surgical Inc.', 'MIRACA Holdings Inc.']
+'Allergan Inc.', 'St. Jude Medical Inc.', '3M Co.',
+'Abbott Laboratories', 'Zimmer Holdings Inc.', 
+'Smith & Nephew plc', 'Olympus Corp.', 'Bayer AG',
+'CR Bard Inc.', 'Varian Medical Systems Inc.',
+'DENTSPLY International Inc.', 'Hologic Inc.', 
+'Danaher Corp.', 'Edwards Lifesciences', 'Intuitive Surgical Inc.']
 \end{verbatim}
-No data for: Covidien plc (not traded? volume 0), Essilor International SA (since 2008 on OTC), Terumo Corp (since 2011), CareFusion Corp. (since 2009), Getinge AB (since 2012), Ship Healthcare Holdings Inc. (no data found), Paul Hartmann AG (not traded now), Nipro Corp. (not traded now), Coloplast A/S (volume 0), Sonova Holdings (since 2010), MIRACA Holdings Inc. (volume 0).\\
+\textcolor{red}{Baxter is missing}
 Additional to above mentioned companies several big players from the industrial equipment market will be added. These are following companies:
 \begin{verbatim}
-['ABB Robotics', 'Adept Technology', 'Bosch', 'Caterpillar', 'Denso Robotics', 'Fanuc Robotics', 'Foxconn', 'Google', 'Kuka Robotics', 'Marel hf', 'Rethink Robotics', 'RoboCV', 'Scape Technologies', 'SCHUNK', 'Seiko Epson', 'Universal Electronics', 'Stäubli']
+['ABB Robotics', 'Adept Technology', 'Bosch', 'Caterpillar',
+'Denso Robotics', 'Google', 'Universal Electronics']
 \end{verbatim}
-No data for: Fanuc Robotics (since 2010), Foxconn (no international trade), Kuka Robotics (trade volume 0), Marel hf (not traded), Rethink Robotics (london trade), RoboCV (not tarded), Scape Technologies (not traded), SCHUNK (not traded), Seiko Epson (since 2008), Stäubli (not traded).\\
 Intel diversified their structure that way, so that they have reduced the transportation and production costs, and made their production more flexible. This why we don't have to consider the suppliers companies in his work.\\
-Of course, these are not all companies that should be considered to establish a good model. But our first goal is to establish an more or less working model. We want our original model to be really bad and not flexible, that is why we have limited the number of variables to iterate through.
+Of course, these are not all companies that should be considered to establish a good model. 
+Some pretty big players on the connected markets are left out because of the lack of information. The reason of the information-lack is that some of the companies have only recently entered the international stock exchange (since 2010 earliest). Other companies are still closed to the foreign investors (which is the case for such giants as Samsung, Honda and other Asian companies). The last case is the trading-volume limitations (sometimes restricted to 0 for more than a week).\\
+But our first goal is to establish a more or less working model (bad model is actually preferable. This will be explained in details in the results interpretation). We want our original model to be really bad and not flexible, that is why we have limited the number of variables to iterate through.
+\subsubsection{Splitting the data}
+Next step, after obtaining the prices on the stock for all mentioned above companies, is to split the whole data-set into three chunks: learning set, testing set and validation set. We have obtained daily prices from 2006 to 2015 (31.12.2014 is the last date for all indexes). The training or learning set will be approximately 60\% of the whole data volume: from 2006 to 2010. The test-set is about 20\%: from 2011 to 2012. And the last validation set is the rest 20\%: from 2013 to 2014. For this work we use daily frequency (only opening prices).\\
 
 \subsection{Model specification and limitations}
 First, the equation or the model description will be given, then the number for the parameters will be set (with all necessary explanations).\\
