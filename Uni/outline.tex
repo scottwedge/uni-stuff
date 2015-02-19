@@ -228,13 +228,16 @@ Some pretty big players on the connected markets are left out because of the lac
 But our first goal is to establish a more or less working model (bad model is actually preferable. This will be explained in details in the results interpretation). We want our original model to be really bad and not flexible, that is why we have limited the number of variables to iterate through.
 \subsubsection{Splitting the data}
 Next step, after obtaining the prices on the stock for all mentioned above companies, is to split the whole data-set into three chunks: learning set, testing set and validation set. We have obtained daily prices from 2006 to 2015 (31.12.2014 is the last date for all indexes). The training or learning set will be approximately 60\% of the whole data volume: from 2006 to 2010. The test-set is about 20\%: from 2011 to 2012. And the last validation set is the rest 20\%: from 2013 to 2014. For this work we use daily frequency (only opening prices).\\
+\subsubsection{First- and second-order data cut-off}
+After obtaining all the data and splitting into three data chunks we start first data analysis to create a limited data. This data set will contain the information (company name and time series) for companies, which are relevant for further analysis. The first-order cut-off is made based on correlations with Intel-company: all companies with correlation coefficient smaller than 25\% are left out. \\
+According to our first condition two companies are left out: Motorola and Edwards. Unfortunately we had to left three other companies out because of lack of information (which is a big deal for linear regression models): \textcolor{red}{find the third company}, BMW and Spirit.\\
+First preparation step leaves us with 67 companies to choose from.  
+ 
+\subsection{First Algorithm}
+The goal of this bachelor work is to check the ability of sentimental data analysis to fine-tune forecasting models. This is why we will take a pretty bad forecasting model, which is multiple linear regression. On the other hand the estimating mechanism for this type of regression is very easy and transparent to program.\\
+Currently we will land into back-pack problem that normally have n! complexity. This is the second worst complexity-class that we possibly could have chosen. This is why the number of the companies in the linear regression will be reduced to a very small number: let's say 5 companies. With restriction to 5 companies we have to check \[\binom{n}{k} = \frac{n!}{k!(n-k)!}\]
+In our case this is equals to $\frac{67!}{5!(67-5)!} = 9657648$. The number of the possible combinations could be smaller if we limit our model to more variables in the regression, but the goal is to pick a bad model.\\  
 
-\subsection{Model specification and limitations}
-First, the equation or the model description will be given, then the number for the parameters will be set (with all necessary explanations).\\
-Second, the automatic optimum finding for given limitations will be maid. (python iterative optimum-finding test). At the end another target function, built from the found optimum will be tested (error check).\\
-Third, texts for the chosen indexes will be analysed. The forecast, probability and maybe buzz will be the results of the sub-chapter.\\
-Forth, the results of the previous stage will be united into one forecast and probability for the main index (index on the left side of the main equation).\\
-Finally, the results of the model will be compared with the actual results that we left as the test-sample.
 
 \newpage
 \section{conclusion}
