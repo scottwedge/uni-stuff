@@ -14,10 +14,21 @@ for row in read_it:
 
 		data_dict[company_key].append(float(row[company_key]))
 
-#data_dict={(companies[i] for i in range(0,len(companies))):[] }
-for k, v in data_dict.items():
-	print(k, v)
-#print(data_dict)
 learningSet.close()
-
-correlationMatrix = open('')
+#companies correlated with intel
+companies = []
+correlation_list = []
+correlation_dict = {}
+indexes = list(range(0,71))
+correlationMatrix = open('data/CorrelationMatrix.csv')
+read_matrix = csv.reader(correlationMatrix, delimiter=',')
+for row in read_matrix:
+	companies.append(row[0])
+	correlation_list.append(row[1])
+#companies_dict = {companies[]:[]}
+correlation_dict = {str(correlation_list[0]):[float(correlation_list[i]) for i in range(1,len(correlation_list))]}
+#choosing the final companies
+important_companies = []
+#print(correlation_dict)
+print(correlation_dict)
+correlationMatrix.close()
