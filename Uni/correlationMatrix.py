@@ -1,9 +1,29 @@
 import csv
 import statistics
+import pandas as pd
+import datetime
+import matplotlib.pyplot as plt 
 
 data_dict = {}
 helper_list = []
 average = 0;
+
+'''def getTheDictOutOfFile(file_name):
+	result_dict = {}
+	with open(str(file_name)) as opened_file:
+		read = csv.DictReader(opened_file, delimiter=',')
+		for row in read:
+			for key in row.keys():
+			
+				#if key not in result_dict:
+				#	result_dict[key] = []
+			#result_dict[key].append(float(row[key]))
+	
+	#print(result_dict)
+	opened_file.close()
+	return result_dict'''
+
+
 learningSet = open('data/LearningSet.csv')
 read_it = csv.DictReader(learningSet, delimiter=',')
 #getting list of companies for keys in our data_dict 
@@ -13,8 +33,11 @@ for row in read_it:
 			data_dict[company_key] = []
 
 		data_dict[company_key].append(float(row[company_key]))
-
+#print(data_dict)
 learningSet.close()
+
+'''first_file_to_open = 'data/LearningSet.csv'
+getTheDictOutOfFile(first_file_to_open)'''
 #companies correlated with intel
 companies = []
 correlation_list = []
@@ -44,9 +67,53 @@ for key in correlation_dict.keys():
 		difference.append(correlation_dict[key])
 	else:
 		pass
-
-print(len(correlation_list), correlation_list)
-print(len(companies), companies)
-#print(correlation_dict)
-print(difference)
 correlationMatrix.close()
+
+
+#processing data
+temp_list = []
+temp_dict_2 = {}
+temp_dict = {}
+smoothed_data = open('data/HelperData.csv')
+helper_file = csv.DictReader(smoothed_data, delimiter=',')
+for row in helper_file:
+	for key in row.keys():
+		temp_list.append(str(key))
+
+for item in temp_list:
+	if item not in temp_dict:
+		temp_dict[item] = []
+	else:
+		pass
+smoothed_data.seek(0)
+
+second_helper = csv.reader(smoothed_data, delimiter=',')
+for line in second_helper:
+	#print(line[0])
+	pass
+
+smoothed_data.close()
+
+#print(temp_dict) 
+
+list_test = []
+dict_test = {}
+#trying to do everything with pandas
+data = pd.read_csv('data/HelperData.csv')
+for key in data.keys():
+	dict_test[key] = []
+for key in dict_test.keys():
+	for i in range(0,len(data['Intel'])):
+		dict_test[key].append(float(data[key][i]))
+print(data)
+#data['Intel'] = pd.rolling_mean(data['Intel'], 15)
+#plt.plot(pd.rolling_mean(data['Intel'], 15))
+#plt.plot(data['Intel'])
+#plt.savefig('img/Intel_MA15.png')
+#plt.show()
+
+#print(data)
+#direct manipulation with data columns
+
+
+
