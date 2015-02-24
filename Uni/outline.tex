@@ -33,8 +33,8 @@
 			\item[2.1] Data preparation (correlation matrices and further filtering)	
 				\begin{enumerate}
 					\item[2.1.1] Choosing dependent markets and companies listed on stock exchange
-					\item[2.1.2] Splitting the data
-					\item[2.1.3] Cut-off: first- and second-order
+					\item[2.1.2] Splitting the data, Correlation matrix and first cut-off
+					\item[2.1.3] Preparing the data for further usage
 				\end{enumerate}
 			\item[2.2] First algorithm
 				\begin{enumerate}
@@ -228,10 +228,14 @@ Some pretty big players on the connected markets are left out because of the lac
 But our first goal is to establish a more or less working model (bad model is actually preferable. This will be explained in details in the results interpretation). We want our original model to be really bad and not flexible, that is why we have limited the number of variables to iterate through.
 \subsubsection{Splitting the data}
 Next step, after obtaining the prices on the stock for all mentioned above companies, is to split the whole data-set into three chunks: learning set, testing set and validation set. We have obtained daily prices from 2006 to 2015 (31.12.2014 is the last date for all indexes). The training or learning set will be approximately 60\% of the whole data volume: from 2006 to 2010. The test-set is about 20\%: from 2011 to 2012. And the last validation set is the rest 20\%: from 2013 to 2014. For this work we use daily frequency (only opening prices).\\
-\subsubsection{First- and second-order data cut-off}
 After obtaining all the data and splitting into three data chunks we start first data analysis to create a limited data. This data set will contain the information (company name and time series) for companies, which are relevant for further analysis. The first-order cut-off is made based on correlations with Intel-company: all companies with correlation coefficient smaller than 25\% are left out. \\
 According to our first condition two companies are left out: Motorola and Edwards. Unfortunately we had to left three other companies out because of lack of information (which is a big deal for linear regression models): \textcolor{red}{find the third company}, BMW and Spirit.\\
 First preparation step leaves us with 67 companies to choose from.  
+\subsubsection{Preprocessing the data}
+Before we let our first algorithm run and choose the best linear combination we need to clean up our data a bit. First of all, we will search for trend in our time series. As the first step we will smooth the row. The most famous approaches are: moving average, weighted average, bicubic spline, etc.. For our purpose simple moving average with the window size of 10-day is enough. The process consist in computation of an average price over several days.\\
+\textcolor{blue}{graphs of the smoothed trend}\\
+After smoothing the data we still can see the nonlinear component, we will try to smooth the data even more by taking a log(data).\\
+\textcolor{blue}{graph of further smoothing}\\
  
 \subsection{First Algorithm}
 The goal of this bachelor work is to check the ability of sentimental data analysis to fine-tune forecasting models. This is why we will take a pretty bad forecasting model, which is multiple linear regression. On the other hand the estimating mechanism for this type of regression is very easy and transparent to program.\\
