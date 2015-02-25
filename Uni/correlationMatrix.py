@@ -3,7 +3,7 @@ import statistics
 import pandas as pd
 import datetime
 import matplotlib.pyplot as plt 
-import math
+import numpy as num
 
 data_dict = {}
 helper_list = []
@@ -108,13 +108,19 @@ for key in dict_test.keys():
 		dict_test[key].append(float(data[key][i]))
 #print(data)
 #smoothing the data over MA(10)
+data_MA = data
 for key in data.keys():
-	data[key] = pd.rolling_mean(data[key], 10)
-#log-data
-#e-data
-#data['Intel'] = pd.rolling_mean(data['Intel'], 10)
+	data_MA[key] = pd.rolling_mean(data_MA[key], 10)
+print(data_MA)
 
-print(data_dict['AMD'])
+
+#log-data
+#data_1 = num.log(num.log(data['Intel']))
+#e-data
+#data_2 = num.exp(data['Intel'])
+#data['Intel'] = pd.rolling_mean(data['Intel'], 10)
+#plt.plot(data['Intel'])
+#plt.plot(data_2)
 #plt.plot(pd.rolling_mean(data['Intel'], 10))
 #plt.savefig('img/Intel_MA10.png')
 #plt.show()
