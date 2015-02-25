@@ -241,8 +241,15 @@ After smoothing the data we still can see the nonlinear component, we will try t
 
  
 \subsection{First Algorithm}
-The goal of this bachelor work is to check the ability of sentimental data analysis to fine-tune forecasting models. This is why we will take a pretty bad forecasting model, which is multiple linear regression. On the other hand the estimating mechanism for this type of regression is very easy and transparent to program.\\
-Currently we will land into back-pack problem that normally have n! complexity. This is the second worst complexity-class that we possibly could have chosen. This is why the number of the companies in the linear regression will be reduced to a very small number: let's say 5 companies. With restriction to 5 companies we have to check \[\binom{n}{k} = \frac{n!}{k!(n-k)!}\]
+The goal of this bachelor work is to check the ability of sentimental data analysis to fine-tune forecasting models. This is why we will take a pretty bad forecasting model, which is multiple linear regression. On the other hand the estimating mechanism for this type of regression is very easy and transparent.\\
+The first issue we have to deal with is choosing the number of the predictors in the final combination. The linear model leads us to the "back-pack problem" that normally have n! complexity. This is the second worst complexity-class that we possibly could have chosen. It is clear, that if we include all our companies as predictors into the regression we will get the best model, however with p factors we will land into $2^p$ combinations, which is very difficult to check. This is why we will use "forward selection":
+\begin{enumerate}
+	\item For every single predictor we will estimate Akaike Information Criterion [2], than take the predictor with the minimum AIC-value.
+	\item For every pair (chosen company from step 1, company left) we will do the same and take the smallest AIC-value. If the second value is higher (worse) stop on the combination from the previous step.
+	\item The iterations will done until the best combination (smallest AIC) is found
+\end{enumerate} 
+But still we know, that AIC tend to show better results with larger number of the predictors, which is not we want. If the AIC-test will result in the model with 5-15 predictors we will be satisfied, if the number of the factors will be higher we will run our second-order test on the amount of chosen companies. 
+This is why the number of the companies in the linear regression will be reduced to a very small number: let's say 5 companies. With restriction to 5 companies we have to check \[\binom{n}{k} = \frac{n!}{k!(n-k)!}\]
 In our case this is equals to $\frac{67!}{5!(67-5)!} = 9657648$. The number of the possible combinations could be smaller if we limit our model to more variables in the regression, but the goal is to pick a bad model.\\  
 
 
