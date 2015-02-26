@@ -5,26 +5,9 @@ import datetime
 import matplotlib.pyplot as plt 
 import numpy as num
 
-data_dict = {}
+'''data_dict = {}
 helper_list = []
 average = 0;
-
-'''def getTheDictOutOfFile(file_name):
-	result_dict = {}
-	with open(str(file_name)) as opened_file:
-		read = csv.DictReader(opened_file, delimiter=',')
-		for row in read:
-			for key in row.keys():
-			
-				#if key not in result_dict:
-				#	result_dict[key] = []
-			#result_dict[key].append(float(row[key]))
-	
-	#print(result_dict)
-	opened_file.close()
-	return result_dict'''
-
-
 learningSet = open('data/LearningSet.csv')
 read_it = csv.DictReader(learningSet, delimiter=',')
 #getting list of companies for keys in our data_dict 
@@ -36,9 +19,6 @@ for row in read_it:
 		data_dict[company_key].append(float(row[company_key]))
 #print(data_dict)
 learningSet.close()
-
-'''first_file_to_open = 'data/LearningSet.csv'
-getTheDictOutOfFile(first_file_to_open)'''
 #companies correlated with intel
 companies = []
 correlation_list = []
@@ -96,7 +76,7 @@ for line in second_helper:
 smoothed_data.close()
 
 #print(temp_dict) 
-
+'''
 list_test = []
 dict_test = {}
 #trying to do everything with pandas
@@ -106,13 +86,12 @@ for key in data.keys():
 for key in dict_test.keys():
 	for i in range(0,len(data['Intel'])):
 		dict_test[key].append(float(data[key][i]))
-#print(data)
+print(dict_test)
 #smoothing the data over MA(10)
 data_MA = data
 for key in data.keys():
 	data_MA[key] = pd.rolling_mean(data_MA[key], 10)
-print(data_MA)
-
+#print(data_MA)
 
 #log-data
 #data_1 = num.log(num.log(data['Intel']))
