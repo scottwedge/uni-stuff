@@ -6,6 +6,7 @@ from scipy import stats as stat
 import statsmodels.tsa.stattools as statmodel
 from multiprocessing import Pool
 
+
 def getData(file_name):
 	data = pd.read_csv(str(file_name))
 	return data
@@ -44,16 +45,48 @@ def stationarity(dict_data):
 		p.map(passes_dftest, dict_data.items())
 	return stationary
 
-#Kolmogorov test 
-def kolmogorovTest(dict_data, distribution):
+#autocorrelation check (for chosen regression)
+def autodorrelation(dict_data):
+	pass
+
+#a bunch of distribution-test for the data
+#kolmogorov: 1-sample test H0 = Data has hoemal distribution with estimated mean and variation
+def kolmogorov_test(dict_data):
 	result_dict = {}
-	for key in dict_data:
-		result_dict[key] = [stat.kstest(dict_data[key], distribution)]
+	for key in dict_data.keys():
+		if stat.kstest(dict_data[key], 'norm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1240)[0] >= 0.9750:
+			result_dict[key] = True
+		else:
+			result_dict[key] = False
+	return result_dict
+
+#normality test
+def normality_test(dict_data):
+	result_dict = {}
+	kolmogorov_check = kolmogorov_test(dict_data)
+	for key in kolmogorov_check.keys():
+		if kolmogorov_check[key] == True:
+			pass
+		else:
+			for key in dict_data.keys():
+				if stat.normaltest(dict_data[key])[1] < 5.991:
+					result_dict[key] = True
+				else:
+					result_dict[key] = False
+	return result_dict
+
+def anderson_darling_test(dict_data):
+	result_dict = {}
+	for key in dict_data.keys():
+		if stat.anderson(dict_data[key])[0] >= 0.787:
+			result_dict[key] = False
+		else:
+			result_dict[key] = True
 	return result_dict
 
 #different helper functions and tests:
 def checkDictionary(dictionary,listCheck):
-	result = False
+	result_value = False
 	check_list = [False for i in range(0,len(listCheck))]
 	for i in range(0, len(listCheck)):
 		for key in dictionary.keys():
@@ -63,10 +96,13 @@ def checkDictionary(dictionary,listCheck):
 				check_list[i] = False
 	for item in check_list:
 		if False in check_list:
-			result = False
+			result_value = False
 		else:
-			result = True
+			result_value = True
 	return result
+
+#Akaike criterion for choosing maximum number of the companies for regression
+
 
 if __name__ == "__main__":
 	'''Resulting outputs'''
@@ -74,12 +110,9 @@ if __name__ == "__main__":
 	data = getData(f)
 	dict_data = formatDataIntoDict(data)
 	list_companies = getCompanies(data)
-	first = stat.moment(dict_data['Intel'], 1,0)
-	second = stat.moment(dict_data['Intel'], 2, 0)
-	#print(len(dict_data))
-	stationary = stationarity(dict_data)
-	print(stationary)
-	#kolmogorov = kolmogorovTest(dict_data['Intel'], 'norm')
-	#print("kolmogorov: "+str(kolmogorov), "first momentt: "+str(first), "second moment: "+str(second))
+	#stationary = stationarity(dict_data)
+	#print(stationary)
+	#normality = normality_test(dict_data)
+	ad = anderson_darling_test(dict_data)
+	print(ad)
 
-	#test kolmogorov 

@@ -80,18 +80,22 @@ smoothed_data.close()
 list_test = []
 dict_test = {}
 #trying to do everything with pandas
-data = pd.read_csv('data/HelperData.csv')
+data = pd.read_csv('data/LearningSet.csv')
 for key in data.keys():
 	dict_test[key] = []
-for key in dict_test.keys():
-	for i in range(0,len(data['Intel'])):
-		dict_test[key].append(float(data[key][i]))
-print(dict_test)
+
 #smoothing the data over MA(10)
-data_MA = data
-for key in data.keys():
-	data_MA[key] = pd.rolling_mean(data_MA[key], 10)
-#print(data_MA)
+def formatDataIntoDict(data):
+	dict_data = {}
+	for key in data.keys():
+		dict_data[key] = []
+	for key in dict_data.keys():
+		for i in range(0,len(data[key])):
+			dict_data[key].append(float(data[key][i]))
+	return dict_data
+
+data_dict = formatDataIntoDict(data)
+print(data_dict)
 
 #log-data
 #data_1 = num.log(num.log(data['Intel']))
