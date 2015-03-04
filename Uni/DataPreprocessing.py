@@ -110,11 +110,23 @@ def pearson_chi_square_test(dict_data):
 			final_result[key] = False
 	return final_result 
 #check chi square
-
-		
-#normality test: kolmogorov - first, anderson - second, pearson - third
-def normality_test(dict_data):
-	pass
+'''Here we build CDF and PDF for our data, save it to img/,
+compute 1, 2, 3 moments, variation'''
+def check_data_charecteristics(dict_data):
+	#build CDF and show it
+	'''ToDO: save plots to the img/'''
+	check_dict = dict_data
+	num_bins = 100
+	plt.figure()
+	for key in check_dict.keys():
+		counts, bin_edges = num.histogram(check_dict[key], bins = num_bins, normed=True)
+		cdf = num.cumsum(counts)
+		check_dict[key] = [cdf, bin_edges]
+		plt.title(key)
+		plt.plot(bin_edges[1:], cdf)
+		plt.savefig("img/CDF_of_{}.png".format(key))
+		plt.clf()
+	return check_dict
 
 #find skew and kurtosis
 def findMoments(dict_data):
@@ -149,15 +161,12 @@ if __name__ == "__main__":
 	data = getData(f)
 	list_companies = getCompanies(data)
 	dict_data = formatDataIntoDict(data)
-	#dict_returns = formatDataIntoReturns(data)
-	#stationary = stationarity(dict_returns)
-	#print(stationary)
-	#ad = anderson_darling_test(dict_data)
-	#moments = findMoments(dict_data)
-	#kolmogorov = kolmogorov_test(dict_data)
-	#pearson = person_chi_square_test(dict_data)
-	#print(pearson)
-	#plt.plot(num.log(dict_data['Intel']))
-	#plt.show()
-	chi = pearson_chi_square_test(dict_data)
-	print(chi)	
+	'''check_dict = dict_data['Intel']
+	num_bins = 100
+	counts, bin_edges = num.histogram(check_dict, bins = num_bins, normed=True)
+	cdf = num.cumsum(counts)
+	plt.plot(bin_edges[1:], cdf)
+	plt.show()'''
+	cdf = check_data_charecteristics(dict_data)
+
+
