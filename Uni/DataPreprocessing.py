@@ -26,6 +26,14 @@ def getCompanies(data):
 		list_companies.append(key)
 	return list_companies
 
+def formatDataIntoReturns(data):
+	financial_returns = {}
+	for key in data.keys():
+		financial_returns[key] =  []
+		for i in range(1, len(data[key])):
+			financial_returns[key].append((data[key][i]-data[key][i-1])/data[key][i-1])
+	return financial_returns
+
 def passes_dftest(data):
 	print("Processing {}".format(data[0]))
 	if statmodel.adfuller(data[1], 250, 'ctt', 't-stat', False, False)[0] < 1:
@@ -54,7 +62,7 @@ def autodorrelation(dict_data):
 def kolmogorov_test(dict_data):
 	result_dict = {}
 	for key in dict_data.keys():
-		if stat.kstest(dict_data[key], 'norm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1240)[0] >= 0.9750:
+		if stat.kstest(dict_data[key], 'norm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1238)[0] >= 0.9750:
 			result_dict[key] = True
 		else:
 			result_dict[key] = False
@@ -108,11 +116,14 @@ if __name__ == "__main__":
 	'''Resulting outputs'''
 	f = 'data/LearningSet.csv'
 	data = getData(f)
-	dict_data = formatDataIntoDict(data)
 	list_companies = getCompanies(data)
-	#stationary = stationarity(dict_data)
+	dict_data = formatDataIntoDict(data)
+	dict_returns = formatDataIntoReturns(data)
+	#stationary = stationarity(dict_returns)
 	#print(stationary)
 	#normality = normality_test(dict_data)
-	ad = anderson_darling_test(dict_data)
-	print(ad)
-
+	#ad = anderson_darling_test(dict_data)
+	
+	#print(stationary)
+	plt.plot(num.log(dict_data['Intel']))
+	plt.show()
