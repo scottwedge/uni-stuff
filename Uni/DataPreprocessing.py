@@ -5,7 +5,7 @@ import numpy as num
 from scipy import stats as stat
 import statsmodels.tsa.stattools as statmodel
 from multiprocessing import Pool
-
+import itertools
 
 def getData(file_name):
 	data = pd.read_csv(str(file_name))
@@ -62,34 +62,65 @@ def autodorrelation(dict_data):
 def kolmogorov_test(dict_data):
 	result_dict = {}
 	for key in dict_data.keys():
-		if stat.kstest(dict_data[key], 'norm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1238)[0] >= 0.9750:
+		if stat.kstest(dict_data[key], 'norm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1240)[0] < 0.034756:
 			result_dict[key] = True
 		else:
 			result_dict[key] = False
 	return result_dict
-
-#normality test
-def normality_test(dict_data):
-	result_dict = {}
-	kolmogorov_check = kolmogorov_test(dict_data)
-	for key in kolmogorov_check.keys():
-		if kolmogorov_check[key] == True:
-			pass
-		else:
-			for key in dict_data.keys():
-				if stat.normaltest(dict_data[key])[1] < 5.991:
-					result_dict[key] = True
-				else:
-					result_dict[key] = False
-	return result_dict
-
+#anderson-darling test of goodness of fit (normal distribution)	
 def anderson_darling_test(dict_data):
 	result_dict = {}
 	for key in dict_data.keys():
-		if stat.anderson(dict_data[key])[0] >= 0.787:
-			result_dict[key] = False
-		else:
+		if stat.anderson(dict_data[key])[0] < 0.787:
 			result_dict[key] = True
+		else:
+			result_dict[key] = False
+	return result_dict
+
+#pearson chi square test computed
+def pearson_chi_square_test(dict_data):
+	grouped = {}
+	for key in dict_data.keys():
+		grouped[key] = dict_data[key]
+	for key in grouped.keys():
+		grouped[key].sort()
+	n = len(grouped[list(grouped.keys())[0]])
+	freq = {}
+	for key in grouped.keys():
+		freq[key] = [(g[0], len(list(g[1]))) for g in itertools.groupby(grouped[key])]
+	observed_frequency = {}
+	for key in freq.keys():
+		observed_frequency[key] = []
+		for item in freq[key]:
+			observed_frequency[key].append(item[1])
+	chi_square_dict = {}
+	chi_square = 0
+	for key in observed_frequency:
+		chi_square_dict[key] = []
+		p = float(1/len(observed_frequency[key]))
+		for i in range(0, len(observed_frequency[key])):
+			chi_square += ((observed_frequency[key][i]-n*p)*(observed_frequency[key][i]-n*p))/n*p
+		chi_square_dict[key].append(chi_square)	
+	#we have compued the value of the test, now we will compare it with the critical value of 5% error
+	final_result = {}
+	for key in chi_square_dict.keys():
+		if chi_square_dict[key][0] < 0.07:
+			final_result[key] = True
+		else:
+			final_result[key] = False
+	return final_result 
+#check chi square
+
+		
+#normality test: kolmogorov - first, anderson - second, pearson - third
+def normality_test(dict_data):
+	pass
+
+#find skew and kurtosis
+def findMoments(dict_data):
+	result_dict = {}
+	for key in dict_data.keys():
+		result_dict[key] = (stat.skewtest(dict_data[key]), stat.kurtosistest(dict_data[key]))
 	return result_dict
 
 #different helper functions and tests:
@@ -118,12 +149,15 @@ if __name__ == "__main__":
 	data = getData(f)
 	list_companies = getCompanies(data)
 	dict_data = formatDataIntoDict(data)
-	dict_returns = formatDataIntoReturns(data)
+	#dict_returns = formatDataIntoReturns(data)
 	#stationary = stationarity(dict_returns)
 	#print(stationary)
-	#normality = normality_test(dict_data)
 	#ad = anderson_darling_test(dict_data)
-	
-	#print(stationary)
-	plt.plot(num.log(dict_data['Intel']))
-	plt.show()
+	#moments = findMoments(dict_data)
+	#kolmogorov = kolmogorov_test(dict_data)
+	#pearson = person_chi_square_test(dict_data)
+	#print(pearson)
+	#plt.plot(num.log(dict_data['Intel']))
+	#plt.show()
+	chi = pearson_chi_square_test(dict_data)
+	print(chi)	
