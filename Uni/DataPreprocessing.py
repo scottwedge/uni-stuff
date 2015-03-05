@@ -67,6 +67,7 @@ def kolmogorov_test(dict_data):
 		else:
 			result_dict[key] = False
 	return result_dict
+
 #anderson-darling test of goodness of fit (normal distribution)	
 def anderson_darling_test(dict_data):
 	result_dict = {}
@@ -109,30 +110,44 @@ def pearson_chi_square_test(dict_data):
 		else:
 			final_result[key] = False
 	return final_result 
-#check chi square
+
 '''Here we build CDF and PDF for our data, save it to img/,
 compute 1, 2, 3 moments, variation'''
-def check_data_charecteristics(dict_data):
-	#build CDF and show it
-	'''ToDO: save plots to the img/'''
-	check_dict = dict_data
+def built_cdf(dict_data):
+	#build CDF and save it under "CDF_of_copany"
+	pdf_dict = dict_data
 	num_bins = 100
 	plt.figure()
-	for key in check_dict.keys():
-		counts, bin_edges = num.histogram(check_dict[key], bins = num_bins, normed=True)
+	for key in pdf_dict.keys():
+		counts, bin_edges = num.histogram(pdf_dict[key], bins = num_bins, normed=True)
 		cdf = num.cumsum(counts)
-		check_dict[key] = [cdf, bin_edges]
+		pdf_dict[key] = [cdf, bin_edges]
 		plt.title(key)
 		plt.plot(bin_edges[1:], cdf)
-		plt.savefig("img/CDF_of_{}.png".format(key))
+		plt.savefig("img/CDF/CDF_of_{}.png".format(key))
 		plt.clf()
-	return check_dict
+
+#build smoothed with gaussian kernel PDF and save it under "KDE_of_company"
+def build_kde(dict_data):
+	plt.figure()
+	kde_dict = dict_data
+	for key in kde_dict.keys():
+		kde = stat.gaussian_kde(kde_dict[key])
+		xgrid = num.linspace(min(kde_dict[key]), max(kde_dict[key]), 100)
+		plt.title(key)
+		plt.hist(kde_dict[key], bins=100, normed=True, color="b")
+		plt.plot(xgrid, kde(xgrid), color="r", linewidth=3.0)
+		plt.savefig("img/KDE/KDE_of_{}.png".format(key))
+		plt.clf()
+	
+	return pdf_dict, kde_dict 
 
 #find skew and kurtosis
 def findMoments(dict_data):
+	#for every company find mean, var, skew, kurtosis
 	result_dict = {}
 	for key in dict_data.keys():
-		result_dict[key] = (stat.skewtest(dict_data[key]), stat.kurtosistest(dict_data[key]))
+		result_dict[key] = [num.sum(dict_data[key])/len(dict_data[key]), num.std(dict_data[key]), stat.skew(dict_data[key]), stat.kurtosis(dict_data[key], fisher=True)]
 	return result_dict
 
 #different helper functions and tests:
@@ -161,12 +176,7 @@ if __name__ == "__main__":
 	data = getData(f)
 	list_companies = getCompanies(data)
 	dict_data = formatDataIntoDict(data)
-	'''check_dict = dict_data['Intel']
-	num_bins = 100
-	counts, bin_edges = num.histogram(check_dict, bins = num_bins, normed=True)
-	cdf = num.cumsum(counts)
-	plt.plot(bin_edges[1:], cdf)
-	plt.show()'''
-	cdf = check_data_charecteristics(dict_data)
-
-
+	#cdf = built_cdf(dict_data)
+	#kde = build_kde(dict_data)
+	moments = findMoments(dict_data)
+	print(moments['Intel'])
