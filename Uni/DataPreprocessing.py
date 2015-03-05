@@ -57,60 +57,6 @@ def stationarity(dict_data):
 def autodorrelation(dict_data):
 	pass
 
-#a bunch of distribution-test for the data
-#kolmogorov: 1-sample test H0 = Data has hoemal distribution with estimated mean and variation
-def kolmogorov_test(dict_data):
-	result_dict = {}
-	for key in dict_data.keys():
-		if stat.kstest(dict_data[key], 'norm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1240)[0] < 0.034756:
-			result_dict[key] = True
-		else:
-			result_dict[key] = False
-	return result_dict
-
-#anderson-darling test of goodness of fit (normal distribution)	
-def anderson_darling_test(dict_data):
-	result_dict = {}
-	for key in dict_data.keys():
-		if stat.anderson(dict_data[key])[0] < 0.787:
-			result_dict[key] = True
-		else:
-			result_dict[key] = False
-	return result_dict
-
-#pearson chi square test computed
-def pearson_chi_square_test(dict_data):
-	grouped = {}
-	for key in dict_data.keys():
-		grouped[key] = dict_data[key]
-	for key in grouped.keys():
-		grouped[key].sort()
-	n = len(grouped[list(grouped.keys())[0]])
-	freq = {}
-	for key in grouped.keys():
-		freq[key] = [(g[0], len(list(g[1]))) for g in itertools.groupby(grouped[key])]
-	observed_frequency = {}
-	for key in freq.keys():
-		observed_frequency[key] = []
-		for item in freq[key]:
-			observed_frequency[key].append(item[1])
-	chi_square_dict = {}
-	chi_square = 0
-	for key in observed_frequency:
-		chi_square_dict[key] = []
-		p = float(1/len(observed_frequency[key]))
-		for i in range(0, len(observed_frequency[key])):
-			chi_square += ((observed_frequency[key][i]-n*p)*(observed_frequency[key][i]-n*p))/n*p
-		chi_square_dict[key].append(chi_square)	
-	#we have compued the value of the test, now we will compare it with the critical value of 5% error
-	final_result = {}
-	for key in chi_square_dict.keys():
-		if chi_square_dict[key][0] < 0.07:
-			final_result[key] = True
-		else:
-			final_result[key] = False
-	return final_result 
-
 '''Here we build CDF and PDF for our data, save it to img/,
 compute 1, 2, 3 moments, variation'''
 def built_cdf(dict_data):
@@ -150,6 +96,62 @@ def findMoments(dict_data):
 		result_dict[key] = [num.sum(dict_data[key])/len(dict_data[key]), num.std(dict_data[key]), stat.skew(dict_data[key]), stat.kurtosis(dict_data[key], fisher=True)]
 	return result_dict
 
+'''Test for distributions, 
+Hypothesis(0)=empirical DF is from tested distribution'''
+#Kolmogorov, distribution = normal, 15% error
+def kolmogorov_normal(dict_data):
+	result_dict = {}
+	for key in dict_data.keys():
+		if stat.kstest(dict_data[key], 'norm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1239)[0] < 0.032331:
+			result_dict[key] = True
+		else:
+			result_dict[key] = False
+	return result_dict
+
+#Kolmogorov, distribution = lognormal, 5% error
+def kolmogorov_lognormal(dict_data):
+	result_dict = {}
+	for key in dict_data.keys():
+		if stat.kstest(dict_data[key], 'lognorm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1239)[0] < 1.039:
+			result_dict[key] = True
+		else:
+			result_dict[key] = False
+	return result_dict
+
+#AD, distribution = Pareto, 5% error
+def ad_gumbel(dict_data):
+	result_dict = {}
+	for key in dict_data.keys():
+		if stat.anderson(dict_data[key], dist='gumbel') < 3.791:
+			result_dict[key] = True
+		else:
+			result_dict[key] = False
+	return result_dict
+
+#AD test, for logistic and gumbel, 85% confidence
+def anderson_darling_multiple(dict_data):
+	result_dict = {}
+	distribution = {}
+	#check for logistic first
+	for key in dict_data.keys():
+		distribution[key] = []
+		if stat.anderson(dict_data[key], dist="logistic")[0] < 0.787:
+			result_dict[key] = True
+		else:
+			result_dict[key] = False
+	for key in result_dict.keys():
+		if result_dict[key] == True:
+			distribution[key].append("is logistic")
+		else:
+			for key in dict_data.keys():
+				if stat.anderson(dict_data[key], dist="gumbel")[0] < 0.787:
+					result_dict[key] = True
+					distribution[key].append("is gumble")
+				else:
+					result_dict[key] = False
+	return distribution, result_dict
+
+
 #different helper functions and tests:
 def checkDictionary(dictionary,listCheck):
 	result_value = False
@@ -178,5 +180,13 @@ if __name__ == "__main__":
 	dict_data = formatDataIntoDict(data)
 	#cdf = built_cdf(dict_data)
 	#kde = build_kde(dict_data)
-	moments = findMoments(dict_data)
-	print(moments['Intel'])
+	#moments = findMoments(dict_data)
+	#norm = kolmogorov_normal(dict_data)
+	#lognorm = kolmogorov_lognormal(dict_data)
+	#pareto = kolmogorov_pareto(dict_data)
+	#ks_lognormal = kolmogorov_lognormal(dict_data)
+	test = stat.kstest(dict_data['Intel'], 'lognorm', args=(num.average(dict_data['Intel']), num.std(dict_data['Intel'])), N=1239)[0]
+	test_norm = stat.kstest(dict_data['Intel'], 'norm', args=(num.average(dict_data['Intel']), num.std(dict_data['Intel'])), N=1239)[0] 
+	test_gumbel = stat.anderson(dict_data['Intel'], 'gumbel')[0]
+	print(test, test_norm, test_gumbel)
+	#print(pareto)
