@@ -6,6 +6,7 @@ from scipy import stats as stat
 import statsmodels.tsa.stattools as statmodel
 from multiprocessing import Pool
 import itertools
+import math
 
 def getData(file_name):
 	data = pd.read_csv(str(file_name))
@@ -150,7 +151,10 @@ def anderson_darling_multiple(dict_data):
 				else:
 					result_dict[key] = False
 	return distribution, result_dict
-
+'''Heteroscedasticity Tests'''
+#null hypothesis is that all observations have the same error variance
+def constant_variance(dict_data):
+	pass
 
 #different helper functions and tests:
 def checkDictionary(dictionary,listCheck):
@@ -169,7 +173,28 @@ def checkDictionary(dictionary,listCheck):
 			result_value = True
 	return result
 
+#bring the data to the normal distribution
+def log_data(dict_data):
+	log_data = {}
+	for key in dict_data.keys():
+		log_data[key] = []
+		for item in dict_data[key]:
+			new_item = math.log(item)
+			log_data[key].append(new_item)
+	return log_data
+
 #Akaike criterion for choosing maximum number of the companies for regression
+'''Algorithm 1'''
+#checking the AIC value for linera regresion from one explanatory variable
+def build_reression(dict_data, list_data):
+	#first company in the csv is our dependent variable ALWAYS!
+	dependent_variable = list_data[0]
+	dependent_variable = {list_data[0]:dict_data[list_data[0]]}
+	dict_data.pop(dependent_variable, None)
+	for i in range(0, len(dict_data.keys())):
+		pass
+
+
 
 
 if __name__ == "__main__":
@@ -185,8 +210,10 @@ if __name__ == "__main__":
 	#lognorm = kolmogorov_lognormal(dict_data)
 	#pareto = kolmogorov_pareto(dict_data)
 	#ks_lognormal = kolmogorov_lognormal(dict_data)
-	test = stat.kstest(dict_data['Intel'], 'lognorm', args=(num.average(dict_data['Intel']), num.std(dict_data['Intel'])), N=1239)[0]
-	test_norm = stat.kstest(dict_data['Intel'], 'norm', args=(num.average(dict_data['Intel']), num.std(dict_data['Intel'])), N=1239)[0] 
-	test_gumbel = stat.anderson(dict_data['Intel'], 'gumbel')[0]
-	print(test, test_norm, test_gumbel)
-	#print(pareto)
+	#test = stat.kstest(dict_data['Intel'], 'lognorm', args=(num.average(dict_data['Intel']), num.std(dict_data['Intel'])), N=1239)[0]
+	#test_norm = stat.kstest(dict_data['Intel'], 'norm', args=(num.average(dict_data['Intel']), num.std(dict_data['Intel'])), N=1239)[0] 
+	#test_gumbel = stat.anderson(dict_data['Intel'], 'gumbel')[0]
+	dependent_variable = {list_companies[0]:dict_data[list_companies[0]]}
+	print(dependent_variable)
+
+	
