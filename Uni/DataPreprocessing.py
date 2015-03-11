@@ -7,6 +7,10 @@ import statsmodels.tsa.stattools as statmodel
 from multiprocessing import Pool
 import itertools
 import math
+import sklearn as sk
+from sklearn import linear_model  as lm
+from sklearn.tree import DecisionTreeRegressor
+
 
 def getData(file_name):
 	data = pd.read_csv(str(file_name))
@@ -188,12 +192,22 @@ def log_data(dict_data):
 #checking the AIC value for linera regresion from one explanatory variable
 def build_reression(dict_data, list_data):
 	#first company in the csv is our dependent variable ALWAYS!
-	dependent_variable = list_data[0]
+	result_dict = {}
+	dependant = list_data[0]
 	dependent_variable = {list_data[0]:dict_data[list_data[0]]}
-	dict_data.pop(dependent_variable, None)
-	for i in range(0, len(dict_data.keys())):
-		pass
+	del dict_data[dependant]
+	#first we will build the regression with 1 dexplanatory variable
+	#count AIC, R² and regression's parameters
+	for key in dict_data.keys():
+		result_dict["y=ß0+ß1*{}".format(key)] = []
 
+	return result_dict
+		#assume the regression y = ß0 + ß1*x
+
+		
+	#!!!Here, we agree on some model error, because the weights for WLS are functions from the data
+	# We agree on error because as the output we need companies (names), that are included into regression
+	# also we agreed on "bad model", so the error up to 25% is accaptable
 
 
 
@@ -203,17 +217,31 @@ if __name__ == "__main__":
 	data = getData(f)
 	list_companies = getCompanies(data)
 	dict_data = formatDataIntoDict(data)
-	#cdf = built_cdf(dict_data)
-	#kde = build_kde(dict_data)
-	#moments = findMoments(dict_data)
-	#norm = kolmogorov_normal(dict_data)
-	#lognorm = kolmogorov_lognormal(dict_data)
-	#pareto = kolmogorov_pareto(dict_data)
-	#ks_lognormal = kolmogorov_lognormal(dict_data)
-	#test = stat.kstest(dict_data['Intel'], 'lognorm', args=(num.average(dict_data['Intel']), num.std(dict_data['Intel'])), N=1239)[0]
-	#test_norm = stat.kstest(dict_data['Intel'], 'norm', args=(num.average(dict_data['Intel']), num.std(dict_data['Intel'])), N=1239)[0] 
-	#test_gumbel = stat.anderson(dict_data['Intel'], 'gumbel')[0]
-	dependent_variable = {list_companies[0]:dict_data[list_companies[0]]}
-	print(dependent_variable)
+	#regression = lm.LinearRegression()
+	#regression.fit(dict_data['AMD'], dict_data['Intel'])
+	#rdescision tree
+	'''x = []
+	for item in dict_data['AMD']:
+		x.append([item])
+	y = dict_data['Intel']
+	clf_1 = DecisionTreeRegressor(max_depth=5)
+	clf_1.fit(x, y)
+	X_test = num.arange(0.0, 5.0, 0.01)[:, num.newaxis]
+	y_1 = clf_1.predict(X_test)
+	
+	plt.figure()
+	plt.scatter(x, y, c="k", label="data")
+	plt.plot(X_test, y_1, c="g", label="max_depth=2", linewidth=2)
+	plt.xlabel("data")
+	plt.ylabel("target")
+	plt.title("Decision Tree Regression")
+	plt.legend()
+	plt.show()
+	print(clf_1)'''
+	#check linear model
+	x_train
+	regr = lm.LinearRegression()
+	regr.fit(x_train, y_train)
+	LinearRegression(copy_X=True, fit_intercept=True, normalize=False)
 
 	
