@@ -3,18 +3,27 @@ from sklearn import datasets
 from sklearn import linear_model
 
 
-iris = datasets.load_iris()
-iris_X = iris.data
-iris_y = iris.target
-np.unique(iris_y)
-diabetes = datasets.load_diabetes()
-diabetes_X_train = diabetes.data[:-20]
-diabetes_X_test  = diabetes.data[-20:]
-diabetes_y_train = diabetes.target[:-20]
-diabetes_y_test  = diabetes.target[-20:]
 
 regr = linear_model.LinearRegression()
 b = regr.fit(diabetes_X_train, diabetes_y_train)
 c = b.predict(diabetes_X_test)
 d = b.score(diabetes_X_train, diabetes_y_train)
-print(d)
+print(d
+
+
+#tree
+	'''
+	clf_1 = DecisionTreeRegressor(max_depth=5)
+	clf_1.fit(x, y)
+	X_test = num.arange(0.0, 5.0, 0.01)[:, num.newaxis]
+	y_1 = clf_1.predict(X_test)
+	
+	plt.figure()
+	plt.scatter(x, y, c="k", label="data")
+	plt.plot(X_test, y_1, c="g", label="max_depth=2", linewidth=2)
+	plt.xlabel("data")
+	plt.ylabel("target")
+	plt.title("Decision Tree Regression")
+	plt.legend()
+	plt.show()
+	print(clf_1)'''

@@ -193,16 +193,25 @@ def log_data(dict_data):
 def build_reression(dict_data, list_data):
 	#first company in the csv is our dependent variable ALWAYS!
 	result_dict = {}
-	dependant = list_data[0]
-	dependent_variable = {list_data[0]:dict_data[list_data[0]]}
+	dependant = list_companies[0]
+	dependent_variable = {list_companies[0]:dict_data[list_companies[0]]}
 	del dict_data[dependant]
+	#Preprocessing data into usable format for scikit.LinearRegression = sci_dict
+	sci_dict = {}
+	for key in dict_data.keys():
+		sci_dict[key] = []
+		for item in dict_data[key]:
+			sci_dict[key].append([item])
 	#first we will build the regression with 1 dexplanatory variable
 	#count AIC, R² and regression's parameters
-	for key in dict_data.keys():
-		result_dict["y=ß0+ß1*{}".format(key)] = []
-
+	#assume the regression y = ß0 + ß1*x
+	for key in sci_dict.keys():
+		regression = lm.LinearRegression()
+		fit_regr = regression.fit(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
+		r_square = fit_regr.score(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
+		result_dict["y=ß0+ß1*{}".format(key)] = [r_square]
 	return result_dict
-		#assume the regression y = ß0 + ß1*x
+		
 
 		
 	#!!!Here, we agree on some model error, because the weights for WLS are functions from the data
@@ -220,28 +229,21 @@ if __name__ == "__main__":
 	#regression = lm.LinearRegression()
 	#regression.fit(dict_data['AMD'], dict_data['Intel'])
 	#rdescision tree
-	'''x = []
-	for item in dict_data['AMD']:
-		x.append([item])
-	y = dict_data['Intel']
-	clf_1 = DecisionTreeRegressor(max_depth=5)
-	clf_1.fit(x, y)
-	X_test = num.arange(0.0, 5.0, 0.01)[:, num.newaxis]
-	y_1 = clf_1.predict(X_test)
-	
-	plt.figure()
-	plt.scatter(x, y, c="k", label="data")
-	plt.plot(X_test, y_1, c="g", label="max_depth=2", linewidth=2)
-	plt.xlabel("data")
-	plt.ylabel("target")
-	plt.title("Decision Tree Regression")
-	plt.legend()
-	plt.show()
-	print(clf_1)'''
+
 	#check linear model
-	x_train
+	'''x_train = []
+	for item in dict_data['']:
+		x_train.append([item])
+	y_train = dict_data['Intel']
 	regr = lm.LinearRegression()
-	regr.fit(x_train, y_train)
-	LinearRegression(copy_X=True, fit_intercept=True, normalize=False)
+	regression = regr.fit(x_train, y_train)
+	r_square = regression.score(x_train, y_train)
+	print(r_square)'''
+	#testing our function
+	#one_varibale_regression = build_reression(dict_data, list_companies)
+	#print(one_varibale_regression)
+
+	regression_one = build_reression(dict_data, list_companies)
+	print(regression_one)
 
 	
