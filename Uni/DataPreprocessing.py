@@ -206,10 +206,10 @@ def build_reression(dict_data, list_data):
 	#count AIC, R² and regression's parameters
 	#assume the regression y = ß0 + ß1*x
 	for key in sci_dict.keys():
-		regression = lm.LinearRegression()
-		fit_regr = regression.fit(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
-		r_square = fit_regr.score(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
-		result_dict["y=ß0+ß1*{}".format(key)] = [r_square]
+		regression = lm.LassoLarsIC()
+		FitRegr = regression.fit(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
+		RSquare = FitRegr.score(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
+		result_dict["y=ß0+ß1*{}".format(key)] = [RSquare, FitRegr.criterion_[1]]
 	return result_dict
 		
 
@@ -226,24 +226,18 @@ if __name__ == "__main__":
 	data = getData(f)
 	list_companies = getCompanies(data)
 	dict_data = formatDataIntoDict(data)
-	#regression = lm.LinearRegression()
-	#regression.fit(dict_data['AMD'], dict_data['Intel'])
-	#rdescision tree
-
-	#check linear model
-	'''x_train = []
-	for item in dict_data['']:
-		x_train.append([item])
-	y_train = dict_data['Intel']
-	regr = lm.LinearRegression()
-	regression = regr.fit(x_train, y_train)
-	r_square = regression.score(x_train, y_train)
-	print(r_square)'''
-	#testing our function
-	#one_varibale_regression = build_reression(dict_data, list_companies)
-	#print(one_varibale_regression)
-
 	regression_one = build_reression(dict_data, list_companies)
 	print(regression_one)
-
+	'''x = []
+	for item in dict_data['AMD']:
+		x.append([item])
+	y = dict_data['Intel']
+	regr = lm.LinearRegression()
+	b = regr.fit(x, y)
+	d = b.score(x, y)
+	lasso = lm.LassoLarsIC(criterion='aic', fit_intercept=True, precompute='auto', )
+	l_aic = lasso.fit(x, y)
+	r_square = l_aic.score(x, y)
+	#l_aic.criterion_[1]'''
+	#print()
 	
