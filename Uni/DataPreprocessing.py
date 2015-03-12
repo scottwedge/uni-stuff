@@ -211,12 +211,17 @@ def build_reression(dict_data, list_data):
 		FitRegr = regression.fit(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
 		RSquare = FitRegr.score(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
 		result_dict["y=ß0+ß1*{}".format(key)] = [RSquare, FitRegr.criterion_[1]]
-	best_regression = {}
-	best_aic = 0
+	#evaluation of the best regression based on min AIC value
+	best_regression = ""
+	helper_list = []
+	for k, v in result_dict.items():
+		helper_list.append(v[1])
+		best_aic = min(helper_list)
 	for key in result_dict.keys():
-		pass
+		if result_dict[key][1] == best_aic:
+			best = str(key) + " Is the bset regression with R²: " + str(result_dict[key][0])
 
-	return result_dict
+	return best
 		
 
 		
@@ -235,14 +240,5 @@ if __name__ == "__main__":
 	regression_one = build_reression(dict_data, list_companies)
 	#print(regression_one)
 	print(regression_one)
-	best = ""				
-	helper_list = []
-	for k, v in regression_one.items():
-		helper_list.append(v[1])
-		best_aic = min(helper_list)
-	for key in regression_one.keys():
-		if regression_one[key][1] == best_aic:
-			best = str(key) + "Is the bset regression with " + str(regression_one[key][0])
-	print(best)
 
 	
