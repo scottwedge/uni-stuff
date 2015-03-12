@@ -10,6 +10,7 @@ import math
 import sklearn as sk
 from sklearn import linear_model  as lm
 from sklearn.tree import DecisionTreeRegressor
+import operator
 
 
 def getData(file_name):
@@ -210,6 +211,11 @@ def build_reression(dict_data, list_data):
 		FitRegr = regression.fit(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
 		RSquare = FitRegr.score(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
 		result_dict["y=ß0+ß1*{}".format(key)] = [RSquare, FitRegr.criterion_[1]]
+	best_regression = {}
+	best_aic = 0
+	for key in result_dict.keys():
+		pass
+
 	return result_dict
 		
 
@@ -227,17 +233,16 @@ if __name__ == "__main__":
 	list_companies = getCompanies(data)
 	dict_data = formatDataIntoDict(data)
 	regression_one = build_reression(dict_data, list_companies)
+	#print(regression_one)
 	print(regression_one)
-	'''x = []
-	for item in dict_data['AMD']:
-		x.append([item])
-	y = dict_data['Intel']
-	regr = lm.LinearRegression()
-	b = regr.fit(x, y)
-	d = b.score(x, y)
-	lasso = lm.LassoLarsIC(criterion='aic', fit_intercept=True, precompute='auto', )
-	l_aic = lasso.fit(x, y)
-	r_square = l_aic.score(x, y)
-	#l_aic.criterion_[1]'''
-	#print()
+	best = ""				
+	helper_list = []
+	for k, v in regression_one.items():
+		helper_list.append(v[1])
+		best_aic = min(helper_list)
+	for key in regression_one.keys():
+		if regression_one[key][1] == best_aic:
+			best = str(key) + "Is the bset regression with " + str(regression_one[key][0])
+	print(best)
+
 	
