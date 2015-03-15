@@ -10,7 +10,7 @@ import math
 import sklearn as sk
 from sklearn import linear_model  as lm
 from sklearn.tree import DecisionTreeRegressor
-import operator
+
 
 
 def getData(file_name):
@@ -215,12 +215,16 @@ def build_reression(dict_data, list_data):
 	best_regression = ""
 	helper_list = []
 	for k, v in result_dict.items():
-		helper_list.append(v[1])
+		helper_list.append(v[0])
+		best_r = max(helper_list)
 		best_aic = min(helper_list)
 	for key in result_dict.keys():
-		if result_dict[key][1] == best_aic:
-			best = str(key) + " Is the bset regression with R²: " + str(result_dict[key][0])
-
+		if result_dict[key][0] == best_r:
+			best = str(key) + " Is the best regression with R²: " + str(result_dict[key][0])
+		else:
+			pass
+	#at this point we have chosen "best" variant among 1-variable-regressions
+	
 	return best
 		
 
@@ -237,8 +241,14 @@ if __name__ == "__main__":
 	data = getData(f)
 	list_companies = getCompanies(data)
 	dict_data = formatDataIntoDict(data)
-	regression_one = build_reression(dict_data, list_companies)
+	#regression_one = build_reression(dict_data, list_companies)
+	#test multiple items matrix
 	#print(regression_one)
-	print(regression_one)
 
-	
+	#creating all possible combinations of companies
+	list_companies.remove('Intel')
+	print(len(list_companies))
+	comb_companies = []
+	for item in itertools.combinations(list_companies, 5):
+		comb_companies.append(item)
+	print()

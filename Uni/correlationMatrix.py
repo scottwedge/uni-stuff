@@ -4,6 +4,8 @@ import pandas as pd
 import datetime
 import matplotlib.pyplot as plt 
 import numpy as num
+import itertools
+import scipy as sp
 
 '''data_dict = {}
 helper_list = []
@@ -95,21 +97,20 @@ def formatDataIntoDict(data):
 	return dict_data
 
 data_dict = formatDataIntoDict(data)
-print(data_dict)
-
-#log-data
-#data_1 = num.log(num.log(data['Intel']))
-#e-data
-#data_2 = num.exp(data['Intel'])
-#data['Intel'] = pd.rolling_mean(data['Intel'], 10)
-#plt.plot(data['Intel'])
-#plt.plot(data_2)
-#plt.plot(pd.rolling_mean(data['Intel'], 10))
-#plt.savefig('img/Intel_MA10.png')
-#plt.show()
-
-#print(data)
-#direct manipulation with data columns
-
+del data_dict['Intel']
+companies = []
+for key in data_dict.keys():
+	companies.append(key)
+combinations = []
+#for item in itertools.combinations(companies, 65):
+#	combinations.append(item)
+#print(companies)
+test = ["A","1", "2", "3", "4", "AA", "BB" "B", "C", "D", "F", "E", "G", "H", "I", "j", "k", "l", "m", 'n', "o", "p", "q", "r", "t", "s", "u", "v", "w", "x", "y", "z" ]
+result = []
+for item in itertools.combinations(test, 5):
+	result.append(item)
+print(result)
+print(len(result))
+print(len(test))
 
 
