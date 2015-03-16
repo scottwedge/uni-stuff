@@ -226,9 +226,15 @@ def build_reression(dict_data, list_data):
 	#at this point we have chosen "best" variant among 1-variable-regressions
 	
 	return best
-		
 
-		
+#Best combination of 5 from 68	
+def best_regression(data):
+	companies = getCompanies(data)
+	data_dict = formatDataIntoDict(data)
+	#always the first column in the data set, in form of the dictionary
+	dependant_variable = {companies[0]:dict_data[companies[0]]}
+	companies.remove(dependant_variable.keys[0])
+	del data_dict[dependant_variable.keys[0]]
 	#!!!Here, we agree on some model error, because the weights for WLS are functions from the data
 	# We agree on error because as the output we need companies (names), that are included into regression
 	# also we agreed on "bad model", so the error up to 25% is accaptable
@@ -242,13 +248,18 @@ if __name__ == "__main__":
 	list_companies = getCompanies(data)
 	dict_data = formatDataIntoDict(data)
 	#regression_one = build_reression(dict_data, list_companies)
-	#test multiple items matrix
-	#print(regression_one)
 
 	#creating all possible combinations of companies
-	list_companies.remove('Intel')
-	print(len(list_companies))
-	comb_companies = []
+	#list_companies.remove('Intel')
+	#print(len(list_companies))
+	'''comb_companies = []
 	for item in itertools.combinations(list_companies, 5):
-		comb_companies.append(item)
-	print()
+		comb_companies.append(item)'''
+	#print()
+	#create test test combination with corresponding data array
+	test_combination = ["Infenion", "AMD", "Ford", "Google", "Olympus"] 
+	result = []
+	for i in range(0, len(dict_data.items())):
+		result.insert(i, [value[i] for key, value in dict_data.items() if key in test_combination])
+
+	print(result)
