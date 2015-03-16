@@ -259,7 +259,10 @@ if __name__ == "__main__":
 	#create test test combination with corresponding data array
 	test_combination = ["Infenion", "AMD", "Ford", "Google", "Olympus"] 
 	result = []
-	for i in range(0, len(dict_data.items())):
+	for i in range(0, len(dict_data[test_combination[0]])):
 		result.insert(i, [value[i] for key, value in dict_data.items() if key in test_combination])
 
-	print(result)
+	regression = lm.LinearRegression()
+	test_regression = regression.fit(result, dict_data['Intel'])
+	test_square = test_regression.score(result, dict_data['Intel'])
+	print(test_square)
