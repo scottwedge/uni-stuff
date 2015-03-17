@@ -229,12 +229,20 @@ def build_reression(dict_data, list_data):
 
 #Best combination of 5 from 68	
 def best_regression(data):
-	companies = getCompanies(data)
+	companies_list = getCompanies(data)
 	data_dict = formatDataIntoDict(data)
-	#always the first column in the data set, in form of the dictionary
+	#always the first column in the data set, in form of the dictionary, clean the data
 	dependant_variable = {companies[0]:dict_data[companies[0]]}
-	companies.remove(dependant_variable.keys[0])
+	companies_list.remove(dependant_variable.keys[0])
 	del data_dict[dependant_variable.keys[0]]
+	#create all possible combinations 5 of 68
+	comb_companies = []
+	for item in itertools.combinations(list_companies, 5):
+		comb_companies.append(item)
+	#create arrays and count R² for each combination.
+	#create dict with R² as the key and combination as value 
+
+
 	#!!!Here, we agree on some model error, because the weights for WLS are functions from the data
 	# We agree on error because as the output we need companies (names), that are included into regression
 	# also we agreed on "bad model", so the error up to 25% is accaptable
@@ -256,13 +264,52 @@ if __name__ == "__main__":
 	for item in itertools.combinations(list_companies, 5):
 		comb_companies.append(item)'''
 	#print()
-	#create test test combination with corresponding data array
-	test_combination = ["Infenion", "AMD", "Ford", "Google", "Olympus"] 
-	result = []
-	for i in range(0, len(dict_data[test_combination[0]])):
-		result.insert(i, [value[i] for key, value in dict_data.items() if key in test_combination])
+	#create test test combination with corresponding data array and "maping" with indexed dictionary
+	test_combination = [["Infenion", "AMD", "Ford", "Google", "Olympus"], ["Infenion", "VW", "Ford", "Google", "Olympus"]] 
+	test_combination_indexed = {}
+	for item in test_combination:
+		test_combination_indexed = {i: test_combination[i] for i in range(0, len(test_combination))}
+	print(test_combination_indexed)
+	final = {}
+	array_comb = []
+	array_comb1 = {}
+	for k in test_combination_indexed.keys():
+		print(k, test_combination_indexed[k])
+		for i in range(0, len(dict_data['Intel'])):
+			array_comb1[i] = [value[i] for key, value in dict_data.items() if key in test_combination_indexed[k]]
+			#array_comb1.insert(i, [value[i] for key, value in dict_data.items() if key in test_combination_indexed[k]])
+			regression = lm.LinearRegression()
+			templist = [value for key, value in sorted(array_comb1.items())]
+			#rint(array_comb1)
+			#print(templist)
+		regression = lm.LinearRegression()
+		test_regression = regression.fit(templist, dict_data['Intel'])
+		test_square = test_regression.score(templist, dict_data['Intel'])
+		final = {test_square: test_combination_indexed[1]}
+		
+	print(final)
 
+	#for 1 combination
+	'''for i in range(0, len(dict_data[test_combination[0][0]])):
+		array_comb.insert(i, [value[i] for key, value in dict_data.items() if key in test_combination[0]])
 	regression = lm.LinearRegression()
-	test_regression = regression.fit(result, dict_data['Intel'])
-	test_square = test_regression.score(result, dict_data['Intel'])
-	print(test_square)
+	test_regression = regression.fit(array_comb, dict_data['Intel'])
+	test_square = test_regression.score(array_comb, dict_data['Intel'])
+	final = {test_square: test_combination_indexed[0]}
+
+	print(final)'''
+		
+
+	"""result = []
+	final_dict = {}
+	for k in test_combination_indexed.keys():
+		for i in range(0, len(dict_data[test_combination[0][0]])):
+			result.insert(i, [value[i] for key, value in dict_data.items() if key in test_combination[k]])
+			regression = lm.LinearRegression()
+			#test_regression = regression.fit(result, dict_data['Intel'])
+			#test_square = test_regression.score(result, dict_data['Intel'])
+			#final_dict = {test_square: value for value in test_combination_indexed[]}
+
+
+	print(result)"""
+
