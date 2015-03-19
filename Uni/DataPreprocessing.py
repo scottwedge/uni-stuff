@@ -32,20 +32,18 @@ def getCompanies(data):
         list_companies.append(key)
     return list_companies
 
-def extract_dependant(data):
-    companies_list = getCompanies(data)
-    data_dict = formatDataIntoDict(data)
-    dependant_variable = {companies_list[0]:dict_data[companies_list[0]]} #separate dependant and explanatory variables 
+def extract_dependant(dict_data, list_companies):
+    dependant_variable = {list_companies[0]:dict_data[list_companies[0]]} #separate dependant and explanatory variables 
     for key in dependant_variable.keys():
         if key in list_companies:
-            companies_list.remove(key)
+            list_companies.remove(key)
         else:
             pass
-        if key in data_dict.keys():
-            del data_dict[key]
+        if key in dict_data.keys():
+            del dict_data[key]
         else:
             pass
-    return dependant_variable, companies_list, data_dict
+    return dependant_variable, list_companies, dict_data
 
 '''Test for: stationary, '''
 def passes_dftest(data):
@@ -248,12 +246,12 @@ def build_reression(dict_data, list_data):
 
     return best_match'''
 #make correlation vector
-def correlation_vector(dict_data):
+def correlation_vector(dict_data, list_companies):
     correlation_with_Intel = {}
     for key in dict_data.keys():
         correlation_with_Intel[key] = []
     for key in correlation_with_Intel.keys():
-        correlation_with_Intel[key] = num.corrcoef(dict_data['Intel'], dict_data[key])[0][1] #ToDo compute dependant variable
+        correlation_with_Intel[key] = num.corrcoef(dict_data[list_companies[0]], dict_data[key])[0][1] #ToDo compute dependant variable
     return correlation_with_Intel
 
 if __name__ == "__main__":
@@ -262,19 +260,24 @@ if __name__ == "__main__":
     data = getData(f)
     list_companies = getCompanies(data)
     dict_data = formatDataIntoDict(data)
-    cor_vec = correlation_vector(dict_data)
+    cor_vec = correlation_vector(dict_data, list_companies)
+    #first cut-off, evrything with the correlation less than 30% is left out
     rest_companies = {}
     for key, value in cor_vec.items():
         if value > 0.3:
             rest_companies[key] = value
         else:
             pass
-
-    #normilizing data
-    print(len(cor_vec), cor_vec)
-    print(len(rest_companies), rest_companies)
-
- 
+    
+    #leave only data from the rest_companies
+    dependant, companies, test_data = extract_dependant(rest_companies, list_companies)
+    first_cutoff = {}
+    for key in test_data.keys():
+        first_cutoff[key] = dict_data[key]
+    print(len(first_cutoff), first_cutoff)
+    #forward step-wise selection
+    #choosing the company with the highet correlation coefficient
+    
 
 
 
