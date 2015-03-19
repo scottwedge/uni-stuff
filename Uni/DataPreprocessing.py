@@ -12,7 +12,7 @@ from sklearn import linear_model  as lm
 from sklearn.tree import DecisionTreeRegressor
 
 
-
+'''Data manipulation'''
 def getData(file_name):
     data = pd.read_csv(str(file_name))
     return data
@@ -32,14 +32,22 @@ def getCompanies(data):
         list_companies.append(key)
     return list_companies
 
-def formatDataIntoReturns(data):
-    financial_returns = {}
-    for key in data.keys():
-        financial_returns[key] =  []
-        for i in range(1, len(data[key])):
-            financial_returns[key].append((data[key][i]-data[key][i-1])/data[key][i-1])
-    return financial_returns
+def extract_dependant(data):
+    companies_list = getCompanies(data)
+    data_dict = formatDataIntoDict(data)
+    dependant_variable = {companies_list[0]:dict_data[companies_list[0]]} #separate dependant and explanatory variables 
+    for key in dependant_variable.keys():
+        if key in list_companies:
+            companies_list.remove(key)
+        else:
+            pass
+        if key in data_dict.keys():
+            del data_dict[key]
+        else:
+            pass
+    return dependant_variable, companies_list, data_dict
 
+'''Test for: stationary, '''
 def passes_dftest(data):
     print("Processing {}".format(data[0]))
     if statmodel.adfuller(data[1], 250, 'ctt', 't-stat', False, False)[0] < 1:
@@ -59,14 +67,11 @@ def stationarity(dict_data):
         p.map(passes_dftest, dict_data.items())
     return stationary
 
-#autocorrelation check (for chosen regression)
-def autodorrelation(dict_data):
-    pass
 
 '''Here we build CDF and PDF for our data, save it to img/,
 compute 1, 2, 3 moments, variation'''
+#build CDF and save it under "CDF_of_copany"
 def built_cdf(dict_data):
-    #build CDF and save it under "CDF_of_copany"
     pdf_dict = dict_data
     num_bins = 100
     plt.figure()
@@ -124,43 +129,6 @@ def kolmogorov_lognormal(dict_data):
             result_dict[key] = False
     return result_dict
 
-#AD, distribution = Pareto, 5% error
-def ad_gumbel(dict_data):
-    result_dict = {}
-    for key in dict_data.keys():
-        if stat.anderson(dict_data[key], dist='gumbel') < 3.791:
-            result_dict[key] = True
-        else:
-            result_dict[key] = False
-    return result_dict
-
-#AD test, for logistic and gumbel, 85% confidence
-def anderson_darling_multiple(dict_data):
-    result_dict = {}
-    distribution = {}
-    #check for logistic first
-    for key in dict_data.keys():
-        distribution[key] = []
-        if stat.anderson(dict_data[key], dist="logistic")[0] < 0.787:
-            result_dict[key] = True
-        else:
-            result_dict[key] = False
-    for key in result_dict.keys():
-        if result_dict[key] == True:
-            distribution[key].append("is logistic")
-        else:
-            for key in dict_data.keys():
-                if stat.anderson(dict_data[key], dist="gumbel")[0] < 0.787:
-                    result_dict[key] = True
-                    distribution[key].append("is gumble")
-                else:
-                    result_dict[key] = False
-    return distribution, result_dict
-'''Heteroscedasticity Tests'''
-#null hypothesis is that all observations have the same error variance
-def constant_variance(dict_data):
-    pass
-
 #different helper functions and tests:
 def checkDictionary(dictionary,listCheck):
     result_value = False
@@ -190,9 +158,10 @@ def log_data(dict_data):
 
 #Akaike criterion for choosing maximum number of the companies for regression
 '''Algorithm 1'''
+
 #checking the AIC value for linera regresion from one explanatory variable
 def build_reression(dict_data, list_data):
-    #first company in the csv is our dependent variable ALWAYS!
+    #first company in the csv is ALWAYS! our dependent variable 
     result_dict = {}
     dependant = list_companies[0]
     dependent_variable = {list_companies[0]:dict_data[list_companies[0]]}
@@ -227,7 +196,7 @@ def build_reression(dict_data, list_data):
     return best
 
 #Best combination of 5 from 68  
-def best_regression(data):
+'''def best_regression(data):
     #the first column in the data set is ALWAYS the dependant variable
     companies_list = getCompanies(data)
     data_dict = formatDataIntoDict(data)
@@ -241,7 +210,6 @@ def best_regression(data):
             del data_dict[key]
         else:
             pass
-
     #create all possible combinations 5 of 68
     comb_companies = []
     for item in itertools.combinations(list_companies, 5):
@@ -278,7 +246,15 @@ def best_regression(data):
     best_r = max(dinal.keys())
     best_match = "The best combination of 5 companies from 68 given is: " + str(final(best_r)) + " with R²: " + str(best_r)
 
-    return best_match
+    return best_match'''
+#make correlation vector
+def correlation_vector(dict_data):
+    correlation_with_Intel = {}
+    for key in dict_data.keys():
+        correlation_with_Intel[key] = []
+    for key in correlation_with_Intel.keys():
+        correlation_with_Intel[key] = [num.corrcoef(dict_data['Intel'], dict_data[key])[0][1]]
+    return correlation_with_Intel
 
 if __name__ == "__main__":
     '''Resulting outputs'''
@@ -286,55 +262,12 @@ if __name__ == "__main__":
     data = getData(f)
     list_companies = getCompanies(data)
     dict_data = formatDataIntoDict(data)
-    '''dependant_variable = {list_companies[0]:dict_data[list_companies[0]]} #separate dependant and explanatory variables 
-    for key in dependant_variable.keys():
-        if key in list_companies:
-            list_companies.remove(key)
-        else:
-            pass
-    #list_companies.remove(dependant_variable[list(dependant_variable.keys())[0]]) 
-    #del dict_data[dependant_variable.keys[0]]
-    print(dependant_variable)
-    print(list_companies)'''
-    best_combination = best_regression(data)
+    cor_vec = correlation_vector(dict_data)
 
-    #regression_one = build_reression(dict_data, list_companies)
+    print(cor_vec)
 
-    #creating all possible combinations of companies
-    #list_companies.remove('Intel')
-    #print(len(list_companies))
-    '''comb_companies = []
-    for item in itertools.combinations(list_companies, 5):
-        comb_companies.append(item)'''
-    #print()
-    #create test test combination with corresponding data array and "maping" with indexed dictionary
-    '''y = dict_data['Intel']
-    test_combination_indexed = {}
-    test_combination = [["Infenion", "AMD", "Ford", "Google", "Olympus"], ["Infenion", "VW", "Ford", "Google", "Olympus"], ["Infenion", "VW", "Nissan", "Google", "Olympus"]] 
-    for item in test_combination:
-        test_combination_indexed = {i: test_combination[i] for i in range(0, len(test_combination))}
-    print(test_combination_indexed)
-    r_square = {i: [] for i in range(0, len(test_combination_indexed.keys()))}
-    print(r_square)
-    final = {}
-    combination_array_dict = {}
-    combination_array_list = []
-    for key_index in test_combination_indexed.keys():
-        for i in range(0, len(dict_data['Intel'])):
-            combination_array_dict[i] = [value[i] for key, value in dict_data.items() if key in test_combination_indexed[key_index]] # index important!
-            combination_array_list = [value for key, value in sorted(combination_array_dict.items())]
-        reg = lm.LinearRegression()
-        test = reg.fit(combination_array_list, y)
-        r = test.score(combination_array_list, y)
-        r_square[key_index].append(r) #index important!
-    for key1 in test_combination_indexed.keys():
-        for key2 in r_square.keys():
-            if key1 == key2:
-                final[float(r_square[key2][0])] = list(test_combination_indexed[key1]) 
-    best = max(final.keys())
-    
-    print(final)
-    print("The best combination of 5 companies from 68 given is: " + str(final[best]) + " with R²: " + str(best))'''
+ 
+
 
 
     
