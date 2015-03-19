@@ -253,7 +253,7 @@ def correlation_vector(dict_data):
     for key in dict_data.keys():
         correlation_with_Intel[key] = []
     for key in correlation_with_Intel.keys():
-        correlation_with_Intel[key] = [num.corrcoef(dict_data['Intel'], dict_data[key])[0][1]]
+        correlation_with_Intel[key] = num.corrcoef(dict_data['Intel'], dict_data[key])[0][1] #ToDo compute dependant variable
     return correlation_with_Intel
 
 if __name__ == "__main__":
@@ -263,8 +263,16 @@ if __name__ == "__main__":
     list_companies = getCompanies(data)
     dict_data = formatDataIntoDict(data)
     cor_vec = correlation_vector(dict_data)
+    rest_companies = {}
+    for key, value in cor_vec.items():
+        if value > 0.3:
+            rest_companies[key] = value
+        else:
+            pass
 
-    print(cor_vec)
+    #normilizing data
+    print(len(cor_vec), cor_vec)
+    print(len(rest_companies), rest_companies)
 
  
 
