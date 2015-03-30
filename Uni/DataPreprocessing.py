@@ -268,14 +268,25 @@ if __name__ == "__main__":
             rest_companies[key] = value
         else:
             pass
-    
     #leave only data from the rest_companies
     dependant, companies, test_data = extract_dependant(rest_companies, list_companies)
     first_cutoff = {}
     for key in test_data.keys():
         first_cutoff[key] = dict_data[key]
     print(len(first_cutoff), first_cutoff)
+    '''
+    #get difference between original number of companies and rest after first cut off
+    cut_temp = []
+    for item in dict_data.keys():
+        if item not in first_cutoff.keys():
+            cut_temp.append(item)
+        else:
+            pass
+    cut_temp.remove(list(dependant.keys())[0])
+    print(len(cut_temp), cut_temp)'''
+
     #forward step-wise selection
+    #rank companies according to their 
     #choosing the company with the highet correlation coefficient
     
 
