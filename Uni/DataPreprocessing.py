@@ -65,6 +65,27 @@ def stationarity(dict_data):
         p.map(passes_dftest, dict_data.items())
     return stationary
 
+'''Test for distributions, 
+Hypothesis(0)=empirical DF is from tested distribution'''
+#Kolmogorov, distribution = normal, 15% error
+def kolmogorov_normal(dict_data):
+    result_dict = {}
+    for key in dict_data.keys():
+        if stat.kstest(dict_data[key], 'norm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1239)[0] < 0.032331:
+            result_dict[key] = True
+        else:
+            result_dict[key] = False
+    return result_dict
+
+#Kolmogorov, distribution = lognormal, 5% error
+def kolmogorov_lognormal(dict_data):
+    result_dict = {}
+    for key in dict_data.keys():
+        if stat.kstest(dict_data[key], 'lognorm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1239)[0] < 1.039:
+            result_dict[key] = True
+        else:
+            result_dict[key] = False
+    return result_dict
 
 '''Here we build CDF and PDF for our data, save it to img/,
 compute 1, 2, 3 moments, variation'''
@@ -105,28 +126,18 @@ def findMoments(dict_data):
         result_dict[key] = [num.sum(dict_data[key])/len(dict_data[key]), num.std(dict_data[key]), stat.skew(dict_data[key]), stat.kurtosis(dict_data[key], fisher=True)]
     return result_dict
 
-'''Test for distributions, 
-Hypothesis(0)=empirical DF is from tested distribution'''
-#Kolmogorov, distribution = normal, 15% error
-def kolmogorov_normal(dict_data):
-    result_dict = {}
+#bring the data to the normal distribution
+def log_data(dict_data):
+    log_data = {}
     for key in dict_data.keys():
-        if stat.kstest(dict_data[key], 'norm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1239)[0] < 0.032331:
-            result_dict[key] = True
-        else:
-            result_dict[key] = False
-    return result_dict
+        log_data[key] = []
+        for item in dict_data[key]:
+            new_item = math.log(item)
+            log_data[key].append(new_item)
+    return log_data
 
-#Kolmogorov, distribution = lognormal, 5% error
-def kolmogorov_lognormal(dict_data):
-    result_dict = {}
-    for key in dict_data.keys():
-        if stat.kstest(dict_data[key], 'lognorm', args=(num.average(dict_data[key]), num.std(dict_data[key])), N=1239)[0] < 1.039:
-            result_dict[key] = True
-        else:
-            result_dict[key] = False
-    return result_dict
 
+'''Helper functions, Tests'''
 #different helper functions and tests:
 def checkDictionary(dictionary,listCheck):
     result_value = False
@@ -144,18 +155,12 @@ def checkDictionary(dictionary,listCheck):
             result_value = True
     return result
 
-#bring the data to the normal distribution
-def log_data(dict_data):
-    log_data = {}
-    for key in dict_data.keys():
-        log_data[key] = []
-        for item in dict_data[key]:
-            new_item = math.log(item)
-            log_data[key].append(new_item)
-    return log_data
 
 #Akaike criterion for choosing maximum number of the companies for regression
 '''Algorithm 1'''
+#As the first step, after statistical characteristics are figured out
+#The correlation vector is computed, sorted 
+
 
 #checking the AIC value for linera regresion from one explanatory variable
 def build_reression(dict_data, list_data):

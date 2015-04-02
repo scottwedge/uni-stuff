@@ -3,9 +3,11 @@ import statistics
 import pandas as pd
 import datetime
 import matplotlib.pyplot as plt 
-import numpy as num
+import numpy as np
 import itertools
 import scipy as sp
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
 
 '''data_dict = {}
 helper_list = []
@@ -96,21 +98,45 @@ def formatDataIntoDict(data):
 			dict_data[key].append(float(data[key][i]))
 	return dict_data
 
-data_dict = formatDataIntoDict(data)
-del data_dict['Intel']
-companies = []
-for key in data_dict.keys():
-	companies.append(key)
-combinations = []
-#for item in itertools.combinations(companies, 65):
-#	combinations.append(item)
-#print(companies)
-test = ["A","1", "2", "3", "4", "AA", "BB" "B", "C", "D", "F", "E", "G", "H", "I", "j", "k", "l", "m", 'n', "o", "p", "q", "r", "t", "s", "u", "v", "w", "x", "y", "z" ]
-result = []
-for item in itertools.combinations(test, 5):
-	result.append(item)
-print(result)
-print(len(result))
-print(len(test))
+dict_data = formatDataIntoDict(data)
+#print(data_dict)
+y = dict_data['Intel']
+dict_test = {'AMD': dict_data['AMD'], 'VW': dict_data['VW'], 'Olympus': dict_data['Olympus']}
+X = []
+#explanatory data is AMD. VW, Olympus whithout interscept
+for i in range(0, len(dict_test['AMD'])):
+	X.append([dict_test['AMD'][i]])
+for key in dict_test.keys():
+	if key != 'AMD':
+		for i in range(0, len(dict_test[key])):
+			X[i].append(dict_test[key][i])
+dict_test2 =  {'VW': dict_data['VW'], 'Olympus': dict_data['Olympus']}
+Z = []
+for i in range(0, len(dict_test2['VW'])):
+	Z.append([dict_test2['VW'][i]])
+for key in dict_test2.keys():
+	if key != 'VW':
+		for i in range(0, len(dict_test2[key])):
+			Z[i].append(dict_test2[key][i])
+#smaller model
+model2 = sm.OLS(y,Z)
+regression2 = model2.fit()
+#bigger model
+model1 = sm.OLS(y,X)
+regression1 = model1.fit()
+#llr = regression.compare_lr_test(restricted)
+print(regression1.compare_lr_test(regression2))
+'''# Generate artificial data (2 regressors + constant)
+nobs = 100
+X = np.random.random((nobs, 2))
+X = sm.add_constant(X)
+beta = [1, .1, .5]
+e = np.random.random(nobs)
+y = np.dot(X, beta) + e
 
+# Fit regression model
+results = sm.OLS(y, X).fit()
 
+print(len(y))
+print(len(X), len(X[0]))
+#print (results.summary())'''
