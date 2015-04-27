@@ -125,7 +125,7 @@ regression2 = model2.fit()
 model1 = sm.OLS(y,X)
 regression1 = model1.fit()
 #llr = regression.compare_lr_test(restricted)
-print(regression1.compare_lr_test(regression2))
+print(regression1.compare_lr_test(regression2)[0])
 '''# Generate artificial data (2 regressors + constant)
 nobs = 100
 X = np.random.random((nobs, 2))
