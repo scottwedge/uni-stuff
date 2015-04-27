@@ -198,58 +198,7 @@ def build_reression(dict_data, list_data):
     
     return best
 
-#Best combination of 5 from 68  
-'''def best_regression(data):
-    #the first column in the data set is ALWAYS the dependant variable
-    companies_list = getCompanies(data)
-    data_dict = formatDataIntoDict(data)
-    dependant_variable = {companies_list[0]:dict_data[companies_list[0]]} #separate dependant and explanatory variables 
-    for key in dependant_variable.keys():
-        if key in list_companies:
-            companies_list.remove(key)
-        else:
-            pass
-        if key in data_dict.keys():
-            del data_dict[key]
-        else:
-            pass
-    #create all possible combinations 5 of 68
-    comb_companies = []
-    for item in itertools.combinations(list_companies, 5):
-        comb_companies.append(item)
 
-    #formating combinations into dictionary 
-    test_combination_indexed = {}
-    for item in comb_companies:
-        test_combination_indexed = {i: comb_companies[i] for i in range(0, len(comb_companies))}
-
-    r_square = {i: [] for i in range(0, len(test_combination_indexed.keys()))}  #create dict with R² as the key and combination as value, initiating the dictionary 
-    final = {} #final dict is the resulting dictionary with r² as the key and corresponding combination as value
-    combination_array_dict = {} #for every combination the dictionary will be overwritten to save memory
-    combination_array_list = [] #formating the combination_array_dict to list to use LinearRegression
-    #get R² for all combinations
-    for key_index in test_combination_indexed.keys():
-        for i in range(0, len(dict_data['Intel'])):
-            combination_array_dict[i] = [value[i] for key, value in dict_data.items() if key in test_combination_indexed[key_index]] 
-            combination_array_list = [value for key, value in sorted(combination_array_dict.items())]
-        reg = lm.LinearRegression()
-        test = reg.fit(combination_array_list, y)
-        r = test.score(combination_array_list, y)
-        r_square[key_index].append(r) 
-
-    #final_dict getting values from the previous step
-    for key1 in test_combination_indexed.keys():
-        for key2 in r_square.keys():
-            if key1 == key2:
-                final[float(r_square[key2][0])] = list(test_combination_indexed[key1]) 
-            else:
-                pass
-
-    #choose "best match" by taking combination with the highest R²
-    best_r = max(dinal.keys())
-    best_match = "The best combination of 5 companies from 68 given is: " + str(final(best_r)) + " with R²: " + str(best_r)
-
-    return best_match'''
 #make correlation vector
 def correlation_vector(dict_data, list_companies):
     correlation_with_Intel = {}
@@ -259,40 +208,43 @@ def correlation_vector(dict_data, list_companies):
         correlation_with_Intel[key] = num.corrcoef(dict_data[list_companies[0]], dict_data[key])[0][1] #ToDo compute dependant variable
     return correlation_with_Intel
 
+def correlational_cutoff(border, correlation_vector):
+    rest_companies = {}
+    for key, value in correlation_vector.items():
+        if value > border:
+            rest_companies[key] = value
+        else:
+            pass
+    return rest_companies 
+
+"""Find 1-parameter regression"""
+def one_parameter_model(correlational_cutoff_vector, list_companies):
+    #extract the dependent variable from correlational vector
+    dependant, companies, test_data = extract_dependant(correlational_cutoff_vector, list_companies)
+    cor_sorted = sorted(cut_off.values())
+    max_cor = max(cor_sorted)
+    model = ""
+    for key, value in cut_off.items():
+        if max_cor == value:
+            model = "Best 1-parameter model is: "+ str(key) +" with "+ str(value) + " correlation"
+        else:
+            pass
+    return model
+
 if __name__ == "__main__":
     '''Resulting outputs'''
     f = 'data/LearningSet.csv'
     data = getData(f)
     list_companies = getCompanies(data)
     dict_data = formatDataIntoDict(data)
+
     cor_vec = correlation_vector(dict_data, list_companies)
     #first cut-off, evrything with the correlation less than 30% is left out
-    rest_companies = {}
-    for key, value in cor_vec.items():
-        if value > 0.3:
-            rest_companies[key] = value
-        else:
-            pass
-    #leave only data from the rest_companies
-    dependant, companies, test_data = extract_dependant(rest_companies, list_companies)
-    first_cutoff = {}
-    for key in test_data.keys():
-        first_cutoff[key] = dict_data[key]
-    print(len(first_cutoff), first_cutoff)
-    '''
-    #get difference between original number of companies and rest after first cut off
-    cut_temp = []
-    for item in dict_data.keys():
-        if item not in first_cutoff.keys():
-            cut_temp.append(item)
-        else:
-            pass
-    cut_temp.remove(list(dependant.keys())[0])
-    print(len(cut_temp), cut_temp)'''
+    cut_off = correlational_cutoff(0.3, cor_vec)
+    
+    one_parameter_model = one_parameter_model(cut_off, list_companies)
+    print(one_parameter_model)
 
-    #forward step-wise selection
-    #rank companies according to their 
-    #choosing the company with the highet correlation coefficient
     
 
 
