@@ -45,6 +45,10 @@ def extract_dependant(dict_data, list_companies):
             pass
     return dependant_variable, list_companies, dict_data
 
+def extract_company(parameter_fixed, ):
+    extractable = []
+
+
 '''Test for: stationary, '''
 def passes_dftest(data):
     print("Processing {}".format(data[0]))
@@ -156,48 +160,10 @@ def checkDictionary(dictionary,listCheck):
     return result
 
 
-#Akaike criterion for choosing maximum number of the companies for regression
-'''Algorithm 1'''
-#As the first step, after statistical characteristics are figured out
-#The correlation vector is computed, sorted 
-
-
-#checking the AIC value for linera regresion from one explanatory variable
-def build_reression(dict_data, list_data):
-    #first company in the csv is ALWAYS! our dependent variable 
-    result_dict = {}
-    dependant = list_companies[0]
-    dependent_variable = {list_companies[0]:dict_data[list_companies[0]]}
-    del dict_data[dependant]
-    #Preprocessing data into usable format for scikit.LinearRegression = sci_dict
-    sci_dict = {}
-    for key in dict_data.keys():
-        sci_dict[key] = []
-        for item in dict_data[key]:
-            sci_dict[key].append([item])
-    #first we will build the regression with 1 dexplanatory variable
-    #count AIC, R² and regression's parameters
-    #assume the regression y = ß0 + ß1*x
-    for key in sci_dict.keys():
-        regression = lm.LassoLarsIC()
-        FitRegr = regression.fit(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
-        RSquare = FitRegr.score(sci_dict[key], dependent_variable[list(dependent_variable.keys())[0]])
-        result_dict["y=ß0+ß1*{}".format(key)] = [RSquare, FitRegr.criterion_[1]]
-    #evaluation of the best regression based on min AIC value
-    helper_list = []
-    for k, v in result_dict.items():
-        helper_list.append(v[0])
-        best_r = max(helper_list)
-        best_aic = min(helper_list)
-    for key in result_dict.keys():
-        if result_dict[key][0] == best_r:
-            best = str(key) + " Is the best regression with R²: " + str(result_dict[key][0])
-        else:
-            pass
-    #at this point we have chosen "best" variant among 1-variable-regressions
-    
-    return best
-
+'''Algorithm 1: step-forward selection. Best model with one parameter computed.
+The best model with 2 parameters computed. Both models are compared using LLR test.
+If bigger model is better the iteration goes further until the set limit of parametrs not reached 
+or until the smaller model woul be better'''
 
 #make correlation vector
 def correlation_vector(dict_data, list_companies):
@@ -208,6 +174,8 @@ def correlation_vector(dict_data, list_companies):
         correlation_with_Intel[key] = num.corrcoef(dict_data[list_companies[0]], dict_data[key])[0][1] #ToDo compute dependant variable
     return correlation_with_Intel
 
+
+#in order to reduce the run time for a bit
 def correlational_cutoff(border, correlation_vector):
     rest_companies = {}
     for key, value in correlation_vector.items():
@@ -224,12 +192,18 @@ def one_parameter_model(correlational_cutoff_vector, list_companies):
     cor_sorted = sorted(cut_off.values())
     max_cor = max(cor_sorted)
     model = ""
+    company = ""
     for key, value in cut_off.items():
         if max_cor == value:
             model = "Best 1-parameter model is: "+ str(key) +" with "+ str(value) + " correlation"
+            company = key
         else:
             pass
-    return model
+    return model, company
+
+"""Find two parameter regression"""
+def two_parameter_model(company,correlational_cutoff_vector):
+    pass
 
 if __name__ == "__main__":
     '''Resulting outputs'''
@@ -237,16 +211,19 @@ if __name__ == "__main__":
     data = getData(f)
     list_companies = getCompanies(data)
     dict_data = formatDataIntoDict(data)
-
+    dependant_variable = {'Intel': dict_data['Intel']}
     cor_vec = correlation_vector(dict_data, list_companies)
     #first cut-off, evrything with the correlation less than 30% is left out
     cut_off = correlational_cutoff(0.3, cor_vec)
-    
-    one_parameter_model = one_parameter_model(cut_off, list_companies)
+
+    one_parameter_model, company = one_parameter_model(cut_off, list_companies)
     print(one_parameter_model)
-
     
+    #remember the company from the first iteration
+    chosen_companies = []
+    chosen_companies.append(company)
+   # print("Fixed parameters for the regression are: " + str(chosen_companies))
 
-
+    #create all possible models with 1 fixed and 1 "random parameter"
 
     
