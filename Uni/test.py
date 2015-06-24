@@ -8,8 +8,8 @@ clf = linear_model.LinearRegression()
 x = [[0, 0], [1, 1], [2, 2]]
 y =  [0, 1, 2]
 a = clf.fit (x, y)
-print(x)
-print(y)
+print(len(x), "x", len(x[0]))
+print(len(y), "x 1")
 
 #tree
 '''

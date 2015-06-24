@@ -218,12 +218,70 @@ if __name__ == "__main__":
 
     one_parameter_model, company = one_parameter_model(cut_off, list_companies)
     print(one_parameter_model)
-    
-    #remember the company from the first iteration
-    chosen_companies = []
-    chosen_companies.append(company)
-   # print("Fixed parameters for the regression are: " + str(chosen_companies))
+    #remember the company from the first iteration and delete from the general list
+    companies_chosen = []
+    companies_chosen.append(company)
 
-    #create all possible models with 1 fixed and 1 "random parameter"
+    #initializing companies_left-list
+    companies_left = []
+    for key in cut_off.keys():
+        companies_left.append(key)
+    #deleting chosen companies
+    for item in companies_chosen:
+        if item in companies_left:
+            companies_left.remove(item)
+        else:
+            pass
 
+    #let's create test combination Olympus, Google = combinations
+    helper_dict = {i: [] for i in range(0, len(dict_data['Intel']))}
+    helper_list = []
+    combinations = ['Olympus', 'Google']
+
+    y = dict_data['Intel']
+
+    for i in range(0, len(dict_data['Intel'])):
+        for item in combinations:
+            helper_dict[i].append(dict_data[item][i])
+        helper_list.append(helper_dict[i])
+
+    reg = lm.LinearRegression()
+    fit = reg.fit(helper_list, y)
+    score = fit.score(helper_list, y)    
+
+    print(dict_data['Olympus'])
+    print(dict_data['Google'])
+    print("R² of the combination is: ", score)
+'''
+    #create regression for combinations from chosen and one free parameters, choose best regression among the class with R²
+    r_square = {}
+    final = {} #final dict is the resulting dictionary with r² as the key and corresponding combination as value
+    helper_dict = {} #for every combination the dictionary will be overwritten to save memory
+    helper_list = [] #formating the combination_array_dict to list to use LinearRegression
+    helper_combination = {}
+    helper_coeff = {}
+    #create combonations
+    combination_list = []
+    for item in companies_left:
+        combination_list.append([item])
+    for i in range(0, len(combination_list)):
+        for element in companies_chosen:
+            combination_list[i].append(element)
+    for i in range(0, len(combination_list)):
+        helper_combination[i] = combination_list[i]
+        helper_coeff[i] = []
+
+    #create dependent varibale array
+    y = dict_data['Intel']
     
+    for i in range(0, len(dict_data['Intel'])):
+        for item in combination_list:
+            helper_dict[i] = []
+            for element in item:
+                helper_dict[i].append(dict_data[element][i]) 
+        helper_list.append(helper_dict[i])  
+        reg = lm.LinearRegression()
+        #fit = reg.fit(helper_list, y)
+'''
+
+
