@@ -249,8 +249,8 @@ if __name__ == "__main__":
     fit = reg.fit(helper_list, y)
     score = fit.score(helper_list, y)    
 
-    print(dict_data['Olympus'])
-    print(dict_data['Google'])
+    print(helper_dict)
+    print(helper_list)
     print("R² of the combination is: ", score)
 '''
     #create regression for combinations from chosen and one free parameters, choose best regression among the class with R²
