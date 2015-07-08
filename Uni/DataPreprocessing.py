@@ -3,6 +3,7 @@ import datetime
 import matplotlib.pyplot as plt 
 import numpy as num
 from scipy import stats as stat
+import statsmodels.api as sm
 import statsmodels.tsa.stattools as statmodel
 from multiprocessing import Pool
 import itertools
@@ -233,13 +234,17 @@ if __name__ == "__main__":
         else:
             pass
 
-    #let's create test combination Olympus, Google = combinations
+    #create combinations for one fixed parameter and one "free"
+    combinations = []
+    for item in companies_left:
+        combinations.append([item, companies_chosen[0]])
+
+    #let's create test combination Olympus+, Google or AMD = combinations
     y = dict_data['Intel']
     helper_dict = {}
     helper_list = []
-    combinations = [['Olympus', 'Google']]
     combinations_dict = {}
-    r_sqared = {i: [] for i in range(0, len(combinations))}
+    r_squared = {i: [] for i in range(0, len(combinations))}
     for i in range(0, len(combinations)):
         combinations_dict[i] = combinations[i]
 
@@ -250,12 +255,23 @@ if __name__ == "__main__":
             for item in combinations_dict[key]:
                 helper_dict[i] = [v[i] for k, v in dict_data.items() if k in combinations_dict[key]]
                 helper_list = [value for key, value in sorted(helper_dict.items())]
-        reg = lm.LinearRegression()
-        fit = reg.fit(helper_list, y)
-        r = fit.score(helper_list, y)
-        r_sqared[key].append(r)
+        # reg = lm.LinearRegression()
+        # fit = reg.fit(helper_list, y)
+        # r = fit.score(helper_list, y)
+        model = sm.OLS(y, helper_list)
+        regression = model.fit()
+        r = regression.rsquared 
+        r_squared[key].append(r)
 
+    #mapping r² and combinations
+    final = {}
+    for k1 in combinations_dict.keys():
+        for k2 in r_squared.keys():
+            if k1 == k2:
+                final[float(r_squared[k2][0])] = list(combinations_dict[k1]) 
+    #choosing the best model among the class
+    best = max(final.keys())
+    best_2_model = "The best 2-Parametered-Model is: " + str(final[best]) + " with R²: " + str(best)
 
-    print(helper_dict)
-    print(helper_list)
-    print(r_sqared)
+    print(final)
+    print(best_2_model)
