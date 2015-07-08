@@ -272,6 +272,8 @@ if __name__ == "__main__":
     #choosing the best model among the class
     best_r = max(final.keys())
     best_model = final[best_r]
+    #create model for further comparison
+
     
     #extract the best models
     for item in best_model:
@@ -280,7 +282,8 @@ if __name__ == "__main__":
         else:
             companies_chosen.append(item)
             companies_left.remove(item)
-
-    print(companies_chosen, 'St Jude' in companies_left)
+    
+    #compare two models
+    # big.compare_lr_test(small)[0]
     print("The best 2-Parametered-Model is: ", final[best_r], " with R²: ", str(best_r))
     print(best_model)
