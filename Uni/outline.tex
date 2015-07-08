@@ -266,7 +266,8 @@ In order to choose the best combination we will use Forward selection. This is a
 As the final result, the first algorithm will return the regression model in the following form: 
 \[Dependent = \alpha + \sum_{i=0}^{N} \beta_{i}Comp_{i}\] 
 where N - is the limit on the number of variables in the regression, $\alpha$, $\beta_{i}$ are the regression's parameters.
-
+\\
+As the main library for estimating the regressions "statsmodels OLS" was chosen. The other possibility was "scikit LinearRegression". Using the first class we can determine the non-linear character of the explanatory variables, which is most likely here. We build simple model, but not the worst one, thus we have chosen more complex model.
 
 \newpage
 \section{conclusion}

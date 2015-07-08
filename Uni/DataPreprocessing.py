@@ -270,8 +270,17 @@ if __name__ == "__main__":
             if k1 == k2:
                 final[float(r_squared[k2][0])] = list(combinations_dict[k1]) 
     #choosing the best model among the class
-    best = max(final.keys())
-    best_2_model = "The best 2-Parametered-Model is: " + str(final[best]) + " with R²: " + str(best)
+    best_r = max(final.keys())
+    best_model = final[best_r]
+    
+    #extract the best models
+    for item in best_model:
+        if item in companies_chosen:
+            pass
+        else:
+            companies_chosen.append(item)
+            companies_left.remove(item)
 
-    print(final)
-    print(best_2_model)
+    print(companies_chosen, 'St Jude' in companies_left)
+    print("The best 2-Parametered-Model is: ", final[best_r], " with R²: ", str(best_r))
+    print(best_model)
