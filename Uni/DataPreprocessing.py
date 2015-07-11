@@ -187,7 +187,7 @@ def correlational_cutoff(border, correlation_vector):
     return rest_companies 
 
 """Find 1-parameter regression"""
-def one_parameter_model(correlational_cutoff_vector, list_companies):
+def one_parameter_model(correlational_cutoff_vector, list_companies, dict_data):
     #extract the dependent variable from correlational vector
     dependant, companies, test_data = extract_dependant(correlational_cutoff_vector, list_companies)
     cor_sorted = sorted(cut_off.values())
@@ -200,10 +200,13 @@ def one_parameter_model(correlational_cutoff_vector, list_companies):
             company = key
         else:
             pass
-    return model, company
+    smaller_model_list = []
+    for i in range(0, len(dict_data['Intel'])):
+        smaller_model_list.append([dict_data[company][i]])
+    return model, company, smaller_model_list
 
 """Find two parameter regression"""
-def two_parameter_model(company,correlational_cutoff_vector):
+def two_parameter_model(companies_left, companies_chosen):
     pass
 
 if __name__ == "__main__":
@@ -217,8 +220,9 @@ if __name__ == "__main__":
     #first cut-off, evrything with the correlation less than 30% is left out
     cut_off = correlational_cutoff(0.3, cor_vec)
 
-    one_parameter_model, company = one_parameter_model(cut_off, list_companies)
+    one_parameter_model, company, smaller_model_list = one_parameter_model(cut_off, list_companies, dict_data)
     print(one_parameter_model)
+    print(smaller_model_list)
     #remember the company from the first iteration and delete from the general list
     companies_chosen = []
     companies_chosen.append(company)
@@ -239,8 +243,9 @@ if __name__ == "__main__":
     for item in companies_left:
         combinations.append([item, companies_chosen[0]])
 
-    #let's create test combination Olympus+, Google or AMD = combinations
+    #dependent data
     y = dict_data['Intel']
+    
     helper_dict = {}
     helper_list = []
     combinations_dict = {}
@@ -248,7 +253,6 @@ if __name__ == "__main__":
     for i in range(0, len(combinations)):
         combinations_dict[i] = combinations[i]
 
-    print(combinations_dict)
     #create proper data for Linear Regression
     for key in combinations_dict.keys():
         for i in range(0, len(dict_data['Intel'])):
@@ -273,7 +277,15 @@ if __name__ == "__main__":
     best_r = max(final.keys())
     best_model = final[best_r]
     #create model for further comparison
-
+    bigger_model_dict = {}
+    bigger_model_list = []
+    for i in range (0, len(dict_data['Intel'])):
+        for item in best_model:
+            bigger_model_dict[i] = [v[i] for k, v in dict_data.items() if k in best_model]
+            bigger_model_list = [value for key, value in sorted(bigger_model_dict.items())]
+    
+    print(best_model)
+    print(bigger_model_dict)
     
     #extract the best models
     for item in best_model:
@@ -284,6 +296,9 @@ if __name__ == "__main__":
             companies_left.remove(item)
     
     #compare two models
-    # big.compare_lr_test(small)[0]
-    print("The best 2-Parametered-Model is: ", final[best_r], " with R²: ", str(best_r))
-    print(best_model)
+    small = sm.OLS(y,smaller_model_list).fit()
+    big = sm.OLS(y, bigger_model_list).fit()
+    comparison = big.compare_lr_test(small)[0]
+    print(comparison)
+    #print("The best 2-Parametered-Model is: ", final[best_r], " with R²: ", str(best_r))
+  
