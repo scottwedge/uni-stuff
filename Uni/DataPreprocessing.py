@@ -205,14 +205,20 @@ def one_parameter_model(correlational_cutoff_vector, list_companies, dict_data):
 def two_parameter_model(companies_left, companies_chosen):
     pass
 
-def llr_test(model_null, model_alternative):
+def llr_test(model_null, model_alternative, rejected):
+    
     #LLR test itself, 5% error -> c = 0,004 according to chi-square distribution table
     c = 0.004
     D = -2 * math.log(model_null/model_alternative)
     if (D  > c):
-        print("The Null-Hypothesis is confirmed"
+        print("The Null-Hypothesis is confirmed")
+        rejected = False
     else:
         print("The Null-Hypothesis is rejected")
+        rejected = True
+    return rejected 
+def set_the_limit(dict_data):
+    pass
 
 if __name__ == "__main__":
     '''Resulting outputs'''
@@ -299,7 +305,8 @@ if __name__ == "__main__":
         else:
             companies_chosen.append(item)
             companies_left.remove(item)
-    
+    #global variable, status flag for the second global condition, here we think that bigger model will be always better
+    flag = True
 
     #compare two models
     model_null = sm.OLS(y,smaller_model_list)
@@ -308,14 +315,10 @@ if __name__ == "__main__":
     params_alternative = sm.OLS(y, bigger_model_list).fit().params
     null = model_null.loglike(params_null)
     alternative = model_alternative.loglike(params_alternative)
-    
-
-    D = -2 * math.log(null/alternative)
-    #LLR test itself, 5% error -> c = 0,004 according to chi-square distribution table
-    c = 0.004
-    if (D  > c):
-        print("Better fit is the model: ", one_parameter_model)
+    rejected = llr_test(null, alternative, flag)
+    if rejected == False:
+        print("Smaller model is better, the search is finished: ", one_parameter_model)
     else:
-        print("Better fit is the model: ", two_parameter_model)
+        print("Bigger model is better, limit is not reached, continue searching: ", two_parameter_model)
     #print("The best 2-Parametered-Model is: ", final[best_r], " with R²: ", str(best_r))
   
