@@ -275,20 +275,20 @@ if __name__ == "__main__":
                 final[float(r_squared[k2][0])] = list(combinations_dict[k1]) 
     #choosing the best model among the class
     best_r = max(final.keys())
-    best_model = final[best_r]
+    two_parameter_model = final[best_r]
     #create model for further comparison
     bigger_model_dict = {}
     bigger_model_list = []
     for i in range (0, len(dict_data['Intel'])):
-        for item in best_model:
-            bigger_model_dict[i] = [v[i] for k, v in dict_data.items() if k in best_model]
+        for item in two_parameter_model:
+            bigger_model_dict[i] = [v[i] for k, v in dict_data.items() if k in two_parameter_model]
             bigger_model_list = [value for key, value in sorted(bigger_model_dict.items())]
     
-    print(best_model)
+    print(two_parameter_model)
     print(bigger_model_dict)
     
     #extract the best models
-    for item in best_model:
+    for item in two_parameter_model:
         if item in companies_chosen:
             pass
         else:
@@ -299,14 +299,16 @@ if __name__ == "__main__":
     #compare two models
     model_null = sm.OLS(y,smaller_model_list)
     model_alternative = sm.OLS(y, bigger_model_list)
-    small = sm.OLS(y,smaller_model_list).fit()
-    big = sm.OLS(y, bigger_model_list).fit()
-
-    print(model_null.loglike(small.params))
-    print(model_alternative.loglike(big.params))
-    coefficient = big.compare_lr_test(small)[0]
-    p_value = big.compare_lr_test(small)[1]
-    freedom = big.compare_lr_test(small)[2]
-    print(coefficient, p_value, freedom)
+    params_null = sm.OLS(y,smaller_model_list).fit().params
+    params_alternative = sm.OLS(y, bigger_model_list).fit().params
+    null = model_null.loglike(params_null)
+    alternative = model_alternative.loglike(params_alternative)
+    D = -2 * math.log(null/alternative)
+    #LLR test itself, 5% error -> c = 0,004 according to chi-square distribution table
+    c = 0.004
+    if (D  > c):
+        print("Better fit is the model: ", one_parameter_model)
+    else:
+        print("Better fit is the model: ", two_parameter_model)
     #print("The best 2-Parametered-Model is: ", final[best_r], " with R²: ", str(best_r))
   
