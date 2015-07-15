@@ -46,10 +46,6 @@ def extract_dependant(dict_data, list_companies):
             pass
     return dependant_variable, list_companies, dict_data
 
-def extract_company(parameter_fixed, ):
-    extractable = []
-
-
 '''Test for: stationary, '''
 def passes_dftest(data):
     print("Processing {}".format(data[0]))
@@ -209,6 +205,15 @@ def one_parameter_model(correlational_cutoff_vector, list_companies, dict_data):
 def two_parameter_model(companies_left, companies_chosen):
     pass
 
+def llr_test(model_null, model_alternative):
+    #LLR test itself, 5% error -> c = 0,004 according to chi-square distribution table
+    c = 0.004
+    D = -2 * math.log(model_null/model_alternative)
+    if (D  > c):
+        print("The Null-Hypothesis is confirmed"
+    else:
+        print("The Null-Hypothesis is rejected")
+
 if __name__ == "__main__":
     '''Resulting outputs'''
     f = 'data/LearningSet.csv'
@@ -303,6 +308,8 @@ if __name__ == "__main__":
     params_alternative = sm.OLS(y, bigger_model_list).fit().params
     null = model_null.loglike(params_null)
     alternative = model_alternative.loglike(params_alternative)
+    
+
     D = -2 * math.log(null/alternative)
     #LLR test itself, 5% error -> c = 0,004 according to chi-square distribution table
     c = 0.004
