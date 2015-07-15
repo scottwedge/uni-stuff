@@ -295,10 +295,18 @@ if __name__ == "__main__":
             companies_chosen.append(item)
             companies_left.remove(item)
     
+
     #compare two models
+    model_null = sm.OLS(y,smaller_model_list)
+    model_alternative = sm.OLS(y, bigger_model_list)
     small = sm.OLS(y,smaller_model_list).fit()
     big = sm.OLS(y, bigger_model_list).fit()
-    comparison = big.compare_lr_test(small)[0]
-    print(comparison)
+
+    print(model_null.loglike(small.params))
+    print(model_alternative.loglike(big.params))
+    coefficient = big.compare_lr_test(small)[0]
+    p_value = big.compare_lr_test(small)[1]
+    freedom = big.compare_lr_test(small)[2]
+    print(coefficient, p_value, freedom)
     #print("The best 2-Parametered-Model is: ", final[best_r], " with R²: ", str(best_r))
   
