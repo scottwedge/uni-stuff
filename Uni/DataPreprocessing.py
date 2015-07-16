@@ -213,13 +213,17 @@ def best_model_in_the_class(dict_data, combinations):
         r = regression.rsquared 
         r_squared[key].append(r)
     #map the results into final    
-    final = {}
+    determination_combination_dict = {}
     for k1 in combinations_dict.keys():
         for k2 in r_squared.keys():
             if k1 == k2:
-                final[float(r_squared[k2][0])] = list(combinations_dict[k1])
+                determination_combination_dict[float(r_squared[k2][0])] = list(combinations_dict[k1])
 
-    return final, r_squared, helper_dict, helper_list
+    #choose the best model among the class 
+    best_r = max(determination_combination_dict.keys())
+    best_model = determination_combination_dict[best_r]
+
+    return best_model, determination_combination_dict, r_squared, helper_dict, helper_list
 
 """Find 1-parameter regression"""
 def one_parameter_model(correlational_cutoff_vector, list_companies, dict_data):
@@ -303,20 +307,17 @@ if __name__ == "__main__":
     #dependent data
     y = dict_data['Intel']
     
-    final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
-
-    #choosing the best model among the class
-    best_r = max(final.keys())
-    two_parameter_model = final[best_r]
+    best_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
+    
     #create model for further comparison
     bigger_model_dict = {}
     bigger_model_list = []
     for i in range (0, len(dict_data['Intel'])):
-        for item in two_parameter_model:
-            bigger_model_dict[i] = [v[i] for k, v in dict_data.items() if k in two_parameter_model]
+        for item in best_model:
+            bigger_model_dict[i] = [v[i] for k, v in dict_data.items() if k in best_model]
             bigger_model_list = [value for key, value in sorted(bigger_model_dict.items())]
     
-    print(two_parameter_model)
+    print(best_model)
     print(bigger_model_dict)
     
     #global variable, status flag for the second global condition, here we think that bigger model will be always better
@@ -333,9 +334,9 @@ if __name__ == "__main__":
     if rejected == False:
         print("Smaller model is better, the search is finished: ", one_parameter_model)
     else:
-        print("Bigger model is better, limit is not reached, continue searching: ", two_parameter_model)
+        print("Bigger model is better, limit is not reached, continue searching: ", best_model)
             #extract the best models
-        for item in two_parameter_model:
+        for item in best_model:
             if item in companies_chosen:
                 pass
             else:
