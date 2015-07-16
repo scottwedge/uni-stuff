@@ -159,8 +159,12 @@ def checkDictionary(dictionary,listCheck):
 #helper function to create combinations from two arrays
 def create_combinations(companies_left, companies_chosen):
     combinations = []
+    #combinations.clear()
     for item in companies_left:
-        combinations.append([item, companies_chosen[0]])
+        combinations.append([item])
+    for i in range(0, len(combinations)):
+        for item in companies_chosen:
+            combinations[i].append(item)
     return combinations
 
 
@@ -265,8 +269,8 @@ if __name__ == "__main__":
             companies_left.remove(item)
         else:
             pass
-
-    combinations = create_combinations(companies_left, companies_chosen)
+    """!!!!!!!!!!"""
+    combinations = create_combinations(companies_left, companies_chosen)    
 
     #dependent data
     y = dict_data['Intel']
@@ -309,13 +313,6 @@ if __name__ == "__main__":
     print(two_parameter_model)
     print(bigger_model_dict)
     
-    #extract the best models
-    for item in two_parameter_model:
-        if item in companies_chosen:
-            pass
-        else:
-            companies_chosen.append(item)
-            companies_left.remove(item)
     #global variable, status flag for the second global condition, here we think that bigger model will be always better
     flag = True
 
@@ -331,12 +328,27 @@ if __name__ == "__main__":
         print("Smaller model is better, the search is finished: ", one_parameter_model)
     else:
         print("Bigger model is better, limit is not reached, continue searching: ", two_parameter_model)
+            #extract the best models
+        for item in two_parameter_model:
+            if item in companies_chosen:
+                pass
+            else:
+                companies_chosen.append(item)
+                companies_left.remove(item)
+
     
     #if the bigger model is better, than the smaller one AND limit is not reached build new model
     #1. Build new combiantions
     print(companies_chosen)
-    combinations_new = create_combinations(companies_left, companies_chosen)
-    print(combinations_new)
+    # combinations_new = []
+    # for item in companies_left:
+    #     combinations_new.append([item])
+    # for i in range(0, len(combinations_new)):
+    #     for item in companies_chosen:
+    #         combinations_new[i].append(item)
+    # print(combinations_new)
+
+    
 
 
 
