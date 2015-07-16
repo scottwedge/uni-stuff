@@ -217,8 +217,18 @@ def llr_test(model_null, model_alternative, rejected):
         print("The Null-Hypothesis is rejected")
         rejected = True
     return rejected 
-def set_the_limit(dict_data):
-    pass
+
+
+def set_the_limit(cut_off):
+    #set the limit on nnumbers of the parameters in the regression
+    total_number = len(cut_off)
+    limit = 0
+    limit += total_number//10
+    if total_number%10>=5:
+        limit += 1
+    else:
+        pass
+    return limit
 
 if __name__ == "__main__":
     '''Resulting outputs'''
@@ -230,8 +240,10 @@ if __name__ == "__main__":
     cor_vec = correlation_vector(dict_data, list_companies)
     #first cut-off, evrything with the correlation less than 30% is left out
     cut_off = correlational_cutoff(0.3, cor_vec)
-
-    one_parameter_model, company, smaller_model_list = one_parameter_model(cut_off, list_companies, dict_data)
+    limit = set_the_limit(cut_off)
+    print(limit)
+    
+    """one_parameter_model, company, smaller_model_list = one_parameter_model(cut_off, list_companies, dict_data)
     print(one_parameter_model)
     print(smaller_model_list)
     #remember the company from the first iteration and delete from the general list
@@ -319,6 +331,7 @@ if __name__ == "__main__":
     if rejected == False:
         print("Smaller model is better, the search is finished: ", one_parameter_model)
     else:
-        print("Bigger model is better, limit is not reached, continue searching: ", two_parameter_model)
-    #print("The best 2-Parametered-Model is: ", final[best_r], " with R²: ", str(best_r))
-  
+        print("Bigger model is better, limit is not reached, continue searching: ", two_parameter_model)"""
+
+
+    
