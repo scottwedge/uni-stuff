@@ -193,6 +193,34 @@ def correlational_cutoff(border, correlation_vector):
             pass
     return rest_companies 
 
+#format data, build the regression (OLS) and choose the bset model among the class
+def best_model_in_the_class(dict_data, combinations):
+    helper_dict = {}
+    helper_list = []
+    combinations_dict = {}
+    r_squared = {i: [] for i in range(0, len(combinations))}
+    for i in range(0, len(combinations)):
+        combinations_dict[i] = combinations[i]
+
+    #create proper data for Linear Regression
+    for key in combinations_dict.keys():
+        for i in range(0, len(dict_data['Intel'])):
+            for item in combinations_dict[key]:
+                helper_dict[i] = [v[i] for k, v in dict_data.items() if k in combinations_dict[key]]
+                helper_list = [value for key, value in sorted(helper_dict.items())]
+        model = sm.OLS(y, helper_list)
+        regression = model.fit()
+        r = regression.rsquared 
+        r_squared[key].append(r)
+    #map the results into final    
+    final = {}
+    for k1 in combinations_dict.keys():
+        for k2 in r_squared.keys():
+            if k1 == k2:
+                final[float(r_squared[k2][0])] = list(combinations_dict[k1])
+
+    return final, r_squared, helper_dict, helper_list
+
 """Find 1-parameter regression"""
 def one_parameter_model(correlational_cutoff_vector, list_companies, dict_data):
     #extract the dependent variable from correlational vector
@@ -269,36 +297,14 @@ if __name__ == "__main__":
             companies_left.remove(item)
         else:
             pass
-    """!!!!!!!!!!"""
+
     combinations = create_combinations(companies_left, companies_chosen)    
 
     #dependent data
     y = dict_data['Intel']
     
-    helper_dict = {}
-    helper_list = []
-    combinations_dict = {}
-    r_squared = {i: [] for i in range(0, len(combinations))}
-    for i in range(0, len(combinations)):
-        combinations_dict[i] = combinations[i]
+    final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
 
-    #create proper data for Linear Regression
-    for key in combinations_dict.keys():
-        for i in range(0, len(dict_data['Intel'])):
-            for item in combinations_dict[key]:
-                helper_dict[i] = [v[i] for k, v in dict_data.items() if k in combinations_dict[key]]
-                helper_list = [value for key, value in sorted(helper_dict.items())]
-        model = sm.OLS(y, helper_list)
-        regression = model.fit()
-        r = regression.rsquared 
-        r_squared[key].append(r)
-
-    #mapping r² and combinations
-    final = {}
-    for k1 in combinations_dict.keys():
-        for k2 in r_squared.keys():
-            if k1 == k2:
-                final[float(r_squared[k2][0])] = list(combinations_dict[k1]) 
     #choosing the best model among the class
     best_r = max(final.keys())
     two_parameter_model = final[best_r]
@@ -339,18 +345,6 @@ if __name__ == "__main__":
     
     #if the bigger model is better, than the smaller one AND limit is not reached build new model
     #1. Build new combiantions
-    print(companies_chosen)
-    # combinations_new = []
-    # for item in companies_left:
-    #     combinations_new.append([item])
-    # for i in range(0, len(combinations_new)):
-    #     for item in companies_chosen:
-    #         combinations_new[i].append(item)
-    # print(combinations_new)
-
-    
-
-
-
-
+    combinations = create_combinations(companies_left, companies_chosen)
+    #2. Format data for model searching
     
