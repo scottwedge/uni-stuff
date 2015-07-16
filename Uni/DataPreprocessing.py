@@ -156,6 +156,13 @@ def checkDictionary(dictionary,listCheck):
             result_value = True
     return result
 
+#helper function to create combinations from two arrays
+def create_combinations(companies_left, companies_chosen):
+    combinations = []
+    for item in companies_left:
+        combinations.append([item, companies_chosen[0]])
+    return combinations
+
 
 '''Algorithm 1: step-forward selection. Best model with one parameter computed.
 The best model with 2 parameters computed. Both models are compared using LLR test.
@@ -240,10 +247,8 @@ if __name__ == "__main__":
     cor_vec = correlation_vector(dict_data, list_companies)
     #first cut-off, evrything with the correlation less than 30% is left out
     cut_off = correlational_cutoff(0.3, cor_vec)
-    limit = set_the_limit(cut_off)
-    print(limit)
-    
-    """one_parameter_model, company, smaller_model_list = one_parameter_model(cut_off, list_companies, dict_data)
+
+    one_parameter_model, company, smaller_model_list = one_parameter_model(cut_off, list_companies, dict_data)
     print(one_parameter_model)
     print(smaller_model_list)
     #remember the company from the first iteration and delete from the general list
@@ -261,10 +266,7 @@ if __name__ == "__main__":
         else:
             pass
 
-    #create combinations for one fixed parameter and one "free"
-    combinations = []
-    for item in companies_left:
-        combinations.append([item, companies_chosen[0]])
+    combinations = create_combinations(companies_left, companies_chosen)
 
     #dependent data
     y = dict_data['Intel']
@@ -282,9 +284,6 @@ if __name__ == "__main__":
             for item in combinations_dict[key]:
                 helper_dict[i] = [v[i] for k, v in dict_data.items() if k in combinations_dict[key]]
                 helper_list = [value for key, value in sorted(helper_dict.items())]
-        # reg = lm.LinearRegression()
-        # fit = reg.fit(helper_list, y)
-        # r = fit.score(helper_list, y)
         model = sm.OLS(y, helper_list)
         regression = model.fit()
         r = regression.rsquared 
@@ -331,7 +330,15 @@ if __name__ == "__main__":
     if rejected == False:
         print("Smaller model is better, the search is finished: ", one_parameter_model)
     else:
-        print("Bigger model is better, limit is not reached, continue searching: ", two_parameter_model)"""
+        print("Bigger model is better, limit is not reached, continue searching: ", two_parameter_model)
+    
+    #if the bigger model is better, than the smaller one AND limit is not reached build new model
+    #1. Build new combiantions
+    print(companies_chosen)
+    combinations_new = create_combinations(companies_left, companies_chosen)
+    print(combinations_new)
+
+
 
 
     
