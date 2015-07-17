@@ -332,10 +332,10 @@ if __name__ == "__main__":
     alternative = model_alternative.loglike(params_alternative)
     rejected = llr_test(null, alternative, flag)
     if rejected == False:
-        print("Smaller model is better, the search is finished: ", one_parameter_model)
+        print("the smaller model is better. the search is over")
     else:
-        print("Bigger model is better, limit is not reached, continue searching: ", best_model)
-            #extract the best models
+        print("the bigger model is better. Search further")
+        #extract the best models
         for item in best_model:
             if item in companies_chosen:
                 pass
@@ -348,4 +348,4 @@ if __name__ == "__main__":
     #1. Build new combiantions
     combinations = create_combinations(companies_left, companies_chosen)
     #2. Format data for model searching
-    
+    best_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
