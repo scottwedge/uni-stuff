@@ -376,7 +376,24 @@ if __name__ == "__main__":
                 companies_left.remove(item)
                 small_model = big_model
                 smaller_model_list = bigger_model_list
-    
+    #3vs4
+    combinations = create_combinations(companies_left, companies_chosen)
+    big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
+    bigger_model_list = get_data_for_comparison(big_model)
+    rejected = compare_models(y, smaller_model_list, bigger_model_list)
+    if rejected == False:
+        print("the smaller model is better. the search is over", small_model)
+    else:
+        print("the bigger model is better. Search further", big_model)
+        #extract the best models
+        for item in big_model:
+            if item in companies_chosen:
+                pass
+            else:
+                companies_chosen.append(item)
+                companies_left.remove(item)
+                small_model = big_model
+                smaller_model_list = bigger_model_list
 
 
 
