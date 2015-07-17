@@ -207,7 +207,7 @@ def best_model_in_the_class(dict_data, combinations):
             for item in combinations_dict[key]:
                 helper_dict[i] = [v[i] for k, v in dict_data.items() if k in combinations_dict[key]]
                 helper_list = [value for key, value in sorted(helper_dict.items())]
-        model = sm.OLS(y, helper_list)
+        model = sm.WLS(y, helper_list)
         regression = model.fit()
         r = regression.rsquared 
         r_squared[key].append(r)
@@ -259,7 +259,7 @@ def llr_test(model_null, model_alternative, rejected):
         rejected = True
     return rejected 
 
-#helper-function to format the data for further OLS-build
+#helper-function to format the data for further WLS-build
 def get_data_for_comparison(best_model):
     model_dict = {}
     model_list = []
@@ -271,17 +271,17 @@ def get_data_for_comparison(best_model):
 
 #helper-function to compare models
 def compare_models(y, smaller_model_list, bigger_model_list):
-    model_null = sm.OLS(y,smaller_model_list)
-    model_alternative = sm.OLS(y, bigger_model_list)
-    params_null = sm.OLS(y,smaller_model_list).fit().params
-    params_alternative = sm.OLS(y, bigger_model_list).fit().params
+    model_null = sm.WLS(y,smaller_model_list)
+    model_alternative = sm.WLS(y, bigger_model_list)
+    params_null = sm.WLS(y,smaller_model_list).fit().params
+    params_alternative = sm.WLS(y, bigger_model_list).fit().params
     null = model_null.loglike(params_null)
     alternative = model_alternative.loglike(params_alternative)
     
     #use llr-test
     rejected = llr_test(null, alternative, flag)
 
-    return rejected
+    return rejected, 
 
 def set_the_limit(cut_off):
     #set the limit on nnumbers of the parameters in the regression
@@ -300,6 +300,7 @@ if __name__ == "__main__":
     data = getData(f)
     list_companies = getCompanies(data)
     dict_data = formatDataIntoDict(data)
+    #dict_data = log_data(dict_data)
     dependant_variable = {'Intel': dict_data['Intel']}
     cor_vec = correlation_vector(dict_data, list_companies)
     #first cut-off, evrything with the correlation less than 30% is left out
@@ -394,6 +395,44 @@ if __name__ == "__main__":
                 companies_left.remove(item)
                 small_model = big_model
                 smaller_model_list = bigger_model_list
+
+    #4vs5
+    combinations = create_combinations(companies_left, companies_chosen)
+    big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
+    bigger_model_list = get_data_for_comparison(big_model)
+    rejected = compare_models(y, smaller_model_list, bigger_model_list)
+    if rejected == False:
+        print("the smaller model is better. the search is over", small_model)
+    else:
+        print("the bigger model is better. Search further", big_model)
+        #extract the best models
+        for item in big_model:
+            if item in companies_chosen:
+                pass
+            else:
+                companies_chosen.append(item)
+                companies_left.remove(item)
+                small_model = big_model
+                smaller_model_list = bigger_model_list
+    #5vs6
+    combinations = create_combinations(companies_left, companies_chosen)
+    big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
+    bigger_model_list = get_data_for_comparison(big_model)
+    rejected = compare_models(y, smaller_model_list, bigger_model_list)
+    if rejected == False:
+        print("the smaller model is better. the search is over", small_model)
+    else:
+        print("the bigger model is better. Search further", big_model)
+        #extract the best models
+        for item in big_model:
+            if item in companies_chosen:
+                pass
+            else:
+                companies_chosen.append(item)
+                companies_left.remove(item)
+                small_model = big_model
+                smaller_model_list = bigger_model_list
+    print(big_model.s)
 
 
 
