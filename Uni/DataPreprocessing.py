@@ -1,13 +1,12 @@
 import pandas as pd
 import datetime
 import matplotlib.pyplot as plt 
-import numpy as num
+import numpy
 from scipy import stats as stat
 import statsmodels.api as sm
 import statsmodels.tsa.stattools as statmodel
 from multiprocessing import Pool
 import itertools
-import math
 import sklearn as sk
 from sklearn import linear_model  as lm
 from sklearn.tree import DecisionTreeRegressor
@@ -110,7 +109,7 @@ def build_kde(dict_data):
     kde_dict = dict_data
     for key in kde_dict.keys():
         kde = stat.gaussian_kde(kde_dict[key])
-        xgrid = num.linspace(min(kde_dict[key]), max(kde_dict[key]), 100)
+        xgrid = numpy.linspace(min(kde_dict[key]), max(kde_dict[key]), 100)
         plt.title(key)
         plt.hist(kde_dict[key], bins=100, normed=True, color="b")
         plt.plot(xgrid, kde(xgrid), color="r", linewidth=3.0)
@@ -124,7 +123,7 @@ def findMoments(dict_data):
     #for every company find mean, var, skew, kurtosis
     result_dict = {}
     for key in dict_data.keys():
-        result_dict[key] = [num.sum(dict_data[key])/len(dict_data[key]), num.std(dict_data[key]), stat.skew(dict_data[key]), stat.kurtosis(dict_data[key], fisher=True)]
+        result_dict[key] = [numpy.sum(dict_data[key])/len(dict_data[key]), numpy.std(dict_data[key]), stat.skew(dict_data[key]), stat.kurtosis(dict_data[key], fisher=True)]
     return result_dict
 
 #bring the data to the normal distribution
@@ -133,7 +132,7 @@ def log_data(dict_data):
     for key in dict_data.keys():
         log_data[key] = []
         for item in dict_data[key]:
-            new_item = math.log(item)
+            new_item = numpy.log(item)
             log_data[key].append(new_item)
     return log_data
 
@@ -179,7 +178,7 @@ def correlation_vector(dict_data, list_companies):
     for key in dict_data.keys():
         correlation_with_Intel[key] = []
     for key in correlation_with_Intel.keys():
-        correlation_with_Intel[key] = num.corrcoef(dict_data[list_companies[0]], dict_data[key])[0][1] #ToDo compute dependant variable
+        correlation_with_Intel[key] = numpy.corrcoef(dict_data[list_companies[0]], dict_data[key])[0][1] #ToDo compute dependant variable
     return correlation_with_Intel
 
 
@@ -249,10 +248,9 @@ def two_parameter_model(companies_left, companies_chosen):
     pass
 
 def llr_test(model_null, model_alternative, rejected):
-    
     #LLR test itself, 5% error -> c = 0,004 according to chi-square distribution table
     c = 0.004
-    D = -2 * math.log(model_null/model_alternative)
+    D = -2 * numpy.log(model_null/model_alternative)
     if (D  > c):
         print("The Null-Hypothesis is confirmed")
         rejected = False
@@ -261,6 +259,29 @@ def llr_test(model_null, model_alternative, rejected):
         rejected = True
     return rejected 
 
+#helper-function to format the data for further OLS-build
+def get_data_for_comparison(best_model):
+    model_dict = {}
+    model_list = []
+    for i in range (0, len(dict_data['Intel'])):
+        for item in best_model:
+            model_dict[i] = [v[i] for k, v in dict_data.items() if k in best_model]
+            model_list = [value for key, value in sorted(model_dict.items())]
+    return model_list
+
+#helper-function to compare models
+def compare_models(y, smaller_model_list, bigger_model_list):
+    model_null = sm.OLS(y,smaller_model_list)
+    model_alternative = sm.OLS(y, bigger_model_list)
+    params_null = sm.OLS(y,smaller_model_list).fit().params
+    params_alternative = sm.OLS(y, bigger_model_list).fit().params
+    null = model_null.loglike(params_null)
+    alternative = model_alternative.loglike(params_alternative)
+    
+    #use llr-test
+    rejected = llr_test(null, alternative, flag)
+
+    return rejected
 
 def set_the_limit(cut_off):
     #set the limit on nnumbers of the parameters in the regression
@@ -284,9 +305,10 @@ if __name__ == "__main__":
     #first cut-off, evrything with the correlation less than 30% is left out
     cut_off = correlational_cutoff(0.3, cor_vec)
 
-    one_parameter_model, company, smaller_model_list = one_parameter_model(cut_off, list_companies, dict_data)
-    print(one_parameter_model)
-    print(smaller_model_list)
+    small_model, company, smaller_model_list = one_parameter_model(cut_off, list_companies, dict_data)
+    print(small_model)
+
+    """! Initialize companies left and companies chosen after finding first fixed parameter!"""
     #remember the company from the first iteration and delete from the general list
     companies_chosen = []
     companies_chosen.append(company)
@@ -307,36 +329,23 @@ if __name__ == "__main__":
     #dependent data
     y = dict_data['Intel']
     
-    best_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
-    
+    big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
+
     #create model for further comparison
-    bigger_model_dict = {}
-    bigger_model_list = []
-    for i in range (0, len(dict_data['Intel'])):
-        for item in best_model:
-            bigger_model_dict[i] = [v[i] for k, v in dict_data.items() if k in best_model]
-            bigger_model_list = [value for key, value in sorted(bigger_model_dict.items())]
-    
-    print(best_model)
-    print(bigger_model_dict)
+    bigger_model_list = get_data_for_comparison(big_model)
     
     #global variable, status flag for the second global condition, here we think that bigger model will be always better
     flag = True
 
     #compare two models
-    model_null = sm.OLS(y,smaller_model_list)
-    model_alternative = sm.OLS(y, bigger_model_list)
-    params_null = sm.OLS(y,smaller_model_list).fit().params
-    params_alternative = sm.OLS(y, bigger_model_list).fit().params
-    null = model_null.loglike(params_null)
-    alternative = model_alternative.loglike(params_alternative)
-    rejected = llr_test(null, alternative, flag)
+    rejected = compare_models(y, smaller_model_list, bigger_model_list)
+
     if rejected == False:
-        print("the smaller model is better. the search is over")
+        print("the smaller model is better. the search is over", small_model)
     else:
-        print("the bigger model is better. Search further")
+        print("the bigger model is better. Search further", big_model)
         #extract the best models
-        for item in best_model:
+        for item in big_model:
             if item in companies_chosen:
                 pass
             else:
@@ -346,6 +355,6 @@ if __name__ == "__main__":
     
     #if the bigger model is better, than the smaller one AND limit is not reached build new model
     #1. Build new combiantions
-    combinations = create_combinations(companies_left, companies_chosen)
+    #combinations = create_combinations(companies_left, companies_chosen)
     #2. Format data for model searching
-    best_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
+    #big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
