@@ -192,6 +192,10 @@ def correlational_cutoff(border, correlation_vector):
             pass
     return rest_companies 
 
+def get_weights(correlation_vector, combinations):
+    weights = []
+    pass
+
 #format data, build the regression (OLS) and choose the bset model among the class
 def best_model_in_the_class(dict_data, combinations):
     helper_dict = {}
@@ -200,7 +204,7 @@ def best_model_in_the_class(dict_data, combinations):
     r_squared = {i: [] for i in range(0, len(combinations))}
     for i in range(0, len(combinations)):
         combinations_dict[i] = combinations[i]
-
+    #create weights
     #create proper data for Linear Regression
     for key in combinations_dict.keys():
         for i in range(0, len(dict_data['Intel'])):
@@ -277,11 +281,18 @@ def compare_models(y, smaller_model_list, bigger_model_list):
     params_alternative = sm.WLS(y, bigger_model_list).fit().params
     null = model_null.loglike(params_null)
     alternative = model_alternative.loglike(params_alternative)
-    
+    additional_info = model_null.fit().summary()
+    additional_info_2 = model_alternative.fit().summary()
     #use llr-test
     rejected = llr_test(null, alternative, flag)
 
-    return rejected, 
+    # if rejected == True:
+    #     additional_info = model_alternative.fit().summary()
+    # else:
+    #     additional_info = model_null.fit().summary()
+
+
+    return rejected, additional_info, additional_info_2
 
 def set_the_limit(cut_off):
     #set the limit on nnumbers of the parameters in the regression
@@ -300,7 +311,7 @@ if __name__ == "__main__":
     data = getData(f)
     list_companies = getCompanies(data)
     dict_data = formatDataIntoDict(data)
-    #dict_data = log_data(dict_data)
+    dict_data = log_data(dict_data)
     dependant_variable = {'Intel': dict_data['Intel']}
     cor_vec = correlation_vector(dict_data, list_companies)
     #first cut-off, evrything with the correlation less than 30% is left out
@@ -316,7 +327,7 @@ if __name__ == "__main__":
 
     #initializing companies_left-list
     companies_left = []
-    for key in cut_off.keys():
+    for key in cut_off.keys(): 
         companies_left.append(key)
     #deleting chosen companies
     for item in companies_chosen:
@@ -339,7 +350,7 @@ if __name__ == "__main__":
     flag = True
 
     #compare two models (1 vs 2)
-    rejected = compare_models(y, smaller_model_list, bigger_model_list)
+    rejected, additional_info, additional_info_2 = compare_models(y, smaller_model_list, bigger_model_list)
 
     if rejected == False:
         print("the smaller model is better. the search is over", small_model)
@@ -354,8 +365,8 @@ if __name__ == "__main__":
                 companies_left.remove(item)
                 small_model = big_model
                 smaller_model_list = bigger_model_list
-
-    #(2 vs 3)
+    print("small model: ", additional_info)
+    print("big model: " , additional_info_2)    #(2 vs 3)
     #if the bigger model is better, than the smaller one AND limit is not reached build new model
     #1. Build new combiantions
     combinations = create_combinations(companies_left, companies_chosen)
@@ -363,7 +374,7 @@ if __name__ == "__main__":
     #rewrite small and big ones
     big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
     bigger_model_list = get_data_for_comparison(big_model)
-    rejected = compare_models(y, smaller_model_list, bigger_model_list)
+    rejected, additional_info, additional_info_2 = compare_models(y, smaller_model_list, bigger_model_list)
     if rejected == False:
         print("the smaller model is better. the search is over", small_model)
     else:
@@ -377,11 +388,12 @@ if __name__ == "__main__":
                 companies_left.remove(item)
                 small_model = big_model
                 smaller_model_list = bigger_model_list
-    #3vs4
+    print("small model: ", additional_info)
+    print("big model: " , additional_info_2)    #3vs4
     combinations = create_combinations(companies_left, companies_chosen)
     big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
     bigger_model_list = get_data_for_comparison(big_model)
-    rejected = compare_models(y, smaller_model_list, bigger_model_list)
+    rejected, additional_info, additional_info_2 = compare_models(y, smaller_model_list, bigger_model_list)
     if rejected == False:
         print("the smaller model is better. the search is over", small_model)
     else:
@@ -395,44 +407,49 @@ if __name__ == "__main__":
                 companies_left.remove(item)
                 small_model = big_model
                 smaller_model_list = bigger_model_list
+    print("small model: ", additional_info)
+    print("big model: " , additional_info_2)    #4vs5
+    combinations = create_combinations(companies_left, companies_chosen)
+    big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
+    bigger_model_list = get_data_for_comparison(big_model)
+    rejected, additional_info, additional_info_2 = compare_models(y, smaller_model_list, bigger_model_list)
+    if rejected == False:
+        print("the smaller model is better. the search is over", small_model)
+    else:
+        print("the bigger model is better. Search further", big_model)
+        #extract the best models
+        for item in big_model:
+            if item in companies_chosen:
+                pass
+            else:
+                companies_chosen.append(item)
+                companies_left.remove(item)
+                small_model = big_model
+                smaller_model_list = bigger_model_list
+    print("small model: ", additional_info)
+    print("big model: " , additional_info_2)    #5vs6
+    combinations = create_combinations(companies_left, companies_chosen)
+    big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
+    bigger_model_list = get_data_for_comparison(big_model)
+    rejected, additional_info, additional_info_2 = compare_models(y, smaller_model_list, bigger_model_list)
+    if rejected == False:
+        print("the smaller model is better. the search is over", small_model)
+    else:
+        print("the bigger model is better. Search further", big_model)
+        print()
+        #extract the best models
+        for item in big_model:
+            if item in companies_chosen:
+                pass
+            else:
+                companies_chosen.append(item)
+                companies_left.remove(item)
+                small_model = big_model
+                smaller_model_list = bigger_model_list
+    print("small model: ", additional_info)
+    print("big model: " , additional_info_2)
 
-    #4vs5
-    combinations = create_combinations(companies_left, companies_chosen)
-    big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
-    bigger_model_list = get_data_for_comparison(big_model)
-    rejected = compare_models(y, smaller_model_list, bigger_model_list)
-    if rejected == False:
-        print("the smaller model is better. the search is over", small_model)
-    else:
-        print("the bigger model is better. Search further", big_model)
-        #extract the best models
-        for item in big_model:
-            if item in companies_chosen:
-                pass
-            else:
-                companies_chosen.append(item)
-                companies_left.remove(item)
-                small_model = big_model
-                smaller_model_list = bigger_model_list
-    #5vs6
-    combinations = create_combinations(companies_left, companies_chosen)
-    big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
-    bigger_model_list = get_data_for_comparison(big_model)
-    rejected = compare_models(y, smaller_model_list, bigger_model_list)
-    if rejected == False:
-        print("the smaller model is better. the search is over", small_model)
-    else:
-        print("the bigger model is better. Search further", big_model)
-        #extract the best models
-        for item in big_model:
-            if item in companies_chosen:
-                pass
-            else:
-                companies_chosen.append(item)
-                companies_left.remove(item)
-                small_model = big_model
-                smaller_model_list = bigger_model_list
-    print(big_model.s)
+
 
 
 
