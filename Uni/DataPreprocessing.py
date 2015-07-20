@@ -211,7 +211,7 @@ def best_model_in_the_class(dict_data, combinations):
             for item in combinations_dict[key]:
                 helper_dict[i] = [v[i] for k, v in dict_data.items() if k in combinations_dict[key]]
                 helper_list = [value for key, value in sorted(helper_dict.items())]
-        model = sm.WLS(y, helper_list)
+        model = sm.GLS(y, helper_list)
         regression = model.fit()
         r = regression.rsquared 
         r_squared[key].append(r)
@@ -263,7 +263,7 @@ def llr_test(model_null, model_alternative, rejected):
         rejected = True
     return rejected 
 
-#helper-function to format the data for further WLS-build
+#helper-function to format the data for further GLS-build
 def get_data_for_comparison(best_model):
     model_dict = {}
     model_list = []
@@ -275,10 +275,10 @@ def get_data_for_comparison(best_model):
 
 #helper-function to compare models
 def compare_models(y, smaller_model_list, bigger_model_list):
-    model_null = sm.WLS(y,smaller_model_list)
-    model_alternative = sm.WLS(y, bigger_model_list)
-    params_null = sm.WLS(y,smaller_model_list).fit().params
-    params_alternative = sm.WLS(y, bigger_model_list).fit().params
+    model_null = sm.GLS(y,smaller_model_list)
+    model_alternative = sm.GLS(y, bigger_model_list)
+    params_null = sm.GLS(y,smaller_model_list).fit().params
+    params_alternative = sm.GLS(y, bigger_model_list).fit().params
     null = model_null.loglike(params_null)
     alternative = model_alternative.loglike(params_alternative)
     additional_info = model_null.fit().summary()
@@ -311,7 +311,7 @@ if __name__ == "__main__":
     data = getData(f)
     list_companies = getCompanies(data)
     dict_data = formatDataIntoDict(data)
-    dict_data = log_data(dict_data)
+    #dict_data = log_data(dict_data)
     dependant_variable = {'Intel': dict_data['Intel']}
     cor_vec = correlation_vector(dict_data, list_companies)
     #first cut-off, evrything with the correlation less than 30% is left out
