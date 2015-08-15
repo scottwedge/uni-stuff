@@ -16,6 +16,7 @@ The Structure of the thesis
             \item[1.2] R language overview
             \item[1.3] Python vs R wars
             \item[1.4] Thesis description
+            \item[1.5] Data preparation 
         \end{enumerate}
     \item[2.] Python
         \begin{enumerate}
@@ -86,6 +87,33 @@ Tho formal criteria to compare Python and R are:
 Using this list both languages can be objectively evaluated. These points are appropriate for all small-, middle- and big-projects. In next section we will describe the test-task to compare Python and R languages and define the points-system for objective evaluation.\\
 
 \subsection{Thesis description}
+The idea of this bachelor thesis is to test which language suits better specific statistic task. 
+The program that will be evaluated consists of four parts:
+\begin{enumerate}
+    \item Getting and formatting data - the program should be able to read a prepared file in csv format. Afterwards, the program should format the data into needed structure for further use.
+    \item Analyzing data - the program should be able to run statistical test to figure out data characteristics. This step is needed to determine what regression models are allowed for this data set. Following test will be presented: stationary test, build cdf and kde, find moments, distribution test (goodness of fit tests).
+    \item Building a model - the program should be able to create a proper model using a step-forward algorithm, set the limits on the number of the predictors and return the names of the parameters, regression parameters and some useful statistics.
+    \item Visualization - the program should be able to present the results and steps between if needed.
+\end{enumerate}
+The program will build a simple regression if possible. This task is considered to be middle-size task, not too easy but at the same time not too time and knowledge consuming.
+The data will be prepared and provided as 2 files (training set and test set) in .csv format.\\
+According to the list for objective evaluation, each point will give either 0 or 1 score to language. The 0 score will be given in negative case and score 1 will be given in positive case.
+\begin{enumerate}
+    \item[] Useful resources - at least 2 different libraries for one task gives 1 point.
+    \item[] Documentation - examples, clean source code and clear structured APIs give 1 point.
+    \item[] Performance - fastest language gets 1 point
+    \item[] Memory - the program with the smallest memory use gets 1 point.
+    \item[] Data structures - no additional formatting needed gives 1 point.
+    \item[] Big Data - libraries, plugins and frameworks for big data give 1 point.
+    \item[] Visualization - the least amount of time spent on this task gives 1 point.
+    \item[] Limitations - if there are any limitations, the language gets 0 points.
+    \item[] Workarounds - additional time to solve the task gives 0 points (deviation from the time for the naive implementation).
+\end{enumerate}
+The results of the programs will be also compared. If they differ, the models will be cross-compared wit the other program or manually.\\
+The task is to build a best matching linear regression (if possible) for a company (always the first column in the file) using certain limitations on the number of the predictors.
+
+\subsection{Data preparation}
+As was mentioned before the 
 
 
 \newpage
