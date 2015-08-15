@@ -3,6 +3,8 @@
 \usepackage{color}
 \usepackage{mathtools}
 \usepackage{color}
+\usepackage{hyperref}
+\hypersetup{urlbordercolor={1 1 1}}
 
 
 \begin{document}
@@ -48,18 +50,23 @@ The Structure of the thesis
 
 \newpage
 \section{Motivation}
-Every time requires it's own heroes. Nowadays, with a massive digitalization of the world, statistical analysis is not only used in spheres like classical production and distribution (logistics), but also everywhere on the web. On-line shops requires an analysis of a customer's behavior, specific demands and preferences to create a nice web-site, that will attract buyers and more important will make them purchase special goods on a certain site. Another application of data analysis is, of course, video games. The AI used in many game-projects from simple browser-strategy to "most expected of the year" is built on immense data source and its constantly analyzing the incoming data from the players, servers and third party sources (if needed). The game play, the enemy, the load distribution on the servers and many other things are based on statistics and forecast. The are many-many other examples where data analysis is used.\vspace{3mm}\\
-Since the computer technologies are way more advanced, than they were several decades ago, the computations can be automatized, the data collection can be automatized. For that purposes certain tools, languages and libraries should be chosen. On the whole, almost every language can be used to build a program for collecting, processing and visualizing data, like: SCALA, C, C++, .NET, Java, Python, JavaScript, R, etc.. However, some of the languages are more suitable for some purposes.\vspace{3mm}\\
-In this work we will compare Python 3 language with R language. Both of them are relatively new \textcolor{blue}{(How old are they)} to the wide publicity. Both are used for data analysis (and not only, but this aspect interests us the most). Both languages are widely used for open source projects and have a large community behind them. Also very important that the learning curve for both languages is Exponential \textcolor{blue}{(is it so?)}.
- 
+Every time requires it's own heroes. Nowadays, with a massive digitalization of the world, statistical analysis is not only used in spheres like classical production and distribution (logistics), but also everywhere on the web. In order to create a nice web-site, that will attract buyers and more important will make them purchase things from a particular on-line shop using this exact site, on-line shops require an analysis of a customer's behavior, specific demands and preferences. Another example where data analysis is essential is video games industry. The AI, which is built in an immense data source and is constantly analyzing the incoming data from the players, servers and third party sources (if needed), is used in many game-projects from a simple browser-strategy to "the most expected game of the year". The game play, the enemies, the load distribution on the servers and many other things are based on analysis and forecast. The are many-many other examples where data analysis is used.\vspace{3mm}\\
+Since the computer technologies are way more advanced, than they were several decades ago, the computations can be automatized, the data collection can be automatized. For every purposes certain tools, languages and libraries should be chosen carefully among the great choice. In this work we will concentrate our attention on a statistic-econometric task. On the whole, almost every language can be used to build a program for collecting, processing and visualizing data: SCALA, C, C++, .NET, Java, Python, JavaScript, R, etc.. However, some of the languages are more suitable for this purposes.\vspace{3mm}\\
+In this work we will concentrate on "easy" languages. We will compare Python 3 (Python 2 in form of some libraries) language with R language. Both of them are relatively new (Python is about 25 years old and R is about 22 years old) to the wide publicity. Both are currently used for data analysis (for Python it is not the only use, but as we said before, we will concentrate on this aspect). Both languages are widely used in open source projects and have a large community behind them. Also, very important that both of the languages are relatively easy to begin with also for non-programmers. Python has a gradual learning curve due to its simplicity, clear and intuitive syntax. Although R has a steep learning curve it is still pretty easy to use for small and not too complex projects (which is the case for this thesis).
+
+\newpage
 \subsection{Python language overview}
-The Python language is pretty young. It has first appeared about 24 years ago. As described on the official page in Wikipedia, Python is a general-purpose, high-level programming language. That means that Python can be used for many tasks like back end development, front end development, data analysis and even for processor simulation instead of VHDL or Verilog. This multi-use is possible, since the language support multiple programming paradigms: Object Oriented, Imperative and Functional programming.\\
+The Python language is pretty young. It has first appeared about 25 years ago. As described on the official page in Wikipedia:"Python is a general-purpose, high-level programming language"[1]. That means that Python can be used for many tasks like back end development, front end development, data analysis and even for processor simulation (the python code will generate you VHDL code eventually). The language supports multiple programming paradigms: Object Oriented, Imperative and Functional programming.\\
 Another big advantage of the language is being a cross-platform language executable via interpreter that can be installed on every operation system. Another possibility to run python programs without installing an interpreter is to package the program into stand-alone executable.\\ 
 The language has an automatic garbage collector, so you don't have to worry about memory leaks by small to medium programs.\\
-Enormous community stays behind Python and its variations. The standard library has more than enough functions to start. The language's syntax is very easy in comparison to C++, C or even Java. I would say the language is similar to normal human speech but in more strict and logical form.s\\
-Another good thing about Python is build-in test - doctest module. This test is very easy to use to check and debug your code on the fly. The use of the module is intuitively clear even to beginners. You also don't keep the test's text in other file, which gives you certain level of an overview of the program. Unit test are also widely used among the programmers using Python language. 
-\subsection{R language overview}
+Enormous community stays behind Python and its \textcolor{blue}{variations}. The standard library has more than enough functions for easy start. The language's syntax is very clear and intuitive in comparison to C++, C or even Java. I would say the language is similar to normal human speech but in more strict and logical form.\\
+Another good thing about Python is build-in test - doctest module. This test is very easy to use to check and debug your code on the fly. The use of the module is intuitively clear even to beginners. You also don't keep the test's text in other file, which gives you certain level of an overview of the program. Unit test are also widely used among the programmers using Python language. There also other possibilities to debug and benchmark the code written in python, but we will not discuss it here.\\
+The disadvantage of the language is its speed in comparison with C, C++ and Java. Also the visualization tools could be better, but since the language is a multipurpose language, it is normal, that some things are not top among the class. \\
 
+\subsection{R language overview}
+According to Wikipedia:"R is a programming language and software environment for statistical computing and graphics"[5]. R is a successor of the S language, purposed about 39 years ago. R is distributed under GNU General Public license, which makes this language a nice choice for an open source analytical project.\\
+Same as Python, R also uses interpreter to execute the code. R language is pretty much single-purpose language. The main use of R is statistical analysis and visualization. Since R is an open source project, there is a huge \textcolor{blue}{community of real life practice and scientists behind it}.\\
+The disadvantage of the language is its one-purpose nature. Analytical project built with R will work with no doubt very fast and good, presenting good results. But the use of such project will be reduced, since there are very few quick and comfortable ways to integrate the program into the system. 
 \subsection{Python vs R wars}
 
 \subsection{Thesis description}
@@ -91,5 +98,17 @@ Another good thing about Python is build-in test - doctest module. This test is 
 
 \newpage
 \section{Literature}
-
+\begin{enumerate}
+    \item[1] \url{https://en.wikipedia.org/wiki/Python_(programming_language)}
+    \item[2]
+    \item[3]
+    \item[4]
+    \item[5] \url{https://en.wikipedia.org/wiki/R_(programming_language)}
+    \item[6]
+    \item[7]
+    \item[8]
+    \item[9]
+    \item[10]
+    \item[11]
+\end{enumerate}
 \end{document}
