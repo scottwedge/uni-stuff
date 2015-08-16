@@ -113,8 +113,54 @@ The results of the programs will be also compared. If they differ, the models wi
 The task is to build a best matching linear regression (if possible) for a company (always the first column in the file) using certain limitations on the number of the predictors.
 
 \subsection{Data preparation}
-As was mentioned before the 
-
+As was mentioned before the data set for this task will be prepared in advance. For our purpose we decided to take Intel as a dependent variable in the regression. Predictors will be chosen among the companies from the same market of micro controllers, supplier market and customers market.\\
+The Intel's competitors can be found on Wikipedia listed in several tables for years from 1998 to 2013. We used a parser to get following list of manufacturers for the years 2000-2013 for semiconductors market:
+\begin{verbatim}
+['AMD', 'Qualcomm', 'Micron Technology','Hynix',
+'Infineon Technologies', 'Intel Corporation', 
+'STMicroelectronics', 'Texas Instruments']
+\end{verbatim}
+The semiconductors are the basic component for different devices, so the potential consumer-markets may vary. In this Bachelor we will concentrate on microchips (CPUs) consumers, following markets are: Tablets, Smart-phones, personal computers, automobiles, video game consoles, medical technologies, Engineering technologies, Aviation. Tablets and personal computers are united into one market-group.\\
+Automobile market:
+\begin{verbatim}
+['Toyota', 'GM', 'Volkswagen', 'Ford', 'Nissan', 
+'Fiat Chrysler Automobiles', 'Honda', 'PSA', 'BMW',
+'Daimler AG', 'Mitsubishi', 'Tata', 'Fuji']
+\end{verbatim}
+The only significant players (manufacturers) on the game console market are: Microsoft, Sony and Nintendo.\\ 
+The aviation market is presented by following companies: 
+\begin{verbatim}
+['Boeing', 'United Technologies', 'Lockheed Martin',
+'Honeywell International', 'General Dynamics',
+'BAE Systems', 'Northrop Grumman', 'Raytheon',
+'Rolls Royce', 'Textron', 'Embraer', 'Spirit AeroSystems Holdings Inc.']
+\end{verbatim}
+The next market consuming microchips and other Intel-production is Smart-phones, Tablets and PCs. These gadgets are not substitutes, but they are all very similar in production-process, end-consumer and functions. Since many companies are presented on the markets mentioned above and have further production markets, we will put them into "Diversified" category. The diversified companies that may influence Intel are:
+\begin{verbatim}
+['Samsung', 'Apple', 'Microsoft', 'Nokia', 'Sony', 'LG',
+'Motorola',  'Lenovo',  'BlackBerry', 'Alcatel', 'Vodafone']
+\end{verbatim} 
+Another huge consumer market for Intel is medical equipment market. The following companies present this sphere:
+\begin{verbatim}
+['Johnson & Johnson', 'General Electric Co.', 'Medtronic Inc.',
+'Siemens AG', 'Baxter International Inc.', 
+'Fresenius Medical Care AG & Co.', 'Koninklijke Philips',
+'Cardinal Health Inc.', 'Novartis AG', 'Stryker Corp.',
+'Becton, Dickinson and Co.', 'Boston Scientific Corp.',
+'Allergan Inc.', 'St. Jude Medical Inc.', '3M Co.',
+'Abbott Laboratories', 'Zimmer Holdings Inc.', 
+'Smith & Nephew plc', 'Olympus Corp.', 'Bayer AG',
+'CR Bard Inc.', 'Varian Medical Systems Inc.',
+'DENTSPLY International Inc.', 'Hologic Inc.', 
+'Danaher Corp.', 'Edwards Lifesciences', 'Intuitive Surgical Inc.']
+\end{verbatim}
+Additional to above mentioned companies several big players from the industrial equipment market will be added. These are following companies:
+\begin{verbatim}
+['ABB Robotics', 'Adept Technology', 'Bosch', 'Caterpillar',
+'Denso Robotics', 'Google', 'Universal Electronics']
+\end{verbatim}
+The list of the potential predictors is not full, because some pretty big players on the markets are left due to the lack of information. The reason of the information-lack is recent enter to the international stock exchange (since 2010 earliest). Some companies are still closed for the foreign investors (which is the case for such giants as Samsung, Honda and other Asian companies). The last limit on chosen companies is the trading-volume. We simply can not use the company's data for composing a regression, if the last year or two the trade volumes for the shares was 0.\\
+After the companies were chosen, the whole data table will be split into 2 data sets: learning set and validation set. We have obtained daily prices from 2006 to 2015 (31.12.2014 is the last date for all indexes). The training or learning set will be approximately 70\% from the whole data volume: from 2006 to 2010. The validation-set is about 30\%: from 2011 to 2012. For this work we use daily frequency (only opening prices).\\
 
 \newpage
 \section{Python}
