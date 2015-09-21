@@ -29,7 +29,7 @@ class DataFormating:
 		return self.list_companies
 
 	def extract_dependent(self):
-		self.dependent_variable = {list(self.data.keys())[0]:list(data[list(data.keys())[0]])} 
+		self.dependent_variable = {list(self.data.keys())[0]:list(self.data[list(self.data.keys())[0]])} 
 		for key in self.dependent_variable.keys():
 			if key in self.list_companies:
 				self.list_companies.remove(key)
