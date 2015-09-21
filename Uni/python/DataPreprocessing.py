@@ -191,10 +191,6 @@ def correlational_cutoff(border, correlation_vector):
 			pass
 	return rest_companies 
 
-def get_weights(correlation_vector, combinations):
-	weights = []
-	pass
-
 #format data, build the regression (OLS) and choose the bset model among the class
 def best_model_in_the_class(dict_data, combinations):
 	helper_dict = {}
