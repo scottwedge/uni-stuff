@@ -17,6 +17,9 @@ class BuildModel:
 
 		self.correlation_with_Dependent = {}
 		self.rest_companies = {}
+		self.companies_chosen = []
+		self.companies_left = []
+		self.combinations = []
 
 
 
@@ -40,36 +43,33 @@ class BuildModel:
 				pass
 		return self.rest_companies 
 
-		#Done
-	def companies_chosen_list(company):
-		companies_chosen = []
-		companies_chosen.append(company)
+	# inner helper
+	def companies_chosen_list(self, company):
+		self.companies_chosen.append(company)
 		
-		return companies_chosen
-	#Done
-	def companies_left_list(cut_off, companies_chosen):
-		#initializing companies_left-list
-		companies_left = []
+		return self.companies_chosen
+	
+	# inner helper
+	def companies_left_list(self, cut_off, companies_chosen):
 		for key in cut_off.keys(): 
-			companies_left.append(key)
-		#deleting chosen companies
+			self.companies_left.append(key)
 		for item in companies_chosen:
-			if item in companies_left:
-				companies_left.remove(item)
+			if item in self.companies_left:
+				self.companies_left.remove(item)
 			else:
 				pass
-		return companies_left
+		
+		return self.companies_left
 
-		#helper function to create combinations from two arrays Done
-	def create_combinations(companies_left, companies_chosen):
-		combinations = []
-		#combinations.clear()
+	# helper function to create combinations from two arrays 
+	def create_combinations(self, companies_left, companies_chosen):
 		for item in companies_left:
-			combinations.append([item])
-		for i in range(0, len(combinations)):
+			self.combinations.append([item])
+		for i in range(0, len(self.combinations)):
 			for item in companies_chosen:
-				combinations[i].append(item)
-		return combinations
+				self.combinations[i].append(item)
+		
+		return self.combinations
 
 
 	#format data, build the regression (OLS) and choose the bset model among the class
@@ -236,9 +236,13 @@ if __name__ == '__main__':
 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
 	cor_vec = model_raw.correlation_vector()
 	cut_off = model_raw.correlational_cutoff(cor_vec)
+	chosen = model_raw.companies_chosen_list("AMD")
+	left = model_raw.companies_left_list(cut_off, chosen)
 
 	print(len(cor_vec))
 	print(len(cut_off))
+	print(chosen)
+	print(chosen in left)
 
 
 
