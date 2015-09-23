@@ -24,6 +24,8 @@ class BuildModel:
 		self.company = ""
 		self.smaller_model_list = []
 		self.best_model_in_class = None
+		self.rejected = True
+		self.comparison_model_list = []
 
 
 
@@ -121,28 +123,29 @@ class BuildModel:
 				pass
 		for i in range(0, len(self.dict_data['Intel'])):
 			self.smaller_model_list.append([self.dict_data[self.company][i]])
+		
 		return self.model, self.company, self.smaller_model_list
 
-	def llr_test(model_null, model_alternative):
-		#LLR test itself, 5% error -> c = 0,004 according to chi-square distribution table
-		rejected = True
+	# LLR test with 5% error -> c = 0,004 according to chi-square distribution table
+	def llr_test(self, model_null, model_alternative):
 		c = 0.004
 		D = -2 * numpy.log(model_null/model_alternative)
 		if (D  > c):
-			rejected = False
+			self.rejected = False
 		else:
-			rejected = True
-		return rejected 
+			self.rejected = True
+		
+		return self.rejected 
 
-	#helper-function to format the data for further GLS-build
-	def get_data_for_comparison(best_model):
+	# inner helper
+	def get_data_for_comparison(self, model):
 		model_dict = {}
-		model_list = []
-		for i in range (0, len(dict_data['Intel'])):
-			for item in best_model:
-				model_dict[i] = [v[i] for k, v in dict_data.items() if k in best_model]
-				model_list = [value for key, value in sorted(model_dict.items())]
-		return model_list
+		for i in range (0, len(self.dict_data[list(self.dependent_variable.keys())[0]])):
+			for item in model:
+				model_dict[i] = [v[i] for k, v in dict_data.items() if k in model]
+				self.comparison_model_list = [value for key, value in sorted(model_dict.items())]
+		
+		return self.comparison_model_list
 
 	#helper-function to compare models
 	def compare_models(y, smaller_model_list, bigger_model_list):
@@ -240,11 +243,13 @@ if __name__ == '__main__':
 	left = model_raw.companies_left_list(cut_off, chosen)
 	comb = model_raw.create_combinations(left, chosen)
 	bigger_model = model_raw.best_model_in_the_class(comb)
+	data_compare = model_raw.get_data_for_comparison(bigger_model)
 
 	print(comb)
 	print(one_param)
 	print(company)
 	print(bigger_model)
+	print(data_compare)
 
 
 
