@@ -74,11 +74,7 @@ if __name__ == '__main__':
 	dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()
 
 	# show results
-	print(dict_data)
-	print(list_companies)
-	print(dependent_variable)
-	print(rest_companies)
-	print(dict_final)
+	
 
 
 
