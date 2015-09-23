@@ -23,6 +23,7 @@ class BuildModel:
 		self.model = ""
 		self.company = ""
 		self.smaller_model_list = []
+		self.best_model_in_class = None
 
 
 
@@ -48,7 +49,7 @@ class BuildModel:
 
 	# inner helper
 	def companies_chosen_list(self, company):
-		self.companies_chosen.append(company)
+		self.companies_chosen.append(str(company))
 		
 		return self.companies_chosen
 	
@@ -74,20 +75,21 @@ class BuildModel:
 		
 		return self.combinations
 
-	#format data, build the regression (OLS) and choose the bset model among the class
-	def best_model_in_the_class(dict_data, combinations):
+	# choose the best model among the class
+	def best_model_in_the_class(self, combinations):
 		helper_dict = {}
 		helper_list = []
 		combinations_dict = {}
+		y = self.dependent_variable[list(self.dependent_variable.keys())[0]]
 		r_squared = {i: [] for i in range(0, len(combinations))}
 		for i in range(0, len(combinations)):
 			combinations_dict[i] = combinations[i]
 		#create weights
 		#create proper data for Linear Regression
 		for key in combinations_dict.keys():
-			for i in range(0, len(dict_data['Intel'])):
+			for i in range(0, len(self.dict_data['Intel'])):
 				for item in combinations_dict[key]:
-					helper_dict[i] = [v[i] for k, v in dict_data.items() if k in combinations_dict[key]]
+					helper_dict[i] = [v[i] for k, v in self.dict_data.items() if k in combinations_dict[key]]
 					helper_list = [value for key, value in sorted(helper_dict.items())]
 			model = sm.GLS(y, helper_list)
 			regression = model.fit()
@@ -102,9 +104,9 @@ class BuildModel:
 
 		#choose the best model among the class 
 		best_r = max(determination_combination_dict.keys())
-		best_model = determination_combination_dict[best_r]
+		self.best_model_in_class = determination_combination_dict[best_r]
 
-		return best_model, determination_combination_dict, r_squared, helper_dict, helper_list
+		return self.best_model_in_class
 
 	# build one parameter model based on correlation
 	def one_parameter_model(self, cut_off):
@@ -233,14 +235,16 @@ if __name__ == '__main__':
 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
 	cor_vec = model_raw.correlation_vector()
 	cut_off = model_raw.correlational_cutoff(cor_vec)
-	comb = model_raw.create_combinations(left, chosen)
 	one_param, company, small_list = model_raw.one_parameter_model(cut_off)
+	chosen = model_raw.companies_chosen_list(company)
+	left = model_raw.companies_left_list(cut_off, chosen)
+	comb = model_raw.create_combinations(left, chosen)
+	bigger_model = model_raw.best_model_in_the_class(comb)
 
-	print(len(cor_vec))
-	print(len(cut_off))
 	print(comb)
 	print(one_param)
-
+	print(company)
+	print(bigger_model)
 
 
 
