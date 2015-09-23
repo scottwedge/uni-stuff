@@ -238,11 +238,11 @@ if __name__ == '__main__':
 	cut_off = model_raw.correlational_cutoff(cor_vec)
 	chosen = model_raw.companies_chosen_list("AMD")
 	left = model_raw.companies_left_list(cut_off, chosen)
+	comb = model_raw.create_combinations(left, chosen)
 
 	print(len(cor_vec))
 	print(len(cut_off))
-	print(chosen)
-	print(chosen in left)
+	print(comb)
 
 
 
