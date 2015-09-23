@@ -20,6 +20,9 @@ class BuildModel:
 		self.companies_chosen = []
 		self.companies_left = []
 		self.combinations = []
+		self.model = ""
+		self.company = ""
+		self.smaller_model_list = []
 
 
 
@@ -71,7 +74,6 @@ class BuildModel:
 		
 		return self.combinations
 
-
 	#format data, build the regression (OLS) and choose the bset model among the class
 	def best_model_in_the_class(dict_data, combinations):
 		helper_dict = {}
@@ -104,25 +106,20 @@ class BuildModel:
 
 		return best_model, determination_combination_dict, r_squared, helper_dict, helper_list
 
-	"""Find 1-parameter regression"""
-	#Done
-	def one_parameter_model(correlational_cutoff_vector, list_companies, dict_data):
+	# build one parameter model based on correlation
+	def one_parameter_model(self, cut_off):
 		#extract the dependent variable from correlational vector
-		dependant, companies, test_data = extract_dependant(correlational_cutoff_vector, list_companies)
 		cor_sorted = sorted(cut_off.values())
 		max_cor = max(cor_sorted)
-		model = ""
-		company = ""
 		for key, value in cut_off.items():
 			if max_cor == value:
-				model = "Best 1-parameter model is: "+ str(key) +" with "+ str(value) + " correlation"
-				company = key
+				self.model = "Best 1-parameter model is: "+ str(key) +" with "+ str(value) + " correlation"
+				self.company = key
 			else:
 				pass
-		smaller_model_list = []
-		for i in range(0, len(dict_data['Intel'])):
-			smaller_model_list.append([dict_data[company][i]])
-		return model, company, smaller_model_list
+		for i in range(0, len(self.dict_data['Intel'])):
+			self.smaller_model_list.append([self.dict_data[self.company][i]])
+		return self.model, self.company, self.smaller_model_list
 
 	def llr_test(model_null, model_alternative):
 		#LLR test itself, 5% error -> c = 0,004 according to chi-square distribution table
@@ -236,13 +233,13 @@ if __name__ == '__main__':
 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
 	cor_vec = model_raw.correlation_vector()
 	cut_off = model_raw.correlational_cutoff(cor_vec)
-	chosen = model_raw.companies_chosen_list("AMD")
-	left = model_raw.companies_left_list(cut_off, chosen)
 	comb = model_raw.create_combinations(left, chosen)
+	one_param, company, small_list = model_raw.one_parameter_model(cut_off)
 
 	print(len(cor_vec))
 	print(len(cut_off))
 	print(comb)
+	print(one_param)
 
 
 
