@@ -299,7 +299,7 @@ def build_the_model(cut_off, list_companies, dict_data):
 	rejected, info_small_model, info_big_model = compare_models(y, smaller_model_list, bigger_model_list)
 
 	# 5. if bigger -> redo 2 and 3, else print result
-	# while дbigger model is better and limit is not reached
+	# while bigger model is better and limit is not reached
 	while rejected and parameters_number < max_parameters:
 		if rejected == False: # The smaller model is better, the search is over
 			rejected = False

@@ -26,8 +26,8 @@ class BuildModel:
 		self.best_model_in_class = None
 		self.rejected = True
 		self.comparison_model_list = []
-
-
+		self.info_small_model = None
+		self.info_big_model = None
 
 	# create correlational vector
 	def correlation_vector(self):
@@ -147,19 +147,25 @@ class BuildModel:
 		
 		return self.comparison_model_list
 
-	#helper-function to compare models
-	def compare_models(y, smaller_model_list, bigger_model_list):
-		model_null = sm.GLS(y,smaller_model_list)
+	# compare models via llr-test
+	def compare_models(self, smaller_model_list, bigger_model_list):
+		y = self.dependent_variable[list(self.dependent_variable.keys())[0]]
+		
+		model_null = sm.GLS(y, smaller_model_list)
 		model_alternative = sm.GLS(y, bigger_model_list)
-		params_null = sm.GLS(y,smaller_model_list).fit().params
+		
+		params_null = sm.GLS(y, smaller_model_list).fit().params
 		params_alternative = sm.GLS(y, bigger_model_list).fit().params
+		
 		null = model_null.loglike(params_null)
 		alternative = model_alternative.loglike(params_alternative)
-		info_small_model = model_null.fit().summary()
-		info_big_model = model_alternative.fit().summary()
-		rejected = llr_test(null, alternative)
+		
+		self.info_small_model = model_null.fit().summary()
+		self.info_big_model = model_alternative.fit().summary()
+		
+		self.rejected = self.llr_test(null, alternative)
 
-		return rejected, info_small_model, info_big_model
+		return self.rejected, self.info_small_model, self.info_big_model
 
 	def build_the_model(cut_off, list_companies, dict_data):
 		parameters_number = 2
@@ -244,12 +250,13 @@ if __name__ == '__main__':
 	comb = model_raw.create_combinations(left, chosen)
 	bigger_model = model_raw.best_model_in_the_class(comb)
 	data_compare = model_raw.get_data_for_comparison(bigger_model)
+	compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
 
 	print(comb)
 	print(one_param)
 	print(company)
 	print(bigger_model)
-	print(data_compare)
+	print(compare)
 
 
 
