@@ -370,9 +370,17 @@ if __name__ == "__main__":
 	data = getData(f)
 	list_companies = getCompanies(data)
 	dict_data = formatDataIntoDict(data)
-	
 
+	dependent_variable, rest_companies, final_dict = extract_dependant(dict_data, list_companies)
 
+	#fix correlation
+	correlation_with_Intel = {}
+	for key in dict_data.keys():
+		correlation_with_Intel[key] = []
+	for key in correlation_with_Intel.keys():
+		correlation_with_Intel[key] = numpy.corrcoef(dependent_variable[list(dependent_variable.keys())[0]], final_dict[key])[0][1] #ToDo compute dependant variable
+
+	print(correlation_with_Intel["AMD"], correlation_with_Intel["Qualcomm"])
 	# test stationary
 	# stationary = {}
 	# for key in dict_data.keys():

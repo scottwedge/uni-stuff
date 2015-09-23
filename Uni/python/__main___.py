@@ -20,5 +20,8 @@ if __name__ == '__main__':
 	kde = statistics.build_kde()
 	cdf = statistics.build_cdf()
 
-	# create model and return the information
-	
+	if False in stationary.values() and False in log_normal.values():
+		print("choose different model to build, deal with non stationary first")
+	else:
+		# create model and return the information
+		pass

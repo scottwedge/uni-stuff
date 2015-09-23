@@ -3,31 +3,46 @@
 2. Using step-forward approach, determine the 1-parameter model using Correlational
 3. Build all possible models with fixed parameter from the previous step and """
 
-from HelperFunctions import *
 from DataFormating import *
+import numpy 
 
 class BuildModel:
 
-	def __init__(self, dict_data, correlation_vector):
+	def __init__(self, dict_data, list_companies, dependent_variable, final_dict):
 		self.dict_data = dict_data
+		self.list_companies = list_companies
+		self.dependent_variable = dependent_variable
+		self.final_dict = final_dict
 
+		self.correlation_with_Intel = {}
 		self.rest_companies = {}
-		self.smaller_model_list = []
+		self.limit = 0
+		self.companies_left = []
 		self.model = ""
 		self.company = ""
+		self.smaller_model_list = []
 		self.companies_chosen = []
-		self.companies_left = []
-		self.limit = 0
 		self.combinations = []
 
-		self.correlation_vector = correlation_vector
-		self.dependent, self.companies, self.test_data = DataFormating.extract_dependent()
+	# Create correlation vector
+	def correlation_vector(self):
+		dependent_name = list(self.dependent_variable.keys())[0]
+		for key in self.dict_data.keys():
+			if  key != "Intel":
+				self.correlation_with_Intel[key] = []
+		for key in self.dict_data.keys():
+			if key != "Intel":
+				self.correlation_with_Intel[key] = numpy.corrcoef(self.dependent_variable[dependent_name], self.dict_data[key])[0][1]
+			else:
+				pass
+			
+		return self.correlation_with_Intel
 
-
-	# Step 1 : reduce the amount data to process. Correlational cut-off
-	def correlational_cutoff(self, border):
-		for key, value in self.correlation_vector.items():
-			if value > border:
+	# Step 1 : reduce the amount data to process. Correlational cut-off. Border is set to 30% 
+	def correlational_cutoff(self):
+		self.correlation_with_Intel = self.correlation_vector()
+		for key, value in self.correlation_with_Intel.items():
+			if value > 0.3:
 				self.rest_companies[key] = value
 			else:
 				pass
@@ -36,7 +51,8 @@ class BuildModel:
 
 	# set the parameter number limit
 	def set_the_limit(self):
-		total_number = len(self.rest_companies)
+		limited = self.correlational_cutoff()
+		total_number = len(limited)
 		self.limit += total_number // 10
 		if total_number % 10 >= 5:
 			self.limit += 1
@@ -48,12 +64,13 @@ class BuildModel:
 	# Step 2: build 1-parameter model using correlation_vector
 	def one_parameter_model(self):
 		# extract the dependent variable from correlational vector
+		self.rest_companies = self.correlational_cutoff()
 		cor_sorted = sorted(self.rest_companies.values())
 		max_cor = max(cor_sorted)
 		for key, value in self.rest_companies.items():
 			if max_cor == value:
-				model = "Best 1-parameter model is: "+ str(key) +" with "+ str(value) + " correlation"
-				company = key
+				self.model = "Best 1-parameter model is: "+ str(key) +" with "+ str(value) + " correlation"
+				self.company = key
 			else:
 				pass
 		for i in range(0, len(self.dict_data['Intel'])):
@@ -122,3 +139,20 @@ class BuildModel:
 		best_model = determination_combination_dict[best_r]
 
 		return best_model, determination_combination_dict, r_squared, helper_dict, helper_list
+
+
+
+
+if __name__ == '__main__':
+	raw_data = DataFormating("../data/LearningSet.csv")
+	dict_data = raw_data.keep_dict()
+	list_companies = raw_data.getAllCompanies()
+	dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()
+
+	model = BuildModel(dict_data, list_companies, dependent_variable, dict_final)
+	cor_vector = model.correlation_vector()
+
+	model, company, smaller_model_list  = model.one_parameter_model()
+
+	print(model)
+
