@@ -21,8 +21,6 @@ class StatisticTests:
 		self.pdf_dict = {}
 		self.kde_dict = {}
 		self.moments_dict = {}
-		self.log_data = {}
-		self.data = None
 
 	# check week stationarity and stationary with Agumented Deakey-Fuller Test
 	def stationarity(self):
@@ -59,7 +57,7 @@ class StatisticTests:
 
 	# build CDF and save it under "CDF_of_copany"
 	def build_cdf(self):
-		self.pdf_dict = self.dict_data
+		self.pdf_dict = self.dict_data.copy()
 		num_bins = 100
 		plt.figure()
 		for key in self.pdf_dict.keys():
@@ -75,14 +73,14 @@ class StatisticTests:
 
 	# build smoothed with gaussian kernel PDF and save it under "KDE_of_company"
 	def build_kde(self):
+		self.kde_dict = self.dict_data.copy()
 		plt.figure()
-		self.kde_dict = self.dict_data
 		for key in self.kde_dict.keys():
 			kde = stat.gaussian_kde(self.kde_dict[key])
 			xgrid = numpy.linspace(min(self.kde_dict[key]), max(self.kde_dict[key]), 100)
 			plt.title(key)
 			plt.hist(self.kde_dict[key], bins=100, normed=True, color="b")
-			plt.plot(xgrid, self.kde(xgrid), color="r", linewidth=3.0)
+			plt.plot(xgrid, kde(xgrid), color="r", linewidth=3.0)
 			plt.savefig("img/KDE/KDE_of_{}.png".format(key))
 			plt.clf()
 		
@@ -96,26 +94,15 @@ class StatisticTests:
 		
 		return self.moments_dict
 
-	# bring the data to the normal distribution
-	def log_data(self):
-		for key in self.dict_data.keys():
-			self.log_data[key] = []
-			for item in self.dict_data[key]:
-				new_item = numpy.log(item)
-				self.log_data[key].append(new_item)
-		
-		return self.log_data
 
 if __name__ == '__main__':
 	# initiate data to work with
 	raw_data = DataFormating("../data/LearningSet.csv")
 	dict_data = raw_data.keep_dict()
 #	list_companies = raw_data.getAllCompanies()
-
 	statistics = StatisticTests(dict_data)
-	kolmogorov_normal = statistics.kolmogorov_normal()
-	kolmogorov_lognormal = statistics.kolmogorov_lognormal()
-#	stationary = statistics.stationarity()
-	print(kolmogorov_normal)
-	print(kolmogorov_lognormal)
-#	print(stationary)
+	moments = statistics.findMoments()
+	print(moments)
+
+
+	
