@@ -69,16 +69,16 @@ class DataFormating:
 
 if __name__ == '__main__':
 	raw_data = DataFormating("../data/LearningSet.csv")
-#	data = raw_data.get_data()
 	dict_data = raw_data.keep_dict()
 	list_companies = raw_data.getAllCompanies()
 	dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()
 
-#	print('Intel' in dict_data.keys())
+	# show results
+	print(dict_data)
+	print(list_companies)
 	print(dependent_variable)
-	print("Intel" in list_companies)
-	print("Intel" in dict_data.keys())
-	print("Intel" in rest_companies)
-	print("Intel" in dict_final.keys())
+	print(rest_companies)
+	print(dict_final)
+
 
 
