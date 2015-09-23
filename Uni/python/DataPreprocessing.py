@@ -154,7 +154,7 @@ def checkDictionary(dictionary,listCheck):
 			result_value = True
 	return result
 
-#helper function to create combinations from two arrays
+#helper function to create combinations from two arrays Done
 def create_combinations(companies_left, companies_chosen):
 	combinations = []
 	#combinations.clear()
@@ -171,7 +171,7 @@ The best model with 2 parameters computed. Both models are compared using LLR te
 If bigger model is better the iteration goes further until the set limit of parametrs not reached 
 or until the smaller model woul be better'''
 
-#make correlation vector
+#make correlation vector Done
 def correlation_vector(dict_data, list_companies):
 	correlation_with_Intel = {}
 	for key in dict_data.keys():
@@ -181,7 +181,7 @@ def correlation_vector(dict_data, list_companies):
 	return correlation_with_Intel
 
 
-#in order to reduce the run time for a bit
+#in order to reduce the run time for a bit Done
 def correlational_cutoff(border, correlation_vector):
 	rest_companies = {}
 	for key, value in correlation_vector.items():
@@ -224,6 +224,7 @@ def best_model_in_the_class(dict_data, combinations):
 	return best_model, determination_combination_dict, r_squared, helper_dict, helper_list
 
 """Find 1-parameter regression"""
+#Done
 def one_parameter_model(correlational_cutoff_vector, list_companies, dict_data):
 	#extract the dependent variable from correlational vector
 	dependant, companies, test_data = extract_dependant(correlational_cutoff_vector, list_companies)
@@ -331,7 +332,7 @@ def build_the_model(cut_off, list_companies, dict_data):
 	print("The best model contains ", str(parameters_number), " parameters. And the model is: ", str(resulting_model))
 	print(info_big_model)
 	return resulting_model
-
+#Done
 def set_the_limit(cut_off):
 	#set the limit on nnumbers of the parameters in the regression
 	total_number = len(cut_off)
@@ -343,12 +344,13 @@ def set_the_limit(cut_off):
 		pass
 	return limit
 
+#Done
 def companies_chosen_list(company):
 	companies_chosen = []
 	companies_chosen.append(company)
 	
 	return companies_chosen
-
+#Done
 def companies_left_list(cut_off, companies_chosen):
 	#initializing companies_left-list
 	companies_left = []
@@ -368,19 +370,21 @@ if __name__ == "__main__":
 	data = getData(f)
 	list_companies = getCompanies(data)
 	dict_data = formatDataIntoDict(data)
+	
+
 
 	# test stationary
-	stationary = {}
-	for key in dict_data.keys():
-		stationary[key] = (False, dict_data[key])
+	# stationary = {}
+	# for key in dict_data.keys():
+	# 	stationary[key] = (False, dict_data[key])
 
 	# # key
 	# print(list(stationary.items()))
 	# # dict_data
 	# print(list(stationary.items())[0][1][1])
 
-	stationary = stationarity(dict_data)
-	print(stationary)
+	# stationary = stationarity(dict_data)
+	# print(stationary)
 	
 	#dependent data
    # dependent_variable = {'Intel': dict_data['Intel']}
