@@ -28,6 +28,8 @@ class BuildModel:
 		self.comparison_model_list = []
 		self.info_small_model = None
 		self.info_big_model = None
+		self.resulting_model = None
+		self.limit = 0
 
 	# create correlational vector
 	def correlation_vector(self):
@@ -147,6 +149,18 @@ class BuildModel:
 		
 		return self.comparison_model_list
 
+	# set the limit on number of predictors in the final regression
+	def set_the_limit(self, cut_off):
+		total_number = len(cut_off)
+		self.limit = 0
+		self.limit += total_number//10
+		if total_number%10>=5:
+			self.limit += 1
+		else:
+			pass
+		
+		return self.limit
+
 	# compare models via llr-test
 	def compare_models(self, smaller_model_list, bigger_model_list):
 		y = self.dependent_variable[list(self.dependent_variable.keys())[0]]
@@ -167,25 +181,26 @@ class BuildModel:
 
 		return self.rejected, self.info_small_model, self.info_big_model
 
-	def build_the_model(cut_off, list_companies, dict_data):
+	def build_the_model(self, cut_off):
 		parameters_number = 2
-		dependent_data = dict_data["Intel"]
+		dependent_data = self.dependent_variable[list(self.dependent_variable.keys())[0]]
 		resulting_model = None
-		max_parameters = set_the_limit(cut_off)
+		max_parameters = self.set_the_limit(cut_off)
+		
 		# 1. create smaller model
-		small_model, company, smaller_model_list = one_parameter_model(cut_off, list_companies, dict_data)
+		small_model, company, smaller_model_list = self.one_parameter_model(cut_off)
 
 		# 2. create combinations
-		companies_chosen = companies_chosen_list(company)
-		companies_left = companies_left_list(cut_off, companies_chosen)
-		combinations = create_combinations(companies_left, companies_chosen)    
+		companies_chosen = self.companies_chosen_list(company)
+		companies_left = self.companies_left_list(cut_off, companies_chosen)
+		combinations = self.create_combinations(companies_left, companies_chosen)    
 
 		# 3. choose best bigger model among the class
-		big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
-		bigger_model_list = get_data_for_comparison(big_model)
+		big_model = self.best_model_in_the_class(combinations)
+		bigger_model_list = self.get_data_for_comparison(big_model)
 
 		# 4. compare the smaller and bigger models
-		rejected, info_small_model, info_big_model = compare_models(y, smaller_model_list, bigger_model_list)
+		rejected, info_small_model, info_big_model = self.compare_models(smaller_model_list, bigger_model_list)
 
 		# 5. if bigger -> redo 2 and 3, else print result
 		# while дbigger model is better and limit is not reached
@@ -195,7 +210,7 @@ class BuildModel:
 				print("the smaller model is better. the search is over")
 				print(small_model, info_small_model)
 				
-				resulting_model = small_model
+				self.self.resulting_model = small_model
 				break
 
 			else: # rejected == True, the bigger model is better, search further
@@ -207,31 +222,23 @@ class BuildModel:
 							companies_left.remove(item)
 					small_model = big_model
 					smaller_model_list = bigger_model_list
-					combinations = create_combinations(companies_left, companies_chosen)
-					big_model, final, r_squared, helper_dict, helper_list = best_model_in_the_class(dict_data, combinations)
-					bigger_model_list = get_data_for_comparison(big_model)
-					rejected, info_small_model, info_big_model = compare_models(y, smaller_model_list, bigger_model_list)
+					combinations = self.create_combinations(companies_left, companies_chosen)
+					big_model = self.best_model_in_the_class(combinations)
+					bigger_model_list = self.get_data_for_comparison(big_model)
+					rejected, info_small_model, info_big_model = self.compare_models(smaller_model_list, bigger_model_list)
 				else:
-					resulting_model = big_model
+					self.resulting_model = big_model
 					break
 			   
-				resulting_model = big_model
+				self.resulting_model = big_model
 			parameters_number += 1
-			print("current best model is ", str(resulting_model))
-		print("The best model contains ", str(parameters_number), " parameters. And the model is: ", str(resulting_model))
+			#print("current best model is ", str(self.resulting_model))
+		print("The best model contains ", str(parameters_number), " parameters. And the model is: ", str(self.resulting_model))
 		print(info_big_model)
-		return resulting_model
-	#Done
-	def set_the_limit(cut_off):
-		#set the limit on nnumbers of the parameters in the regression
-		total_number = len(cut_off)
-		limit = 0
-		limit += total_number//10
-		if total_number%10>=5:
-			limit += 1
-		else:
-			pass
-		return limit
+		
+		return self.resulting_model
+
+
 
 
 
@@ -244,19 +251,14 @@ if __name__ == '__main__':
 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
 	cor_vec = model_raw.correlation_vector()
 	cut_off = model_raw.correlational_cutoff(cor_vec)
-	one_param, company, small_list = model_raw.one_parameter_model(cut_off)
-	chosen = model_raw.companies_chosen_list(company)
-	left = model_raw.companies_left_list(cut_off, chosen)
-	comb = model_raw.create_combinations(left, chosen)
-	bigger_model = model_raw.best_model_in_the_class(comb)
-	data_compare = model_raw.get_data_for_comparison(bigger_model)
-	compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
+	# one_param, company, small_list = model_raw.one_parameter_model(cut_off)
+	# chosen = model_raw.companies_chosen_list(company)
+	# left = model_raw.companies_left_list(cut_off, chosen)
+	# comb = model_raw.create_combinations(left, chosen)
+	# bigger_model = model_raw.best_model_in_the_class(comb)
+	# data_compare = model_raw.get_data_for_comparison(bigger_model)
+	# compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
+	build_model = model_raw.build_the_model(cut_off)
 
-	print(comb)
-	print(one_param)
-	print(company)
-	print(bigger_model)
-	print(compare)
-
-
+	print(build_model)
 
