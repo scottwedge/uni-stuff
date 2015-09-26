@@ -165,8 +165,24 @@ After the companies were chosen, the whole data table will be split into 2 data 
 \newpage
 \section{Python}
 \subsection{The structure of the program}
+The program consists of three main classes, connected with each other in main class. The first class is called DataFormating.py and is responsible for getting data out of the csv file and writing it into an instance of a proper format for other two classes, also the dependent variable will be extracted from the whole data base (the dependent variable is always the first column in the csv table).\\
+The second class is called StatisticTests.py, it runs several test to find out main static characteristics in order to choose an appropriate model class for the data.\\
+The third class is called BuildModel.py. This class builds the multiple linear regression (according to the results of the StatisticTests class) using step-forward approach:
+\begin{enumerate}
+    \item The amount of companies taken into account is reduced using correlation: all companies with correlation less than 30\% are left out.
+    \item A limit on the maximum number of the parameters is set using following rule: 1 company out of 10 if number of company exceeds 5.
+    \item The first step is to find the best one parameter company using the highest correlation coefficient from the first step.
+    \item best models among the classes are compared using likelihood ratio test. 
+    \item If the bigger model is better and the limit of the predictors in regression is not achieved, the previous two steps are repeated.
+\end{enumerate} 
+At the end the full information for the best model is returned.
+
 \subsection{The process description}
+In this section the process of the coding is described: what difficulties and problems are encountered and how they were solved.
 \subsubsection{Used Libraries}
+In the course of writing the program several steps were implemented. First one, as was told above, is the data extracting. Although, python language has a native library to read csv files and format them into a list or a dictionary, in this work pandas library is used [15]. \\
+In the class responsible for statistic test three different libraries and sources are used: scipy [16], statsmodels [17] and scikit [18]. 
+
 \subsubsection{Documentation quality and quantity}
 \subsubsection{Advantages and disadvantages of the program}
 \subsection{Results}

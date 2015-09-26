@@ -144,7 +144,7 @@ class BuildModel:
 		model_dict = {}
 		for i in range (0, len(self.dict_data[list(self.dependent_variable.keys())[0]])):
 			for item in model:
-				model_dict[i] = [v[i] for k, v in dict_data.items() if k in model]
+				model_dict[i] = [v[i] for k, v in self.dict_data.items() if k in model]
 				self.comparison_model_list = [value for key, value in sorted(model_dict.items())]
 		
 		return self.comparison_model_list

@@ -2,6 +2,7 @@
 
 from DataFormating import *
 from StatisticTests import *
+from BuildModel import *
 
 if __name__ == '__main__':
 
@@ -24,4 +25,12 @@ if __name__ == '__main__':
 		print("choose different model to build, deal with non stationary first")
 	else:
 		# create model and return the information
-		pass
+		model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
+		cor_vec = model_raw.correlation_vector()
+		cut_off = model_raw.correlational_cutoff(cor_vec)
+		build_model = model_raw.build_the_model(cut_off)
+
+	print(build_model)
+
+
+
