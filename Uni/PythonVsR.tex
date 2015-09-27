@@ -203,7 +203,42 @@ The Scipy source, as was already mentioned before, unites 6 libraries and thus c
 The Statmodels library proved to be easy in use, if you understand how it is all organized. This library has a good content tree, but contains not enough general and small specific examples. The problem is sometimes to understand what input parameters are needed and why the result has unexpected format. For instance, in the documentation of some functions parameters, methods and return instances are organized not by appearance or relevance order, but by alphabet, which makes it many times harder to read it. The source code is given for the whole class and not for the certain parts. However, they give at least one link to the theory behind the implementation. One of the biggest inconveniences was being unable to read the documentation. The Statmodels keep their documentation at sourceforge. This resource had been offline for several days in a row, which can be a very big issue for a project with a deadline. The code is kept on Github. It is very hard to read the code without certain theoretical and practical background. Although Statmodels have many disadvantages, this library was chosen for the program because of its content. In most cases the resulting output had proper (suitable for our program) format and did the exact thing we wanted.\\
 
 \subsubsection{Advantages and disadvantages of the program}
+The results of the program for the given data, described in the data preparation section are:
+\begin{verbatim}
+The best model contains  6  parameters. And the model is:
+['STMElectro', 'Olympus', 'St Jude', 'Lenovo', 'MicronTech', 'Google']
+                            GLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.998
+Model:                            GLS   Adj. R-squared:                  0.998
+Method:                 Least Squares   F-statistic:                 8.701e+04
+Date:                 Do, 24 Sep 2015   Prob (F-statistic):               0.00
+Time:                        20:20:45   Log-Likelihood:                -1753.3
+No. Observations:                1239   AIC:                             3519.
+Df Residuals:                    1233   BIC:                             3549.
+Df Model:                           6                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [95.0% Conf. Int.]
+------------------------------------------------------------------------------
+x1             0.1254      0.016      7.933      0.000         0.094     0.156
+x2             0.0609      0.012      5.065      0.000         0.037     0.085
+x3             0.3261      0.016     21.029      0.000         0.296     0.357
+x4             0.2126      0.004     47.272      0.000         0.204     0.221
+x5             0.0083      0.001     12.929      0.000         0.007     0.010
+x6             0.1291      0.012     10.536      0.000         0.105     0.153
+==============================================================================
+Omnibus:                       10.831   Durbin-Watson:                   0.120
+Prob(Omnibus):                  0.004   Jarque-Bera (JB):               10.859
+Skew:                           0.212   Prob(JB):                      0.00439
+Kurtosis:                       2.827   Cond. No.                         357.
+==============================================================================
 
+[Finished in 13590.5s]
+\end{verbatim}
+The overall run time is pretty big - 3,7 Hours. The main time consumption comes from StatisticTests.py, specifically from stationarity test.
+\textcolor{red}{verbatim - run time}
+This section was written pretty naive and thus is slow. The advantage of the python is its multipurpose nature. On the functions changing big arrays or different data type it is possible to use speed up methods like Multiprocessing [21]. This will give you up to 8 times speed up momentum (depending on number of cores you can use). However this a bit of intermediate knowledge of python programming and will be quite difficult for a beginner to use.
 \subsection{Results}
 
 \newpage
