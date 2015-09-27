@@ -100,9 +100,14 @@ if __name__ == '__main__':
 	raw_data = DataFormating("../data/LearningSet.csv")
 	dict_data = raw_data.keep_dict()
 #	list_companies = raw_data.getAllCompanies()
-	statistics = StatisticTests(dict_data)
+	stastatistics = StatisticTests(dict_data)
+	stationary = statistics.stationarity()
+	normal = statistics.kolmogorov_normal()
+	log_normal = statistics.kolmogorov_lognormal()
 	moments = statistics.findMoments()
-	print(moments)
+	kde = statistics.build_kde()
+	cdf = statistics.build_cdf()
+	print(stationary)
 
 
 	
