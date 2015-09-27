@@ -181,7 +181,20 @@ At the end the full information for the best model is returned.
 In this section the process of the coding is described: what difficulties and problems are encountered and how they were solved.
 \subsubsection{Used Libraries}
 In the course of writing the program several steps were implemented. First one, as was told above, is the data extracting. Although, python language has a native library to read csv files and format them into a list or a dictionary, in this work pandas library is used [15]. \\
-In the class responsible for statistic test three different libraries and sources are used: scipy [16], statsmodels [17] and scikit [18]. 
+The class responsible for statistic test uses four different libraries and sources: Scipy [16], Statsmodels [17], Matplotlib [] and Scikit [18].\\
+Scipy library was mainly used to perform goodness of fit Kolmogorov distribution tests and to build KDE and CDF. The other two libraries could do the same, but in this case the use of the class was better explained for Scipy.\\
+The Statsmodels library is used separately for StatisticTests class and BuildModel class. In the first part, Statmodels is used to run Augmented Dickey–Fuller test [5] to figure out whether data is stationary.\\
+The Sklearn module from Scikit was used mainly during testing of the functionality of the program. The library can perform the same tests that were mentioned above, but with unnecessary complication of the documentary and methods use.\\
+The Matplotlib library is used to present the KDE and CDF graphically. Normally this library is used as the part of the Scipy source, so it is used in this work.\\ 
+In the BuildModel class two libraries were used directly: Statsmodels and Numpy. Tne Numpy library is a part of the Scipy package, but in this case it was used explicitly. The main and the only function of the Numpy was to speed up mathematical computations. Of course, we could have taken build-in Math class directly, but it is a common and a good practice to use Numpy for mid-difficult computations, like:
+\begin{verbatim}
+element = numpy.corrcoef(self.dict_data[self.list_companies[0]],
+                         self.dict_data[key])[0][1]
+\end{verbatim}
+This element computes the correlation between the dependent variable and any other variable from the data. The Math class can present simple operations, in order to compute the coefficient of the correlation we should have built the formula directly without a wrapper function. And every part of the computation would have taken longer. \textcolor{red}{Do I need to present a benchmark results here?}\\
+The Statmodels library is used directly to build a linear regression using Generalized Least Squares [19] method. GLS was chosen to eliminate some possible insignificance of Ordinary Least Squares or Weighted Least Squares.\\
+The Likelihood ratio test [12] function was implemented in Statmodels, however we found it unusable, since the resulting output had completely different type, as we have expected. Looking into the source code of the wrapper function didn't bring much, this is why the LLR-test was implemented directly according to the formula and was yielding results of the proper format.\\
+The end result is currently printed out to a console: The names of the companies in the final regression, main characteristics of the regression (determination coefficient, AIC, BIC, Loglikelihood, coefficients and errors, etc.) and final run time of the program. It is possible to show the full information for each iteration the algorithm makes, but it will take more time to compute. 
 
 \subsubsection{Documentation quality and quantity}
 \subsubsection{Advantages and disadvantages of the program}
@@ -190,6 +203,7 @@ In the class responsible for statistic test three different libraries and source
 \newpage
 \section{R}
 \subsection{The structure of the program}
+The program written in R language has almost exact the same structure as the Python program, as far as the language allows. 
 \subsection{The process description}
 \subsubsection{Used Libraries}
 \subsubsection{Documentation quality and quantity}
