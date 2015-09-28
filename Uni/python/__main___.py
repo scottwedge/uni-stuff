@@ -3,16 +3,19 @@
 from DataFormating import *
 from StatisticTests import *
 from BuildModel import *
+import cProfile
+import re
 
-if __name__ == '__main__':
-
-	# initialize the data
-	raw_data = DataFormating("../data/LearningSet.csv")
+def collect_data(file_name):
+	raw_data = DataFormating(file_name)
 	dict_data = raw_data.keep_dict()
 	list_companies = raw_data.getAllCompanies()
 	dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()
 
-	# check the data characteristics
+	return dict_data, list_companies, dependent_variable, rest_companies, dict_final
+
+
+def collect_statistics(dict_data):
 	statistics = StatisticTests(dict_data)
 	stationary = statistics.stationarity()
 	normal = statistics.kolmogorov_normal()
@@ -21,15 +24,27 @@ if __name__ == '__main__':
 	kde = statistics.build_kde()
 	cdf = statistics.build_cdf()
 
-	if False in stationary.values() and False in log_normal.values():
-		print("choose different model to build, deal with non stationary first")
-	else:
-		# create model and return the information
-		model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
-		cor_vec = model_raw.correlation_vector()
-		cut_off = model_raw.correlational_cutoff(cor_vec)
-		build_model = model_raw.build_the_model(cut_off)
+	return stationary, moments, log_normal
 
-	print(build_model)
 
-m
+if __name__ == '__main__':
+
+	# initialize the data
+	file_name = "../data/LearningSet.csv"
+	dict_data, list_companies, dependent_variable, rest_companies, dict_final = collect_data("../data/LearningSet.csv")
+
+	# check the data characteristics
+	stationary, moments, log_normal = collect_statistics(dict_data)
+	# if False in stationary.values() and False in log_normal.values():
+	# 	print("choose different model to build, deal with non stationary first")
+	# else:
+	# 	# create model and return the information
+	# 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
+	# 	cor_vec = model_raw.correlation_vector()
+	# 	cut_off = model_raw.correlational_cutoff(cor_vec)
+	# 	build_model = model_raw.build_the_model(cut_off)
+
+	# #print(build_model)
+
+	#cProfile.run('collect_data(file_name)')
+	cProfile.run('collect_statistics(dict_data)')

@@ -1,0 +1,70 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage[margin=0.5in]{geometry}
+
+\begin{document}
+\section*{Appendix A: time and memory use test}
+\subsection*{Python Program}
+1. DataFormating.py
+\begin{verbatim}
+         3771929 function calls (3771434 primitive calls) in 13.401 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:2264(_handle_fromlist)
+        1    0.007    0.007   13.401   13.401 <string>:1(<module>)
+        2    0.000    0.000    0.000    0.000 <string>:12(__new__)
+        1    0.831    0.831    6.644    6.644 DataFormating.py:19(keep_dict)
+        1    0.833    0.833    6.680    6.680 DataFormating.py:28(format_into_dict)
+        1    0.000    0.000    0.000    0.000 DataFormating.py:37(getAllCompanies)
+        1    0.000    0.000    0.000    0.000 DataFormating.py:43(getCompanies)
+        1    0.006    0.006    6.694    6.694 DataFormating.py:49(extract_dependent)
+        1    0.000    0.000    0.055    0.055 DataFormating.py:7(__init__)
+        6    0.000    0.000    0.000    0.000 __init__.py:124(iteritems)
+        1    0.000    0.000   13.394   13.394 __main___.py:9(collect_data)
+        1    0.000    0.000    0.000    0.000 _methods.py:37(_any)
+        1    0.000    0.000    0.000    0.000 common.py:103(_expand_user)
+        1    0.000    0.000    0.000    0.000 common.py:121(get_filepath_or_buffer)
+       69    0.000    0.000    0.000    0.000 common.py:1949(_possibly_castable)
+       69    0.000    0.000    0.001    0.000 common.py:212(isnull)
+       69    0.000    0.000    0.001    0.000 common.py:233(_isnull_new)
+        2    0.000    0.000    0.000    0.000 common.py:2347(_asarray_tuplesafe)
+        1    0.000    0.000    0.000    0.000 common.py:2461(_get_dtype_type)
+        1    0.000    0.000    0.000    0.000 common.py:2557(is_bool_dtype)
+        5    0.000    0.000    0.000    0.000 common.py:2569(is_categorical_dtype)
+       69    0.000    0.000    0.000    0.000 common.py:2603(is_list_like)
+        1    0.000    0.000    0.000    0.000 common.py:407(array_equivalent)
+        1    0.000    0.000    0.000    0.000 common.py:50(_is_url)
+        1    0.000    0.000    0.000    0.000 common.py:68(_is_s3_url)
+      209    0.001    0.000    0.001    0.000 common.py:70(_check)
+   171121    1.392    0.000    3.648    0.000 frame.py:1774(__getitem__)
+   171121    0.646    0.000    1.156    0.000 frame.py:1799(_getitem_column)
+        1    0.000    0.000    0.010    0.010 frame.py:200(__init__)
+       69    0.001    0.000    0.009    0.000 frame.py:2102(_box_item_values)
+       69    0.001    0.000    0.006    0.000 frame.py:2109(_box_col_values)
+        1    0.000    0.000    0.010    0.010 frame.py:295(_init_dict)
+       70    0.000    0.000    0.000    0.000 frame.py:305(<genexpr>)
+      ...
+        1    0.000    0.000    0.000    0.000 {method 'values' of 'dict' objects}
+   170994    0.332    0.000    0.332    0.000 {method 'view' of 'numpy.ndarray' objects}
+        1    0.000    0.000    0.000    0.000 {pandas.lib.array_equivalent_object}
+        1    0.000    0.000    0.000    0.000 {pandas.lib.clean_index_list}
+        2    0.000    0.000    0.000    0.000 {pandas.lib.infer_dtype}
+   170982    0.106    0.000    0.106    0.000 {pandas.lib.is_float}
+        1    0.000    0.000    0.000    0.000 {pandas.lib.is_integer}
+       69    0.000    0.000    0.000    0.000 {pandas.lib.isscalar}
+        1    0.000    0.000    0.000    0.000 {pandas.lib.list_to_object_array}
+   342104    1.029    0.000    4.145    0.000 {pandas.lib.values_from_object}
+
+
+[Finished in 26.2s]
+\end{verbatim}
+2. StatisticTest.py
+\begin{verbatim}
+
+\end{verbatim}
+\end{document}
