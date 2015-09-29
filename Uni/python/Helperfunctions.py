@@ -1,4 +1,0 @@
-"""Helper functions"""
-
-
-class HelperFunctions:
