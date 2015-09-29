@@ -1,13 +1,13 @@
 """__main___"""
 
-from DataFormating import *
+from DataFormatting import *
 from StatisticTests import *
 from BuildModel import *
 import cProfile
 import re
 
 def collect_data(file_name):
-	raw_data = DataFormating(file_name)
+	raw_data = DataFormatting(file_name)
 	dict_data = raw_data.keep_dict()
 	list_companies = raw_data.getAllCompanies()
 	dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()

@@ -1,6 +1,6 @@
 """Class for statistical tests"""
 
-from DataFormating import *
+from DataFormatting import *
 import sklearn as sk
 import matplotlib.pyplot as plt 
 import numpy
@@ -97,7 +97,7 @@ class StatisticTests:
 
 if __name__ == '__main__':
 	# initiate data to work with
-	raw_data = DataFormating("../data/LearningSet.csv")
+	raw_data = DataFormatting("../data/LearningSet.csv")
 	dict_data = raw_data.keep_dict()
 #	list_companies = raw_data.getAllCompanies()
 	statistics = StatisticTests(dict_data)

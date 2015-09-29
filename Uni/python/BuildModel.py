@@ -3,7 +3,7 @@
 2. Using step-forward approach, determine the 1-parameter model using Correlational
 3. Build all possible models with fixed parameter from the previous step and """
 
-from DataFormating import *
+from DataFormatting import *
 import numpy
 import statsmodels.api as sm 
 import cProfile
@@ -244,7 +244,7 @@ class BuildModel:
 
 
 if __name__ == '__main__':
-	raw_data = DataFormating("../data/LearningSet.csv")
+	raw_data = DataFormatting("../data/LearningSet.csv")
 	dict_data = raw_data.keep_dict()
 	list_companies = raw_data.getAllCompanies()
 	dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()
