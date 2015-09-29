@@ -65,6 +65,145 @@
 \end{verbatim}
 2. StatisticTest.py
 \begin{verbatim}
+         33687046 function calls (33129590 primitive calls) in 8572.478 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+   108223    0.756    0.000    1.050    0.000 <frozen importlib._bootstrap>:2264(_handle_fromlist)
+        1    0.000    0.000    0.000    0.000 <string>:1(<module>)
+        1    0.000    0.000    0.000    0.000 <string>:12(__new__)
+      138    0.000    0.000    0.000    0.000 <string>:2(_parse_args)
+        1    0.000    0.000    0.000    0.000 <string>:5(KstestResult)
+        1    0.000    0.000    0.000    0.000 StatisticTests.py:15(__init__)
+        1    0.004    0.004 8358.810 8358.810 StatisticTests.py:26(stationarity)
+        1    0.002    0.002    0.439    0.439 StatisticTests.py:39(kolmogorov_normal)
+        1    0.002    0.002    0.428    0.428 StatisticTests.py:49(kolmogorov_lognormal)
+        1    0.004    0.004   63.703   63.703 StatisticTests.py:59(build_cdf)
+        1    0.008    0.008  148.942  148.942 StatisticTests.py:75(build_kde)
+        1    0.002    0.002    0.171    0.171 StatisticTests.py:90(findMoments)
+        2    0.000    0.000    0.000    0.000 __init__.py:1335(get_backend)
+      487    0.003    0.000    0.005    0.000 __init__.py:1347(is_interactive)
+      138    0.000    0.000    0.000    0.000 __init__.py:25(get_projection_class)
+      138    0.014    0.000    0.286    0.002 __init__.py:301(namedtuple)
+    50730    0.116    0.000    0.250    0.000 __init__.py:303(report)
+    50730    0.134    0.000    0.134    0.000 __init__.py:335(ge)
+      414    0.001    0.000    0.003    0.000 __init__.py:364(<genexpr>)
+      414    0.002    0.000    0.004    0.000 __init__.py:366(<genexpr>)
+      138    0.001    0.000    0.001    0.000 __init__.py:54(get_projection_class)
+     ...
+40374/16450    0.125    0.000    6.119    0.000 _base.py:548(get_xaxis_transform)
+     4394    0.094    0.000    0.963    0.000 _base.py:573(get_xaxis_text1_transform)
+     4394    0.073    0.000    1.072    0.000 _base.py:599(get_xaxis_text2_transform)
+40905/16745    0.118    0.000    6.098    0.000 _base.py:625(get_yaxis_transform)
+     4453    0.093    0.000    1.063    0.000 _base.py:650(get_yaxis_text1_transform)
+     4453    0.074    0.000    0.896    0.000 _base.py:676(get_yaxis_text2_transform)
+      414    0.007    0.000    0.687    0.002 _base.py:702(_update_transScale)
+      414    0.002    0.000    0.044    0.000 _base.py:713(get_position)
+      414    0.004    0.000    0.046    0.000 _base.py:720(set_position)
+      ...
+   193601    0.581    0.000    0.581    0.000 _weakrefset.py:16(__init__)
+   193601    0.709    0.000    0.902    0.000 _weakrefset.py:20(__enter__)
+   193601    0.982    0.000    1.366    0.000 _weakrefset.py:26(__exit__)
+    18522    0.087    0.000    0.087    0.000 _weakrefset.py:70(__contains__)
+    18522    0.105    0.000    0.191    0.000 abc.py:178(__instancecheck__)
+       69    0.004    0.000    0.078    0.001 adfvalues.py:171(mackinnonp)
+       69    0.002    0.000    0.024    0.000 adfvalues.py:343(mackinnoncrit)
+   141495    0.530    0.000    2.532    0.000 artist.py:155(convert_xunits)
+   141547    0.393    0.000    2.010    0.000 artist.py:165(convert_yunits)
+     8142    0.010    0.000    0.010    0.000 artist.py:174(set_axes)
+   221065    0.932    0.000    2.069    0.000 artist.py:235(pchanged)
+     7866    0.007    0.000    0.007    0.000 artist.py:243(is_transform_set)
+    55139    0.162    0.000    0.643    0.000 artist.py:250(set_transform)
+    75804    0.276    0.000    0.450    0.000 artist.py:261(get_transform)
+    55932    0.213    0.000    0.298    0.000 artist.py:41(before)
+    43605    0.049    0.000    0.049    0.000 artist.py:430(get_gid)
+    36660    0.197    0.000    0.373    0.000 artist.py:444(get_snap)
+       69    0.000    0.000    0.000    0.000 artist.py:462(set_snap)
+    36660    0.050    0.000    0.050    0.000 artist.py:477(get_sketch_params)
+    55932    0.276    0.000    0.408    0.000 artist.py:48(after)
+    43605    0.063    0.000    0.063    0.000 artist.py:531(get_path_effects)
+    67712    0.158    0.000    0.900    0.000 artist.py:541(set_figure)
+      828    0.002    0.000    0.008    0.000 artist.py:551(set_clip_box)
+    12006    0.423    0.000   12.207    0.001 artist.py:560(set_clip_path)
+55932/414    0.912    0.000  105.985    0.256 artist.py:57(draw_wrapper)
+     6945    0.007    0.000    0.007    0.000 artist.py:614(get_alpha)
+    68028    0.081    0.000    0.081    0.000 artist.py:621(get_visible)
+    16974    0.012    0.000    0.012    0.000 artist.py:625(get_animated)
+     7038    0.006    0.000    0.006    0.000 artist.py:637(get_clip_path)
+    56667    0.269    0.000    0.361    0.000 artist.py:663(_set_gc_clip)
+   111864    0.106    0.000    0.106    0.000 artist.py:673(get_rasterized)
+   111864    0.111    0.000    0.111    0.000 artist.py:690(get_agg_filter)
+     8847    0.026    0.000    0.101    0.000 artist.py:706(set_alpha)
+    69213    0.784    0.000    2.008    0.000 artist.py:745(update)
+      ...
+    45762    0.188    0.000    0.362    0.000 font_manager.py:1071(get_default_size)
+    22968    0.454    0.000    3.517    0.000 font_manager.py:655(__init__)
+    29619    0.435    0.000    1.721    0.000 font_manager.py:701(__hash__)
+    29619    0.038    0.000    0.038    0.000 font_manager.py:720(get_family)
+    29619    0.032    0.000    0.032    0.000 font_manager.py:738(get_style)
+    29619    0.038    0.000    0.038    0.000 font_manager.py:748(get_variant)
+    29619    0.032    0.000    0.032    0.000 font_manager.py:757(get_weight)
+    29619    0.032    0.000    0.032    0.000 font_manager.py:768(get_stretch)
+    45762    1.001    0.000    1.437    0.000 font_manager.py:786(get_size_in_points)
+    29619    0.027    0.000    0.027    0.000 font_manager.py:795(get_file)
+    18522    0.263    0.000    1.175    0.000 font_manager.py:815(set_family)
+    18522    0.119    0.000    0.119    0.000 font_manager.py:828(<listcomp>)
+    18522    0.102    0.000    0.166    0.000 font_manager.py:832(set_style)
+    18522    0.068    0.000    0.112    0.000 font_manager.py:844(set_variant)
+    18660    0.493    0.000    0.536    0.000 font_manager.py:854(set_weight)
+    18522    0.342    0.000    0.400    0.000 font_manager.py:872(set_stretch)
+    18660    0.270    0.000    0.270    0.000 font_manager.py:890(set_size)
+    18522    0.019    0.000    0.019    0.000 font_manager.py:905(set_file)
+    ...
+    35328    0.213    0.000    0.539    0.000 linalg.py:106(_makearray)
+    70656    0.116    0.000    0.208    0.000 linalg.py:111(isComplexType)
+    34776 5316.352    0.153 5327.369    0.153 linalg.py:1225(svd)
+    70104    0.260    0.000    0.381    0.000 linalg.py:124(_realType)
+    35328    0.422    0.000    0.819    0.000 linalg.py:139(_commonType)
+    17388    1.309    0.000  129.293    0.007 linalg.py:1430(matrix_rank)
+    35328    0.122    0.000    0.149    0.000 linalg.py:198(_assertRankAtLeast2)
+      552    0.004    0.000    0.006    0.000 linalg.py:209(_assertNdSquareness)
+    34776    0.190    0.000    0.190    0.000 linalg.py:219(_assertNoEmpty2d)
+      552    0.037    0.000    0.079    0.000 linalg.py:455(inv)
+    17388    0.029    0.000    0.029    0.000 linear_model.py:104(df_model)
+    17388    0.758    0.000    1.928    0.000 linear_model.py:1065(__init__)
+     1380    0.039    0.000    1.397    0.001 linear_model.py:1134(wresid)
+     1380    0.011    0.000    1.467    0.001 linear_model.py:1145(scale)
+    17388    0.024    0.000    0.024    0.000 linear_model.py:120(df_resid)
+     1380    0.037    0.000    1.855    0.001 linear_model.py:1230(bse)
+    17388    0.044    0.000    0.044    0.000 linear_model.py:133(df_resid)
+    17388    2.922    0.000 8313.830    0.478 linear_model.py:141(fit)
+     1380    0.004    0.000    1.358    0.001 linear_model.py:336(predict)
+    ...
+     5520    0.026    0.000    0.026    0.000 wrapper.py:23(<lambda>)
+      276    0.188    0.001    0.188    0.001 {built-in method RendererAgg}
+      138    0.013    0.000    0.018    0.000 {built-in method __build_class__}
+   382101    0.820    0.000    0.821    0.000 {built-in method __new__ of type object at 0x7fd89908bde0}
+      138    0.000    0.000    0.000    0.000 {built-in method _getframe}
+     1518    0.024    0.000    0.024    0.000 {built-in method _insert}
+    26496    0.032    0.000    0.032    0.000 {built-in method abs}
+       16    0.004    0.000    0.004    0.000 {built-in method addAction}
+        4    0.000    0.000    0.000    0.000 {built-in method addSeparator}
+        2    0.000    0.000    0.000    0.000 {built-in method addToolBar}
+    48551    0.408    0.000    0.408    0.000 {built-in method affine_transform}
+   ...
+      276    0.049    0.000    0.049    0.000 {method 'sort' of 'numpy.ndarray' objects}
+     4599    0.016    0.000    0.016    0.000 {method 'split' of 'str' objects}
+    52233    0.088    0.000    0.088    0.000 {method 'squeeze' of 'numpy.ndarray' objects}
+   133764    0.129    0.000    0.129    0.000 {method 'startswith' of 'str' objects}
+    15960    0.023    0.000    0.023    0.000 {method 'strip' of 'str' objects}
+      138    0.001    0.000    0.005    0.000 {method 'sum' of 'numpy.ndarray' objects}
+     1242    0.016    0.000    0.016    0.000 {method 'take' of 'numpy.ndarray' objects}
+    52164    0.162    0.000    0.162    0.000 {method 'transpose' of 'numpy.ndarray' objects}
+    39360    0.095    0.000    0.095    0.000 {method 'update' of 'dict' objects}
+   194015    0.154    0.000    0.154    0.000 {method 'values' of 'dict' objects}
+
+
+[Finished in 17141.4s]
+\end{verbatim}
+3. BuildModel.py
+\begin{verbatim}
 
 \end{verbatim}
 \end{document}

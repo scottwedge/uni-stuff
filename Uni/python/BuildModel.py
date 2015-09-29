@@ -6,6 +6,7 @@
 from DataFormating import *
 import numpy
 import statsmodels.api as sm 
+import cProfile
 
 class BuildModel:
 
@@ -260,5 +261,5 @@ if __name__ == '__main__':
 	# compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
 	build_model = model_raw.build_the_model(cut_off)
 
-	print(build_model)
+	cProfile.run("build_the_model(cut_off)")
 
