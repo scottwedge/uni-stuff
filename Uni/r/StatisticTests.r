@@ -74,7 +74,7 @@ statistic <- setRefClass("statistic",
 			norm_vec <- rnorm(length(data[[companies_list[[1]]]]))
 			for (i in 1:length(companies_list)) {
 				name <- companies_list[[i]]
-				tmp <- (ks.test(data[[name]], norm_vec)[[1]][[1]]< 0.032331)
+				tmp <- (ks.test(data[[name]], norm_vec)[[1]][[1]] < 0.032331)
 				normal[[name]] <<- tmp
 			}
 
@@ -84,6 +84,17 @@ statistic <- setRefClass("statistic",
 		# test for log-normal distribution, 5% error
 		lognormal_distribution = function(){
 			lognormal <<- list()
+			log_vec <- rlnorm(length(data[[companies_list[[1]]]]), meanlog = 0, sdlog = 1)
+			# for(i in 1:length(data[[companies_list[[1]]]])) {
+   #  			log[[i]] <- rlnorm(10, meanlog = 0, sdlog = 1)
+			# }
+			for (i in 1:length(companies_list)) {
+				name <- companies_list[[i]]
+				tmp <- (ks.test(data[[name]], log_vec)[[1]][[1]] < 1.039)
+				lognormal[[name]] <<- tmp
+			}
+
+			lognormal
 		}
 
 		))
