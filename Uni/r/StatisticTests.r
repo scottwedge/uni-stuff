@@ -1,6 +1,6 @@
 statistic <- setRefClass("statistic",
 	fields=list(data="data.frame", companies_list="character", stationar="list",
-				cdf ="list", kde="list", hist_den="list", moments="list"),
+				cdf ="list", kde="list", hist_den="list", moments="list", normal="list", lognormal="list"),
 	methods=list(
 		# check stationary
 		stationary = function() {
@@ -66,22 +66,30 @@ statistic <- setRefClass("statistic",
 			}
 
 			moments
-		}
+		},
 
-		# # test for normal distribution, 15% error
-		# normal_distribution = function(){
-			
-		# }
+		# test for normal distribution, 15% error
+		normal_distribution = function(){
+			normal <<- list()
+			norm_vec <- rnorm(length(data[[companies_list[[1]]]]))
+			for (i in 1:length(companies_list)) {
+				name <- companies_list[[i]]
+				tmp <- (ks.test(data[[name]], norm_vec)[[1]][[1]]< 0.032331)
+				normal[[name]] <<- tmp
+			}
+
+			normal
+		},
 		
+		# test for log-normal distribution, 5% error
+		lognormal_distribution = function(){
+			lognormal <<- list()
+		}
 
 		))
 
 
 
-# # test for log-normal distribution, 5% error
-# lognormal_distribution <- function(){
-	
-# }
 
 
 
