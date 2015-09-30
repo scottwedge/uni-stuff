@@ -20,11 +20,21 @@ statistic <- setRefClass("statistic",
 		# build cdf
 		build_cdf = function() {
 			cdf <<-list()
+			graph <- list()
 			for(i in 1:length(companies_list)) {
 				name <- companies_list[[i]]
 				tmp <- list(sort(ecdf(data[[name]])(data[[name]])))
+				graph_temp <- ecdf(data[[name]])
+				graph[[name]] <- graph_temp 
 				cdf[[name]] <<- tmp 
-				}
+				
+				path_cdf <- file.path("img","CDF", paste("cdf_", companies_list[[i]], ".png", sep = ""))
+				png(path_cdf)
+				plot(graph[[name]], verticals = TRUE, do.points = FALSE, main=name)
+				#dev.copy(png, path_cdf)
+				dev.off()	
+			}
+
 			cdf
 		}
 		# # test for normal distribution, 15% error
