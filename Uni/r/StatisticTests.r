@@ -1,6 +1,6 @@
 statistic <- setRefClass("statistic",
 	fields=list(data="data.frame", companies_list="character", stationar="list",
-				cdf ="list", kde="list", hist_den="list"),
+				cdf ="list", kde="list", hist_den="list", moments="list"),
 	methods=list(
 		# check stationary
 		stationary = function() {
@@ -54,7 +54,20 @@ statistic <- setRefClass("statistic",
 			}
 			hist_den
 			
+		},
+
+		# find moments: mean, standart deviation, skew, kurtosis
+		find_moments = function() {
+			moments <<- list()
+			for (i in 1:length(companies_list)) {
+				name <- companies_list[[i]]
+				tmp <- list(mean(data[[name]]), sd(data[[name]], na.rm = FALSE), skewness(data[[name]]), kurtosis(data[[name]]))
+				moments[[name]] <<- tmp
+			}
+
+			moments
 		}
+
 		# # test for normal distribution, 15% error
 		# normal_distribution = function(){
 			
@@ -71,9 +84,4 @@ statistic <- setRefClass("statistic",
 # }
 
 
-
-# # find moments: mean, var, skew, kurtosis
-# find_moments <- function() {
-	
-# }
 

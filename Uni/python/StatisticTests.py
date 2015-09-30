@@ -106,8 +106,8 @@ if __name__ == '__main__':
 	#log_normal = statistics.kolmogorov_lognormal()
 	moments = statistics.findMoments()
 	#kde = statistics.build_kde()
-	kde = statistics.build_kde()
-	print(kde)
+	#kde = statistics.build_kde()
+	print(moments)
 	
 
 
