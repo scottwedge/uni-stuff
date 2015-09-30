@@ -27,8 +27,6 @@ statistic <- setRefClass("statistic",
 				}
 			cdf
 		}
-		# sort(f(data[["CaterPill"]]))
-
 		# # test for normal distribution, 15% error
 		# normal_distribution = function(){
 			

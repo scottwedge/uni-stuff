@@ -101,13 +101,14 @@ if __name__ == '__main__':
 	dict_data = raw_data.keep_dict()
 #	list_companies = raw_data.getAllCompanies()
 	statistics = StatisticTests(dict_data)
-	stationary = statistics.stationarity()
-	normal = statistics.kolmogorov_normal()
-	log_normal = statistics.kolmogorov_lognormal()
+	#stationary = statistics.stationarity()
+	#normal = statistics.kolmogorov_normal()
+	#log_normal = statistics.kolmogorov_lognormal()
 	moments = statistics.findMoments()
-	kde = statistics.build_kde()
+	#kde = statistics.build_kde()
 	cdf = statistics.build_cdf()
-	print(stationary)
+	print(cdf)
+	
 
 
 	
