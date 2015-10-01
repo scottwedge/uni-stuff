@@ -251,7 +251,7 @@ if __name__ == '__main__':
 
 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
 	cor_vec = model_raw.correlation_vector()
-	cut_off = model_raw.correlational_cutoff(cor_vec)
+	#cut_off = model_raw.correlational_cutoff(cor_vec)
 	# one_param, company, small_list = model_raw.one_parameter_model(cut_off)
 	# chosen = model_raw.companies_chosen_list(company)
 	# left = model_raw.companies_left_list(cut_off, chosen)
@@ -259,7 +259,6 @@ if __name__ == '__main__':
 	# bigger_model = model_raw.best_model_in_the_class(comb)
 	# data_compare = model_raw.get_data_for_comparison(bigger_model)
 	# compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
-	build_model = model_raw.build_the_model(cut_off)
+	#build_model = model_raw.build_the_model(cut_off)
 
-	cProfile.run("build_the_model(cut_off)")
-
+	print(cor_vec)

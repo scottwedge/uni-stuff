@@ -1,13 +1,13 @@
 buildModel <- setRefClass("buildModel",
-	fields = list(data="data.frame", companies_list="list", rest ="list",
-					variable_dependent="list", stationar="list", corr_vector="list"),
+	fields = list(data="data.frame", companies="character", rest ="character",
+					dep="list", stationar="list", corr_vector="list"),
 	methods = list(
 		# correlation vector
-		correlation_vector = function(dependent, rest_companies) {
+		correlation_vector = function(dep, rest) {
 			corr_vector <<- list()
-			for (i in 1:length(rest_companies)) {
-				name <- rest_companies[[i]]
-				tmp <- list(cor(data[dependent[[1]]], data[[name]]))
+			for (i in 1:length(rest)) {
+				name <- rest[[i]]
+				tmp <- list(cor(data[dep[[1]]], data[[name]]))
 				corr_vector[[name]] <<- tmp
 			}
 
