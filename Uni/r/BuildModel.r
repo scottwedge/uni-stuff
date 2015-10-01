@@ -1,7 +1,8 @@
 buildModel <- setRefClass("buildModel",
 	fields = list(data="data.frame", companies="character", rest ="character",
 					dep="list", stationar="list", corr_vector="list", cut_off="list",
-					limit="numeric", chosen="character", one_param_model="list"),
+					limit="numeric", chosen="character", one_param_model="list",
+					company="character", left="character"),
 	methods = list(
 		# correlation vector
 		correlation_vector = function(dep, rest) {
@@ -50,22 +51,25 @@ buildModel <- setRefClass("buildModel",
 			print(one_param_model)
 
 			one_param_model
+		},
 
+		# companies chosen list
+		# Don'tforget to get the company explicetly (<<- names(one_param_model)[1]) 
+		companies_chosen = function(company) {
+			chosen <<- append(chosen, company)
+
+			chosen						
+		},
+
+		# companies left list
+		companies_left = function(cut_off, chosen) {
+			left <<- names(cut_off)[!(names(cut_off) %in% chosen)]
+
+			left
 		}
-		# # companies chosen list
-		# companies_chosen = function() {
-			
-		# }
+		
 
 		))
-
-
-
-# # companies left list
-# companies_left = function() {
-	
-# }
-
 
 # # create combinations
 # create_combinations = fonction() {
