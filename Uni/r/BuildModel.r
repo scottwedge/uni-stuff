@@ -1,27 +1,33 @@
 buildModel <- setRefClass("buildModel",
 	fields = list(data="data.frame", companies="character", rest ="character",
-					dep="list", stationar="list", corr_vector="list"),
+					dep="list", stationar="list", corr_vector="list", cut_off = "list"),
 	methods = list(
 		# correlation vector
 		correlation_vector = function(dep, rest) {
 			corr_vector <<- list()
 			for (i in 1:length(rest)) {
 				name <- rest[[i]]
-				tmp <- list(cor(data[dep[[1]]], data[[name]]))
+				tmp <- cor(data[dep[[1]]], data[[name]])
 				corr_vector[[name]] <<- tmp
 			}
 
 			corr_vector
-		}
+		},
 		
+		# correlational cut-off
+		correlation_cutoff = function(corr_vector) {
+			cut_off <<- list()
+			for (i in 1:length(corr_vector)) {
+				name <- corr_vector[[i]]
+				cut_off <<- corr_vector[corr_vector > 0.3 | corr_vector < -0.3] 
+			}	
+
+			cut_off		
+		}
 
 
 		))
 
-# # correlational cut-off
-# correlational_cutoff = function() {
-	
-# }
 
 # # set the limit
 # set_limit = function() {
