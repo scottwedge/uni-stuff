@@ -2,7 +2,7 @@ buildModel <- setRefClass("buildModel",
 	fields = list(data="data.frame", companies="character", rest ="character",
 					dep="list", stationar="list", corr_vector="list", cut_off="list",
 					limit="numeric", chosen="character", one_param_model="list",
-					company="character", left="character"),
+					company="character", left="character", combo="list"),
 	methods = list(
 		# correlation vector
 		correlation_vector = function(dep, rest) {
@@ -66,15 +66,23 @@ buildModel <- setRefClass("buildModel",
 			left <<- names(cut_off)[!(names(cut_off) %in% chosen)]
 
 			left
+		},
+
+		# create combinations
+		create_combinations = function(left, chosen) {
+			combo <<- list()
+ 			for (i in 1:length(lf)) {
+				name <- lf[[i]]         
+				tmp <- c(name, ch)
+				combo[[name]] <<- tmp
+			}
+
+			combo
 		}
 		
 
 		))
 
-# # create combinations
-# create_combinations = fonction() {
-	
-# }
 
 # # best model in the class
 # best_in_class = function() {
