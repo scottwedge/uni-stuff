@@ -1,6 +1,7 @@
 buildModel <- setRefClass("buildModel",
 	fields = list(data="data.frame", companies="character", rest ="character",
-					dep="list", stationar="list", corr_vector="list", cut_off = "list"),
+					dep="list", stationar="list", corr_vector="list", cut_off = "list",
+					limit="numeric"),
 	methods = list(
 		# correlation vector
 		correlation_vector = function(dep, rest) {
@@ -23,16 +24,26 @@ buildModel <- setRefClass("buildModel",
 			}	
 
 			cut_off		
-		}
+		},
 
+		# set the limit
+		set_limit = function(cut_off) {
+			limit<<-0
+			whole <- length(cut_off)%/%10
+			if (length(cut_off)%%10 >= 5) {
+				part <- 1
+			}
+			else {
+				part <-0
+			}
+			limit<<- whole + part
+
+			limit
+		}
 
 		))
 
 
-# # set the limit
-# set_limit = function() {
-
-# }
 
 # # companies chosen list
 # companies_chosen = function() {
