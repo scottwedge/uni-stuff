@@ -1,15 +1,14 @@
 buildModel <- setRefClass("buildModel",
 	fields = list(data="data.frame", companies="character", rest ="character",
-					dep="list", stationar="list", corr_vector="list", cut_off = "list",
-					limit="numeric"),
+					dep="list", stationar="list", corr_vector="list", cut_off="list",
+					limit="numeric", chosen="character", one_param_model="list"),
 	methods = list(
 		# correlation vector
 		correlation_vector = function(dep, rest) {
 			corr_vector <<- list()
 			for (i in 1:length(rest)) {
 				name <- rest[[i]]
-				tmp <- cor(data[dep[[1]]], data[[name]])
-				corr_vector[[name]] <<- tmp
+				corr_vector[[name]] <<- as.numeric(cor(data[dep[[1]]], data[[name]]))
 			}
 
 			corr_vector
@@ -18,11 +17,8 @@ buildModel <- setRefClass("buildModel",
 		# correlational cut-off
 		correlation_cutoff = function(corr_vector) {
 			cut_off <<- list()
-			for (i in 1:length(corr_vector)) {
-				name <- corr_vector[[i]]
-				cut_off <<- corr_vector[corr_vector > 0.3 | corr_vector < -0.3] 
-			}	
-
+			cut_off <<- corr_vector[corr_vector > 0.3 | corr_vector < -0.3]
+	
 			cut_off		
 		},
 
@@ -39,26 +35,37 @@ buildModel <- setRefClass("buildModel",
 			limit<<- whole + part
 
 			limit
+		},
+
+		# one parameter model via correlation
+		one_parameter_model = function(cut_off) {
+			one_param_model<<-list()
+			helper <- c()
+			for (i in 1:length(cut_off)) {
+				helper <- append(helper, cut_off[[i]])
+			}
+			max_cor <- max(helper)
+			one_param_model <<- cut_off[cut_off == max_cor]
+			print("Best one parameter model is: ")
+			print(one_param_model)
+
+			one_param_model
+
 		}
+		# # companies chosen list
+		# companies_chosen = function() {
+			
+		# }
 
 		))
 
 
-
-# # companies chosen list
-# companies_chosen = function() {
-	
-# }
 
 # # companies left list
 # companies_left = function() {
 	
 # }
 
-# # one parameter model via correlation
-# one_parameter_model = function() {
-	
-# }
 
 # # create combinations
 # create_combinations = fonction() {
