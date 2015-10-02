@@ -93,15 +93,17 @@ buildModel <- setRefClass("buildModel",
 			}
 			form
 			aic <- list()
+			model_list <- list()
 			for(k in names(combo)) {                                                                     
 				for(k1 in names(form)) {                                                                      
 					if(k == k1){                                                                                
-						aic[[k]] <- summary(gls(as.formula(form[[k1]]), data))$AIC                                                
+						aic[[k]] <- summary(gls(as.formula(form[[k1]]), data))$AIC  
+						model_list[[k]] <- gls(as.formula(form[[k1]]), data)                                              
 			}}}   
 			min_aic <- min(as.numeric(aic[1:length(aic)]))
 			for(i in 1:length(aic)) {
 				if(min_aic == aic[[i]]) {
-					best_in_class <<- aic[i]
+					best_in_class <<- list(aic[i],model_list[i])
 				}
 			}
 
