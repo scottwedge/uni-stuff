@@ -84,10 +84,25 @@ buildModel <- setRefClass("buildModel",
 		# best model in the class
 		best_model_in_class = function(combo) {
 			best_in_class <<- list()
-			for(i in 1:length(combo)){                                    
+			form <- list()
+			for(i in 1:length(combo)) {  
+				name <- names(combo)[i]                               
 				temp1<-"Intel ~ "
 				temp2<-paste(combo[[i]][1:length(combo[[i]])], collapse=" + ")
-				best_in_class[[i]] <<- paste(temp1, temp2, collapse=" ")
+				form[[name]] <- paste(temp1, temp2, collapse=" ")
+			}
+			form
+			aic <- list()
+			for(k in names(combo)) {                                                                     
+				for(k1 in names(form)) {                                                                      
+					if(k == k1){                                                                                
+						aic[[k]] <- summary(gls(as.formula(form[[k1]]), data))$AIC                                                
+			}}}   
+			min_aic <- min(as.numeric(aic[1:length(aic)]))
+			for(i in 1:length(aic)) {
+				if(min_aic == aic[[i]]) {
+					best_in_class <<- aic[i]
+				}
 			}
 
 			best_in_class			
