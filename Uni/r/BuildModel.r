@@ -3,7 +3,7 @@ buildModel <- setRefClass("buildModel",
 					dep="list", stationar="list", corr_vector="list", cut_off="list",
 					limit="numeric", chosen="character", one_param_model="list",
 					company="character", left="character", combo="list",
-					best_in_class="list", llr="list"),
+					best_in_class="list", llr="logical"),
 	methods = list(
 		# correlation vector
 		correlation_vector = function(dep, rest) {
@@ -82,6 +82,7 @@ buildModel <- setRefClass("buildModel",
 		},
 		
 		# best model in the class
+		# use nlme
 		best_model_in_class = function(combo) {
 			best_in_class <<- list()
 			form <- list()
@@ -111,19 +112,18 @@ buildModel <- setRefClass("buildModel",
 		},
 
 		# LLR test with 5% error -> c= 0,004
-		# if TRUE -> Hypothesis accepted and smaller model is better
-		# if FALSE ->
+		# use lmtest
 		llr_test = function(model_big, model_small) {
-			llr <<- list()
-			llr <<- lrtest(model_big, model_small)
-			# c <- 0.004
-			# D <- lrtest(model_big, model_small)
-			# if (D > c) {
-			# 	llr <<- FALSE
-			# }
-			# else {
-			# 	llr <<- TRUE
-			# }
+			llr <<- logical()
+			#llr <<- lrtest(model_big, model_small)
+			c <- 0.004
+			D <- -2*log(as.numeric(logLik(model_small))/as.numeric(logLik(model_big)))
+			if (D > c) {
+				llr <<- FALSE # Hypothesis is excepted, smaller model is bigger
+			}
+			else {
+				llr <<- TRUE # Hypothesis is wrong, bigger model is bigger
+			}
 
 			llr
 		}
