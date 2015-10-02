@@ -3,8 +3,7 @@ buildModel <- setRefClass("buildModel",
 					dep="list", stationar="list", corr_vector="list", cut_off="list",
 					limit="numeric", chosen="character", one_param_model="list",
 					company="character", left="character", combo="list",
-					best_in_class="list", llr="list", model_big="numeric",
-					model_big="numeric"),
+					best_in_class="list", llr="list"),
 	methods = list(
 		# correlation vector
 		correlation_vector = function(dep, rest) {
@@ -73,9 +72,9 @@ buildModel <- setRefClass("buildModel",
 		# create combinations
 		create_combinations = function(left, chosen) {
 			combo <<- list()
- 			for (i in 1:length(lf)) {
-				name <- lf[[i]]         
-				tmp <- c(name, ch)
+ 			for (i in 1:length(left)) {
+				name <- left[[i]]         
+				tmp <- c(name, chosen)
 				combo[[name]] <<- tmp
 			}
 
@@ -83,8 +82,15 @@ buildModel <- setRefClass("buildModel",
 		},
 		
 		# best model in the class
-		best_model_in_class = function() {
-			best_in_class <<- list()			
+		best_model_in_class = function(combo) {
+			best_in_class <<- list()
+			for(i in 1:length(combo)){                                    
+				temp1<-"Intel ~ "
+				temp2<-paste(combo[[i]][1:length(combo[[i]])], collapse=" + ")
+				best_in_class[[i]] <<- paste(temp1, temp2, collapse=" ")
+			}
+
+			best_in_class			
 		},
 
 		# LLR test with 5% error -> c= 0,004
