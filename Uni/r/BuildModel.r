@@ -3,7 +3,7 @@ buildModel <- setRefClass("buildModel",
 					dep="list", stationar="list", corr_vector="list", cut_off="list",
 					limit="numeric", chosen="character", one_param_model="list",
 					company="character", left="character", combo="list",
-					best_in_class="list", llr="logical", model_big="numeric",
+					best_in_class="list", llr="list", model_big="numeric",
 					model_big="numeric"),
 	methods = list(
 		# correlation vector
@@ -91,15 +91,16 @@ buildModel <- setRefClass("buildModel",
 		# if TRUE -> Hypothesis accepted and smaller model is better
 		# if FALSE ->
 		llr_test = function(model_big, model_small) {
-			llr <<- TRUE
-			c <- 0.004
-			D <- lrtest(model_big, model_small)
-			if (D > c) {
-				llr <<- FALSE
-			}
-			else {
-				llr <<- TRUE
-			}
+			llr <<- list()
+			llr <<- lrtest(model_big, model_small)
+			# c <- 0.004
+			# D <- lrtest(model_big, model_small)
+			# if (D > c) {
+			# 	llr <<- FALSE
+			# }
+			# else {
+			# 	llr <<- TRUE
+			# }
 
 			llr
 		}
