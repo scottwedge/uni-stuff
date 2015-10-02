@@ -81,12 +81,14 @@ class BuildModel:
 		return self.combinations
 
 	# choose the best model among the class
+	# check, wether AIC works the same way
 	def best_model_in_the_class(self, combinations):
 		helper_dict = {}
 		helper_list = []
 		combinations_dict = {}
 		y = self.dependent_variable[list(self.dependent_variable.keys())[0]]
 		r_squared = {i: [] for i in range(0, len(combinations))}
+		aic = {i: [] for i in range(0, len(combinations))} 
 		for i in range(0, len(combinations)):
 			combinations_dict[i] = combinations[i]
 		#create weights
@@ -99,7 +101,9 @@ class BuildModel:
 			model = sm.GLS(y, helper_list)
 			regression = model.fit()
 			r = regression.rsquared 
+			akaike = regression.aic
 			r_squared[key].append(r)
+			aic[key].append(akaike)
 		#map the results into final    
 		determination_combination_dict = {}
 		for k1 in combinations_dict.keys():
@@ -107,9 +111,19 @@ class BuildModel:
 				if k1 == k2:
 					determination_combination_dict[float(r_squared[k2][0])] = list(combinations_dict[k1])
 
+		# choose via AIC
+		aic_combination_dict = {}
+		for k1 in combinations_dict.keys():
+			for k2 in aic.keys():
+				if k1 == k2:
+					aic_combination_dict[float(aic[k2][0])] = list(combinations_dict[k1])
+
+		best_aic = min(aic_combination_dict.keys())
+		self.best_model_in_class = aic_combination_dict[best_aic]
+
 		#choose the best model among the class 
-		best_r = max(determination_combination_dict.keys())
-		self.best_model_in_class = determination_combination_dict[best_r]
+		#best_r = max(determination_combination_dict.keys())
+		#self.best_model_in_class = determination_combination_dict[best_r]
 
 		return self.best_model_in_class
 
@@ -251,14 +265,15 @@ if __name__ == '__main__':
 
 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
 	cor_vec = model_raw.correlation_vector()
-	#cut_off = model_raw.correlational_cutoff(cor_vec)
-	# one_param, company, small_list = model_raw.one_parameter_model(cut_off)
-	# chosen = model_raw.companies_chosen_list(company)
-	# left = model_raw.companies_left_list(cut_off, chosen)
-	# comb = model_raw.create_combinations(left, chosen)
-	# bigger_model = model_raw.best_model_in_the_class(comb)
-	# data_compare = model_raw.get_data_for_comparison(bigger_model)
-	# compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
+	cut_off = model_raw.correlational_cutoff(cor_vec)
+	one_param, company, small_list = model_raw.one_parameter_model(cut_off)
+	chosen = model_raw.companies_chosen_list(company)
+	left = model_raw.companies_left_list(cut_off, chosen)
+	comb = model_raw.create_combinations(left, chosen)
+	bigger_model = model_raw.best_model_in_the_class(comb)
+	data_compare = model_raw.get_data_for_comparison(bigger_model)
+	compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
 	#build_model = model_raw.build_the_model(cut_off)
 
-	print(cor_vec)
+	print(bigger_model)
+	print(info_big)
