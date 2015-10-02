@@ -2,7 +2,9 @@ buildModel <- setRefClass("buildModel",
 	fields = list(data="data.frame", companies="character", rest ="character",
 					dep="list", stationar="list", corr_vector="list", cut_off="list",
 					limit="numeric", chosen="character", one_param_model="list",
-					company="character", left="character", combo="list"),
+					company="character", left="character", combo="list",
+					best_in_class="list", llr="logical", model_big="numeric",
+					model_big="numeric"),
 	methods = list(
 		# correlation vector
 		correlation_vector = function(dep, rest) {
@@ -78,21 +80,32 @@ buildModel <- setRefClass("buildModel",
 			}
 
 			combo
-		}
+		},
 		
+		# best model in the class
+		best_model_in_class = function() {
+			best_in_class <<- list()			
+		},
+
+		# LLR test with 5% error -> c= 0,004
+		# if TRUE -> Hypothesis accepted and smaller model is better
+		# if FALSE ->
+		llr_test = function(model_big, model_small) {
+			llr <<- TRUE
+			c <- 0.004
+			D <- lrtest(model_big, model_small)
+			if (D > c) {
+				llr <<- FALSE
+			}
+			else {
+				llr <<- TRUE
+			}
+
+			llr
+		}
 
 		))
 
-
-# # best model in the class
-# best_in_class = function() {
-	
-# }
-
-# # llr_test
-# llr_test = function() {
-
-# }
 
 # # compare models from different classes -> using llr_test
 # compare_models = function() {
