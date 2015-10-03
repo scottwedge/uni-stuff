@@ -273,7 +273,6 @@ if __name__ == '__main__':
 	bigger_model = model_raw.best_model_in_the_class(comb)
 	data_compare = model_raw.get_data_for_comparison(bigger_model)
 	compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
-	#build_model = model_raw.build_the_model(cut_off)
+	build_model = model_raw.build_the_model(cut_off)
 
-	print(bigger_model)
-	print(info_big)
+	print(build_model)

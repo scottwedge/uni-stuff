@@ -3,7 +3,7 @@ buildModel <- setRefClass("buildModel",
 					dep="list", stationar="list", corr_vector="list", cut_off="list",
 					limit="numeric", chosen="character", one_param_model="list",
 					company="character", left="character", combo="list",
-					best_in_class="list", llr="logical", compared="list"),
+					best_in_class="list", llr="logical", compared="list", final_model="list"),
 	methods = list(
 		# correlation vector
 		correlation_vector = function(dep, rest) {
@@ -137,21 +137,73 @@ buildModel <- setRefClass("buildModel",
 			compared <<- list()
 			llr_temp <- llr_test(model_small, model_big)
 			if(llr_temp == FALSE) {
-				compared <<- list(model_small, "smaller model is better, search is over")
+				compared <<- list(llr_temp, model_small, "smaller model is better, search is over")
 			}
 			else {
-				compared <<- list(model_big, "bigger model is better, search continues")
+				compared <<- list(llr_temp, model_big, "bigger model is better, search continues")
 			}
 
 			compared
-		}
+		},
 
+		# find best possible model for given data
+		build_model = function(cut_off) {
+			final_model <<- list()
+			# set limit on parameters in the regression
+			limit_helper <- set_limit(cut_off)
+			# create smaller model via one_parameter_model
+			small_model <- one_parameter_model(cut_off)
+			small <- gls(as.formula(paste(dep$name,"~", as.character(names(opm)), collapse="")), data)
+			# create bigegr model via best_in_class
+			comp_helper <- names(small_model)
+			comp_chosen <- companies_chosen(comp_helper)
+			comp_left <- companies_left(cut_off, comp_chosen)
+			combo_helper <- create_combinations(comp_left, comp_chosen)
+			print("1")
+			big_model <- best_model_in_class(combo_helper)
+			# compare models via compare models
+			comparison <- compare_models(small, big_model[[2]][[1]])
+			print("2")
+			# here goes while loop 
+			flag <- TRUE
+			parameter <- 1
+			while (flag & (parameter < limit_helper)) {
+				print("3")
+				if(flag==FALSE) {
+					print("The smaller model is better, The search is over")
+
+					final_model <<- list(small, summary(small))
+					break
+				}
+				else {
+					if (parameter < limit_helper) {
+						print("4")
+						comp_helper <- names(big_model[[1]])
+						comp_chosen <- companies_chosen(comp_helper)
+						comp_left <- companies_left(cut_off, comp_chosen)
+						small<-big_model[[2]][[1]]
+						combo_helper <- create_combinations(comp_left, comp_chosen)
+						big_model <- best_model_in_class(combo_helper)
+						flag <- compare_models(small, big_model[[2]][[1]])[[1]]
+						parameter <- parameter + 1
+
+					}
+					else {
+						final_model <<- big_model
+						break
+					}
+					print("the big model is better and the number of parameter reached its max")
+				}
+
+				final_model <<- big_model
+			}
+			parameter <- parameter + 1
+
+			final_model
+
+		} 
 
 		))
 
 
 
-# # find best possible model for given data
-# build_model = function() {
-
-# } 
