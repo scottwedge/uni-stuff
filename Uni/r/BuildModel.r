@@ -3,7 +3,7 @@ buildModel <- setRefClass("buildModel",
 					dep="list", stationar="list", corr_vector="list", cut_off="list",
 					limit="numeric", chosen="character", one_param_model="list",
 					company="character", left="character", combo="list",
-					best_in_class="list", llr="logical"),
+					best_in_class="list", llr="logical", compared="list"),
 	methods = list(
 		# correlation vector
 		correlation_vector = function(dep, rest) {
@@ -115,7 +115,7 @@ buildModel <- setRefClass("buildModel",
 
 		# LLR test with 5% error -> c= 0,004
 		# use lmtest
-		llr_test = function(model_big, model_small) {
+		llr_test = function(model_small, model_big) {
 			library(lmtest)
 			require(lmtest)
 			llr <<- logical()
@@ -123,22 +123,33 @@ buildModel <- setRefClass("buildModel",
 			c <- 0.004
 			D <- -2*log(as.numeric(logLik(model_small))/as.numeric(logLik(model_big)))
 			if (D > c) {
-				llr <<- FALSE # Hypothesis is excepted, smaller model is bigger
+				llr <<- FALSE # Hypothesis is excepted, smaller model is better
 			}
 			else {
-				llr <<- TRUE # Hypothesis is wrong, bigger model is bigger
+				llr <<- TRUE # Hypothesis is wrong, bigger model is better
 			}
 
 			llr
+		},
+
+		# compare models from different classes -> using llr_test
+		compare_models = function(model_small, model_big) {
+			compared <<- list()
+			llr_temp <- llr_test(model_small, model_big)
+			if(llr_temp == FALSE) {
+				compared <<- list(model_small, "smaller model is better, search is over")
+			}
+			else {
+				compared <<- list(model_big, "bigger model is better, search continues")
+			}
+
+			compared
 		}
+
 
 		))
 
 
-# # compare models from different classes -> using llr_test
-# compare_models = function() {
-
-# }
 
 # # find best possible model for given data
 # build_model = function() {
