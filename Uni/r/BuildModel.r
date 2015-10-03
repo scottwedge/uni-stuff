@@ -84,6 +84,8 @@ buildModel <- setRefClass("buildModel",
 		# best model in the class
 		# use nlme
 		best_model_in_class = function(combo) {
+			library(nlme)
+			require(nlme)
 			best_in_class <<- list()
 			form <- list()
 			for(i in 1:length(combo)) {  
@@ -114,6 +116,8 @@ buildModel <- setRefClass("buildModel",
 		# LLR test with 5% error -> c= 0,004
 		# use lmtest
 		llr_test = function(model_big, model_small) {
+			library(lmtest)
+			require(lmtest)
 			llr <<- logical()
 			#llr <<- lrtest(model_big, model_small)
 			c <- 0.004
