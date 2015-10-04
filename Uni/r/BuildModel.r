@@ -84,8 +84,6 @@ buildModel <- setRefClass("buildModel",
 		# best model in the class
 		# use nlme
 		best_model_in_class = function(combo) {
-			library(nlme)
-			require(nlme)
 			best_in_class <<- list()
 			form <- list()
 			for(i in 1:length(combo)) {  
@@ -116,8 +114,7 @@ buildModel <- setRefClass("buildModel",
 		# LLR test with 5% error -> c= 0,004
 		# use lmtest
 		llr_test = function(model_small, model_big) {
-			library(lmtest)
-			require(lmtest)
+
 			llr <<- logical()
 			#llr <<- lrtest(model_big, model_small)
 			c <- 0.004
@@ -148,12 +145,17 @@ buildModel <- setRefClass("buildModel",
 
 		# find best possible model for given data
 		build_model = function(cut_off) {
+			library(lmtest)
+			require(lmtest)
+			library(nlme)
+			require(nlme)
+
 			final_model <<- list()
 			# set limit on parameters in the regression
 			limit_helper <- set_limit(cut_off)
 			# create smaller model via one_parameter_model
 			small_model <- one_parameter_model(cut_off)
-			small <- gls(as.formula(paste(dep$name,"~", as.character(names(opm)), collapse="")), data)
+			small <- gls(as.formula(paste(dep$name,"~", as.character(names(small_model)), collapse="")), data)
 			# create bigegr model via best_in_class
 			comp_helper <- names(small_model)
 			comp_chosen <- companies_chosen(comp_helper)
@@ -166,7 +168,7 @@ buildModel <- setRefClass("buildModel",
 			print("2")
 			# here goes while loop 
 			flag <- TRUE
-			parameter <- 1
+			parameter <- 2
 			while (flag & (parameter < limit_helper)) {
 				print("3")
 				if(flag==FALSE) {

@@ -81,14 +81,13 @@ class BuildModel:
 		return self.combinations
 
 	# choose the best model among the class
-	# check, wether AIC works the same way
 	def best_model_in_the_class(self, combinations):
 		helper_dict = {}
 		helper_list = []
 		combinations_dict = {}
 		y = self.dependent_variable[list(self.dependent_variable.keys())[0]]
 		r_squared = {i: [] for i in range(0, len(combinations))}
-		aic = {i: [] for i in range(0, len(combinations))} 
+		aic_coef = {i: [] for i in range(0, len(combinations))}
 		for i in range(0, len(combinations)):
 			combinations_dict[i] = combinations[i]
 		#create weights
@@ -100,29 +99,27 @@ class BuildModel:
 					helper_list = [value for key, value in sorted(helper_dict.items())]
 			model = sm.GLS(y, helper_list)
 			regression = model.fit()
-			r = regression.rsquared 
-			akaike = regression.aic
-			r_squared[key].append(r)
-			aic[key].append(akaike)
+			aic = regression.aic
+			aic_coef[key].append(aic)
+			#r = regression.rsquared 
+			#r_squared[key].append(r)
 		#map the results into final    
-		determination_combination_dict = {}
-		for k1 in combinations_dict.keys():
-			for k2 in r_squared.keys():
-				if k1 == k2:
-					determination_combination_dict[float(r_squared[k2][0])] = list(combinations_dict[k1])
+		# determination_combination_dict = {}
+		# for k1 in combinations_dict.keys():
+		# 	for k2 in r_squared.keys():
+		# 		if k1 == k2:
+		# 			determination_combination_dict[float(r_squared[k2][0])] = list(combinations_dict[k1])
 
-		# choose via AIC
-		aic_combination_dict = {}
+		aic_combinations_dict = {}
 		for k1 in combinations_dict.keys():
-			for k2 in aic.keys():
+			for k2 in aic_coef.keys():
 				if k1 == k2:
-					aic_combination_dict[float(aic[k2][0])] = list(combinations_dict[k1])
-
-		best_aic = min(aic_combination_dict.keys())
-		self.best_model_in_class = aic_combination_dict[best_aic]
+					aic_combinations_dict[float(aic_coef[k2][0])] = list(combinations_dict[k1])
+		best_aic = min(aic_combinations_dict.keys())
+		self.best_model_in_class = aic_combinations_dict[best_aic]
 
 		#choose the best model among the class 
-		#best_r = max(determination_combination_dict.keys())
+#		best_r = max(determination_combination_dict.keys())
 		#self.best_model_in_class = determination_combination_dict[best_r]
 
 		return self.best_model_in_class
@@ -197,9 +194,64 @@ class BuildModel:
 		return self.rejected, self.info_small_model, self.info_big_model
 
 	def build_the_model(self, cut_off):
+		# parameters_number = 2
+		# dependent_data = self.dependent_variable[list(self.dependent_variable.keys())[0]]
+		# resulting_model = None
+		# max_parameters = self.set_the_limit(cut_off)
+		
+		# # 1. create smaller model
+		# small_model, company, smaller_model_list = self.one_parameter_model(cut_off)
+
+		# # 2. create combinations
+		# companies_chosen = self.companies_chosen_list(company)
+		# companies_left = self.companies_left_list(cut_off, companies_chosen)
+		# combinations = self.create_combinations(companies_left, companies_chosen)    
+
+		# # 3. choose best bigger model among the class
+		# big_model = self.best_model_in_the_class(combinations)
+		# bigger_model_list = self.get_data_for_comparison(big_model)
+
+		# # 4. compare the smaller and bigger models
+		# rejected, info_small_model, info_big_model = self.compare_models(smaller_model_list, bigger_model_list)
+
+		# # 5. if bigger -> redo 2 and 3, else print result
+		# # while дbigger model is better and limit is not reached
+		# while rejected and parameters_number < max_parameters:
+		# 	print(parameters_number)
+		# 	if rejected == False: # The smaller model is better, the search is over
+		# 		rejected = False
+		# 		print("the smaller model is better. the search is over")
+		# 		print(small_model, info_small_model)
+				
+		# 		self.resulting_model = small_model
+		# 		break
+
+		# 	else: # rejected == True, the bigger model is better, search further
+		# 		rejected = True
+		# 		if parameters_number < max_parameters:
+		# 			for item in big_model:
+		# 				if item  not in companies_chosen:
+		# 					companies_chosen.append(item)
+		# 					companies_left.remove(item)
+		# 			small_model = big_model
+		# 			smaller_model_list = bigger_model_list
+		# 			combinations = self.create_combinations(companies_left, companies_chosen)
+		# 			big_model = self.best_model_in_the_class(combinations)
+		# 			bigger_model_list = self.get_data_for_comparison(big_model)
+		# 			rejected, info_small_model, info_big_model = self.compare_models(smaller_model_list, bigger_model_list)
+		# 		else:
+		# 			self.resulting_model = big_model
+		# 			break
+			   
+		# 		self.resulting_model = big_model
+		# 	parameters_number += 1
+		# 	#print("current best model is ", str(self.resulting_model))
+		# print("The best model contains ", str(parameters_number), " parameters. And the model is: ", str(self.resulting_model))
+		# print(info_big_model)
+
 		parameters_number = 2
 		dependent_data = self.dependent_variable[list(self.dependent_variable.keys())[0]]
-		resulting_model = None
+		#self.resulting_model = None
 		max_parameters = self.set_the_limit(cut_off)
 		
 		# 1. create smaller model
@@ -220,12 +272,13 @@ class BuildModel:
 		# 5. if bigger -> redo 2 and 3, else print result
 		# while дbigger model is better and limit is not reached
 		while rejected and parameters_number < max_parameters:
+			print(parameters_number)
 			if rejected == False: # The smaller model is better, the search is over
 				rejected = False
 				print("the smaller model is better. the search is over")
 				print(small_model, info_small_model)
 				
-				self.self.resulting_model = small_model
+				self.resulting_model = small_model
 				break
 
 			else: # rejected == True, the bigger model is better, search further
@@ -266,13 +319,20 @@ if __name__ == '__main__':
 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
 	cor_vec = model_raw.correlation_vector()
 	cut_off = model_raw.correlational_cutoff(cor_vec)
-	one_param, company, small_list = model_raw.one_parameter_model(cut_off)
-	chosen = model_raw.companies_chosen_list(company)
-	left = model_raw.companies_left_list(cut_off, chosen)
-	comb = model_raw.create_combinations(left, chosen)
-	bigger_model = model_raw.best_model_in_the_class(comb)
-	data_compare = model_raw.get_data_for_comparison(bigger_model)
-	compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
+	# one_param, company, small_list = model_raw.one_parameter_model(cut_off)
+	# chosen = model_raw.companies_chosen_list(company)
+	# left = model_raw.companies_left_list(cut_off, chosen)
+	# comb = model_raw.create_combinations(left, chosen)
+	# bigger_model = model_raw.best_model_in_the_class(comb)
+	# data_compare = model_raw.get_data_for_comparison(bigger_model)
+	# compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
 	build_model = model_raw.build_the_model(cut_off)
-
 	print(build_model)
+
+
+	# y= dependent_variable[list(dependent_variable.keys())[0]]
+	# print(len(small_list))
+	# print(sm.GLS(y, small_list))
+
+
+
