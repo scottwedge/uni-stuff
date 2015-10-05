@@ -171,8 +171,11 @@ The third class is called BuildModel.py. This class builds the multiple linear r
     \item The amount of companies taken into account is reduced using correlation: all companies with correlation less than 30\% are left out.
     \item A limit on the maximum number of the parameters is set using following rule: 1 company out of 10 if number of company exceeds 5.
     \item The first step is to find the best one parameter company using the highest correlation coefficient from the first step.
-    \item best models among the classes are compared using likelihood ratio test. 
-    \item If the bigger model is better and the limit of the predictors in regression is not achieved, the previous two steps are repeated.
+    \item All possible combinations for fixed company from the previous step and left companies are created. For all these combinations the linear regression using Generalized Least Squares approach [\url{https://en.wikipedia.org/wiki/Generalized_least_squares}].
+    \item The best model among the class is chosen using AIC criterion.
+    \item Best models among the classes are compared using likelihood ratio test. 
+    \item If the bigger model is better and the limit of the predictors in regression is not achieved, the new small model is equal to old big model and repeat from step 4. The final result is the last big model.
+    \item If the smaller model is better or/and the maximum number of parameters in the final regression is achieved, than the final result is either the small model or the last big model. 
 \end{enumerate} 
 At the end the full information for the best model is returned.
 
