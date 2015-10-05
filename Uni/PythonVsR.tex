@@ -283,20 +283,23 @@ The points for the Python program are:
 \begin{enumerate}
     \item Useful sources: 1 Point.
     \item Documentation: 1 Point (arguable for some libraries, but in general the documentation is on a high level).
-    \item Performance: \textcolor{red}{POINTS}.
-    \item Memory: \textcolor{red}{Memory use test}
+    \item Performance: 0 Points.
+    \item Memory: 0 Points (Since the data format for different packages is different, our program have used a combination of different data structures to store all formats).
     \item Data structures: 0 Points (different libraries uses different shapes).
     \item Big Data: 1 Point (Python have tools for Big Data analysis, or can be used with known tools like Hadoop, Cassandra, Pig, Hive, etc.).
     \item Visualization: 1 Point (several libraries also for displaying the chart in web).
     \item Limitations: 1 Point (accept time to actually learn the language there are no limitations).
     \item Workarounds: 1 Point (for this particular task there have always been a method or several wrap functions).
 \end{enumerate} 
-The Python program gets \textcolor{red}{???} points in total.
+The Python program gets 6 points in total.
 
 \newpage
 \section{R}
 \subsection{The structure of the program}
-The program written in R language has almost exact the same structure as the Python program, as far as the language allows. 
+The program written in R language has the same structure as the Python program. The R program consists of three classes: DataFormatting.r, StatisticTests.r and BiuldModel.r. Their functions are similar to the same functions from the first program. However there are slight differences in the inner functions of the classes.\\
+The R language is very convenient in terms of data formatting - you don't need it. The object called Data.frame is returned when using read.csv() from the base package. This object has methods that allow the programmer to use the data directly without extracting it and saving to the proper format. For example the list of all companies from the table was extracted using the function "colnames(data.frame)" as an output we get the list object containing the elements from the first row of the table. So the R program does not have inner helpers - converter functions.\\
+The The StatisticTests.r runs tests to detect statistic characteristics of the data: Kolmogorov-Smirnov goodness of fit distribution test, Augmented Dickey-Fuller test to detect unit root, build cumulative distribution function and kernel density function, find main characteristics (mean, standard deviation, skew, kurtosis).\\
+The third class creates the model following the same steps from the step-forward approach that was used in the Python program.
 \subsection{The process description}
 \subsubsection{Used Libraries}
 \subsubsection{Documentation quality and quantity}
