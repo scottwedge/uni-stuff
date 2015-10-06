@@ -196,7 +196,7 @@ element = numpy.corrcoef(self.dict_data[self.list_companies[0]],
 This element computes the correlation between the dependent variable and any other variable from the data. The Math class can present simple operations, in order to compute the coefficient of the correlation we should have built the formula directly without a wrapper function. And every part of the computation would have taken longer. \textcolor{red}{Do I need to present a benchmark results here?}\\
 The Statmodels library is used directly to build a linear regression using Generalized Least Squares [19] method. GLS was chosen to eliminate some possible insignificance of Ordinary Least Squares or Weighted Least Squares.\\
 The Likelihood ratio test [12] function was implemented in Statmodels, however we found it unusable, since the resulting output had completely different type, as we have expected. Looking into the source code of the wrapper function didn't bring much, this is why the LLR-test was implemented directly according to the formula and was yielding results of the proper format.\\
-The end result is currently printed out to a console: The names of the companies in the final regression, main characteristics of the regression (determination coefficient, AIC, BIC, Loglikelihood, coefficients and errors, etc.) and final run time of the program. It is possible to show the full information for each iteration the algorithm makes, but it will take more time to compute. 
+The end result is currently printed out to a console: The names of the companies in the final regression, main characteristics of the regression (determination coefficient, AIC, BIC, Loglikelihood, coefficients and errors, etc.) and final run time of the program. 
 
 \subsubsection{Documentation quality and quantity}
 Since all libraries a very big and some of them a pretty complex, the quality of the documentation played a big role in choosing the libraries and packages for the program. Originally, Python language was used a lot by the scientific society and many libraries were also implemented for scientific use for people with certain background. This is why there were some difficulties with several libraries. The first issue appeared while choosing the proper library for computing the linear regression. The second issue appeared during writing tests for the data.\\
@@ -317,11 +317,27 @@ In this section the process of the program writing is described in more details:
 \subsubsection{Used Libraries}
 For this R program following packages were used:
 \begin{enumerate}
-    \item base []
+    \item base [\url{https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html}]
     \item stats [\url{https://stat.ethz.ch/R-manual/R-patched/library/stats/html/00Index.html}]
     \item nlme [https://cran.r-project.org/web/packages/nlme/nlme.pdf]
     \item tseries [\url{https://cran.r-project.org/web/packages/tseries/tseries.pdf}]
 \end{enumerate}
+The first base library was used for all basic computations like moments, correlation vector, etc.. This package provides many different functions for formatting the data. For example:
+\begin{verbatim}
+formula <- as.formula(paste(dep$name,"~", as.character(names(small_model)), collapse=""))
+\end{verbatim}
+This function converts the string object from the brackets into a formula object that is further used as an input parameter for building a linear regression using GLS method. The base package offers basic math operation as well.\\
+The StatisticTests.r class uses both stats and tseries packages to build statistic tests on the data. The tseries package offers many different tests and methods used in computational finances and time series analysis. In this work we have only used Agumented Dickey-Fuller test to test the data for stationarity:
+\begin{verbatim}
+test <- adf.test(data[[company]])
+\end{verbatim}
+The second package used in StatisticTests class offers functions to run simple statistic tests on the data and build simple characteristics. In our work we have used the stats package to build graphs for each company from the data table and test the data for its distribution. The program has yields the same results as the python program.\\
+The fourth package used in this program offers the the possibility to build linear regression using given parameters. The use of the functions from the library are very intuitive:
+\begin{verbatim}
+small <- gls(as.formula(paste(dep$name,"~", as.character(names(small_model)), collapse="")), data)
+\end{verbatim} 
+Where the first parameter is from the class formula looks like string object: "Intel ~ Olympus + St.Jude". The second parameter is the data, where the variables from the formula match the names of the columns from the data frame object.\\
+The program is run from the console from the R environment. The result is also printed out to the console. The result contains log-likelihood of the final regression, its companies, coefficients, AIC and BIC. Additional information provided by the nlme package offers the correlation matrix for given parameters.  
 \subsubsection{Documentation quality and quantity}
 \subsubsection{Advantages and disadvantages of the program}
 \subsection{Results}
