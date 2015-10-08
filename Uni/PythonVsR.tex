@@ -201,19 +201,50 @@ The end result is currently printed out to a console: The names of the companies
 \subsubsection{Documentation quality and quantity}
 The quality and the quantity of the documentation plays a crucial role for the project of every complexity, but especially for beginner levels. In this work we will evaluate the documentation of the languages and connected libraries, packages, frameworks using score system. The languages can get points for each position criterion given in the table:
 \begin{enumerate}
-    \item The Base package documentation is always available.
-    \item The Base package documentation is easy to navigate.
-    \item The Documentation offers a sufficient amount of examples.
+    \item The documentation is always available.
+    \item The documentation is easy to navigate.
+    \item The documentation offers a sufficient amount of examples.
     \item The examples given in the documentation cover at least two complexity levels (a very simple use and use in an advance context).
     \item The documentation provide a link to the source code (mainly for non-base packages and libraries).
-    \item The documentation is always available (the reliability of the host).
     \item For scientific libraries the theoretical background is provided.
     \item The documentation is easy to read (formatting, colors, description of the parameters and output).
 \end{enumerate}
-Since all libraries a very big and some of them a pretty complex, the quality of the documentation played a big role in choosing the libraries and packages for the program. Originally, Python language was used a lot by the scientific society and many libraries were also implemented for scientific use for people with certain background. This is why there were some difficulties with several libraries. The first issue appeared while choosing the proper library for computing the linear regression. The second issue appeared during writing tests for the data.\\
-The Scikit library offered many advanced or very specific models, the also have implemented some not very popular methods for beginners. However the documentation is pretty good, all input parameters are explained up to format. The output results also are explained in details. The links to the source code are given to every method of the class and not only to the page. There are different number of examples for each function and each class. The bad thing about Scikit documentation is that they don't always provide the link to the theoretical background: this makes it harder to understand how and what exactly is computed in the method or function. On the page the also provide users with the links to other useful resources (all of the resources used in this work are mentioned on the site). A very big advantage of the library is hosting all the documentation on their own server. The code is always available on Github and the project is opened for everyone. \textcolor{red}{figure out where they are actually hosting}\\
-The Scipy source, as was already mentioned before, unites 6 libraries and thus covers the whole process of getting the data, analyzing the data and giving back the results using visualization tools. The documentation can come in two forms:documentation for the wrapper for specific function or class of one of the components, or the direct documentation of the library. All the libraries and tools from Scipy have very detailed documentation that they host on their servers. Most of the documentation is presented in typical style python uses. Which is an advantage, if you are used to it. There are many tutorials also offered on every site. Sometimes they even compare the library with R language [20]. Scipy and every all its libraries hold their code on Github, although the links to source code are not always shown in the documentation. In this work the tools united in Scipy were sometimes used explicitly, but the general documentation overview of the Scipy library fits all of its elements documentation.\\
-The Statmodels library proved to be easy in use, if you understand how it is all organized. This library has a good content tree, but contains not enough general and small specific examples. The problem is sometimes to understand what input parameters are needed and why the result has unexpected format. For instance, in the documentation of some functions parameters, methods and return instances are organized not by appearance or relevance order, but by alphabet, which makes it many times harder to read it. The source code is given for the whole class and not for the certain parts. However, they give at least one link to the theory behind the implementation. One of the biggest inconveniences was being unable to read the documentation. The Statmodels keep their documentation at sourceforge. This resource had been offline for several days in a row, which can be a very big issue for a project with a deadline. The code is kept on Github. It is very hard to read the code without certain theoretical and practical background. Although Statmodels have many disadvantages, this library was chosen for the program because of its content. In most cases the resulting output had proper (suitable for our program) format and did the exact thing we wanted.\\
+Originally, Python language was used a lot by the scientific society and many libraries were also implemented for scientific purpose by people with a certain background. In this work we have used base Python 3 library [12],  SciPy[14] and Statmodels[15]. SciPy unites several packages, only three from the whole list were used in our Python program: NumPy, Matplotlib and Pandas.\\
+The Python program was written in Python 3 version, in this work we did not encountered any problems with the version conflicts. But it is possible that some external libraries are build on Python 2 and thus can cause some issues. In this case you can use Six library[16] to guarantee the compatibility of the versions. As we said, our program did not require use of this library, but it is safe to keep it in mind.\\
+According to the provided evaluation table all four libraries will get points and the weighted (approximate weights are based on appearance frequency and importance of the library in the program) score will be added to the python total score.\\
+The base Python library:
+\begin{enumerate}
+    \item 1 Point (the documentation was always available, no delays over period of 6 month were noticed).
+    \item 1 Point (the web site is modern and have a very clear structure).
+    \item 1 Point (each function has one simple example, some functions are explained by "identical function" example, at the end of the class description composite example is given).
+    \item 1 Point (see above).
+    \item 0 Point (the code is mostly not in a free access, mostly normal for base libraries).
+    \item 1 Point (functions are either explained in the documentation, or provide a link to an external source, for example for math.gamma(x) the description link sends you to the Wikipedia page for gamma function).
+    \item 1 Point (the Structure of the documentation for every class is the same and  mostly intuitive. You can navigate through the documentation using different methods: global index, glossary, etc.).
+\end{enumerate}
+From the SciPy source three libraries were used explicitly: NumPy, Matplotlib and Pandas. The documentation of the libraries contain more detailed information and some additional examples, but the structure and the formatting are the same according to python styling trend. So the SciPy documentation will be evaluated.
+\begin{enumerate}
+    \item 1 Point.
+    \item 1 Point.
+    \item 1 Point.
+    \item 1 Point.
+    \item 1 Point.
+    \item 1 Point.
+    \item 1 Point (similar styling pattern used for all libraries).
+\end{enumerate}
+The most important library for our python program was Statmodels, since we used it to build the models. Although the library itself is very powerful, it is not easy to use and to understand.
+\begin{enumerate}
+    \item 0 Point (the documentation is hosted on Sourceforge and the server was down for about a week during the program development).
+    \item 0 Point (too many sub classes and sub methods, which importance you can not evaluate from the first view).
+    \item 1 Point.
+    \item 0 Point (basic examples are not always provided by the documentation).
+    \item 1 Point (source code is hosted on github, thus no issues with availability, but very hard to read).
+    \item 1 Point.
+    \item 0 Point (the explanation order of the input parameters, output parameters and methods is alphabetical and not logical, the explanation is sometimes not sufficient).
+\end{enumerate}
+So the final score for the python documentation is:
+\[ \frac{(\frac{2}{5}(6) + \frac{1}{5}(7) + \frac{2}{5}(3) )}{7}= 0.71\]
+
 
 \subsubsection{Advantages and disadvantages of the program}
 The results of the program for the given data, described in the data preparation section are:
@@ -364,16 +395,20 @@ Although the functions offered by the chosen libraries have covered all the need
 \newpage
 \section{Literature}
 \begin{enumerate}
-    \item[1] \url{https://en.wikipedia.org/wiki/Python_(programming_language)}
-    \item[2]
-    \item[3] \url{https://www.r-project.org/about.html}
-    \item[4] \url{http://www.revolutionanalytics.com/what-r}
-    \item[5] \url{https://en.wikipedia.org/wiki/R_(programming_language)}
-    \item[6] \url{http://stackoverflow.com/questions/2770030/r-or-python-for-file-manipulation}
-    \item[7] \url{http://datascience.stackexchange.com/questions/326/python-vs-r-for-machine-learning}
-    \item[8] \url{http://www.kdnuggets.com/2015/05/r-vs-python-data-science.html}
-    \item[9] \url{http://blog.datacamp.com/r-or-python-for-data-analysis/}
-    \item[10] \url{http://101.datascience.community/2015/05/12/data-science-wars-r-vs-python/}
-    \item[11]
+    \item \url{https://en.wikipedia.org/wiki/Python_(programming_language)}
+    \item
+    \item \url{https://www.r-project.org/about.html}
+    \item \url{http://www.revolutionanalytics.com/what-r}
+    \item \url{https://en.wikipedia.org/wiki/R_(programming_language)}
+    \item \url{http://stackoverflow.com/questions/2770030/r-or-python-for-file-manipulation}
+    \item \url{http://datascience.stackexchange.com/questions/326/python-vs-r-for-machine-learning}
+    \item \url{http://www.kdnuggets.com/2015/05/r-vs-python-data-science.html}
+    \item \url{http://blog.datacamp.com/r-or-python-for-data-analysis/}
+    \item \url{http://101.datascience.community/2015/05/12/data-science-wars-r-vs-python/}
+    \item
+    \item Python 3 \url{https://www.python.org/doc/}
+    \item SciPy \url{http://www.scipy.org/}
+    \item Statmodels \url{http://statsmodels.sourceforge.net/}
+    \item Six \url{https://pythonhosted.org/six/}
 \end{enumerate}
 \end{document}
