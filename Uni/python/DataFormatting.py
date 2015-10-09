@@ -1,6 +1,7 @@
 """Class for data formatting"""
 
 import pandas as pd
+import cProfile
 
 class DataFormatting:
 
@@ -69,11 +70,11 @@ class DataFormatting:
 
 if __name__ == '__main__':
 	raw_data = DataFormatting("../data/LearningSet.csv")
-	dict_data = raw_data.keep_dict()
-	list_companies = raw_data.getAllCompanies()
-	dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()
+	#dict_data = raw_data.keep_dict()
+	#list_companies = raw_data.getAllCompanies()
+	#dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()
 
-	# show results
+	print(cProfile.run('data = pd.read_csv("../data/LearningSet.csv")'))
 	
 
 

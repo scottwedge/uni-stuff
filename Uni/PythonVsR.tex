@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{color}
 \usepackage{mathtools}
+\usepackage{graphicx}
 \usepackage{hyperref}
 \hypersetup{urlbordercolor={1 1 1}}
 
@@ -182,21 +183,54 @@ At the end the full information for the best model is returned.
 \subsection{The process description}
 In this section the process of the coding is described: what difficulties and problems are encountered and how they were solved.
 \subsubsection{Used Libraries}
-In the course of writing the program several steps were implemented. First one, as was told above, is the data extracting. Although, python language has a native library to read csv files and format them into a list or a dictionary, in this work pandas library is used [15]. \\
-The class responsible for statistic test uses three different libraries and sources: Scipy [16], Statsmodels [17] and Scikit [18].\\
-Scipy library was mainly used to perform goodness of fit Kolmogorov distribution tests and to build KDE and CDF. The other two libraries could do the same, but in this case the use of the class was better explained for Scipy.\\
-The Statsmodels library is used separately for StatisticTests class and BuildModel class. In the first part, Statmodels is used to run Augmented Dickey–Fuller test [5] to figure out whether data is stationary.\\
-The Sklearn module from Scikit was used mainly during testing of the functionality of the program. The library can perform the same tests that were mentioned above, but with unnecessary complication of the documentary and methods use.\\
-The Matplotlib library is used to present the KDE and CDF graphically. Normally this library is used as the part of the Scipy source, so it is used in this work.\\ 
-In the BuildModel class two libraries were used directly: Statsmodels and Numpy. Tne Numpy library is a part of the Scipy package, but in this case it was used explicitly. The main and the only function of the Numpy was to speed up mathematical computations. Of course, we could have taken build-in Math class directly, but it is a common and a good practice to use Numpy for mid-difficult computations, like:
+In the course of writing the program several steps were implemented. As was mentioned above in the "Program structure" section, these steps are: extracting and preparing the data for further use, check statistic characteristics and build the model based on the results of the statistics. In order to build the program three main libraries were used:
+\begin{enumerate}
+    \item Base Python library[12].
+    \item SciPy resource (unites six different libraries, in our case three were used explicitly)[13].
+    \item Statmodels[14].
+\end{enumerate}
+The functions and data structures defined in the base library was used for every simple task, except simple mathematical computations, since there were faster implementations.\\
+The second most used library in this work is NumPy,this library is the part of the SciPy source. NumPy offers many fast multi dimensional computations and assosiated multi dimensional structures. In our work we used this library to compute several statistic and build data for displaying graphs. As we mentioned before, the built-in library was not fast enough for our computation (for bigger data arrays numpy is almost not an arguable choice):
 \begin{verbatim}
-element = numpy.corrcoef(self.dict_data[self.list_companies[0]],
-                         self.dict_data[key])[0][1]
+>>> x=[random.randint(0,10) for i in range(0,1500)]
+>>> len(x)
+1500
+
+>>> mean_base = statistics.mean(x)
+>>> mean_base
+4.966
+>>> cProfile.run('statistics.mean(x)')   
+         4531 function calls in 0.006 seconds
+        
+>>> mean_numpy = numpy.average(x)
+>>> mean_numpy
+4.9660000000000002
+>>> cProfile.run('numpy.average(x)')
+         17 function calls in 0.001 seconds
+\end{verbatim}   
+As you can see, the NumPy implementation of the function "average" is more accurate and efficient (4531 intern calls vs 17 intern calls). The run time difference can be already shown on the list containing 1500 elements.\\
+The third library with fundamental use is Pandas, this library is also a part of the SciPy source. This library provides high-performance data structures and associated functions for data analysis. This library can be used for generating, accessing and formatting data. In this work we used to get the data from our .csv file in a intuitive manner and to avoid unnecessary formatting steps. Also Pandas offers you a functionality to get the data directly from web sites like: Yahoo Finance, Google Finance, Google Analytics, etc.., although we didn't used it in our program. Fo example the method we used to read the data and returned it in Data.frame format, which can be easily sliced according to the needs of the program or formatted.
+\begin{verbatim}
+data = pd.read_csv(str(self.file_name))
+cProfile.run('data = pd.read_csv("../data/LearningSet.csv")'
+    3316 function calls (3238 primitive calls) in 0.024 seconds
 \end{verbatim}
-This element computes the correlation between the dependent variable and any other variable from the data. The Math class can present simple operations, in order to compute the coefficient of the correlation we should have built the formula directly without a wrapper function. And every part of the computation would have taken longer. \textcolor{red}{Do I need to present a benchmark results here?}\\
-The Statmodels library is used directly to build a linear regression using Generalized Least Squares [19] method. GLS was chosen to eliminate some possible insignificance of Ordinary Least Squares or Weighted Least Squares.\\
-The Likelihood ratio test [12] function was implemented in Statmodels, however we found it unusable, since the resulting output had completely different type, as we have expected. Looking into the source code of the wrapper function didn't bring much, this is why the LLR-test was implemented directly according to the formula and was yielding results of the proper format.\\
-The end result is currently printed out to a console: The names of the companies in the final regression, main characteristics of the regression (determination coefficient, AIC, BIC, Loglikelihood, coefficients and errors, etc.) and final run time of the program. 
+The LearningSet file is a table containing 78 companies with 1240 prices for each company, 477,6KiB.\\
+The library used for drawing and saving graphs is very popular and for many other libraries is a default use. Matplotlib is also a part of the SciPy source. It offers you different types of graphs and formatting tools.
+\begin{verbatim}
+plt.title(3M)
+plt.plot(bin_edges[1:], cdf)
+plt.clf()
+\end{verbatim}
+\includegraphics[scale=0.5]{PythonPlotExample.png} \\
+The last but the fundamental library is Statmodels. This library offers a wide variety of tools and models for statistic purpose. Two main functions of the library used in our program are: Augmented Dickey-Fuller test for unit root and building a multiple linear regression with generalized least squares approach.
+\begin{verbatim}
+statistic = statmodel.adfuller(self.dict_data[key], 250, 
+                        'ctt', 't-stat', False, False)[0] - stationary test
+                        
+model_null = sm.GLS(y, smaller_model_list)
+info_small_model = model_null.fit().summary()
+\end{verbatim}   
 
 \subsubsection{Documentation quality and quantity}
 The quality and the quantity of the documentation plays a crucial role for the project of every complexity, but especially for beginner levels. In this work we will evaluate the documentation of the languages and connected libraries, packages, frameworks using score system. The languages can get points for each position criterion given in the table:
@@ -247,6 +281,7 @@ So the final score for the python documentation is:
 
 
 \subsubsection{Advantages and disadvantages of the program}
+The end result is currently printed out to a console: the names of the companies in the final regression, main characteristics of the regression (AIC, BIC, Loglikelihood, coefficients and errors, etc.) and final run time of the program. 
 The results of the program for the given data, described in the data preparation section are:
 \begin{verbatim}
 The best model contains  6  parameters. And the model is:
@@ -359,10 +394,10 @@ In this section the process of the program writing is described in more details:
 \subsubsection{Used Libraries}
 For this R program following packages were used:
 \begin{enumerate}
-    \item base [\url{https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html}]
-    \item stats [\url{https://stat.ethz.ch/R-manual/R-patched/library/stats/html/00Index.html}]
-    \item nlme [https://cran.r-project.org/web/packages/nlme/nlme.pdf]
-    \item tseries [\url{https://cran.r-project.org/web/packages/tseries/tseries.pdf}]
+    \item Base package[16].
+    \item Stats package[17].
+    \item Nlme package[18].
+    \item Tseries package[19].
 \end{enumerate}
 The first base library was used for all basic computations like moments, correlation vector, etc.. This package provides many different functions for formatting the data. For example:
 \begin{verbatim}
@@ -410,5 +445,11 @@ Although the functions offered by the chosen libraries have covered all the need
     \item SciPy \url{http://www.scipy.org/}
     \item Statmodels \url{http://statsmodels.sourceforge.net/}
     \item Six \url{https://pythonhosted.org/six/}
+    \item Base R library \url{https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html}
+    \item Stats R library \url{https://stat.ethz.ch/R-manual/R-patched/library/stats/html/00Index.html}
+    \item Nlme R library \url{https://cran.r-project.org/web/packages/nlme/nlme.pdf}
+    \item Tseries R library \url{https://cran.r-project.org/web/packages/tseries/tseries.pdf}
+    \item \url{}
+    \item \url{}
 \end{enumerate}
 \end{document}
