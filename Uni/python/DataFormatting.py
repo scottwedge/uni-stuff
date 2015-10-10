@@ -8,7 +8,6 @@ class DataFormatting:
 	def __init__(self, file_name):
 		self.file_name = file_name
 		self.data = pd.read_csv(str(self.file_name))
-#		self.data = None
 		self.dict_data = {}
 		self.dict_final = {}
 		self.list_companies = []
@@ -59,7 +58,16 @@ class DataFormatting:
 			if key in self.dict_final.keys():
 				del self.dict_final[key]
 			else:
-				pass
+				pass	# stationary, moments, log_normal = collect_statistics(dict_data)
+	# if False in stationary.values() and False in log_normal.values():
+	# 	print("choose different model to build, deal with non stationary first")
+	# else:
+	# 	# create model and return the information
+	# 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
+	# 	cor_vec = model_raw.correlation_vector()
+	# 	cut_off = model_raw.correlational_cutoff(cor_vec)
+	# 	build_model, predictions = model_raw.build_the_model(cut_off)
+
 		# clean up the dependent_dict
 		for key in self.dependent_variable.keys():
 			for i in range(0, len(self.dependent_variable[key])):
@@ -70,11 +78,12 @@ class DataFormatting:
 
 if __name__ == '__main__':
 	raw_data = DataFormatting("../data/LearningSet.csv")
-	#dict_data = raw_data.keep_dict()
-	#list_companies = raw_data.getAllCompanies()
-	#dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()
+	dict_data = raw_data.keep_dict()
+	list_companies = raw_data.getAllCompanies()
+	dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()
 
-	print(cProfile.run('data = pd.read_csv("../data/LearningSet.csv")'))
+	print(dict_final)
+	#print(cProfile.run('data = pd.read_csv("../data/LearningSet.csv")'))
 	
 
 

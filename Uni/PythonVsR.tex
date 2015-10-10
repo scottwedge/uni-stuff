@@ -281,7 +281,58 @@ So the final score for the python documentation is:
 
 
 \subsubsection{Advantages and disadvantages of the program}
-The end result is currently printed out to a console: the names of the companies in the final regression, main characteristics of the regression (AIC, BIC, Loglikelihood, coefficients and errors, etc.) and final run time of the program. 
+There are several advantages and disadvantages of the Python language for statistic tasks.\\
+The first advantage is small time investment needed up front. The Python language is intuitive and does not require deep understanding of the programming paradigm for simple programs, thus Python is great for prototyping and checking small hypothesis. However this is a temporary advantage, since for more complex tasks you will have to use complex libraries and structures, which require deeper understanding of the language.\\
+The second really important advantage of the python language is testing. Python has built-in doc-tests [22], that are very easy to use. Another test-possibility are Unit Tests [23]. Python language gives the programmer different ways to test and to debug the program in order to avoid possible computational and logic errors. We will not discuss this theme in details, since the tutorials and the documentation are clear and offer sufficient amount of examples.\\
+Another advantage of the python is its multipurpose nature, although we didn't use it for our program it is still important for the world outside of the analysis field.\\
+There are several disadvantages of the statistic program written in python.\\ 
+The first and the biggest disadvantage is the performance. This disadvantage appears only for beginners by implementing mid-difficult task with mid-size data structures.\\
+The main time consumption comes from StatisticTests.py, specifically from stationarity test. 
+\begin{verbatim}
+>>> cProfile.run('collect_statistics(dict_data)')
+        33687046 function calls (33129590 primitive calls) in 8572.478 seconds
+\end{verbatim}
+\textcolor{red}{other run time profiles}\\
+Another small disadvantage of the program written in python is the time you have to invest into the language investigation for more complex tasks. In order to save memory or make the performance better we had to drop naive implementation and read the documentation more carefully (although the language is intuitive on the surface it is not that simple). For example:
+\begin{verbatim}
+>>> a = {"a":[1,2,3], "b":[1,2,3], "c":[1,4,9]}
+>>> b = a
+>>> b["a"] = [1,4,9]
+>>> b
+{'b': [1, 2, 3], 'a': [1, 4, 9], 'c': [1, 4, 9]}
+>>> a
+{'b': [1, 2, 3], 'a': [1, 4, 9], 'c': [1, 4, 9]}
+\end{verbatim} 
+Although we haven't expected dictionary to change. Python does not implicitly creates copies. The example above shows how two objects are referred to the same object. Thus during mutating one of the objects, all references will change in order to keep referring to the object in its current state. This can be crucial for the program, since we have used one originally formatted dictionary for different purposes. In order to avoid this error you need to do following thing:     
+\begin{verbatim}
+>>> a = {"a":[1,2,3], "b":[1,2,3], "c":[1,4,9]}
+>>> b = a.copy()
+>>> a
+{'b': [1, 2, 3], 'a': [1, 2, 3], 'c': [1, 4, 9]}
+>>> b
+{'c': [1, 4, 9], 'b': [1, 2, 3], 'a': [1, 2, 3]}
+>>> b["a"] = [0]
+>>> b
+{'c': [1, 4, 9], 'b': [1, 2, 3], 'a': [0]}
+>>> a
+{'b': [1, 2, 3], 'a': [1, 2, 3], 'c': [1, 4, 9]}
+\end{verbatim}
+or 
+\begin{verbatim}
+>>> a = {"a":[1,2,3], "b":[1,2,3], "c":[1,4,9]}
+>>> b = dict(a)
+>>> b
+{'c': [1, 4, 9], 'b': [1, 2, 3], 'a': [1, 2, 3]}
+>>> b["a"]=[0]
+>>> b
+{'c': [1, 4, 9], 'b': [1, 2, 3], 'a': [0]}
+>>> a
+{'b': [1, 2, 3], 'a': [1, 2, 3], 'c': [1, 4, 9]}
+\end{verbatim}
+Such thing can confuse not only the very beginners, but also advanced programmers, because you need to keep every thing in mind.\\
+
+\subsection{Results}
+The end result is currently printed out to a console: the names of the companies in the final regression, main characteristics of the regression (AIC, BIC, Loglikelihood, coefficients and errors, etc.) and the final run time of the program. 
 The results of the program for the given data, described in the data preparation section are:
 \begin{verbatim}
 The best model contains  6  parameters. And the model is:
@@ -315,63 +366,20 @@ Kurtosis:                       2.827   Cond. No.                         357.
 
 [Finished in 13590.5s]
 \end{verbatim}
-As you can see, the first and biggest disadvantage is the run time. The program runs for 3,7 hours.\\
- The main time consumption comes from StatisticTests.py, specifically from stationarity test. \textcolor{red}{verbatim - run time}Since the naive implementation was used for writing the test section, the main time consumption is also presented in this part of the program. The advantage of the python is its multipurpose nature. It is possible to speed up all functions that change arrays or other data structures using speed up methods like Multiprocessing [21]. This will give you up to 8 times speed up momentum (depending on number of cores you can use). However this a bit of intermediate knowledge of python programming and will be quite difficult for a beginner to use.\\
-Another disadvantage of the program written in python is the time you have to invest into the language investigation, since there are concepts and non-intuitive implementations. For instance:
-\begin{verbatim}
->>> a = {"a":[1,2,3], "b":[1,2,3], "c":[1,4,9]}
->>> b = a
->>> b["a"] = [1,4,9]
->>> b
-{'b': [1, 2, 3], 'a': [1, 4, 9], 'c': [1, 4, 9]}
->>> a
-{'b': [1, 2, 3], 'a': [1, 4, 9], 'c': [1, 4, 9]}
-\end{verbatim} 
-Although we haven't expected dictionary a to change. Python does not implicitly copies objects. The example above shows how two objects are referred to the same object. Thus during mutating one of the objects, all references will change in order to keep referring to the object in its current state. This can be crucial for the program, since we have used one originally formatted dictionary for different purposes. In order to avoid this error you need to do following thing:     
-\begin{verbatim}
->>> a = {"a":[1,2,3], "b":[1,2,3], "c":[1,4,9]}
->>> b = a.copy()
->>> a
-{'b': [1, 2, 3], 'a': [1, 2, 3], 'c': [1, 4, 9]}
->>> b
-{'c': [1, 4, 9], 'b': [1, 2, 3], 'a': [1, 2, 3]}
->>> b["a"] = [0]
->>> b
-{'c': [1, 4, 9], 'b': [1, 2, 3], 'a': [0]}
->>> a
-{'b': [1, 2, 3], 'a': [1, 2, 3], 'c': [1, 4, 9]}
-\end{verbatim}
-or 
-\begin{verbatim}
->>> a = {"a":[1,2,3], "b":[1,2,3], "c":[1,4,9]}
->>> b = dict(a)
->>> b
-{'c': [1, 4, 9], 'b': [1, 2, 3], 'a': [1, 2, 3]}
->>> b["a"]=[0]
->>> b
-{'c': [1, 4, 9], 'b': [1, 2, 3], 'a': [0]}
->>> a
-{'b': [1, 2, 3], 'a': [1, 2, 3], 'c': [1, 4, 9]}
-\end{verbatim}
-Such thing can confuse not only very beginners, but also advanced programmers, because you need to keep every thing in mind.\\
-The first really big advantage of the python language is testing. Python has built-in doc-tests [22], that are incredibly easy to use. We will not discuss this theme in details, since the tutorials and the documentation are very easy. Another test possibility are Unit Tests [23]. Python language gives the programmer many ways to test and debug the program in order to avoid possible computational and logic errors.\\
-The second advantage of the program in python is actually beyond the scope of this work. Working with the whole process (data mining, data processing and data visualization) in real time and with feedback if needed can't be implemented in R. So, if you are writing an interactive application, than you should definitely go for python.
-
-\subsection{Results}
 To sum up the objective arguments of using python for writing a small program to compute a linear regression for a given data and restrictions, we will sum up the points from the table from the thesis description section.
 The points for the Python program are:
 \begin{enumerate}
     \item Useful sources: 1 Point.
-    \item Documentation: 1 Point (arguable for some libraries, but in general the documentation is on a high level).
+    \item Documentation: 0.71 Point.
     \item Performance: 0 Points.
     \item Memory: 0 Points (Since the data format for different packages is different, our program have used a combination of different data structures to store all formats).
-    \item Data structures: 0 Points (different libraries uses different shapes).
+    \item Uniform Data structures: 0 Points (different libraries uses different shapes).
     \item Big Data: 1 Point (Python have tools for Big Data analysis, or can be used with known tools like Hadoop, Cassandra, Pig, Hive, etc.).
     \item Visualization: 1 Point (several libraries also for displaying the chart in web).
     \item Limitations: 1 Point (accept time to actually learn the language there are no limitations).
     \item Workarounds: 1 Point (for this particular task there have always been a method or several wrap functions).
 \end{enumerate} 
-The Python program gets 6 points in total.
+The Python program gets 5.71 points in total.
 
 \newpage
 \section{R}

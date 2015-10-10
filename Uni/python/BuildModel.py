@@ -15,7 +15,7 @@ class BuildModel:
 		self.list_companies = list_companies
 		self.dependent_variable = dependent_variable
 		self.final_dict = final_dict
-
+		self.predictions = []
 		self.correlation_with_Dependent = {}
 		self.rest_companies = {}
 		self.companies_chosen = []
@@ -194,61 +194,6 @@ class BuildModel:
 		return self.rejected, self.info_small_model, self.info_big_model
 
 	def build_the_model(self, cut_off):
-		# parameters_number = 2
-		# dependent_data = self.dependent_variable[list(self.dependent_variable.keys())[0]]
-		# resulting_model = None
-		# max_parameters = self.set_the_limit(cut_off)
-		
-		# # 1. create smaller model
-		# small_model, company, smaller_model_list = self.one_parameter_model(cut_off)
-
-		# # 2. create combinations
-		# companies_chosen = self.companies_chosen_list(company)
-		# companies_left = self.companies_left_list(cut_off, companies_chosen)
-		# combinations = self.create_combinations(companies_left, companies_chosen)    
-
-		# # 3. choose best bigger model among the class
-		# big_model = self.best_model_in_the_class(combinations)
-		# bigger_model_list = self.get_data_for_comparison(big_model)
-
-		# # 4. compare the smaller and bigger models
-		# rejected, info_small_model, info_big_model = self.compare_models(smaller_model_list, bigger_model_list)
-
-		# # 5. if bigger -> redo 2 and 3, else print result
-		# # while дbigger model is better and limit is not reached
-		# while rejected and parameters_number < max_parameters:
-		# 	print(parameters_number)
-		# 	if rejected == False: # The smaller model is better, the search is over
-		# 		rejected = False
-		# 		print("the smaller model is better. the search is over")
-		# 		print(small_model, info_small_model)
-				
-		# 		self.resulting_model = small_model
-		# 		break
-
-		# 	else: # rejected == True, the bigger model is better, search further
-		# 		rejected = True
-		# 		if parameters_number < max_parameters:
-		# 			for item in big_model:
-		# 				if item  not in companies_chosen:
-		# 					companies_chosen.append(item)
-		# 					companies_left.remove(item)
-		# 			small_model = big_model
-		# 			smaller_model_list = bigger_model_list
-		# 			combinations = self.create_combinations(companies_left, companies_chosen)
-		# 			big_model = self.best_model_in_the_class(combinations)
-		# 			bigger_model_list = self.get_data_for_comparison(big_model)
-		# 			rejected, info_small_model, info_big_model = self.compare_models(smaller_model_list, bigger_model_list)
-		# 		else:
-		# 			self.resulting_model = big_model
-		# 			break
-			   
-		# 		self.resulting_model = big_model
-		# 	parameters_number += 1
-		# 	#print("current best model is ", str(self.resulting_model))
-		# print("The best model contains ", str(parameters_number), " parameters. And the model is: ", str(self.resulting_model))
-		# print(info_big_model)
-
 		parameters_number = 2
 		dependent_data = self.dependent_variable[list(self.dependent_variable.keys())[0]]
 		#self.resulting_model = None
@@ -303,8 +248,12 @@ class BuildModel:
 			#print("current best model is ", str(self.resulting_model))
 		print("The best model contains ", str(parameters_number), " parameters. And the model is: ", str(self.resulting_model))
 		print(info_big_model)
-		
-		return self.resulting_model
+		print("prediction are: ")
+		params = sm.GLS(y, bigger_model_list).fit().params
+		self.predictions = sm.GLS(y, bigger_model_list).predict(params)
+		print(self.predictions)
+
+		return self.resulting_model, self.predictions
 
 
 
@@ -319,7 +268,7 @@ if __name__ == '__main__':
 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
 	cor_vec = model_raw.correlation_vector()
 	cut_off = model_raw.correlational_cutoff(cor_vec)
-	# one_param, company, small_list = model_raw.one_parameter_model(cut_off)
+	one_param, company, small_list = model_raw.one_parameter_model(cut_off)
 	# chosen = model_raw.companies_chosen_list(company)
 	# left = model_raw.companies_left_list(cut_off, chosen)
 	# comb = model_raw.create_combinations(left, chosen)
@@ -327,12 +276,13 @@ if __name__ == '__main__':
 	# data_compare = model_raw.get_data_for_comparison(bigger_model)
 	# compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
 	#build_model = model_raw.build_the_model(cut_off)
-	print(build_model)
+	#print(build_model)
 
-
+	# test predict
 	# y= dependent_variable[list(dependent_variable.keys())[0]]
-	# print(len(small_list))
-	# print(sm.GLS(y, small_list))
+	# params = sm.GLS(y, small_list).fit().params
+
+	# print(sm.GLS(y, small_list).predict(params))
 
 
 
