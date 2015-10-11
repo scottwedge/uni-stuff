@@ -289,8 +289,8 @@ There are several disadvantages of the statistic program written in python.\\
 The first and the biggest disadvantage is the performance. This disadvantage appears only for beginners by implementing mid-difficult task with mid-size data structures.\\
 The main time consumption comes from StatisticTests.py, specifically from stationarity test. 
 \begin{verbatim}
->>> cProfile.run('collect_statistics(dict_data)')
-        33687046 function calls (33129590 primitive calls) in 8572.478 seconds
+>>> cProfile.run("statistics.stationarity()")
+        2898213 function calls (2887173 primitive calls) in 5408.838 seconds
 \end{verbatim}
 \textcolor{red}{other run time profiles}\\
 Another small disadvantage of the program written in python is the time you have to invest into the language investigation for more complex tasks. In order to save memory or make the performance better we had to drop naive implementation and read the documentation more carefully (although the language is intuitive on the surface it is not that simple). For example:
@@ -332,7 +332,7 @@ or
 Such thing can confuse not only the very beginners, but also advanced programmers, because you need to keep every thing in mind.\\
 
 \subsection{Results}
-The end result is currently printed out to a console: the names of the companies in the final regression, main characteristics of the regression (AIC, BIC, Loglikelihood, coefficients and errors, etc.) and the final run time of the program. 
+The end result is currently printed out to a console. The final message contains the names of the companies used in the final regression, main characteristics of the regression (AIC, BIC, Loglikelihood, coefficients and errors, etc.) and the total run time of the program. 
 The results of the program for the given data, described in the data preparation section are:
 \begin{verbatim}
 The best model contains  6  parameters. And the model is:
@@ -364,7 +364,7 @@ Skew:                           0.212   Prob(JB):                      0.00439
 Kurtosis:                       2.827   Cond. No.                         357.
 ==============================================================================
 
-[Finished in 13590.5s]
+[Finished in 4173.2s]
 \end{verbatim}
 To sum up the objective arguments of using python for writing a small program to compute a linear regression for a given data and restrictions, we will sum up the points from the table from the thesis description section.
 The points for the Python program are:
@@ -379,15 +379,24 @@ The points for the Python program are:
     \item Limitations: 1 Point (accept time to actually learn the language there are no limitations).
     \item Workarounds: 1 Point (for this particular task there have always been a method or several wrap functions).
 \end{enumerate} 
-The Python program gets 5.71 points in total.
+The Python program gets 5.71 points in total.\\
+The subjective arguments for and against are: 
+\begin{enumerate}
+    \item Code is easy to understand, since syntax is much like simple English.
+    \item The data structures are exactly same as you imagine
+    \item Slicing of the data arrays is normally intuitive (unless you have a multidimensional custom structure).
+    \item For small data arrays the language is fast enough even without tricks.
+    \item Debugging messages are easy to understand.
+\end{enumerate}  
+
 
 \newpage
 \section{R}
 \subsection{The structure of the program}
-The program written in R language has the same structure as the Python program. The R program consists of three classes: DataFormatting.r, StatisticTests.r and BiuldModel.r. Their functions are similar to the same functions from the first program. However there are slight differences in the inner functions of the classes.\\
-The R language is very convenient in terms of data formatting - you don't need it. The object called Data.frame is returned when using read.csv() from the base package. This object has methods that allow the programmer to use the data directly without extracting it and saving to the proper format. For example the list of all companies from the table was extracted using the function "colnames(data.frame)" as an output we get the list object containing the elements from the first row of the table. So the R program does not have inner helpers - converter functions.\\
-The The StatisticTests.r runs tests to detect statistic characteristics of the data: Kolmogorov-Smirnov goodness of fit distribution test, Augmented Dickey-Fuller test to detect unit root, build cumulative distribution function and kernel density function, find main characteristics (mean, standard deviation, skew, kurtosis).\\
-The third class creates the model following the same steps from the step-forward approach that was used in the Python program:
+The program written in R language has the same structure as the Python program. The R program consists of three classes: DataFormatting.r, StatisticTests.r and BiuldModel.r. Their functions are similar to the same functions from the first program. However there are slight differences in the inner functions of the classes. The main class is not implemented, since we wanted more control over the program flow and thus have called all functions and imported classes via console in R run time.\\
+The R language is very convenient in terms of data formatting - you don't need it. The object called Data.frame is returned when using read.csv() from the base package. This object has methods that allow the programmer to use the data from different spots in the program and for different purposes directly without extracting it and saving in a proper format. For example the list of all companies from the table was extracted using the function "colnames(data.frame)" as an output we get the list object containing the elements from the first row of the table. So our R program does not have inner helpers - converter functions, thus is a bit easier to understand.\\
+The The StatisticTests.r runs tests to detect statistic characteristics of the data: Kolmogorov-Smirnov goodness of fit distribution test, Augmented Dickey-Fuller test to detect unit root, build cumulative distribution function and kernel density function, find moments (mean, standard deviation, skew, kurtosis).\\
+The third class, called BuildModel.r, creates the multiple linear regression for given data table following the same steps from the step-forward approach that was used in the Python program:
 \begin{enumerate}
     \item Cut off all companies with correlation less than 30\%.
     \item Set the limit for the maximum number of parameters in the final regression. 
@@ -397,6 +406,7 @@ The third class creates the model following the same steps from the step-forward
     \item Compare the best models from two different classes via Likelihood Ratio Test.
     \item Repeat until the smaller will be better or/and the maximum number of parameters is reached.
 \end{enumerate}
+
 \subsection{The process description}
 In this section the process of the program writing is described in more details: what packages were used, what difficulties appeared, etc..
 \subsubsection{Used Libraries}
@@ -424,8 +434,50 @@ small <- gls(as.formula(paste(dep$name,"~", as.character(names(small_model)), co
 Where the first parameter is from the class formula looks like string object: "Intel ~ Olympus + St.Jude". The second parameter is the data, where the variables from the formula match the names of the columns from the data frame object.\\
 The program is run from the console from the R environment. The result is also printed out to the console. The result contains log-likelihood of the final regression, its companies, coefficients, AIC and BIC. Additional information provided by the nlme package offers the correlation matrix for given parameters.  
 \subsubsection{Documentation quality and quantity}
-In comparison to the Python language, R was build only for analytical purpose. The most part of the contributors are scientific institutions, and thus the R language documentation is written in a scientific paper style. \\
-Although the functions offered by the chosen libraries have covered all the need of the program written in this work, there were difficulties to understand how the function should be used, especially since R language requires a certain time investment to get started.
+In comparison to the Python language, R was build solely for analytical purposes. The most part of the contributors are scientific institutions and scientists, and thus the R language documentation is written in a scientific style. To evaluate the R language documentation we will use the points system described in Python Documentation section.\\
+The R Base package:
+\begin{enumerate}
+    \item 1 Point (the documentation is hosted by ETH Zürich and no server downtime was noticed).
+    \item 0 Points (if you don't know exactly for what function you are looking for, alphabetic search not going to be much of a help).
+    \item 0 Points (the native documentation does not provide sufficient amount of examples).
+    \item 0.5 Points (depends on the function).
+    \item 0 Points.
+    \item 1 Points (the literature source is given but not in form of the link).
+    \item 0 Points (no styling applied).
+\end{enumerate}
+The Stats package is organized similar to the Base package and thus have similar points:
+\begin{enumerate}
+    \item 1 Point (also hosted by ETH Zürich).
+    \item 0 Point (the alphabetical list with short description).
+    \item 0.5 Points (depends on function, demo files are offered only for some of the functions).
+    \item 0.5 Points (depends on the function).
+    \item 0 Point.
+    \item 1 Point.
+    \item 0 Points (no styling applied).
+\end{enumerate} 
+The Nlme package is hosted by the biggest R source called "CRAN". This source offers significant amount of simple and complex demos, test data sets and tutorials, etc.. CRAN is considered to be the central R source.
+\begin{enumerate}
+    \item 1 Point (the CRAN servers are constantly monitored, no problems were noticed within a 2 year period).
+    \item 1 Point (the documentation is organized as a scientific paper with the content provided).
+    \item 1 Point.
+    \item 1 Point (examples are sometimes united for different functions).
+    \item 0 Points.
+    \item 1 Point (the theoretical background is provided in the form of the references after the function explanation).
+    \item 1 Point (scientific paper formatting).
+\end{enumerate}
+The last package used in our program is Tseries:
+\begin{enumerate}
+    \item 1 Point (hosted by CRAN).
+    \item 1 Point (scientific paper).
+    \item 1 Points.
+    \item 1 Point.
+    \item 0 Point.
+    \item 1 Point (in the form of references).
+    \item 1 Point (scientific paper formatting).
+\end{enumerate}
+The quality of the R documentation is in average on the same level for all sources, but the convenience of the documentation (formatting, navigation) can differ a lot depending on the source. The total score for the R documentation is:
+\[ \frac{\frac{3}{10}(2.5)+\frac{1}{10}(3)+\frac{3}{10}(6)+\frac{3}{10}(6)}{7}= 0.66 \] 
+
 \subsubsection{Advantages and disadvantages of the program}
 \subsection{Results}
 

@@ -7,6 +7,7 @@ import numpy
 from scipy import stats as stat
 from multiprocessing import Pool
 import statsmodels.tsa.stattools as statmodel
+import cProfile
 
 
 # this class uses full data (with dependent Variable)
@@ -104,10 +105,12 @@ if __name__ == '__main__':
 	#stationary = statistics.stationarity()
 	#normal = statistics.kolmogorov_normal()
 	#log_normal = statistics.kolmogorov_lognormal()
-	moments = statistics.findMoments()
+	#moments = statistics.findMoments()
 	#kde = statistics.build_kde()
 	#kde = statistics.build_kde()
-	print(moments)
+	
+	cProfile.run("statistics.stationarity()")
+
 	
 
 

@@ -18,17 +18,12 @@ getData <- setRefClass("getData",
 			dependent_name <- as.character(list_companies[[1]])
 			dependent_variable <<- list(name=dependent_name, value=c(data[[dependent_name]]))
 			dependent_variable
-		},miley cyrus
+		},
 
 		get_rest_companies = function(dependent, list_companies) {
 			rest_companies <<- list_companies[list_companies != dependent$name]
 			rest_companies
 		}
-		#,
-
-		# data_for_tests = function(data_frame, list_companies) {
-	
-		# }
 	))
 
 # we assume, that we can anytime iterate over data.frame.

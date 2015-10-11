@@ -49,12 +49,12 @@ if __name__ == '__main__':
 
 	print(evaluation_set)
 
-	difference = []
-	for key in evaluation_set.keys():
-		for i in range(0, len(evaluation_set[key])):
-			difference.append(evaluation_set[i]-predictions[i])
+	# difference = []
+	# for key in evaluation_set.keys():
+	# 	for i in range(0, len(evaluation_set[key])):
+	# 		difference.append(evaluation_set[i]-predictions[i])
 
-	print(difference)
+	# print(difference)
 
 	#cProfile.run('collect_data(file_name)')
-	#cProfile.run('collect_statistics(dict_data)')
+	cProfile.run('collect_statistics(dict_data)')

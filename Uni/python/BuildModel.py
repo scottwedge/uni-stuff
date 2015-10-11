@@ -15,7 +15,7 @@ class BuildModel:
 		self.list_companies = list_companies
 		self.dependent_variable = dependent_variable
 		self.final_dict = final_dict
-		self.predictions = []
+		self.evaluation_dict = {}
 		self.correlation_with_Dependent = {}
 		self.rest_companies = {}
 		self.companies_chosen = []
@@ -30,6 +30,7 @@ class BuildModel:
 		self.info_small_model = None
 		self.info_big_model = None
 		self.resulting_model = None
+		self.resulting_model_array = None
 		self.limit = 0
 
 	# create correlational vector
@@ -86,7 +87,7 @@ class BuildModel:
 		helper_list = []
 		combinations_dict = {}
 		y = self.dependent_variable[list(self.dependent_variable.keys())[0]]
-		r_squared = {i: [] for i in range(0, len(combinations))}
+		#r_squared = {i: [] for i in range(0, len(combinations))}
 		aic_coef = {i: [] for i in range(0, len(combinations))}
 		for i in range(0, len(combinations)):
 			combinations_dict[i] = combinations[i]
@@ -194,6 +195,7 @@ class BuildModel:
 		return self.rejected, self.info_small_model, self.info_big_model
 
 	def build_the_model(self, cut_off):
+		y = self.dependent_variable[list(self.dependent_variable.keys())[0]]
 		parameters_number = 2
 		dependent_data = self.dependent_variable[list(self.dependent_variable.keys())[0]]
 		#self.resulting_model = None
@@ -224,6 +226,7 @@ class BuildModel:
 				print(small_model, info_small_model)
 				
 				self.resulting_model = small_model
+				self.resulting_model_array = smaller_model_list
 				break
 
 			else: # rejected == True, the bigger model is better, search further
@@ -244,16 +247,28 @@ class BuildModel:
 					break
 			   
 				self.resulting_model = big_model
+				self.resulting_model_array = bigger_model_list
 			parameters_number += 1
 			#print("current best model is ", str(self.resulting_model))
 		print("The best model contains ", str(parameters_number), " parameters. And the model is: ", str(self.resulting_model))
 		print(info_big_model)
-		print("prediction are: ")
-		params = sm.GLS(y, bigger_model_list).fit().params
-		self.predictions = sm.GLS(y, bigger_model_list).predict(params)
-		print(self.predictions)
+		# print("prediction are: ")
+		# params = sm.GLS(y, bigger_model_list).fit().params
+		# self.predictions = sm.GLS(y, bigger_model_list).predict(params)
+		# print(self.predictions)
 
-		return self.resulting_model, self.predictions
+		return self.resulting_model, self.resulting_model_array
+
+	def build_predictions(self, final_model):
+		raw_data = DataFormatting("../data/TestingSet.csv")
+		dict_data = raw_data.keep_dict()
+		self.evaluation_dict = dict_data
+
+		for item in final_model:
+			print()
+
+		return self.evaluation_dict
+
 
 
 
@@ -268,15 +283,18 @@ if __name__ == '__main__':
 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
 	cor_vec = model_raw.correlation_vector()
 	cut_off = model_raw.correlational_cutoff(cor_vec)
-	one_param, company, small_list = model_raw.one_parameter_model(cut_off)
+#	one_param, company, small_list = model_raw.one_parameter_model(cut_off)
 	# chosen = model_raw.companies_chosen_list(company)
 	# left = model_raw.companies_left_list(cut_off, chosen)
 	# comb = model_raw.create_combinations(left, chosen)
 	# bigger_model = model_raw.best_model_in_the_class(comb)
 	# data_compare = model_raw.get_data_for_comparison(bigger_model)
 	# compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
-	#build_model = model_raw.build_the_model(cut_off)
-	#print(build_model)
+	build_model, build_model_list = model_raw.build_the_model(cut_off)
+	#evaluation_dict = model_raw.build_predictions()
+
+	print(build_model)
+	print(type(build_model))
 
 	# test predict
 	# y= dependent_variable[list(dependent_variable.keys())[0]]
