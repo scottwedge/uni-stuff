@@ -286,7 +286,7 @@ The first advantage is small time investment needed up front. The Python languag
 The second really important advantage of the python language is testing. Python has built-in doc-tests [22], that are very easy to use. Another test-possibility are Unit Tests [23]. Python language gives the programmer different ways to test and to debug the program in order to avoid possible computational and logic errors. We will not discuss this theme in details, since the tutorials and the documentation are clear and offer sufficient amount of examples.\\
 Another advantage of the python is its multipurpose nature, although we didn't use it for our program it is still important for the world outside of the analysis field.\\
 There are several disadvantages of the statistic program written in python.\\ 
-The first and the biggest disadvantage is the performance. This disadvantage appears only for beginners by implementing mid-difficult task with mid-size data structures.\\
+The first and the biggest disadvantage is the performance. This disadvantage appears only for beginners by implementing mid-difficult task with mid-size data structures. For large data sets python will be not the best option.\\
 The main time consumption comes from StatisticTests.py, specifically from stationarity test. 
 \begin{verbatim}
 >>> cProfile.run("statistics.stationarity()")
@@ -330,6 +330,7 @@ or
 {'b': [1, 2, 3], 'a': [1, 2, 3], 'c': [1, 4, 9]}
 \end{verbatim}
 Such thing can confuse not only the very beginners, but also advanced programmers, because you need to keep every thing in mind.\\
+One more small disadvantage is the unsorted nature of the dictionary. After we have read the csv table and formatted it into dictionary, where keys are the companies names and values are the associated prices lists. The keys appear in dictionary in random order, so we can't iterate over the keys directly and the first key will not be the first company from the table. Additional commands will be needed. But this disadvantage will mostly appear for the very beginners and the very beginning of the program, since the workaround is intuitive. 
 
 \subsection{Results}
 The end result is currently printed out to a console. The final message contains the names of the companies used in the final regression, main characteristics of the regression (AIC, BIC, Loglikelihood, coefficients and errors, etc.) and the total run time of the program. 

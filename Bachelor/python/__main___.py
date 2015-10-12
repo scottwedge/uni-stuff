@@ -33,8 +33,8 @@ if __name__ == '__main__':
 	dict_data, list_companies, dependent_variable, rest_companies, dict_final = collect_data(file_name)
 
 	# create validation set
-	file_name2 = "../data/TestingSet.csv"
-	dict_data2, list_companies2, evaluation_set, rest_companies2, dict_final2 = collect_data(file_name2)
+	# file_name2 = "../data/TestingSet.csv"
+	# dict_data2, list_companies2, evaluation_set, rest_companies2, dict_final2 = collect_data(file_name2)
 
 	# check the data characteristics
 	stationary, moments, log_normal = collect_statistics(dict_data)
@@ -45,9 +45,9 @@ if __name__ == '__main__':
 		model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
 		cor_vec = model_raw.correlation_vector()
 		cut_off = model_raw.correlational_cutoff(cor_vec)
-		build_model, predictions = model_raw.build_the_model(cut_off)
+		build_model = model_raw.build_the_model(cut_off)
 
-	print(evaluation_set)
+	print(build_model)
 
 	# difference = []
 	# for key in evaluation_set.keys():
@@ -57,4 +57,4 @@ if __name__ == '__main__':
 	# print(difference)
 
 	#cProfile.run('collect_data(file_name)')
-	cProfile.run('collect_statistics(dict_data)')
+	#cProfile.run('collect_statistics(dict_data)')
