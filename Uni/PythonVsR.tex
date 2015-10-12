@@ -479,6 +479,123 @@ The quality of the R documentation is in average on the same level for all sourc
 \[ \frac{\frac{3}{10}(2.5)+\frac{1}{10}(3)+\frac{3}{10}(6)+\frac{3}{10}(6)}{7}= 0.66 \] 
 
 \subsubsection{Advantages and disadvantages of the program}
+Every programming language has its advantages and disadvantages. During writing our second program we have encountered several difficulties assosiated with the language features. Since we have already written our program, we decided to implement the same structure and thus have escaped difficulties choosing proper classes, structure of the program, functions, etc..\\
+The first and a very important advantage of the R program is the data.frame object and associated functions. This object can be formatted or sliced within very small time from every function, the results of the of the slicing can be assigned needed format. One of the most useful functions during the work with R data objects was str() that shows you the structure of the object:
+\begin{verbatim}
+> str(data)
+'data.frame':   1239 obs. of  69 variables:
+ $ Intel                : num  26.6 26.6 26.4 25.8 25.9 ...
+ $ AMD                  : num  27.5 28.4 27.8 27.9 29.2 ...
+ $ Qualcomm             : num  46.5 45.6 45.4 43.8 44.2 ...
+ $ MicronTech           : num  13.5 13.6 13.6 13.6 13.9 ...
+ $ Infenion             : num  9.26 9.38 9.41 9.3 9.25 9.23 9.21 9.23 9.26 9.19 ...
+ $ STMElectro           : num  18.5 18.7 18.6 18.1 18.2 ...
+...
+\end{verbatim}
+The slicing is very useful, when you know how exactly to handle it. For instance, to get all the companies names from the table you can use colnames():
+\begin{verbatim}
+> names<-colnames(data)
+> class(names)
+[1] "character"
+> str(names)
+ chr [1:69] "Intel" "AMD" "Qualcomm" "MicronTech" "Infenion" ...
+\end{verbatim} 
+In comparison to the Python program, where we have to store the data into dictionary with the names as the keys and the lists of share prices as the associated values, the names in the data.frame and other formats are coming in exact same order as they appear in the table. This feature make it very easy to extract the dependent variable, also you will have to know only the name of the variable for further computations.\\
+The second advantage of the program is closely connected to the the function we have used to build the regression. As we described in the "Program Structure" and "Used Libraries" sections, for the regression we have used gls function from the nlme package. The use of the function is intuitive: you provide the formula for the regression and the data containing all given names from the formula (optional if the environment already have the data set loaded). Below two examples of the gls use are presented (these examples are not an optimal decision, but a show case):
+\begin{verbatim}
+> model1<-gls(Intel ~ Olympus + Google + AMD + St.Jude, data)
+> model1
+Generalized least squares fit by REML
+  Model: Intel ~ Olympus + Google + AMD + St.Jude 
+  Data: data 
+  Log-restricted-likelihood: -1959.999
+
+Coefficients:
+(Intercept)     Olympus      Google         AMD     St.Jude 
+-1.38174717  0.18731627  0.01450565  0.05510854  0.21830586 
+
+Degrees of freedom: 1239 total; 1234 residual
+Residual standard error: 1.158712
+>
+> model2<-gls(Intel ~ sin(pi*Olympus) + cos(2*pi*AMD) + St.Jude, data)
+> model2
+Generalized least squares fit by REML
+  Model: Intel ~ sin(pi * Olympus) + cos(2 * pi * AMD) + St.Jude 
+  Data: data 
+  Log-restricted-likelihood: -2875.022
+
+Coefficients:
+      (Intercept) sin(pi * Olympus) cos(2 * pi * AMD)           St.Jude 
+       1.78264194        0.19693369        0.03505161        0.46976204 
+
+Degrees of freedom: 1239 total; 1235 residual
+Residual standard error: 2.451844
+\end{verbatim}
+Another positive moment about gls function is its data use. In comparison to python you don't have to format it and separate the data for chosen variables from the rest of the data object. You can use the data.frame loaded into the environment or use external data source, for example, for predictions. If y the formula doesn't composed automatically, the only thing you have to care about is matching of the variable names from the formula and names in data.frame.\\
+The third advantage of the R program is its performance. Without explicit multiprocessing or JIT (just in time compiler is not used in this work), the program runs within a minute.\textcolor{red}{total run time}\\
+The first and probably main disadvantage of the R language is its difficulty. The syntax is not intuitive, the data structures and their use are non trivial. In order to begin using R you will have to look through several tutorials and maybe full introduction course. The R background of the author of this work consisted only of the coursera "R programming" course [20], which didn't cover the whole program structure and the course was using RStudio [21]. RStudio is a good IDE for R to begin with, but if you need more control and understanding, you should switch to the console and a simple IDE to write the classes.\\
+The first example of the R complexity is the absence of the classes in their normal understanding. In R there are three type of classes: S3, S4 and Regference Class. The last one is close to normal Python classes. The first two are repsenting the attribute of an object (in R everything considered as an object). In our program we only used the Reference class and didn't dive into the other two classes. More information on OO systems in R you can visit [22]. \\
+The second disadvantage of the R program is connected to Reference Class definition. In R you can not return multiple instances. Following implementation will return an error:
+\begin{verbatim}
+getData <- setRefClass("getData",
+    fields = list( name="character", data="data.frame", companies="character"),
+	methods = list( 
+    	get_data = function() {
+            data <<- read.csv(name, header = TRUE, sep = ",", 
+            quote = "\"", dec = ".", fill = TRUE, comment.char = "")
+			companies <<- colnames(data)
+			
+			return data, companies
+		})
+\end{verbatim}
+In order to be able to return several objects you will have to unite them into list:
+\begin{verbatim}
+getData <- setRefClass("getData",
+    fields = list( name="character", result="list"),
+	methods = list( 
+    	get_data = function() {
+            data <- read.csv(name, header = TRUE, sep = ",", 
+            quote = "\"", dec = ".", fill = TRUE, comment.char = "")
+			companies <- colnames(data)
+            
+            result <<- c(data, result)
+            result<<- c(companies, result)
+            
+            return result            			
+		})
+\end{verbatim}
+The smallest disadvantage of this workaround is additional variables assignment of the returned list in order to get needed values separately:
+\begin{verbatim}
+> d <- getData(name="../data/LearningSet.csv")
+> result <- d$get_data()
+>class(result)
+[1] "list"
+> data <- result[[1]]
+> companies <- result[[2]]
+\end{verbatim}
+Another disadvantage of the R program in the beginning is the slicing. On one hand, you can get the element or a data object using different approaches. On the other hand, they do not always return what you have expected and does not seem intuitive. For example let's get first 5 prices of Intel:
+\begin{verbatim}
+> data$Intel[1:5]
+[1] 26.59 26.58 26.37 25.80 25.85
+> class(data$Intel[1:5])
+[1] "numeric"
+>
+> data[[1]][1:5]
+[1] 26.59 26.58 26.37 25.80 25.85
+> class(data[[1]][1:5])
+[1] "numeric"
+>
+> data[names(data)[1]][[1]][1:5]
+[1] 26.59 26.58 26.37 25.80 25.85
+> class(data[names(data)[1]][[1]][1:5])
+[1] "numeric"
+>
+> data[,1][1:5]
+[1] 26.59 26.58 26.37 25.80 25.85
+> class(data[,1][1:5])
+[1] "numeric"
+\end{verbatim}
+Slicing is a powerful tool in R, but for beginners it might be a problem to use it properly.
 \subsection{Results}
 
 \newpage
@@ -509,7 +626,8 @@ The quality of the R documentation is in average on the same level for all sourc
     \item Stats R library \url{https://stat.ethz.ch/R-manual/R-patched/library/stats/html/00Index.html}
     \item Nlme R library \url{https://cran.r-project.org/web/packages/nlme/nlme.pdf}
     \item Tseries R library \url{https://cran.r-project.org/web/packages/tseries/tseries.pdf}
-    \item \url{}
-    \item \url{}
+    \item Coursera: "R Programming"\url{https://www.coursera.org/course/rprog}
+    \item RStudio IDE \url{https://www.rstudio.com/}
+    \item OO systems in R \url{http://adv-r.had.co.nz/OO-essentials.html}
 \end{enumerate}
 \end{document}
