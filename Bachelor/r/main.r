@@ -46,3 +46,35 @@ main <- function() {
 	best_model
 
 }
+
+# returns predictions vector, differencies vector, average error, max eror
+build_predictions <- function() {
+	predictions <- list()
+
+	# get data.frame to build predictions
+	t <- getData(name="../data/TestingSet.csv")
+	test_data <- t$get_data()
+
+	d <- getData(name="../data/LearningSet.csv")
+	build_data <- d$get_data()
+
+	#get gls model
+	model <- gls(Intel ~ Olympus + Cardinal + St.Jude + MicronTech + STMElectro + Lenovo, build_data)
+	pv <- predict(model, test_data)
+	dv <- (test_data$Intel - pv)
+	average <- mean(dv)
+	max <- max(dv)
+	min <- min(dv)
+	if(max > (-1 * min)) {
+		dev <- max
+	}
+	else {
+		dev <- min
+	}
+
+	predictions$predictions <- pv
+	predictions$difference <- dv
+	predictions$errors <- list(average=average, dev=dev)
+
+	predictions
+}

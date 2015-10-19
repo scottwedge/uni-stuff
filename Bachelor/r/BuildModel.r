@@ -200,7 +200,7 @@ buildModel <- setRefClass("buildModel",
 
 			final_model
 
-		} 
+		}
 
 		))
 
