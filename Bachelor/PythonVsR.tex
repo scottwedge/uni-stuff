@@ -603,8 +603,72 @@ Slicing is a powerful tool in R, but for beginners it might be a problem to use 
 \section{Results}
 Our R program does not have the main class as in Python program, however main function is implemented, where all libraries are activated, classes are imported and the final calculation is run. The output is printed out to terminal from which the program was started. This is the extended output for gls function: summary.gls:
 \begin{verbatim}
+> source("main.r")
+> system.time(main())
+[1] "The parameters limit is not reached, searching further"
+[1] "The parameters limit is not reached, searching further"
+[1] "The parameters limit is not reached, searching further"
+[1] "The parameters limit is not reached, searching further"
+Generalized least squares fit by REML
+  Model: as.formula(form[[k1]]) 
+  Data: data 
+       AIC      BIC    logLik
+  3421.976 3462.907 -1702.988
+
+Coefficients:
+                Value  Std.Error   t-value p-value
+(Intercept)  4.588765 0.29835356  15.38029       0
+Cardinal    -0.073992 0.00540346 -13.69342       0
+Olympus      0.054461 0.01080308   5.04127       0
+St.Jude      0.165351 0.00801178  20.63845       0
+Lenovo       0.500866 0.01499778  33.39599       0
+MicronTech   0.073363 0.01235370   5.93858       0
+STMElectro   0.435386 0.02655304  16.39685       0
+
+ Correlation: 
+           (Intr) Cardnl Olymps St.Jud Lenovo McrnTc
+Cardinal   -0.208                                   
+Olympus    -0.492  0.210                            
+St.Jude    -0.846 -0.113  0.212                     
+Lenovo      0.447 -0.046 -0.834 -0.408              
+MicronTech -0.421  0.252  0.267  0.273 -0.180       
+STMElectro  0.494 -0.802 -0.590 -0.203  0.415 -0.614
+
+Standardized residuals:
+       Min         Q1        Med         Q3        Max 
+-2.3116653 -0.7048518 -0.0818459  0.6500465  3.5270072 
+
+Residual standard error: 0.9389829 
+Degrees of freedom: 1239 total; 1232 residual
+
+
+   user  system elapsed 
+ 24.566   0.000  23.461 
 
 \end{verbatim}    
+As you can see, the best model yielded by the R program consist of 6 companies: STMElctro, Olympus, St.Jude, Lenovo, Microntech and Cardinal. It is interesting, that on the last step of the evaluation the algorithm have chosen Cardinal over Google (which have chosen the Python Program). Since the programs are identical this deviation can be caused by the underlying implementation in gls function or llr test, or AIC criterion evaluation. Unfortunately we haven't found the source code for R and thus we couldn't compare the implementations. This is why in the section Results we will compare the predictions of the programs. And add points to the program yielding closer predictions.\\
+To sum up the objective arguments of using R for a small program to compute a linear regression for given data and restrictions we will give the points according to the evaluation table given in the description section. The Points for the R program are:
+\begin{enumerate}
+    \item Useful sources: 1 Point.
+    \item Documentation: 0.66 Points.
+    \item Performance: 1 Point.
+    \item Memory: 1 Point (since no additional formatting was used the memory use for our specific case is less for R).
+    \item Uniform data structures: 1 Point (data.frame object was used everywhere directly).
+    \item Big Data: 1 Point (this is a relatively recent addition to the language, but there are several sources and libraries allowing to work with big data [23]).
+    \item Visualization: 1 Point (on the fly changing the graph makes it easy to work with).
+    \item Limitations: 1 Point (same as by Python language, after investing time into getting into R language there were noticed no limitations).
+    \item Workarounds: 1 Point (the program was build strait forward without having any issues).
+\end{enumerate} 
+The total objective score for R language is 7.66 points total.\\
+The subjective arguments are:
+\begin{enumerate}
+    \item Debugging messages are hard to understand.
+    \item Certain amount of time is needed to understand the code, since syntax is not completely intuitive.
+    \item Layered structures can very challenging to work with.
+    \item Slicing is very easy to work with, if you have understood it.
+    \item Very fast language.
+\end{enumerate}
+
 \subsection{Objective comparison}
 \subsection{Subjective comparison}
 \subsection{Conclusion}
@@ -634,5 +698,6 @@ Our R program does not have the main class as in Python program, however main fu
     \item Coursera: "R Programming"\url{https://www.coursera.org/course/rprog}
     \item RStudio IDE \url{https://www.rstudio.com/}
     \item OO systems in R \url{http://adv-r.had.co.nz/OO-essentials.html}
+    \item Big Data in R \url{http://r-pbd.org/}
 \end{enumerate}
 \end{document}

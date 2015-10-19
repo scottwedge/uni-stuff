@@ -25,18 +25,8 @@ def collect_statistics(dict_data):
 
 	return stationary, moments, log_normal
 
-
-if __name__ == '__main__':
-
-	# initialize the data
-	file_name = "../data/LearningSet.csv"
+def build_model(file_name):
 	dict_data, list_companies, dependent_variable, rest_companies, dict_final = collect_data(file_name)
-
-	# create validation set
-	# file_name2 = "../data/TestingSet.csv"
-	# dict_data2, list_companies2, evaluation_set, rest_companies2, dict_final2 = collect_data(file_name2)
-
-	# check the data characteristics
 	stationary, moments, log_normal = collect_statistics(dict_data)
 	if False in stationary.values() and False in log_normal.values():
 		print("choose different model to build, deal with non stationary first")
@@ -49,6 +39,23 @@ if __name__ == '__main__':
 
 	print(build_model)
 
+
+
+if __name__ == '__main__':
+
+	# initialize the data
+	file_name = "../data/LearningSet.csv"
+	build_model(file_name)
+
+	cProfile.run('collect_data(file_name)')
+	cProfile.run('collect_statistics(dict_data)')
+	cProfile.run('build_model(file_name)')
+	# create validation set
+	# file_name2 = "../data/TestingSet.csv"
+	# dict_data2, list_companies2, evaluation_set, rest_companies2, dict_final2 = collect_data(file_name2)
+
+	# check the data characteristics
+
 	# difference = []
 	# for key in evaluation_set.keys():
 	# 	for i in range(0, len(evaluation_set[key])):
@@ -56,5 +63,3 @@ if __name__ == '__main__':
 
 	# print(difference)
 
-	#cProfile.run('collect_data(file_name)')
-	#cProfile.run('collect_statistics(dict_data)')
