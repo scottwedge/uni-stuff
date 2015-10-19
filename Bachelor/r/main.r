@@ -72,6 +72,13 @@ build_predictions <- function() {
 		dev <- min
 	}
 
+	png("Predicitions")
+	plot(test_data$Intel, type="l", col="red", ann=FALSE)
+	par(new=TRUE)
+	plot(pv, type="l", col="blue", axes=FALSE, ann=FALSE)
+	legend("top", c("Real Prices", "Predictions"), lty=c(1,1), lwd=c(1.5,1.5), col=c("red", "blue"))
+	dev.off()
+
 	predictions$predictions <- pv
 	predictions$difference <- dv
 	predictions$errors <- list(average=average, dev=dev)
