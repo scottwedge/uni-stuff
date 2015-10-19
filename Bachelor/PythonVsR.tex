@@ -222,7 +222,7 @@ plt.title(3M)
 plt.plot(bin_edges[1:], cdf)
 plt.clf()
 \end{verbatim}
-\includegraphics[scale=0.5]{PythonPlotExample.png} \\
+\includegraphics[scale=0.75]{PythonPlotExample.png} \\
 The last but the fundamental library is Statmodels. This library offers a wide variety of tools and models for statistic purpose. Two main functions of the library used in our program are: Augmented Dickey-Fuller test for unit root and building a multiple linear regression with generalized least squares approach.
 \begin{verbatim}
 statistic = statmodel.adfuller(self.dict_data[key], 250, 
@@ -433,7 +433,14 @@ The fourth package used in this program offers the the possibility to build line
 small <- gls(as.formula(paste(dep$name,"~", as.character(names(small_model)), collapse="")), data)
 \end{verbatim} 
 Where the first parameter is from the class formula looks like string object: "Intel ~ Olympus + St.Jude". The second parameter is the data, where the variables from the formula match the names of the columns from the data frame object.\\
-The program is run from the console from the R environment. The result is also printed out to the console. The result contains log-likelihood of the final regression, its companies, coefficients, AIC and BIC. Additional information provided by the nlme package offers the correlation matrix for given parameters.  
+The graphics is provided by the graphics library, but it comes with the default R set up. The plotting in R is easy to use:
+\begin{verbatim}
+png(path_cdf)
+plot(graph[[name]], verticals = TRUE, do.points = FALSE, main=name)
+dev.off()
+\end{verbatim}
+\includegraphics[scale=0.75]{RPlotExample.png}
+ 
 \subsubsection{Documentation quality and quantity}
 In comparison to the Python language, R was build solely for analytical purposes. The most part of the contributors are scientific institutions and scientists, and thus the R language documentation is written in a scientific style. To evaluate the R language documentation we will use the points system described in Python Documentation section.\\
 The R Base package:
