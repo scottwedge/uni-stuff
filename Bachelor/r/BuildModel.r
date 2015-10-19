@@ -48,8 +48,8 @@ buildModel <- setRefClass("buildModel",
 			}
 			max_cor <- max(helper)
 			one_param_model <<- cut_off[cut_off == max_cor]
-			print("Best one parameter model is: ")
-			print(one_param_model)
+			# print("Best one parameter model is: ")
+			# print(one_param_model)
 
 			one_param_model
 		},
@@ -161,16 +161,13 @@ buildModel <- setRefClass("buildModel",
 			comp_chosen <- companies_chosen(comp_helper)
 			comp_left <- companies_left(cut_off, comp_chosen)
 			combo_helper <- create_combinations(comp_left, comp_chosen)
-			print("1")
 			big_model <- best_model_in_class(combo_helper)
 			# compare models via compare models
 			comparison <- compare_models(small, big_model[[2]][[1]])
-			print("2")
 			# here goes while loop 
 			flag <- TRUE
 			parameter <- 2
 			while (flag & (parameter < limit_helper)) {
-				print("3")
 				if(flag==FALSE) {
 					print("The smaller model is better, The search is over")
 
@@ -179,7 +176,6 @@ buildModel <- setRefClass("buildModel",
 				}
 				else {
 					if (parameter < limit_helper) {
-						print("4")
 						comp_helper <- names(big_model[[1]])
 						comp_chosen <- companies_chosen(comp_helper)
 						comp_left <- companies_left(cut_off, comp_chosen)
@@ -188,13 +184,14 @@ buildModel <- setRefClass("buildModel",
 						big_model <- best_model_in_class(combo_helper)
 						flag <- compare_models(small, big_model[[2]][[1]])[[1]]
 						parameter <- parameter + 1
+						print("The parameters limit is not reached, searching further")
 
 					}
 					else {
 						final_model <<- big_model
 						break
 					}
-					print("the big model is better and the number of parameter reached its max")
+					# print("the big model is better and the number of parameter reached its max")
 				}
 
 				final_model <<- big_model
