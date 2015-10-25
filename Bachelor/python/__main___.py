@@ -67,6 +67,14 @@ def build_predictions():
 	else:
 		dev = min_diff
 
+	# plot predictions and real prices
+	plt.figure()
+	plt.title("Predictions vs Real Prices")
+	plt.plot(y, color="r", linewidth=2.0)
+	plt.plot(predict, color="b", linewidth=1.0)
+	plt.savefig("PythonPredictions.png")
+	plt.clf()
+
 	print("difference vector is: " + str(diff))
 	print("the average difference is: " + str(av))
 	print("max deviation is: " + str(dev))
