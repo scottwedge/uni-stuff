@@ -1,7 +1,34 @@
-# required packages: nlme, stats, tseries, moments
-# make sure they are installed
-# run library(library_name) for each library
+#!/usr/bin/r.
+# helper functions to test run time
+data_read <- function() {
+	source("DataFormatting.r")
+	d <- getData(name="../data/LearningSet.csv")
+	build_data <- d$get_data()
+	companies <- d$get_list_companies(build_data)
+	dependent <- d$extract_dependent(companies)
+	rest <- d$get_rest_companies(dep, companies)
+}
 
+stat <- function(build_data, companies) {
+	source("StatisticTests.r")
+	s <- statistic(data=build_data, companies_list=companies)
+	stationary <- s$stationary()
+	cdf <- s$build_cdf()
+	kde <- s$build_hist()
+	moments <- s$find_moments()
+	normal <- s$normal_distribution()
+	lognormal <- s$lognormal_distribution()
+}
+
+model <- function(build_data, companies, rest, dependent) {
+	source("BuildModel.r")
+	b <- buildModel(data=build_data, companies=companies, rest=rest, dep=dependent)
+	corr_vector <- b$correlation_vector(dependent, rest)
+	corr_cutoff <- b$correlation_cutoff(corr_vector)
+
+	best_model <- b$build_model(corr_cutoff)
+	# print(summary(best_model[[2]][[1]]))
+}
 
 main <- function() {
 	# activate libraries
@@ -16,7 +43,7 @@ main <- function() {
 	build_data <- d$get_data()
 	companies <- d$get_list_companies(build_data)
 	dependent <- d$extract_dependent(companies)
-	rest <- d$get_rest_companies(dep, companies)
+	rest <- d$get_rest_companies(dependent, companies)
 
 	# get statistics 
 	source("StatisticTests.r")
@@ -30,7 +57,7 @@ main <- function() {
 
 	# build the model
 	if (FALSE %in% stationary) {
-		print("Choose different model to build dependencies")
+		# print("Choose different model to build dependencies")
 	}
 	else {
 		source("BuildModel.r")
@@ -39,7 +66,7 @@ main <- function() {
 		corr_cutoff <- b$correlation_cutoff(corr_vector)
 
 		best_model <- b$build_model(corr_cutoff)
-		print(summary(best_model[[2]][[1]]))
+		# print(summary(best_model[[2]][[1]]))
 
 	}
 
@@ -73,11 +100,11 @@ build_predictions <- function() {
 		dev <- min
 	}
 
-	png("Predicitions")
-	plot(test_data$Intel, type="l", col="red", ann=FALSE)
+	png("../RPredicitions.png")
+	plot(test_data$Intel, type="l", col="grey", ann=FALSE)
 	par(new=TRUE)
-	plot(pv, type="l", col="blue", axes=FALSE, ann=FALSE)
-	legend("top", c("Real Prices", "Predictions"), lty=c(1,1), lwd=c(1.5,1.5), col=c("red", "blue"))
+	plot(pv, type="l", col="green", axes=FALSE, ann=FALSE)
+	legend("top", c("Real Prices", "Predictions"), lty=c(1,1), lwd=c(1.5,1.5), col=c("grey", "green"))
 	dev.off()
 
 	predictions$predictions <- pv
@@ -96,3 +123,4 @@ build_predictions <- function() {
 
 	predictions
 }
+

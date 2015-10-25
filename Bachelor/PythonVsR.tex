@@ -677,8 +677,132 @@ The subjective arguments are:
 \end{enumerate}
 
 \subsection{Objective comparison}
+In this section the final comparison of the programs written in two languages will be presented. Here we will explain the difference in the scores and also check the accuracy of the predictions both programs yield.\\
+The first difference between programs is the performance. In order to show the difference in the run time of the programs we will use system.time() for R and cProfile for Python (the examples of the code were already given above).
+\begin{verbatim}
+> system.time(data_read())                                                                  
+   user  system elapsed                                                                       
+  0.100   0.000   0.085  
+> system.time(stat(build_data, companies))
+   user  system elapsed 
+  3.627   0.000   3.465
+>> system.time(model(build_data, companies, rest, dependent))
+   user  system elapsed 
+  3.837   0.000   3.067 
+\end{verbatim}
+The main function consists of three parts: read the data from the csv table and format it, the second part is the statistic test and the final part is building a model based on the results of the statistic test. And the overall time of the program can be measured via two functions: main and predict:
+\begin{verbatim}
+> system.time(main())
+   user  system elapsed 
+  8.917   0.000   6.546 
+> system.time(build_predictions())
+[1] "the mean of the y is: "
+[1] 23.46462
+[1] "the std of the y is: "
+[1] 2.55532
+[1] "the mean of the predictions is: "
+[1] 20.86923
+[1] "the std of the predictions is: "
+[1] 1.544088
+   user  system elapsed 
+  0.000   0.000   0.117 
+\end{verbatim}
+The run time of the main function is greater than the sum of its parts, since the main function loads needed libraries and also counts the time for the data transfer between the classes as well as the initialization of the classes.\\
+The Python program performance is not that impressive as by the R program:\\
+\textcolor{red}{here compare overall run time, 3 main parts run time}
+\\
+The second difference is the memory used by each program. There are several possibilities to measure the memory load of the programs. In R you can use Rprofmem() from the utilities package to determine how much memory was used by the object (in R everything is considered as an object). In Python different tools and built-in classes can be used to do the profiling for example memory\_profile [11]. However in this work we will use the unix time command from the console for both programs in order to get more accurate results. The printed message contains many details, but we will be interested in the Maximum resident set size, which means the amount of memory belogning to the process and currently presented in RAM.\\ 
+The R memory use looks as following:
+\begin{verbatim}
+[20:32:19 - 15-10-25] 
+/home/alisa/uni-stuff/Bachelor/r % /usr/bin/time -v R  main.r
+        Command being timed: "R main.r"
+        User time (seconds): 7.41
+        System time (seconds): 0.05
+        Percent of CPU this job got: 18%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 0:41.45
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 78436
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 0
+        Minor (reclaiming a frame) page faults: 17697
+        Voluntary context switches: 59
+        Involuntary context switches: 2026
+        Swaps: 0
+        File system inputs: 0
+        File system outputs: 2840
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
+\end{verbatim}
+The maximum memory usage of the R program during running is 78,4 MB.\\
+The Python memory use looks as following:
+\begin{verbatim}
+[19:11:27 - 15-10-25] 
+/home/alisa/uni-stuff/Bachelor/python % /usr/bin/time -v python __main___.py
+        Command being timed: "python __main___.py"
+        User time (seconds): 5564.19
+        System time (seconds): 7.73
+        Percent of CPU this job got: 100%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 1:32:46
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 637036
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 0
+        Minor (reclaiming a frame) page faults: 3633280
+        Voluntary context switches: 3047
+        Involuntary context switches: 22080
+        Swaps: 0
+        File system inputs: 0
+        File system outputs: 8976
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0
+\end{verbatim}
+The maximum memory usage of the running Python program is 637,0 MB.\\
+Since the final models from two programs differ, we will compare the predictions. Predictions were built on the TestingSet.csv containing 515 Prices for the time period from 1.01.2011 to 31.12.2012. We will show the main characteristics of the predictions row: mean and standard deviation as well as the comparison plot.\\
+The R program gives us following results:
+\begin{verbatim}
+> pred<-build_predictions()
+[1] "the mean of the y is: "
+[1] 23.46462
+[1] "the std of the y is: "
+[1] 2.55532
+[1] "the mean of the predictions is: "
+[1] 20.86923
+[1] "the std of the predictions is: "
+[1] 1.544088
+\end{verbatim}
+\includegraphics[scale=0.75]{RPredicitions.png}
+The Python program results are:
+\begin{verbatim}
+>>> build_predictions()
+the mean of the y is: 23.4646213592
+the std of the y is: 2.55283813168
+the mean of the prediction is: 21.8848266352
+the standart deviation is: 1.35949376438
+\end{verbatim}
+\includegraphics[scale=0.75]{PythonPredictions.png}
+As you can see, the results of the Python Program yield similar trend to the real time series, but the absolute difference is bigger, than by R program. Since we didn't get the source code for the R nlme library, we can't say whether the implementation of the computations differ. We have seen that the algorithms yield the same reault until the last step. We have also noticed that the coefficients differ from program to program a bit. It might be the case that on the 6th step the differences became significant and the result became different. On the next graph you can see both predictions together compared with the real prices.
+\includegraphics[scale=0.75]{BothPredictions.png}
+textcolor{red}{calculate accumulated error for both programs}
+give 1 point to the program with the closer results.
+Compare final score.
+
 \subsection{Subjective comparison}
+Personal preference.
 \subsection{Conclusion}
+Conclusion and future recommendations
 
 \newpage
 \section{Literature}
@@ -693,7 +817,7 @@ The subjective arguments are:
     \item \url{http://www.kdnuggets.com/2015/05/r-vs-python-data-science.html}
     \item \url{http://blog.datacamp.com/r-or-python-for-data-analysis/}
     \item \url{http://101.datascience.community/2015/05/12/data-science-wars-r-vs-python/}
-    \item
+    \item Memory Profiler for Python \url{https://github.com/fabianp/memory_profiler} 
     \item Python 3 \url{https://www.python.org/doc/}
     \item SciPy \url{http://www.scipy.org/}
     \item Statmodels \url{http://statsmodels.sourceforge.net/}

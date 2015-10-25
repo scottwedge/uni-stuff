@@ -169,7 +169,7 @@ buildModel <- setRefClass("buildModel",
 			parameter <- 2
 			while (flag & (parameter < limit_helper)) {
 				if(flag==FALSE) {
-					print("The smaller model is better, The search is over")
+					# print("The smaller model is better, The search is over")
 
 					final_model <<- list(small, summary(small))
 					break
@@ -184,7 +184,7 @@ buildModel <- setRefClass("buildModel",
 						big_model <- best_model_in_class(combo_helper)
 						flag <- compare_models(small, big_model[[2]][[1]])[[1]]
 						parameter <- parameter + 1
-						print("The parameters limit is not reached, searching further")
+						# print("The parameters limit is not reached, searching further")
 
 					}
 					else {

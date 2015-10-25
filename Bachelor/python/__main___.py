@@ -25,6 +25,7 @@ def collect_statistics(dict_data):
 
 	return stationary, moments, log_normal
 
+#@profile
 def build_model(file_name):
 	dict_data, list_companies, dependent_variable, rest_companies, dict_final = collect_data(file_name)
 	stationary, moments, log_normal = collect_statistics(dict_data)
@@ -40,6 +41,7 @@ def build_model(file_name):
 	print(build_model)
 	return build_model
 
+#@profile
 def build_predictions():
 	# get testing data.frame and dependent
 	test_raw = DataFormatting("../data/TestingSet.csv")
@@ -81,9 +83,10 @@ def build_predictions():
 	# plot predictions and real prices
 	plt.figure()
 	plt.title("Predictions vs Real Prices")
-	plt.plot(y, color="r", linewidth=2.0)
-	plt.plot(predict, color="b", linewidth=1.0)
-	plt.savefig("PythonPredictions.png")
+	rl = plt.plot(y, color="grey", linewidth=2.0)
+	pr = plt.plot(predict, color="blue", linewidth=1.0)
+	plt.legend([rl, pr],["real prices", "predicted"])
+	plt.savefig("../PythonPredictions.png")
 	plt.clf()
 
 	print("the mean of the y is: " + str(numpy.mean(y)))
@@ -92,13 +95,14 @@ def build_predictions():
 	print("the mean of the prediction is: " + str(mean_pred))
 	print("the standart deviation is: " + str(std_pred))
 
-
 	return predict, diff, mean_pred, std_pred
 
 if __name__ == '__main__':
 
 	# initialize the data
-	#file_name = "../data/LearningSet.csv"
+	file_name = "../data/LearningSet.csv"
+#	dict_data, list_companies, dependent_variable, rest_companies, dict_final = collect_data(file_name)
+
 	#build_model(file_name)
 
 	predict, diff, av, dev = build_predictions()
@@ -106,4 +110,5 @@ if __name__ == '__main__':
 	# cProfile.run('collect_data(file_name)')
 	# cProfile.run('collect_statistics(dict_data)')
 	# cProfile.run('build_model(file_name)')
+	# cProfile.run('build_predictions()')
 
