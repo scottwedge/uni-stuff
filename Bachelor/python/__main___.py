@@ -47,6 +47,14 @@ def build_predictions():
 	comp_test = test_raw.getAllCompanies()
 	dependent_variable_tmp, rest, dict_final_tmp = test_raw.extract_dependent()
 
+	# get real data 
+	build_raw = DataFormatting("../data/LearningSet.csv")
+	build_dict = build_raw.keep_dict()
+	comp_model = build_raw.getAllCompanies()
+	dependent_variable_mod, rest_mod, dict_final_mod = build_raw.extract_dependent()
+	real_model = BuildModel(build_dict, comp_model, dependent_variable_mod, rest_mod, dict_final_mod)
+	y_mod = build_dict[list(dependent_variable_mod.keys())[0]]
+
 	test_model = BuildModel(test_dict, comp_test, dependent_variable_tmp, rest, dict_final_tmp)
 	y = test_dict[list(dependent_variable_tmp.keys())[0]]
 
@@ -55,11 +63,14 @@ def build_predictions():
 
 	# get params on test_set
 	test_data = test_model.get_data_for_comparison(model_list, test_dict) 
-	params = sm.GLS(y, test_data).fit().params
+	build_data = real_model.get_data_for_comparison(model_list, build_dict)
+	model = sm.GLS(y_mod, build_data)
+	params = model.fit().params
 
-	predict = sm.GLS(y, test_data).predict(params)
+	predict = model.predict(params, test_data)
 	diff = y - predict
-	av = numpy.mean(diff)
+	mean_pred = numpy.mean(predict)
+	std_pred = numpy.std(predict)
 	max_dif = max(diff)
 	min_diff = min(diff)
 	if max_dif > (min_diff * (-1)):
@@ -75,11 +86,14 @@ def build_predictions():
 	plt.savefig("PythonPredictions.png")
 	plt.clf()
 
-	print("difference vector is: " + str(diff))
-	print("the average difference is: " + str(av))
-	print("max deviation is: " + str(dev))
+	print("the mean of the y is: " + str(numpy.mean(y)))
+	print("the std of the y is: " + str(numpy.std(y)))
 
-	return predict, diff, av, dev
+	print("the mean of the prediction is: " + str(mean_pred))
+	print("the standart deviation is: " + str(std_pred))
+
+
+	return predict, diff, mean_pred, std_pred
 
 if __name__ == '__main__':
 

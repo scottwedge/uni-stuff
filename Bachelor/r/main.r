@@ -62,7 +62,8 @@ build_predictions <- function() {
 	model <- gls(Intel ~ Olympus + Cardinal + St.Jude + MicronTech + STMElectro + Lenovo, build_data)
 	pv <- predict(model, test_data)
 	dv <- (test_data$Intel - pv)
-	average <- mean(dv)
+	mean_pred <- mean(pv)
+	std_pred <- sd(pv)
 	max <- max(dv)
 	min <- min(dv)
 	if(max > (-1 * min)) {
@@ -81,7 +82,17 @@ build_predictions <- function() {
 
 	predictions$predictions <- pv
 	predictions$difference <- dv
-	predictions$errors <- list(average=average, dev=dev)
+	predictions$errors <- list(mean=mean_pred, std=std_pred)
+
+	print("the mean of the y is: ")
+	print(mean(test_data$Intel))
+	print("the std of the y is: ")
+	print(sd(test_data$Intel))
+
+	print("the mean of the predictions is: ")
+	print(mean_pred)
+	print("the std of the predictions is: ")
+	print(std_pred)
 
 	predictions
 }
