@@ -34,13 +34,13 @@ class BuildModel:
 		self.limit = 0
 
 	# create correlational vector
-	def correlation_vector(self):
-		for key in self.dict_data.keys():
+	def correlation_vector(self, dict_data):
+		for key in dict_data.keys():
 			if key != list(self.dependent_variable.keys())[0]:
 				self.correlation_with_Dependent[key] = []
 		for key in self.correlation_with_Dependent.keys():
 			if key != list(self.dependent_variable.keys())[0]:
-				self.correlation_with_Dependent[key] = numpy.corrcoef(self.dict_data[self.list_companies[0]], self.dict_data[key])[0][1] #ToDo compute dependant variable
+				self.correlation_with_Dependent[key] = numpy.corrcoef(dict_data[self.list_companies[0]], dict_data[key])[0][1] 
 		
 		return self.correlation_with_Dependent
 
@@ -153,11 +153,11 @@ class BuildModel:
 		return self.rejected 
 
 	# inner helper
-	def get_data_for_comparison(self, model):
+	def get_data_for_comparison(self, model, dict_data):
 		model_dict = {}
-		for i in range (0, len(self.dict_data[list(self.dependent_variable.keys())[0]])):
+		for i in range (0, len(dict_data[list(self.dependent_variable.keys())[0]])):
 			for item in model:
-				model_dict[i] = [v[i] for k, v in self.dict_data.items() if k in model]
+				model_dict[i] = [v[i] for k, v in dict_data.items() if k in model]
 				self.comparison_model_list = [value for key, value in sorted(model_dict.items())]
 		
 		return self.comparison_model_list
@@ -211,7 +211,7 @@ class BuildModel:
 
 		# 3. choose best bigger model among the class
 		big_model = self.best_model_in_the_class(combinations)
-		bigger_model_list = self.get_data_for_comparison(big_model)
+		bigger_model_list = self.get_data_for_comparison(big_model, self.dict_data)
 
 		# 4. compare the smaller and bigger models
 		rejected, info_small_model, info_big_model = self.compare_models(smaller_model_list, bigger_model_list)
@@ -240,7 +240,7 @@ class BuildModel:
 					smaller_model_list = bigger_model_list
 					combinations = self.create_combinations(companies_left, companies_chosen)
 					big_model = self.best_model_in_the_class(combinations)
-					bigger_model_list = self.get_data_for_comparison(big_model)
+					bigger_model_list = self.get_data_for_comparison(big_model, self.dict_data)
 					rejected, info_small_model, info_big_model = self.compare_models(smaller_model_list, bigger_model_list)
 				else:
 					self.resulting_model = big_model
@@ -280,27 +280,22 @@ if __name__ == '__main__':
 	list_companies = raw_data.getAllCompanies()
 	dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()
 
-	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
-	cor_vec = model_raw.correlation_vector()
-	cut_off = model_raw.correlational_cutoff(cor_vec)
-#	one_param, company, small_list = model_raw.one_parameter_model(cut_off)
-	# chosen = model_raw.companies_chosen_list(company)
+
+
+# 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
+# 	cor_vec = model_raw.correlation_vector(dict_data)
+# 	cut_off = model_raw.correlational_cutoff(cor_vec)
+# #	one_param, company, small_list = model_raw.one_parameter_model(cut_off)
+# 	# chosen = model_raw.companies_chosen_list(company)
 	# left = model_raw.companies_left_list(cut_off, chosen)
 	# comb = model_raw.create_combinations(left, chosen)
 	# bigger_model = model_raw.best_model_in_the_class(comb)
 	# data_compare = model_raw.get_data_for_comparison(bigger_model)
 	# compare, info_small, info_big = model_raw.compare_models(small_list, data_compare)
-	build_model, build_model_list = model_raw.build_the_model(cut_off)
-	#evaluation_dict = model_raw.build_predictions()
+	#build_model, build_model_list = model_raw.build_the_model(cut_off)
 
-	print(build_model)
-	print(type(build_model))
+	#print(build_model)
 
-	# test predict
-	# y= dependent_variable[list(dependent_variable.keys())[0]]
-	# params = sm.GLS(y, small_list).fit().params
-
-	# print(sm.GLS(y, small_list).predict(params))
 
 
 

@@ -59,14 +59,6 @@ class DataFormatting:
 				del self.dict_final[key]
 			else:
 				pass	# stationary, moments, log_normal = collect_statistics(dict_data)
-	# if False in stationary.values() and False in log_normal.values():
-	# 	print("choose different model to build, deal with non stationary first")
-	# else:
-	# 	# create model and return the information
-	# 	model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
-	# 	cor_vec = model_raw.correlation_vector()
-	# 	cut_off = model_raw.correlational_cutoff(cor_vec)
-	# 	build_model, predictions = model_raw.build_the_model(cut_off)
 
 		# clean up the dependent_dict
 		for key in self.dependent_variable.keys():
