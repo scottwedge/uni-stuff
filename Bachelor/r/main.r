@@ -36,6 +36,7 @@ main <- function() {
 	library(stats)
 	library(tseries)
 	library(moments)
+	library(hydroGOF)
 
 	# create data class
 	source("DataFormatting.r")
@@ -91,14 +92,8 @@ build_predictions <- function() {
 	dv <- (test_data$Intel - pv)
 	mean_pred <- mean(pv)
 	std_pred <- sd(pv)
-	max <- max(dv)
-	min <- min(dv)
-	if(max > (-1 * min)) {
-		dev <- max
-	}
-	else {
-		dev <- min
-	}
+	ab_er <- mae(pv, test_data$Intel)
+	sqrmer <- rmse(pv, test_data$Intel)
 
 	png("../RPredicitions.png")
 	plot(test_data$Intel, type="l", col="grey", ann=FALSE)
@@ -109,17 +104,20 @@ build_predictions <- function() {
 
 	predictions$predictions <- pv
 	predictions$difference <- dv
-	predictions$errors <- list(mean=mean_pred, std=std_pred)
+	predictions$errors <- list(mean=mean_pred, std=std_pred, mean_er=ab_er, std_er=sqrmer)
 
 	print("the mean of the y is: ")
 	print(mean(test_data$Intel))
 	print("the std of the y is: ")
 	print(sd(test_data$Intel))
-
 	print("the mean of the predictions is: ")
 	print(mean_pred)
 	print("the std of the predictions is: ")
 	print(std_pred)
+	print("the mean absolute error of the predictions is: ")
+	print(ab_er)
+	print("the root mean squared error of the predictions is: ")
+	print(sqrmer)
 
 	predictions
 }

@@ -773,7 +773,7 @@ The maximum memory usage of the running Python program is 637,0 MB.\\
 Since the final models from two programs differ, we will compare the predictions. Predictions were built on the TestingSet.csv containing 515 Prices for the time period from 1.01.2011 to 31.12.2012. We will show the main characteristics of the predictions row: mean and standard deviation as well as the comparison plot.\\
 The R program gives us following results:
 \begin{verbatim}
-> pred<-build_predictions()
+> p<-build_predictions()
 [1] "the mean of the y is: "
 [1] 23.46462
 [1] "the std of the y is: "
@@ -782,6 +782,10 @@ The R program gives us following results:
 [1] 20.86923
 [1] "the std of the predictions is: "
 [1] 1.544088
+[1] "the mean absolute error of the predictions is: "
+[1] 3.29319
+[1] "the root mean squared error of the predictions is: "
+[1] 4.132798
 \end{verbatim}
 \includegraphics[scale=0.75]{RPredicitions.png}
 The Python program results are:
@@ -790,13 +794,28 @@ The Python program results are:
 the mean of the y is: 23.4646213592
 the std of the y is: 2.55283813168
 the mean of the prediction is: 21.8848266352
-the standart deviation is: 1.35949376438
+the standard deviation is: 1.35949376438
+the mean absolute error of the prediction is: 2.83819120505
+the root mean squared error is: 3.47169327209
 \end{verbatim}
-\includegraphics[scale=0.75]{PythonPredictions.png}
-As you can see, the results of the Python Program yield similar trend to the real time series, but the absolute difference is bigger, than by R program. Since we didn't get the source code for the R nlme library, we can't say whether the implementation of the computations differ. We have seen that the algorithms yield the same reault until the last step. We have also noticed that the coefficients differ from program to program a bit. It might be the case that on the 6th step the differences became significant and the result became different. On the next graph you can see both predictions together compared with the real prices.
-\includegraphics[scale=0.75]{BothPredictions.png}
-textcolor{red}{calculate accumulated error for both programs}
-give 1 point to the program with the closer results.
+
+\includegraphics[scale=0.75]{PythonPredictions.png}\\
+As you can see, the Python prediction statistically speaking is better, than the R prediction. Both mean absolute error and root mean square error are smaller by the Python results. The Python program gets 1 additional point for the relative accuracy. On the following graph you can see both predictions together, where the R forecasts have green color and blue color belongs to the Python forecasts.\\
+\includegraphics[scale=0.75]{BothPredictions.png}\\
+As the following step we will force both Python and R programs to show the cross results. The python will yield predictions for the final model from R: ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. And the R program will return the forecast for the Python final model: ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]\\
+The R cross-result is:
+\begin{verbatim}
+
+\end{verbatim}
+\textcolor{red}{plot original vs new for r}
+\textcolor{red}{plot new r vs old python}
+The Python cross results are:
+\begin{verbatim}
+
+\end{verbatim}
+\textcolor{red}{plot original vs new for python}
+\textcolor{red}{plot new python vs old r}
+
 Compare final score.
 
 \subsection{Subjective comparison}

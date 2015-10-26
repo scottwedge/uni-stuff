@@ -5,6 +5,8 @@ from StatisticTests import *
 from BuildModel import *
 import cProfile
 import re
+import sklearn.metrics as sk
+import numpy
 
 def collect_data(file_name):
 	raw_data = DataFormatting(file_name)
@@ -73,29 +75,26 @@ def build_predictions():
 	diff = y - predict
 	mean_pred = numpy.mean(predict)
 	std_pred = numpy.std(predict)
-	max_dif = max(diff)
-	min_diff = min(diff)
-	if max_dif > (min_diff * (-1)):
-		dev = max_dif
-	else:
-		dev = min_diff
+	mae = sk.mean_absolute_error(y, predict)
+	rmse = numpy.sqrt(sk.mean_squared_error(y, predict))
 
 	# plot predictions and real prices
 	plt.figure()
 	plt.title("Predictions vs Real Prices")
 	rl = plt.plot(y, color="grey", linewidth=2.0)
 	pr = plt.plot(predict, color="blue", linewidth=1.0)
-	plt.legend([rl, pr],["real prices", "predicted"])
+	#plt.legend([rl, pr],["real prices", "predicted"])
 	plt.savefig("../PythonPredictions.png")
 	plt.clf()
 
 	print("the mean of the y is: " + str(numpy.mean(y)))
 	print("the std of the y is: " + str(numpy.std(y)))
-
 	print("the mean of the prediction is: " + str(mean_pred))
-	print("the standart deviation is: " + str(std_pred))
+	print("the standard deviation is: " + str(std_pred))
+	print("the mean absolute error of the prediction is: " + str(mae))
+	print("the root mean squared error is: " + str(rmse))
 
-	return predict, diff, mean_pred, std_pred
+	return predict, diff, mean_pred, std_pred, mae, rmse
 
 if __name__ == '__main__':
 
@@ -105,7 +104,19 @@ if __name__ == '__main__':
 
 	#build_model(file_name)
 
-	predict, diff, av, dev = build_predictions()
+	predict, diff, av, dev, mae, rmse = build_predictions()
+
+	# build cool graph
+	pred_data = DataFormatting("../data/Predictions.csv")
+	dict_pred = pred_data.keep_dict()	
+	plt.figure()
+	plt.title("Both Predictions")
+	rl = plt.plot(dict_pred["Intel"], color="grey", linewidth=2.0)
+	ppr = plt.plot(dict_pred["Python"], color="blue", linewidth=1.0)
+	rpr = plt.plot(dict_pred["R"], color="green", linewidth=1.0)
+	#plt.legend([rl, ppr, rpr],["real prices", "python", "R"])
+	plt.savefig("../BothPredictions.png")
+	plt.clf()
 
 	# cProfile.run('collect_data(file_name)')
 	# cProfile.run('collect_statistics(dict_data)')
