@@ -798,25 +798,92 @@ the standard deviation is: 1.35949376438
 the mean absolute error of the prediction is: 2.83819120505
 the root mean squared error is: 3.47169327209
 \end{verbatim}
-
 \includegraphics[scale=0.75]{PythonPredictions.png}\\
 As you can see, the Python prediction statistically speaking is better, than the R prediction. Both mean absolute error and root mean square error are smaller by the Python results. The Python program gets 1 additional point for the relative accuracy. On the following graph you can see both predictions together, where the R forecasts have green color and blue color belongs to the Python forecasts.\\
 \includegraphics[scale=0.75]{BothPredictions.png}\\
 As the following step we will force both Python and R programs to show the cross results. The python will yield predictions for the final model from R: ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. And the R program will return the forecast for the Python final model: ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]\\
 The R cross-result is:
 \begin{verbatim}
+> p<-build_predictions()
+[1] "the mean of the y is: "
+[1] 23.46462
+[1] "the std of the y is: "
+[1] 2.55532
+[1] "the mean of the predictions is: "
+[1] 21.73608
+[1] "the std of the predictions is: "
+[1] 1.152263
+[1] "the mean absolute error of the predictions is: "
+[1] 2.631951
+[1] "the root mean squared error of the predictions is: "
+[1] 3.305496
+> p$model
+Generalized least squares fit by REML
+  Model: Intel ~ Olympus + Google + St.Jude + MicronTech + STMElectro +      Lenovo 
+  Data: build_data 
+  Log-restricted-likelihood: -1760.532
 
+Coefficients:
+(Intercept)     Olympus      Google     St.Jude  MicronTech  STMElectro 
+2.299629176 0.047291974 0.005870799 0.165562665 0.105875773 0.167784354 
+     Lenovo 
+0.401918284 
+
+Degrees of freedom: 1239 total; 1232 residual
+Residual standard error: 0.982245 
 \end{verbatim}
-\textcolor{red}{plot original vs new for r}
-\textcolor{red}{plot new r vs old python}
+On the following image you can see the difference in two models forecasts returned by the R program, where the gray line is as above the real values, the green line is the new forecasts and the blue line is the old model forecast.\\
+\includegraphics[scale=0.75]{ROriginalVsNew.png}\\
+The R program considers the new model to be better in comparison to it's original suggestion, since the MAE is 0.661 smaller by the new predictions row and the RMSE of the new predictions row is 0.827 smaller. The original model was chosen based on the AIC and the predictions were not taken into account during that step.\\
+On the next image you can see the predictions for the same model but estimated by different program. Same notation as above is used: gray - real values, green - R forecast, blue - Python forecast.\\
+\includegraphics[scale=0.75]{PythonOriginalVsRNew.png}
+The interesting thing that predictions built by the R program for the Python original model are more accurate than the python predictions for the same model. The R  MAE is 0.208 smaller and the R RMSE is 0.166 smaller.
 The Python cross results are:
 \begin{verbatim}
+>>> build_predictions()
+the mean of the y is: 23.4646213592
+the std of the y is: 2.55283813168
+the mean of the prediction is: 20.699905831
+the standard deviation is: 2.18673197501
+the mean absolute error of the prediction is: 3.9100716967
+the root mean squared error is: 4.81718549588
 
+the model is: ['STMElectro', 'Olympus', 'St Jude', 'Lenovo', 'MicronTech', 'Cardinal']
+                            GLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.998
+Model:                            GLS   Adj. R-squared:                  0.998
+Method:                 Least Squares   F-statistic:                 8.261e+04
+Date:                Mon, 26 Oct 2015   Prob (F-statistic):               0.00
+Time:                        14:34:25   Log-Likelihood:                -1785.4
+No. Observations:                1239   AIC:                             3583.
+Df Residuals:                    1233   BIC:                             3613.
+Df Model:                           6                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [95.0% Conf. Int.]
+------------------------------------------------------------------------------
+x1             0.2337      0.025      9.273      0.000         0.184     0.283
+x2             0.1363      0.010     13.277      0.000         0.116     0.156
+x3             0.3977      0.015     27.166      0.000         0.369     0.426
+x4            -0.0567      0.006     -9.826      0.000        -0.068    -0.045
+x5             0.2696      0.005     57.903      0.000         0.261     0.279
+x6             0.1533      0.012     12.533      0.000         0.129     0.177
+==============================================================================
+Omnibus:                       32.097   Durbin-Watson:                   0.140
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               18.122
+Skew:                           0.114   Prob(JB):                     0.000116
+Kurtosis:                       2.453   Cond. No.                         70.4
+==============================================================================
 \end{verbatim}
-\textcolor{red}{plot original vs new for python}
-\textcolor{red}{plot new python vs old r}
-
-Compare final score.
+On the following image you can see the difference in two models forecasts returned by the Python program, where the gray line the real values, the green line is the new forecasts and the blue line is the old model forecast.\\
+\includegraphics[scale=0.75]{PythonOriginalVsPythonNew.png}\\
+The Python program considers the new model to be worse in comparison to it's original suggestion, since the MAE is 1.072 smaller by the old predictions row and the RMSE of the old predictions row is 1.4 smaller. The original model was chosen based on the AIC and the predictions were not taken into account during that step.\\
+On the next image you can see the predictions for the same model but estimated by different program (new model for the python program). Same notation as above is used: gray - real values, green - R forecast, blue - Python forecast.\\
+\includegraphics[scale=0.75]{ROriginalVsPythonNew.png}
+Here predictions built by the Python program for the R original model are less accurate than the R predictions for the same model. The R MAE is 0.617 smaller and the R RMSE is 0.684 smaller.\\
+The best prediction is built by the R prediction function for the Python original model. This result can be explained by the fact, that R gls.predict() module is higher accuracy computation process. At the same time Python managed to figure out better regression using AIC. We give Python additional Point for yielding more accurate results.\\
+The final score for both programs is 7.66 Points for R program versus 6.71 Points for Python program. This mean that objectively R is more suitable for beginners to use as the programming language for a small statistic task with small data sets.
 
 \subsection{Subjective comparison}
 Personal preference.

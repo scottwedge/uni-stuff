@@ -87,7 +87,10 @@ build_predictions <- function() {
 	build_data <- d$get_data()
 
 	#get gls model
+	# original model
 	model <- gls(Intel ~ Olympus + Cardinal + St.Jude + MicronTech + STMElectro + Lenovo, build_data)
+	# new model
+	#model <- gls(Intel ~ Olympus + Google + St.Jude + MicronTech + STMElectro + Lenovo, build_data)
 	pv <- predict(model, test_data)
 	dv <- (test_data$Intel - pv)
 	mean_pred <- mean(pv)
@@ -102,6 +105,7 @@ build_predictions <- function() {
 	legend("top", c("Real Prices", "Predictions"), lty=c(1,1), lwd=c(1.5,1.5), col=c("grey", "green"))
 	dev.off()
 
+	predictions$model <- model
 	predictions$predictions <- pv
 	predictions$difference <- dv
 	predictions$errors <- list(mean=mean_pred, std=std_pred, mean_er=ab_er, std_er=sqrmer)

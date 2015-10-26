@@ -63,12 +63,15 @@ def build_predictions():
 	y = test_dict[list(dependent_variable_tmp.keys())[0]]
 
 	# manually given resulting list of the companies
+	# original list
 	model_list = ['STMElectro', 'Olympus', 'St Jude', 'Lenovo', 'MicronTech', 'Google']
-
+	# new list
+	#model_list = ['STMElectro', 'Olympus', 'St Jude', 'Lenovo', 'MicronTech', 'Cardinal']
 	# get params on test_set
 	test_data = test_model.get_data_for_comparison(model_list, test_dict) 
 	build_data = real_model.get_data_for_comparison(model_list, build_dict)
 	model = sm.GLS(y_mod, build_data)
+	model_out = model.fit().summary()
 	params = model.fit().params
 
 	predict = model.predict(params, test_data)
@@ -93,8 +96,9 @@ def build_predictions():
 	print("the standard deviation is: " + str(std_pred))
 	print("the mean absolute error of the prediction is: " + str(mae))
 	print("the root mean squared error is: " + str(rmse))
+	print("the model is: " + str(model_list))
 
-	return predict, diff, mean_pred, std_pred, mae, rmse
+	return model, predict, diff, mean_pred, std_pred, mae, rmse
 
 if __name__ == '__main__':
 
@@ -104,18 +108,17 @@ if __name__ == '__main__':
 
 	#build_model(file_name)
 
-	predict, diff, av, dev, mae, rmse = build_predictions()
+	#model, predict, diff, av, dev, mae, rmse = build_predictions()
 
 	# build cool graph
 	pred_data = DataFormatting("../data/Predictions.csv")
 	dict_pred = pred_data.keep_dict()	
 	plt.figure()
-	plt.title("Both Predictions")
+	plt.title("Python new vs R original")
 	rl = plt.plot(dict_pred["Intel"], color="grey", linewidth=2.0)
-	ppr = plt.plot(dict_pred["Python"], color="blue", linewidth=1.0)
-	rpr = plt.plot(dict_pred["R"], color="green", linewidth=1.0)
-	#plt.legend([rl, ppr, rpr],["real prices", "python", "R"])
-	plt.savefig("../BothPredictions.png")
+	ppr = plt.plot(dict_pred["PythonNew"], color="blue", linewidth=1.0)
+	rpr = plt.plot(dict_pred["R_Original"], color="green", linewidth=1.0)
+	plt.savefig("../ROriginalVsPythonNew.png")
 	plt.clf()
 
 	# cProfile.run('collect_data(file_name)')
