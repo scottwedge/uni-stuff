@@ -886,9 +886,44 @@ The best prediction is built by the R prediction function for the Python origina
 The final score for both programs is 7.66 Points for R program versus 6.71 Points for Python program. This mean that objectively R is more suitable for beginners to use as the programming language for a small statistic task with small data sets.
 
 \subsection{Subjective comparison}
-Personal preference.
+During the process of the program development Both languages have shown their good and bad sides. Good sides of the Python language are:
+\begin{enumerate}
+    \item Easy refactoring from functions to classes.
+    \item Sufficient amount of tutorials and examples for every function used in the program.
+    \item Intuitive data structures.
+    \item Very clear debugging messages.
+\end{enumerate}
+The bad sides of the language for this work are:
+\begin{enumerate}
+    \item Too slow third-party functions to do the full data set test.
+    \item Formatting step took much time to figure out.
+    \item Pandas library does not work with pypy interpreter, which prohibits the program from easy speed up.
+\end{enumerate} 
+The good thing about R program development are:
+\begin{enumerate}
+    \item The run time.
+    \item Data structures are very powerful.
+    \item Fast real testing possibility.
+    \item Low memory allocation.
+\end{enumerate}
+The negative experience during working with R was caused by:
+\begin{enumerate}
+    \item Non-intuitive syntax.
+    \item Hard to run R script from the console in non-interactive mode.
+    \item Not enough examples for function used in this work.
+\end{enumerate} 
+Subjectively speaking R is slightly better for data analysis programs, when you have already thought about a program architecture and you know approximately what functions the program will use. The Python language is better for fast prototyping on small data sets. Python is better for very beginners, when no architecture of the program is created.
+  
 \subsection{Conclusion}
-Conclusion and future recommendations
+After point to point comparison and collecting the personal opinion, we have decided, that R programming language is more suitable for pure analytical task.
+\begin{enumerate}
+    \item The language is fast.
+    \item The language is not memory hungry.
+    \item The results are adequately accurate. 
+\end{enumerate}
+The R language has a big high-quality community behind it. There are certain standards for the documentation and the code quality, which ensures the quality of the libraries.\\
+The negative moment can be the development of a bigger program. Prototyping in R can be tricky for mid- and very complex programs. You have to think in advance about class connections. Although you can also keep everything in functions form - this will allow you to prototype faster, but will cause some difficulties later on during refactoring.\\
+  
 
 \newpage
 \section{Literature}
