@@ -1,4 +1,4 @@
 ~lock.*
-.lock
+*.lock
 .swp
 .png
