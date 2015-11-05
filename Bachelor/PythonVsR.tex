@@ -391,19 +391,18 @@ The Python program gets 5.71 points in total.\\
 The subjective arguments for and against are: 
 \begin{enumerate}
     \item Code is easy to understand, since syntax is much like simple English.
-    \item The data structures are exactly same as you imagine
+    \item The data structures are exactly same as you imagine.
     \item Slicing of the data arrays is normally intuitive (unless you have a multidimensional custom structure).
     \item For small data arrays the language is fast enough even without tricks.
     \item Debugging messages are easy to understand.
 \end{enumerate}  
 
-
 \newpage
 \section{R}
 \subsection{The structure of the program}
-The program written in R language has the same structure as the Python program. The R program consists of three classes: DataFormatting.r, StatisticTests.r and BiuldModel.r. Their functions are similar to the same functions from the first program. However there are slight differences in the inner functions of the classes. The main class is not implemented, since we wanted more control over the program flow and thus have called all functions and imported classes via console in R run time.\\
-The R language is very convenient in terms of data formatting - you don't need it. The object called Data.frame is returned when using read.csv() from the base package. This object has methods that allow the programmer to use the data from different spots in the program and for different purposes directly without extracting it and saving in a proper format. For example the list of all companies from the table was extracted using the function "colnames(data.frame)" as an output we get the list object containing the elements from the first row of the table. So our R program does not have inner helpers - converter functions, thus is a bit easier to understand.\\
-The The StatisticTests.r runs tests to detect statistic characteristics of the data: Kolmogorov-Smirnov goodness of fit distribution test, Augmented Dickey-Fuller test to detect unit root, build cumulative distribution function and kernel density function, find moments (mean, standard deviation, skew, kurtosis).\\
+The program written in R language has the same structure as the Python program. The R program consists of three classes: DataFormatting.r, StatisticTests.r and BiuldModel.r. Their functions are similar to the same functions from the first program. However there are slight differences in the inner functions of the classes. The main class is implemented in the from of two separate functions for easier usage via console. Since we wanted more control over the program flow, all functions and imported classes were called via console in R run time.\\
+The R language is very convenient in terms of data formatting - you don't need it. The object called Data.frame is returned when using read.csv() from the base package. This object has methods that allow the programmer to use the data from different spots in the program and for different purposes directly without extracting it and saving in a proper format. For example the list of all companies from the table was extracted using the function "colnames(data.frame)" as an output we get the list object containing the elements from the first row of the table. The R program does not have inner helpers - converter functions, thus it is a bit easier to understand.\\
+The class StatisticTests.r runs tests to detect statistic characteristics of the data: Kolmogorov-Smirnov goodness of fit distribution test, Augmented Dickey-Fuller test to detect unit root, build cumulative distribution function and kernel density function, find moments (mean, standard deviation, skew, kurtosis).\\
 The third class, called BuildModel.r, creates the multiple linear regression for given data table following the same steps from the step-forward approach that was used in the Python program:
 \begin{enumerate}
     \item Cut off all companies with correlation less than 30\%.
@@ -494,8 +493,8 @@ The quality of the R documentation is in average on the same level for all sourc
 \[ \frac{\frac{3}{10}(2.5)+\frac{1}{10}(3)+\frac{3}{10}(6)+\frac{3}{10}(6)}{7}= 0.66 \] 
 
 \subsubsection{Advantages and disadvantages of the program}
-Every programming language has its advantages and disadvantages. During writing our second program we have encountered several difficulties assosiated with the language features. Since we have already written our program, we decided to implement the same structure and thus have escaped difficulties choosing proper classes, structure of the program, functions, etc..\\
-The first and a very important advantage of the R program is the data.frame object and associated functions. This object can be formatted or sliced within very small time from every function, the results of the of the slicing can be assigned needed format. One of the most useful functions during the work with R data objects was str() that shows you the structure of the object:
+During writing our second program we have encountered several difficulties assosiated with the language features. Since we have already written our program in Python, we have decided to implement the same structure and thus have escaped difficulties choosing proper classes, structure of the program, functions, etc..\\
+The first and a very important advantage of the R program is the data.frame object and associated functions. This object can be formatted or sliced within very small time from every function, the results of the of the slicing can be assigned needed format. One of the most useful functions during the work with R data objects was str() that shows the structure of the object:
 \begin{verbatim}
 > str(data)
 'data.frame':   1239 obs. of  69 variables:
@@ -516,7 +515,7 @@ The slicing is very useful, when you know how exactly to handle it. For instance
  chr [1:69] "Intel" "AMD" "Qualcomm" "MicronTech" "Infenion" ...
 \end{verbatim} 
 In comparison to the Python program, where we have to store the data into dictionary with the names as the keys and the lists of share prices as the associated values, the names in the data.frame and other formats are coming in exact same order as they appear in the table. This feature make it very easy to extract the dependent variable, also you will have to know only the name of the variable for further computations.\\
-The second advantage of the program is closely connected to the the function we have used to build the regression. As we described in the "Program Structure" and "Used Libraries" sections, for the regression we have used gls function from the nlme package. The use of the function is intuitive: you provide the formula for the regression and the data containing all given names from the formula (optional if the environment already have the data set loaded). Below two examples of the gls use are presented (these examples are not an optimal decision, but a show case):
+The second advantage of the program is closely connected to the the function we have used to build the regression. As we described in the "Program Structure" and "Used Libraries" sections, for the regression we have used gls function from the nlme package. The use of the function is intuitive: you provide the formula for the regression and the data containing all given names from the formula (optional if the environment already have the data set loaded). Below two examples of the gls use are presented (following examples are not an optimal decision, but a show case):
 \begin{verbatim}
 > model1<-gls(Intel ~ Olympus + Google + AMD + St.Jude, data)
 > model1
@@ -546,10 +545,10 @@ Coefficients:
 Degrees of freedom: 1239 total; 1235 residual
 Residual standard error: 2.451844
 \end{verbatim}
-Another positive moment about gls function is its data use. In comparison to python you don't have to format it and separate the data for chosen variables from the rest of the data object. You can use the data.frame loaded into the environment or use external data source, for example, for predictions. If y the formula doesn't composed automatically, the only thing you have to care about is matching of the variable names from the formula and names in data.frame.\\
-The third advantage of the R program is its performance. Without explicit multiprocessing or JIT (just in time compiler is not used in this work), the program runs within a minute.\textcolor{red}{total run time}\\
-The first and probably main disadvantage of the R language is its difficulty. The syntax is not intuitive, the data structures and their use are non trivial. In order to begin using R you will have to look through several tutorials and maybe full introduction course. The R background of the author of this work consisted only of the coursera "R programming" course [20], which didn't cover the whole program structure and the course was using RStudio [21]. RStudio is a good IDE for R to begin with, but if you need more control and understanding, you should switch to the console and a simple IDE to write the classes.\\
-The first example of the R complexity is the absence of the classes in their normal understanding. In R there are three type of classes: S3, S4 and Regference Class. The last one is close to normal Python classes. The first two are repsenting the attribute of an object (in R everything considered as an object). In our program we only used the Reference class and didn't dive into the other two classes. More information on OO systems in R you can visit [22]. \\
+Another positive moment about gls function is its data use. In comparison to python you don't have to format it and separate the data for chosen variables from the rest of the data object. You can use the data.frame loaded into the environment or use external data source, for example, for predictions.\\
+The third advantage of the R program is its performance. Without explicit multiprocessing or JIT (just in time compiler is not used in this work), the program runs within a very small amount of time.\\
+The first and probably main disadvantage of the R language is its difficulty. The syntax is not intuitive, the data structures and their use are non trivial. In order to begin using R you will have to look through several tutorials and the introduction course. The R background of the author of this work consisted only of the coursera "R programming" course [20], which didn't cover the whole program structure and the course was using RStudio [21]. RStudio is a good IDE for R to begin with, but if you need more control and understanding, you should switch to the console and a simple IDE to write the classes.\\
+The first example of the R complexity is the absence of the classes in their normal understanding. In R there are three type of classes: S3, S4 and Regference Class. The last one is close to normal Python classes. The first two are repsenting the attribute of an object (in R everything considered as an object). In our program we only used the Reference class and didn't dive into the other two classes. For more information on OO systems in R you can visit the source [22]. \\
 The second disadvantage of the R program is connected to Reference Class definition. In R you can not return multiple instances. Following implementation will return an error:
 \begin{verbatim}
 getData <- setRefClass("getData",
@@ -612,9 +611,6 @@ Another disadvantage of the R program in the beginning is the slicing. On one ha
 \end{verbatim}
 Slicing is a powerful tool in R, but for beginners it might be a problem to use it properly.
 \subsection{Results}
-
-\newpage
-\section{Results}
 Our R program does not have the main class as in Python program, however main function is implemented, where all libraries are activated, classes are imported and the final calculation is run. The output is printed out to terminal from which the program was started. This is the extended output for gls function: summary.gls:
 \begin{verbatim}
 > source("main.r")
@@ -683,8 +679,12 @@ The subjective arguments are:
     \item More.
 \end{enumerate}
 
+\newpage
+\section{Results}
+In this section the final comparison of the programs written in two languages will be presented.
+
 \subsection{Objective comparison}
-In this section the final comparison of the programs written in two languages will be presented. Here we will explain the difference in the scores and also check the accuracy of the predictions both programs yield.\\
+Here we will explain the difference in the scores and also check the accuracy of the predictions both programs yield.\\
 The first difference between programs is the performance. In order to show the difference in the run time of the programs we will use system.time() for R and cProfile for Python (the examples of the code were already given above).
 \begin{verbatim}
 > system.time(data_read())                                                                  
@@ -714,10 +714,7 @@ The main function consists of three parts: read the data from the csv table and 
    user  system elapsed 
   0.000   0.000   0.117 
 \end{verbatim}
-The run time of the main function is greater than the sum of its parts, since the main function loads needed libraries and also counts the time for the data transfer between the classes as well as the initialization of the classes.\\
-The Python program performance is not that impressive as by the R program:\\
-\textcolor{red}{here compare overall run time, 3 main parts run time}
-\\
+The run time of the main function is greater than the sum of its parts, since the main function loads needed libraries and also counts the time for the data transfer between the classes as well as the initialization of the classes. The Python program performance in our implementation is 750 times slower. R program runs for 7.41 seconds versus 5564.19 seconds Python program.\\
 The second difference is the memory used by each program. There are several possibilities to measure the memory load of the programs. In R you can use Rprofmem() from the utilities package to determine how much memory was used by the object (in R everything is considered as an object). In Python different tools and built-in classes can be used to do the profiling for example memory\_profile [11]. However in this work we will use the unix time command from the console for both programs in order to get more accurate results. The printed message contains many details, but we will be interested in the Maximum resident set size, which means the amount of memory belogning to the process and currently presented in RAM.\\ 
 The R memory use looks as following:
 \begin{verbatim}
@@ -806,7 +803,7 @@ the mean absolute error of the prediction is: 2.83819120505
 the root mean squared error is: 3.47169327209
 \end{verbatim}
 \includegraphics[scale=0.75]{PythonPredictions.png}\\
-As you can see, the Python prediction statistically speaking is better, than the R prediction. Both mean absolute error and root mean square error are smaller by the Python results. The Python program gets 1 additional point for the relative accuracy. On the following graph you can see both predictions together, where the R forecasts have green color and blue color belongs to the Python forecasts.\\
+As you can see, the Python predictions statistically speaking are better, than the R predictions. Both mean absolute error and root mean square error are smaller by the Python results. The Python program gets 1 additional point for the relative accuracy. On the following graph you can see both predictions together, where the R forecasts have green color and blue color belongs to the Python forecasts.\\
 \includegraphics[scale=0.75]{BothPredictions.png}\\
 As the following step we will force both Python and R programs to show the cross results. The python will yield predictions for the final model from R: ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. And the R program will return the forecast for the Python final model: ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]\\
 The R cross-result is:
@@ -899,6 +896,7 @@ During the process of the program development Both languages have shown their go
     \item Sufficient amount of tutorials and examples for every function used in the program.
     \item Intuitive data structures.
     \item Very clear debugging messages.
+    \item Possibility to use simple speed up in form the of pypy.
 \end{enumerate}
 The bad sides of the language for this work are:
 \begin{enumerate}
@@ -924,9 +922,10 @@ Subjectively speaking R is slightly better for data analysis programs, when you 
 \subsection{Conclusion}
 After point to point comparison and collecting the personal opinion, we have decided, that R programming language is more suitable for pure analytical task.
 \begin{enumerate}
-    \item The language is fast.
+    \item The language is faster.
     \item The language is not memory hungry.
     \item The results are adequately accurate. 
+    \item The complex functions are easier to use.
 \end{enumerate}
 The R language has a big high-quality community behind it. There are certain standards for the documentation and the code quality, which ensures the quality of the libraries.\\
 The negative moment can be the development of a bigger program. Prototyping in R can be tricky for mid- and very complex programs. You have to think in advance about class connections. Although you can also keep everything in functions form - this will allow you to prototype faster, but will cause some difficulties later on during refactoring.\\
