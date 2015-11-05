@@ -167,13 +167,13 @@ Additionally to the above mentioned companies several big players from the indus
 'Denso Robotics', 'Google', 'Universal Electronics']
 \end{verbatim}
 After limiting the number of the connected markets, we had to limit the number the companies from the chosen markets, because of the lack of the information about some companies. The reason of the information-lack is recent enter to the international stock exchange (since 2010 earliest). Some companies are still closed for the foreign investors (which is the case for such giants as Samsung, Honda and other Asian companies). The last limit on chosen companies is the trading-volume. If the last year or two the trade volumes for the shares was 0, the company was considered to be not traded at the stock exchange.\\
-After the companies were chosen, the whole data table will be split into 2 data sets: learning set and validation set. We have obtained daily prices from 2006 to 2015 (31.12.2014 is the last date for all indexes). The training or learning set will be approximately 70\% from the whole data volume: from 2006 to 2010. The validation-set is about 30\%: from 2011 to 2012. For this work we use daily frequency (only opening prices).\\
+After the companies were chosen, the whole data table was split into two data sets: learning set and validation set. We have obtained daily prices from 2006 to 2015 (31.12.2014 is the last date for all indexes). The training or learning set will be approximately 70\% from the whole data volume: from 2006 to 2010. The validation-set is about 30\%: from 2011 to 2012. For this work we use daily frequency (only opening prices).\\
 
 \newpage
 \section{Python}
 \subsection{The structure of the program}
-The program consists of three main classes, connected with each other in main class. The first class is called DataFormating.py and is responsible for getting data out of the csv file and writing it into an instance of a proper format for other two classes, also the dependent variable will be extracted from the whole data base (the dependent variable is always the first column in the csv table).\\
-The second class is called StatisticTests.py, it runs several test to find out main static characteristics in order to choose an appropriate model class for the data.\\
+The program consists of three functional classes, connected with each other in the main class. The first class is called DataFormating.py and it is responsible for getting the data out of the csv file and writing it into an instance of a proper format for the other two classes, also the dependent variable will be extracted from the data set (the dependent variable is always the first column in the csv table).\\
+The second class is called StatisticTests.py, it runs several test to find out main static characteristics in order to choose an appropriate model class for the data. In this work we have focused on the linear regression class.\\
 The third class is called BuildModel.py. This class builds the multiple linear regression (according to the results of the StatisticTests class) using step-forward approach:
 \begin{enumerate}
     \item The amount of companies taken into account is reduced using correlation: all companies with correlation less than 30\% are left out.
@@ -185,19 +185,19 @@ The third class is called BuildModel.py. This class builds the multiple linear r
     \item If the bigger model is better and the limit of the predictors in regression is not achieved, the new small model is equal to old big model and repeat from step 4. The final result is the last big model.
     \item If the smaller model is better or/and the maximum number of parameters in the final regression is achieved, than the final result is either the small model or the last big model. 
 \end{enumerate} 
-At the end the full information for the best model is returned.
+At the end the names of the companies in the final regression and the full information for the best model are returned.
 
 \subsection{The process description}
-In this section the process of the coding is described: what difficulties and problems are encountered and how they were solved.
+In this section the process of the coding is described: what difficulties and problems were encountered and how they were solved.
 \subsubsection{Used Libraries}
-In the course of writing the program several steps were implemented. As was mentioned above in the "Program structure" section, these steps are: extracting and preparing the data for further use, check statistic characteristics and build the model based on the results of the statistics. In order to build the program three main libraries were used:
+In the course of writing the program several steps were implemented. As was already mentioned above, in the "Program structure" section, these steps are: extracting and preparing the data for further use, check statistic characteristics and build the model based on the results of the statistics. In order to build the program three main libraries were used:
 \begin{enumerate}
-    \item Base Python library[12].
-    \item SciPy resource (unites six different libraries, in our case three were used explicitly)[13].
-    \item Statmodels[14].
+    \item Base Python library [12].
+    \item SciPy resource (unites six different libraries, in our case three were used explicitly) [13].
+    \item Statmodels [14].
 \end{enumerate}
-The functions and data structures defined in the base library was used for every simple task, except simple mathematical computations, since there were faster implementations.\\
-The second most used library in this work is NumPy,this library is the part of the SciPy source. NumPy offers many fast multi dimensional computations and assosiated multi dimensional structures. In our work we used this library to compute several statistic and build data for displaying graphs. As we mentioned before, the built-in library was not fast enough for our computation (for bigger data arrays numpy is almost not an arguable choice):
+The functions and data structures defined in the base library were used for every simple task, except some mathematical computations, since NumPy library offeres faster implementations.\\
+The second most used library in this work was NumPy, this library is the part of the SciPy source. NumPy offers many fast multi dimensional computations and assosiated multi dimensional structures. In our work we have used this library to compute several statistic and build data for displaying graphs. As we mentioned before, the built-in library was not fast enough for our computation (for bigger data arrays numpy is almost not an arguable choice):
 \begin{verbatim}
 >>> x=[random.randint(0,10) for i in range(0,1500)]
 >>> len(x)
@@ -215,15 +215,15 @@ The second most used library in this work is NumPy,this library is the part of t
 >>> cProfile.run('numpy.average(x)')
          17 function calls in 0.001 seconds
 \end{verbatim}   
-As you can see, the NumPy implementation of the function "average" is more accurate and efficient (4531 intern calls vs 17 intern calls). The run time difference can be already shown on the list containing 1500 elements.\\
-The third library with fundamental use is Pandas, this library is also a part of the SciPy source. This library provides high-performance data structures and associated functions for data analysis. This library can be used for generating, accessing and formatting data. In this work we used to get the data from our .csv file in a intuitive manner and to avoid unnecessary formatting steps. Also Pandas offers you a functionality to get the data directly from web sites like: Yahoo Finance, Google Finance, Google Analytics, etc.., although we didn't used it in our program. Fo example the method we used to read the data and returned it in Data.frame format, which can be easily sliced according to the needs of the program or formatted.
+As you can see, the NumPy implementation of the function "average" is more accurate and efficient. The run time difference can be already shown on the list containing 1500 elements.\\
+The third library with fundamental use in this work is Pandas. The library is also a part of the SciPy source. Pandas provides high-performance data structures and associated functions for data analysis. This library can be used for generating, accessing and formatting data. In this work we have used it to get the data from our csv file in an intuitive manner and also to avoid unnecessary formatting steps. Also Pandas offers a functionality to get the data directly from web sources like Yahoo Finance, Google Finance, Google Analytics, etc.. We didn't used this functionality in our program, since our task did not require the up-to-date data and e wanted to safe the possibility to correct the csv file manually if needed. The following example presents the method we used to read the data and returned it in Data.frame format. The returned data object can be easily sliced or formatted according to the needs of the program.
 \begin{verbatim}
 data = pd.read_csv(str(self.file_name))
 cProfile.run('data = pd.read_csv("../data/LearningSet.csv")'
     3316 function calls (3238 primitive calls) in 0.024 seconds
 \end{verbatim}
 The LearningSet file is a table containing 78 companies with 1240 prices for each company, 477,6KiB.\\
-The library used for drawing and saving graphs is very popular and for many other libraries is a default use. Matplotlib is also a part of the SciPy source. It offers you different types of graphs and formatting tools.
+The library used for drawing and saving graphs is very popular and is a default plotting library for many libraries where drawing graphs is needed. Matplotlib is also a part of the SciPy source. It offers different types of graphs and formatting tools. The following example represents the default graph without any further formatting.
 \begin{verbatim}
 plt.title(3M)
 plt.plot(bin_edges[1:], cdf)
@@ -240,7 +240,7 @@ info_small_model = model_null.fit().summary()
 \end{verbatim}   
 
 \subsubsection{Documentation quality and quantity}
-The quality and the quantity of the documentation plays a crucial role for the project of every complexity, but especially for beginner levels. In this work we will evaluate the documentation of the languages and connected libraries, packages, frameworks using score system. The languages can get points for each position criterion given in the table:
+The quality and the quantity of the documentation plays a crucial role for the project of every complexity, especially for beginner levels. In this work we will evaluate the documentation of the languages and connected libraries, packages, frameworks using score system. The languages will get points for each criterion given in the table below:
 \begin{enumerate}
     \item The documentation is always available.
     \item The documentation is easy to navigate.
@@ -250,8 +250,8 @@ The quality and the quantity of the documentation plays a crucial role for the p
     \item For scientific libraries the theoretical background is provided.
     \item The documentation is easy to read (formatting, colors, description of the parameters and output).
 \end{enumerate}
-Originally, Python language was used a lot by the scientific society and many libraries were also implemented for scientific purpose by people with a certain background. In this work we have used base Python 3 library [12],  SciPy[14] and Statmodels[15]. SciPy unites several packages, only three from the whole list were used in our Python program: NumPy, Matplotlib and Pandas.\\
-The Python program was written in Python 3 version, in this work we did not encountered any problems with the version conflicts. But it is possible that some external libraries are build on Python 2 and thus can cause some issues. In this case you can use Six library[16] to guarantee the compatibility of the versions. As we said, our program did not require use of this library, but it is safe to keep it in mind.\\
+Originally, Python language was used a lot by the scientific society and many libraries were also implemented for scientific purpose by people with a certain background. As we have already mentiod earlier, in this work we have used base Python 3 library[12],  SciPy [14] and Statmodels [15]. SciPy unites several packages, only three from the whole list were used in our Python program: NumPy, Matplotlib and Pandas.\\
+The Python program was written in Python 3 version, in this work we did not encountered any problems with the version conflicts. But it is possible that some external libraries are build on Python 2 and thus can cause some issues. In this case you can use Six library [16] to guarantee the compatibility of the versions. As we said, our program did not require use of this library, but it is safe to keep it in mind.\\
 According to the provided evaluation table all four libraries will get points and the weighted (approximate weights are based on appearance frequency and importance of the library in the program) score will be added to the python total score.\\
 The base Python library:
 \begin{enumerate}
@@ -288,18 +288,18 @@ So the final score for the python documentation is:
 
 
 \subsubsection{Advantages and disadvantages of the program}
-There are several advantages and disadvantages of the Python language for statistic tasks.\\
-The first advantage is small time investment needed up front. The Python language is intuitive and does not require deep understanding of the programming paradigm for simple programs, thus Python is great for prototyping and checking small hypothesis. However this is a temporary advantage, since for more complex tasks you will have to use complex libraries and structures, which require deeper understanding of the language.\\
+There are several advantages and disadvantages of the Python language for the statistic task implemented in our work.\\
+The first advantage is the small time investment needed up front. The Python language is intuitive and does not require deep understanding of the programming paradigm for simple programs, thus Python is great for prototyping and checking small hypothesis. However this is a temporary advantage, since for more complex tasks you will have to use complex libraries and structures, which require deeper understanding of the language.\\
 The second really important advantage of the python language is testing. Python has built-in doc-tests [22], that are very easy to use. Another test-possibility are Unit Tests [23]. Python language gives the programmer different ways to test and to debug the program in order to avoid possible computational and logic errors. We will not discuss this theme in details, since the tutorials and the documentation are clear and offer sufficient amount of examples.\\
 Another advantage of the python is its multipurpose nature, although we didn't use it for our program it is still important for the world outside of the analysis field.\\
 There are several disadvantages of the statistic program written in python.\\ 
-The first and the biggest disadvantage is the performance. This disadvantage appears only for beginners by implementing mid-difficult task with mid-size data structures. For large data sets python will be not the best option.\\
+The first and the biggest disadvantage is the performance. This disadvantage appears only for beginners by implementing mid-difficult task with mid-size data structures. For large data sets cython might be the right choise.\\
 The main time consumption comes from StatisticTests.py, specifically from stationarity test. 
 \begin{verbatim}
 >>> cProfile.run("statistics.stationarity()")
         2898213 function calls (2887173 primitive calls) in 5408.838 seconds
 \end{verbatim}
-\textcolor{red}{other run time profiles}\\
+Unfortunately in our program we have used Pandas library, which is not compatible with the PyPy3 (faster python implementation), thus we couldn't speed up the program casually.\\
 Another small disadvantage of the program written in python is the time you have to invest into the language investigation for more complex tasks. In order to save memory or make the performance better we had to drop naive implementation and read the documentation more carefully (although the language is intuitive on the surface it is not that simple). For example:
 \begin{verbatim}
 >>> a = {"a":[1,2,3], "b":[1,2,3], "c":[1,4,9]}
@@ -337,7 +337,7 @@ or
 {'b': [1, 2, 3], 'a': [1, 2, 3], 'c': [1, 4, 9]}
 \end{verbatim}
 Such thing can confuse not only the very beginners, but also advanced programmers, because you need to keep every thing in mind.\\
-One more small disadvantage is the unsorted nature of the dictionary. After we have read the csv table and formatted it into dictionary, where keys are the companies names and values are the associated prices lists. The keys appear in dictionary in random order, so we can't iterate over the keys directly and the first key will not be the first company from the table. Additional commands will be needed. But this disadvantage will mostly appear for the very beginners and the very beginning of the program, since the workaround is intuitive. 
+The last small disadvantage we want to mention is the unsorted nature of the dictionary. After we have read the csv table and formatted it into dictionary, where keys are the companies names and values are the associated prices lists. The keys appear in dictionary in random order, so we can't iterate over the keys directly and the first key will not be the first company from the table. Additional commands will be needed. But this disadvantage will mostly appear for the very beginners and the very beginning of the program, since the workarounds are mostely intuitive. 
 
 \subsection{Results}
 The end result is currently printed out to a console. The final message contains the names of the companies used in the final regression, main characteristics of the regression (AIC, BIC, Loglikelihood, coefficients and errors, etc.) and the total run time of the program. 
