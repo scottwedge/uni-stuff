@@ -71,33 +71,40 @@ The disadvantage of the language is its one-purpose nature. Analytical project b
 
 \subsection{Python vs R wars}
 Since both languages offer tons of packages and libraries for analyzing and visualization, people argue about what language is a better fit. You can find a lot of discussions about this topic on stackoverflow [6], stackoverflow analog for data science [7] and many other resources on internet [8],[9],[10].
-So far nobody has managed to give a satisfactory final answer, since the languages indeed are different. However for every concrete task and scale we can give a list of requirements and compare the languages objectively leaving the subjective comparison aside.\\
-Tho formal criteria to compare Python and R are:
+So far nobody has managed to give a satisfactory final answer, since the languages indeed are different. The answer will differ depending on task scale, complexity, requirements, etc.. The best tactics is to give certain list of requirements with points for each requirement for every concrete task and scale. This way it is possible to compare the languages more or less objectively without letting the subjective judgment and preference make the evaluation biased.\\
+In this work we have developed our own list of criteria to compare Python and R. This list contains following points:
 \begin{enumerate}
-    \item The amount of useful resources for the task
-    \item Clear documentation with examples
-    \item Performance
-    \item Memory use
-    \item Appropriate data structures
-    \item Possibility to work with Big Data
-    \item Visualization tools
-    \item Hard or soft limitations
-    \item Need of workarounds
+    \item The amount of useful resources for the task.
+    \item Clear documentation with examples.
+    \item Performance.
+    \item Memory use.
+    \item Appropriate data structures.
+    \item Possibility to work with Big Data.
+    \item Visualization tools.
+    \item Hard or soft limitations.
+    \item Need of workarounds.
 \end{enumerate}
-Using this list both languages can be objectively evaluated. These points are appropriate for all small-, middle- and big-projects. In next section we will describe the test-task to compare Python and R languages and define the points-system for objective evaluation.\\
+Using this list both languages can be objectively evaluated. These points were chosen to be appropriate for all small-, middle- and big-projects. In the next section we will describe the test-task to compare Python and R languages and define the points-system for objective evaluation.\\
 
 \subsection{Thesis description}
-The idea of this bachelor thesis is to test which language suits better specific statistic task. 
-The program that will be evaluated consists of four parts:
+The idea of this bachelor thesis is to test which of two chosen languages suits better for specific statistic task. Both programs will have similar structure and functions, so that they can be evaluated properer. The program that will be evaluated consists of four parts:
 \begin{enumerate}
     \item Getting and formatting data - the program should be able to read a prepared file in csv format. Afterwards, the program should format the data into needed structure for further use.
-    \item Analyzing data - the program should be able to run statistical test to figure out data characteristics. This step is needed to determine what regression models are allowed for this data set. Following test will be presented: stationary test, build cdf and kde, find moments, distribution test (goodness of fit tests).
-    \item Building a model - the program should be able to create a proper model using a step-forward algorithm, set the limits on the number of the predictors and return the names of the parameters, regression parameters and some useful statistics.
+    \item Analyzing data - the program should be able to run statistical tests to figure out several data characteristics. This step is implemented in order to determine what regression models are allowed for this data set. Following test will be presented: stationary test, building cdf and kde, finding moments, distribution test (goodness of fit tests).
+    \item Building a model - the program should be able to create a proper model using a step-forward algorithm. The preparation step is creating a correlation vector and leaving out all companies with the correlation coefficient smaller than 30\%. As the first step the limits on the number of the predictors in the final regression will be set. The second step is to create a one parameter model using the correlation vector (take the company with the highest correlation coefficient). The third step is iterative model building: 
+    \begin{enumerate}
+        \item Create all possible double combinations consisting of fixed company name from the previous step and not used company name. Choose the best multiple linear regression built with GLS method among the class. 
+        \item Compare two models from different classes using LLR test.
+        \item If the smaller model is better, the search is over, the program returns the result.
+        \item If the bigger model is better, the iteration continues until smaller company will be better or the limit on the parameters in the regressin is reached. The program returns the result. 
+    \end{enumerate}
+The output of the program shows the names of the companies in the final regression, main statistics, coefficients.
     \item Visualization - the program should be able to present the results and steps between if needed.
+    \item The program is able to build predictions for the chosen company and evaluate them using the mean accumulated error (MAE) and or root-mean-square error (RMSE).
 \end{enumerate}
-The program will build a simple regression if possible. This task is considered to be middle-size task, not too easy but at the same time not too time and knowledge consuming.
-The data will be prepared and provided as 2 files (training set and test set) in .csv format.\\
-According to the list for objective evaluation, each point will give either 0 or 1 score to language. The 0 score will be given in negative case and score 1 will be given in positive case.
+The program will build a simple regression if possible. Tn this work we consider the class of linear regressions to be a simple regression model. This task is considered to be middle-size task, not too easy but at the same time not too time and knowledge consuming.
+The data will be prepared and provided by two files: training set and test set in the csv format.\\
+According to the list for objective evaluation, each point will give either 0 or 1 score to the language. The 0 score will be given in negative case and score 1 will be given in positive case.
 \begin{enumerate}
     \item[] Useful resources - at least 2 different libraries for one task gives 1 point.
     \item[] Documentation - examples, clean source code and clear structured APIs give 1 point.
@@ -113,14 +120,14 @@ The results of the programs will be also compared. If they differ, the models wi
 The task is to build a best matching linear regression (if possible) for a company (always the first column in the file) using certain limitations on the number of the predictors.
 
 \subsection{Data preparation}
-As was mentioned before the data set for this task will be prepared in advance. For our purpose we decided to take Intel as a dependent variable in the regression. Predictors will be chosen among the companies from the same market of micro controllers, supplier market and customers market.\\
+The data set for this work will be prepared in advance. For our purpose we decided to take Intel as a dependent variable in the regression. Predictors will be chosen among the companies from the same market of micro controllers, supplier market and customers market. We have chosen Intel because it is a transparent diversified company with clear development trend, this company is one of the leaders ob the microchips market and all connected markets are also easy to define. In this work we will consider only small amount of companies influencing Intel, since we want to keep the task on middle-complexity level.\\
 The Intel's competitors can be found on Wikipedia listed in several tables for years from 1998 to 2013. We used a parser to get following list of manufacturers for the years 2000-2013 for semiconductors market:
 \begin{verbatim}
 ['AMD', 'Qualcomm', 'Micron Technology','Hynix',
 'Infineon Technologies', 'Intel Corporation', 
 'STMicroelectronics', 'Texas Instruments']
 \end{verbatim}
-The semiconductors are the basic component for different devices, so the potential consumer-markets may vary. In this Bachelor we will concentrate on microchips (CPUs) consumers, following markets are: Tablets, Smart-phones, personal computers, automobiles, video game consoles, medical technologies, Engineering technologies, Aviation. Tablets and personal computers are united into one market-group.\\
+The semiconductors are the basic component for different devices, so the potential consumer-markets may vary. In this Bachelor thesis we will concentrate on microchips (CPUs) consumers, following markets are: Tablets, Smart-phones, personal computers, automobiles, video game consoles, medical technologies, Engineering technologies, Aviation. Tablets and personal computers are united into one market-group.\\
 Automobile market:
 \begin{verbatim}
 ['Toyota', 'GM', 'Volkswagen', 'Ford', 'Nissan', 
@@ -128,7 +135,7 @@ Automobile market:
 'Daimler AG', 'Mitsubishi', 'Tata', 'Fuji']
 \end{verbatim}
 The only significant players (manufacturers) on the game console market are: Microsoft, Sony and Nintendo.\\ 
-The aviation market is presented by following companies: 
+The aviation market is presented by the following companies: 
 \begin{verbatim}
 ['Boeing', 'United Technologies', 'Lockheed Martin',
 'Honeywell International', 'General Dynamics',
@@ -140,7 +147,7 @@ The next market consuming microchips and other Intel-production is Smart-phones,
 ['Samsung', 'Apple', 'Microsoft', 'Nokia', 'Sony', 'LG',
 'Motorola',  'Lenovo',  'BlackBerry', 'Alcatel', 'Vodafone']
 \end{verbatim} 
-Another huge consumer market for Intel is medical equipment market. The following companies present this sphere:
+Another huge consumer market for Intel is a medical equipment market. The following companies present this sphere:
 \begin{verbatim}
 ['Johnson & Johnson', 'General Electric Co.', 'Medtronic Inc.',
 'Siemens AG', 'Baxter International Inc.', 
@@ -154,12 +161,12 @@ Another huge consumer market for Intel is medical equipment market. The followin
 'DENTSPLY International Inc.', 'Hologic Inc.', 
 'Danaher Corp.', 'Edwards Lifesciences', 'Intuitive Surgical Inc.']
 \end{verbatim}
-Additional to above mentioned companies several big players from the industrial equipment market will be added. These are following companies:
+Additionally to the above mentioned companies several big players from the industrial equipment market will be added. These are following companies:
 \begin{verbatim}
 ['ABB Robotics', 'Adept Technology', 'Bosch', 'Caterpillar',
 'Denso Robotics', 'Google', 'Universal Electronics']
 \end{verbatim}
-The list of the potential predictors is not full, because some pretty big players on the markets are left due to the lack of information. The reason of the information-lack is recent enter to the international stock exchange (since 2010 earliest). Some companies are still closed for the foreign investors (which is the case for such giants as Samsung, Honda and other Asian companies). The last limit on chosen companies is the trading-volume. We simply can not use the company's data for composing a regression, if the last year or two the trade volumes for the shares was 0.\\
+After limiting the number of the connected markets, we had to limit the number the companies from the chosen markets, because of the lack of the information about some companies. The reason of the information-lack is recent enter to the international stock exchange (since 2010 earliest). Some companies are still closed for the foreign investors (which is the case for such giants as Samsung, Honda and other Asian companies). The last limit on chosen companies is the trading-volume. If the last year or two the trade volumes for the shares was 0, the company was considered to be not traded at the stock exchange.\\
 After the companies were chosen, the whole data table will be split into 2 data sets: learning set and validation set. We have obtained daily prices from 2006 to 2015 (31.12.2014 is the last date for all indexes). The training or learning set will be approximately 70\% from the whole data volume: from 2006 to 2010. The validation-set is about 30\%: from 2011 to 2012. For this work we use daily frequency (only opening prices).\\
 
 \newpage
