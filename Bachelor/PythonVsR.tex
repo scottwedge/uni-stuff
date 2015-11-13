@@ -95,15 +95,15 @@ The idea of this bachelor thesis is to test which of the languages is more suita
         \item Create all possible double combinations consisting of fixed company name from the previous step and not used company name. Choose the best multiple linear regression built with GLS method among the class. 
         \item Compare two models from different classes using LLR test.
         \item If the smaller model is better, the search is over, the program returns the result.
-        \item If the bigger model is better, the iteration continues until smaller company will be better or the limit on the parameters in the regressin is reached. The program returns the result. 
+        \item If the bigger model is better, the iteration continues until the smaller model will be better or the limit on the parameters in the regression is reached. The program then returns the result. 
     \end{enumerate}
 The output of the program shows the names of the companies in the final regression, main statistics, coefficients.
-    \item Visualization - the program should be able to present the results and steps between if needed.
+    \item Visualization - the program should be able to present the results in the form of graphs for needed steps.
     \item The program is able to build predictions for the chosen company and evaluate them using the mean accumulated error (MAE) and or root-mean-square error (RMSE).
 \end{enumerate}
-The program will build a simple regression if possible. Tn this work we consider the class of linear regressions to be a simple regression model. This task is considered to be middle-size task, not too easy but at the same time not too time and knowledge consuming.
+The program will build a simple regression if possible. In this work we have considered the class of linear regressions to be a simple regression model. This task is considered to be middle-size task, not too easy but at the same time not too time consuming and specific.
 The data will be prepared and provided by two files: training set and test set in the csv format.\\
-According to the list for objective evaluation, each point will give either 0 or 1 score to the language. The 0 score will be given in negative case and score 1 will be given in positive case.
+According to the list for objective evaluation, each point will give either a score of 0 or 1 to the language. A score of 0 will be given in negative case and a score of 1 will be given in positive cases.
 \begin{enumerate}
     \item[] Useful resources - at least 2 different libraries for one task gives 1 point.
     \item[] Documentation - examples, clean source code and clear structured APIs give 1 point.
@@ -115,25 +115,25 @@ According to the list for objective evaluation, each point will give either 0 or
     \item[] Limitations - if there are any limitations, the language gets 0 points.
     \item[] Workarounds - additional time to solve the task gives 0 points (deviation from the time for the naive implementation).
 \end{enumerate}
-The results of the programs will be also compared. If they differ, the models will be cross-compared wit the other program or manually.\\
+The results of the programs will be also compared. If they differ, the models will be cross-compared.\\
 The task is to build a best matching linear regression (if possible) for a company (always the first column in the file) using certain limitations on the number of the predictors.
 
 \subsection{Data preparation}
-The data set for this work will be prepared in advance. For our purpose we decided to take Intel as a dependent variable in the regression. Predictors will be chosen among the companies from the same market of micro controllers, supplier market and customers market. We have chosen Intel because it is a transparent diversified company with clear development trend, this company is one of the leaders ob the microchips market and all connected markets are also easy to define. In this work we will consider only small amount of companies influencing Intel, since we want to keep the task on middle-complexity level.\\
-The Intel's competitors can be found on Wikipedia listed in several tables for years from 1998 to 2013. We used a parser to get following list of manufacturers for the years 2000-2013 for semiconductors market:
+The data set for this work will be prepared in advance. For our purpose we decided to take Intel as a dependent variable in the regression. Predictors will be chosen among the companies from the same market of micro controllers, supplier market and customers market. We have chosen Intel because it is a transparent diversified company with clear development trend this company is one of the leaders ob the microchips market and all connected markets are also easy to define. In this work we will consider only a small amount of companies influencing Intel, since we want to keep the task on medium complexity.\\
+Intel's competitors can be found on Wikipedia listed in several tables for years from 1998 to 2013. We have used a parser to get the following list of manufacturers for the years 2000-2013 for semiconductors market:
 \begin{verbatim}
 ['AMD', 'Qualcomm', 'Micron Technology','Hynix',
 'Infineon Technologies', 'Intel Corporation', 
 'STMicroelectronics', 'Texas Instruments']
 \end{verbatim}
-The semiconductors are the basic component for different devices, so the potential consumer-markets may vary. In this Bachelor thesis we will concentrate on microchips (CPUs) consumers, following markets are: Tablets, Smart-phones, personal computers, automobiles, video game consoles, medical technologies, Engineering technologies, Aviation. Tablets and personal computers are united into one market-group.\\
+Semiconductors are the basic component for different devices, so the potential consumer-markets may vary. In this bachelor thesis we will concentrate on microchips (CPUs) consumers. The following consumer markets are: tablets, smartphones, personal computers, automobiles, video game consoles, medical technologies, engineering technologies, aviation. Tablets and personal computers are united into one market-group.\\
 Automobile market:
 \begin{verbatim}
 ['Toyota', 'GM', 'Volkswagen', 'Ford', 'Nissan', 
 'Fiat Chrysler Automobiles', 'Honda', 'PSA', 'BMW',
 'Daimler AG', 'Mitsubishi', 'Tata', 'Fuji']
 \end{verbatim}
-The only significant players (manufacturers) on the game console market are: Microsoft, Sony and Nintendo.\\ 
+The only significant players (manufacturers) on the gaming console market are: Microsoft, Sony and Nintendo.\\ 
 The aviation market is presented by the following companies: 
 \begin{verbatim}
 ['Boeing', 'United Technologies', 'Lockheed Martin',
@@ -141,12 +141,12 @@ The aviation market is presented by the following companies:
 'BAE Systems', 'Northrop Grumman', 'Raytheon',
 'Rolls Royce', 'Textron', 'Embraer', 'Spirit AeroSystems Holdings Inc.']
 \end{verbatim}
-The next market consuming microchips and other Intel-production is Smart-phones, Tablets and PCs. These gadgets are not substitutes, but they are all very similar in production-process, end-consumer and functions. Since many companies are presented on the markets mentioned above and have further production markets, we will put them into "Diversified" category. The diversified companies that may influence Intel are:
+The next microchips consumer markets are smartphones, tablets and PCs markets. Since many companies are presented on the markets mentioned above and have further production markets, we will put them into "Diversified" category. The diversified companies that may influence Intel are:
 \begin{verbatim}
 ['Samsung', 'Apple', 'Microsoft', 'Nokia', 'Sony', 'LG',
 'Motorola',  'Lenovo',  'BlackBerry', 'Alcatel', 'Vodafone']
 \end{verbatim} 
-Another huge consumer market for Intel is a medical equipment market. The following companies present this sphere:
+Another huge consumer market for Intel is the medical equipment market. The following companies present this sphere:
 \begin{verbatim}
 ['Johnson & Johnson', 'General Electric Co.', 'Medtronic Inc.',
 'Siemens AG', 'Baxter International Inc.', 
@@ -160,43 +160,43 @@ Another huge consumer market for Intel is a medical equipment market. The follow
 'DENTSPLY International Inc.', 'Hologic Inc.', 
 'Danaher Corp.', 'Edwards Lifesciences', 'Intuitive Surgical Inc.']
 \end{verbatim}
-Additionally to the above mentioned companies several big players from the industrial equipment market will be added. These are following companies:
-\begin{verbatim}
+Additionally to the companies mentioned above, several big players from the industrial equipment market will be added. These are the following companies:
+\begin{verbatim} 
 ['ABB Robotics', 'Adept Technology', 'Bosch', 'Caterpillar',
 'Denso Robotics', 'Google', 'Universal Electronics']
 \end{verbatim}
-After limiting the number of the connected markets, we had to limit the number the companies from the chosen markets, because of the lack of the information about some companies. The reason of the information-lack is recent enter to the international stock exchange (since 2010 earliest). Some companies are still closed for the foreign investors (which is the case for such giants as Samsung, Honda and other Asian companies). The last limit on chosen companies is the trading-volume. If the last year or two the trade volumes for the shares was 0, the company was considered to be not traded at the stock exchange.\\
-After the companies were chosen, the whole data table was split into two data sets: learning set and validation set. We have obtained daily prices from 2006 to 2015 (31.12.2014 is the last date for all indexes). The training or learning set will be approximately 70\% from the whole data volume: from 2006 to 2010. The validation-set is about 30\%: from 2011 to 2012. For this work we use daily frequency (only opening prices).\\
+After limiting the number of the connected markets, we have limited the number the companies from the chosen markets, because of the lack of the information about some companies. The reason for the lack of information is that some companies have entered the international stock exchange recently (since 2010 earliest). Some companies are still closed for foreign investors (which is the case for giants such as Samsung, Honda and other Asian companies). The last limit on the chosen companies is the trading volume. If  the trading volume for the last two years were zero, the company was considered to not have been traded on the stock exchange.\\
+After the companies were chosen, the whole data table was split into two data sets: learning set and validation set. We have obtained daily prices from 2006 to 2015 (31.12.2014 is the last date for all indexes). The training or learning set will be approximately 70\% of the whole data volume: from 2006 to 2010. The validation set is about 30\%: from 2011 to 2012. For this work we use the daily frequency (only opening prices).\\
 
 \newpage
 \section{Python}
 \subsection{The structure of the program}
-The program consists of three functional classes, connected with each other in the main class. The first class is called DataFormating.py and it is responsible for getting the data out of the csv file and writing it into an instance of a proper format for the other two classes, also the dependent variable will be extracted from the data set (the dependent variable is always the first column in the csv table).\\
-The second class is called StatisticTests.py, it runs several test to find out main static characteristics in order to choose an appropriate model class for the data. In this work we have focused on the linear regression class.\\
-The third class is called BuildModel.py. This class builds the multiple linear regression (according to the results of the StatisticTests class) using step-forward approach:
+The program consists of three functional classes, connected with each other in the main class. The first class is called DataFormating and it is responsible for getting the data out of the csv file and writing it into an instance of a proper format for the other two classe. The dependent variable will be extracted from the data set (the dependent variable is always the first column in the csv table).\\
+The second class is called StatisticTests, it runs several tests to find out the main static characteristics in order to choose an appropriate model class for the data. In this work we have focused on the linear regression class.\\
+The third class is called BuildModel. This class builds the multiple linear regression (according to the results of the StatisticTests class) using the step-forward approach:
 \begin{enumerate}
-    \item The amount of companies taken into account is reduced using correlation: all companies with correlation less than 30\% are left out.
-    \item A limit on the maximum number of the parameters is set using following rule: 1 company out of 10 if number of company exceeds 5.
-    \item The first step is to find the best one parameter company using the highest correlation coefficient from the first step.
-    \item All possible combinations for fixed company from the previous step and left companies are created. For all these combinations the linear regression using Generalized Least Squares approach [\url{https://en.wikipedia.org/wiki/Generalized_least_squares}].
-    \item The best model among the class is chosen using AIC criterion.
-    \item Best models among the classes are compared using likelihood ratio test. 
-    \item If the bigger model is better and the limit of the predictors in regression is not achieved, the new small model is equal to old big model and repeat from step 4. The final result is the last big model.
-    \item If the smaller model is better or/and the maximum number of parameters in the final regression is achieved, than the final result is either the small model or the last big model. 
+    \item The amount of companies taken into account is reduced using correlation: all companies with correlation less than 30\% are omitted.
+    \item A limit on the maximum number of the parameters is set using the following rule: 1 company out of 10 if the number of companies exceeds 5.
+    \item The first step is to find the best one-parameter model using the highest correlation coefficient from the first step.
+    \item All possible combinations for fixed companies from the previous step and remeining companies are created. For all these combinations the linear regression using Generalized Least Squares approach [\url{https://en.wikipedia.org/wiki/Generalized_least_squares}] is built.
+    \item The best model among the class is chosen using the AIC criterion.
+    \item Best models among the classes are compared using the likelihood ratio test. 
+    \item If the bigger model is better and the limit of the predictors in regression is not achieved, the new small model is set to be equal to the old bigger model. The whole computations are repeat from step 4. The final result is equal to the last bigger model.
+    \item If the smaller model is better or the maximum number of parameters in the final regression is achieved then the final result is either the small model or the last big model. 
 \end{enumerate} 
-At the end the names of the companies in the final regression and the full information for the best model are returned.
+At the end the program returns the names of the companies in the final regression and the full information for the best model.
 
 \subsection{The process description}
-In this section the process of the coding is described: what difficulties and problems were encountered and how they were solved.
-\subsubsection{Used Libraries}
-In the course of writing the program several steps were implemented. As was already mentioned above, in the "Program structure" section, these steps are: extracting and preparing the data for further use, check statistic characteristics and build the model based on the results of the statistics. In order to build the program three main libraries were used:
+In this section the process of the coding is described which difficulties and problems were encountered and how they were solved.
+\subsubsection{Libraries Used}
+In the course of writing the program several steps were implemented. As was already mentioned above, in the "Program Structure" section, these steps are: extracting and preparing the data for further use, checking statistic characteristics and building the model based on the results of the statistics. In order to build the program three main libraries were used:
 \begin{enumerate}
-    \item Base Python library [12].
+    \item Python Standart Library [12].
     \item SciPy resource (unites six different libraries, in our case three were used explicitly) [13].
     \item Statmodels [14].
 \end{enumerate}
-The functions and data structures defined in the base library were used for every simple task, except some mathematical computations, since NumPy library offeres faster implementations.\\
-The second most used library in this work was NumPy, this library is the part of the SciPy source. NumPy offers many fast multi dimensional computations and assosiated multi dimensional structures. In our work we have used this library to compute several statistic and build data for displaying graphs. As we mentioned before, the built-in library was not fast enough for our computation (for bigger data arrays numpy is almost not an arguable choice):
+The functions and data structures defined in the base library were used for every simple task, except some mathematical computations, since the NumPy library offers faster implementations.\\
+The second most used library in this work was NumPy. This library is part of the SciPy source. NumPy offers many fast multi-dimensional computations and associated multi-dimensional structures. In our work we have used this library to compute several statistics and to build the data for displaying graphs. As we mentioned before, the built-in library was not fast enough for our computations:
 \begin{verbatim}
 >>> x=[random.randint(0,10) for i in range(0,1500)]
 >>> len(x)
@@ -215,21 +215,21 @@ The second most used library in this work was NumPy, this library is the part of
          17 function calls in 0.001 seconds
 \end{verbatim}   
 As you can see, the NumPy implementation of the function "average" is more accurate and efficient. The run time difference can be already shown on the list containing 1500 elements.\\
-The third library with fundamental use in this work is Pandas. The library is also a part of the SciPy source. Pandas provides high-performance data structures and associated functions for data analysis. This library can be used for generating, accessing and formatting data. In this work we have used it to get the data from our csv file in an intuitive manner and also to avoid unnecessary formatting steps. Also Pandas offers a functionality to get the data directly from web sources like Yahoo Finance, Google Finance, Google Analytics, etc.. We didn't used this functionality in our program, since our task did not require the up-to-date data and e wanted to safe the possibility to correct the csv file manually if needed. The following example presents the method we used to read the data and returned it in Data.frame format. The returned data object can be easily sliced or formatted according to the needs of the program.
+The third library with fundamental use in this work is Pandas. The library is also a part of the SciPy source. Pandas provides high-performance data structures and associated functions for data analysis. This library can be used for generating, accessing and formatting data. In this work we have used it to get the data from our csv file in an intuitive manner and also to avoid unnecessary formatting steps. Also Pandas offers functionality to get the data directly from web sources like Yahoo Finance, Google Finance, Google Analytics, etc.. We didn't use this functionality in our program, since our task did not require the up-to-date data and we did want to save the possibility to correct the csv file manually if needed. The following example presents the method we used to read the data and returned it in Data.frame format. The returned data object can be easily sliced or formatted according to the needs of the program.
 \begin{verbatim}
 data = pd.read_csv(str(self.file_name))
 cProfile.run('data = pd.read_csv("../data/LearningSet.csv")'
     3316 function calls (3238 primitive calls) in 0.024 seconds
 \end{verbatim}
-The LearningSet file is a table containing 78 companies with 1240 prices for each company, 477,6KiB.\\
-The library used for drawing and saving graphs is very popular and is a default plotting library for many libraries where drawing graphs is needed. Matplotlib is also a part of the SciPy source. It offers different types of graphs and formatting tools. The following example represents the default graph without any further formatting.
+The LearningSet file is a table containing 78 companies with 1240 prices for each company. Its total size is approximately 500KiB.\\
+The library used for drawing and saving graphs is very popular and is a default plotting library for many projects where drawing graphs is needed. Matplotlib is also a part of the SciPy source. It offers different types of graphs and formatting tools. The following example represents the default graph without any further formatting.
 \begin{verbatim}
 plt.title(3M)
 plt.plot(bin_edges[1:], cdf)
 plt.clf()
 \end{verbatim}
 \includegraphics[scale=0.75]{PythonPlotExample.png} \\
-The last but the fundamental library is Statmodels. This library offers a wide variety of tools and models for statistic purpose. Two main functions of the library used in our program are: Augmented Dickey-Fuller test for unit root and building a multiple linear regression with generalized least squares approach.
+The last library is Statmodels. This library offers a wide variety of tools and models for statistic purpose. Two main functions of the library used in our program are: Augmented Dickey-Fuller test for unit root and building a multiple linear regression with generalized least squares approach.
 \begin{verbatim}
 statistic = statmodel.adfuller(self.dict_data[key], 250, 
                         'ctt', 't-stat', False, False)[0] - stationary test
@@ -239,7 +239,7 @@ info_small_model = model_null.fit().summary()
 \end{verbatim}   
 
 \subsubsection{Documentation quality and quantity}
-The quality and the quantity of the documentation plays a crucial role for the project of every complexity, especially for beginner levels. In this work we will evaluate the documentation of the languages and connected libraries, packages, frameworks using score system. The languages will get points for each criterion given in the table below:
+The quality and the quantity of the documentation plays a crucial role for the project of every complexity, especially for beginners. In this work we will evaluate the documentation of the languages and connected libraries, packages, frameworks using score system. The languages will get points for each criterion given in the table below:
 \begin{enumerate}
     \item The documentation is always available.
     \item The documentation is easy to navigate.
