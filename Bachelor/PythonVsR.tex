@@ -239,17 +239,17 @@ info_small_model = model_null.fit().summary()
 \end{verbatim}   
 
 \subsubsection{Documentation quality and quantity}
-The quality and the quantity of the documentation plays a crucial role for the project of every complexity, especially for beginners. In this work we will evaluate the documentation of the languages and connected libraries, packages, frameworks using score system. The languages will get points for each criterion given in the table below:
+The quality and the quantity of the documentation plays a crucial role for the project of every complexity. In this work we will evaluate the documentation of the languages using a score system. Each language will get points for the following criteria described in the table below:
 \begin{enumerate}
     \item The documentation is always available.
     \item The documentation is easy to navigate.
     \item The documentation offers a sufficient amount of examples.
     \item The examples given in the documentation cover at least two complexity levels (a very simple use and use in an advance context).
     \item The documentation provide a link to the source code (mainly for non-base packages and libraries).
-    \item For scientific libraries the theoretical background is provided.
+    \item For scientific libraries the theoretical background should be provided.
     \item The documentation is easy to read (formatting, colors, description of the parameters and output).
 \end{enumerate}
-Originally, Python language was used a lot by the scientific society and many libraries were also implemented for scientific purpose by people with a certain background. As we have already mentiod earlier, in this work we have used base Python 3 library[12],  SciPy [14] and Statmodels [15]. SciPy unites several packages, only three from the whole list were used in our Python program: NumPy, Matplotlib and Pandas.\\
+Originally, Python was used a lot for scientific purposes. This is why many libraries have specific formatting and high complexity. As we have already mentioned earlier, in this work we have used Python 3 standard library [12],  SciPy [14] and Statmodels [15]. SciPy is a collection of several packages. In our work we have used three packages from SciPy. These packages are: NumPy, Matplotlib and Pandas.\\
 The Python program was written in Python 3 version, in this work we did not encountered any problems with the version conflicts. But it is possible that some external libraries are build on Python 2 and thus can cause some issues. In this case you can use Six library [16] to guarantee the compatibility of the versions. As we said, our program did not require use of this library, but it is safe to keep it in mind.\\
 According to the provided evaluation table all four libraries will get points and the weighted (approximate weights are based on appearance frequency and importance of the library in the program) score will be added to the python total score.\\
 The base Python library:
