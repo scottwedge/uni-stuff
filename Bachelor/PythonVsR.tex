@@ -1,4 +1,10 @@
-\documentclass{article}
+\documentclass[
+  twoside,
+  12pt, a4paper,
+  footinclude=true,
+  headinclude=true,
+  cleardoublepage=empty
+]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{color}
 \usepackage{mathtools}
@@ -171,14 +177,14 @@ After the companies were chosen, the whole data table was split into two data se
 \newpage
 \section{Python}
 \subsection{The structure of the program}
-The program consists of three functional classes, connected with each other in the main class. The first class is called DataFormating and it is responsible for getting the data out of the csv file and writing it into an instance of a proper format for the other two classe. The dependent variable will be extracted from the data set (the dependent variable is always the first column in the csv table).\\
-The second class is called StatisticTests, it runs several tests to find out the main static characteristics in order to choose an appropriate model class for the data. In this work we have focused on the linear regression class.\\
+The program consists of three functional classes, connected with each other in the main class. The first class is called DataFormating and it is responsible for getting the data out of the csv file and writing it into an instance of a proper format for the other two classes. The dependent variable will be extracted from the data set (the dependent variable is always the first company listed in the first column in the csv table).\\
+The second class is called StatisticTests. It runs several tests to find out the main static characteristics in order to choose an appropriate model class for the data. In this work we have focused on the linear regression class.\\
 The third class is called BuildModel. This class builds the multiple linear regression (according to the results of the StatisticTests class) using the step-forward approach:
 \begin{enumerate}
-    \item The amount of companies taken into account is reduced using correlation: all companies with correlation less than 30\% are omitted.
+    \item The amount of companies taken into account is reduced using the correlation vector: all companies having the correlation coefficient less than 30\% are omitted.
     \item A limit on the maximum number of the parameters is set using the following rule: 1 company out of 10 if the number of companies exceeds 5.
     \item The first step is to find the best one-parameter model using the highest correlation coefficient from the first step.
-    \item All possible combinations for fixed companies from the previous step and remeining companies are created. For all these combinations the linear regression using Generalized Least Squares approach [\url{https://en.wikipedia.org/wiki/Generalized_least_squares}] is built.
+    \item All possible combinations for fixed companies from the previous step and remaining companies are created. For all these combinations the linear regression using Generalized Least Squares approach [24] is built.
     \item The best model among the class is chosen using the AIC criterion.
     \item Best models among the classes are compared using the likelihood ratio test. 
     \item If the bigger model is better and the limit of the predictors in regression is not achieved, the new small model is set to be equal to the old bigger model. The whole computations are repeat from step 4. The final result is equal to the last bigger model.
@@ -187,16 +193,16 @@ The third class is called BuildModel. This class builds the multiple linear regr
 At the end the program returns the names of the companies in the final regression and the full information for the best model.
 
 \subsection{The process description}
-In this section the process of the coding is described which difficulties and problems were encountered and how they were solved.
+In this section we will describe the language specific difficulties we have encountered.
 \subsubsection{Libraries Used}
-In the course of writing the program several steps were implemented. As was already mentioned above, in the "Program Structure" section, these steps are: extracting and preparing the data for further use, checking statistic characteristics and building the model based on the results of the statistics. In order to build the program three main libraries were used:
+In the course of writing the program several steps were implemented. These steps are: extracting and preparing the data for further use, checking statistic characteristics and building the model based on the results of the statistics. In order to build the program three main libraries were used:
 \begin{enumerate}
     \item Python Standart Library [12].
-    \item SciPy resource (unites six different libraries, in our case three were used explicitly) [13].
+    \item SciPy (unites six different libraries) [13].
     \item Statmodels [14].
 \end{enumerate}
-The functions and data structures defined in the base library were used for every simple task, except some mathematical computations, since the NumPy library offers faster implementations.\\
-The second most used library in this work was NumPy. This library is part of the SciPy source. NumPy offers many fast multi-dimensional computations and associated multi-dimensional structures. In our work we have used this library to compute several statistics and to build the data for displaying graphs. As we mentioned before, the built-in library was not fast enough for our computations:
+The functions and the data structures defined in the standard Python library were used for every simple task, except some mathematical computations, since the NumPy library offers faster implementations.\\
+The second most used library in this work was NumPy. This library is the part of the SciPy source. NumPy offers many fast multi-dimensional computations and associated multi-dimensional structures. In our work we have used this library to compute several statistics and to build the data for displaying graphs. The functions in the standard library did not show the sufficient performance needed for our program:
 \begin{verbatim}
 >>> x=[random.randint(0,10) for i in range(0,1500)]
 >>> len(x)
@@ -214,55 +220,55 @@ The second most used library in this work was NumPy. This library is part of the
 >>> cProfile.run('numpy.average(x)')
          17 function calls in 0.001 seconds
 \end{verbatim}   
-As you can see, the NumPy implementation of the function "average" is more accurate and efficient. The run time difference can be already shown on the list containing 1500 elements.\\
-The third library with fundamental use in this work is Pandas. The library is also a part of the SciPy source. Pandas provides high-performance data structures and associated functions for data analysis. This library can be used for generating, accessing and formatting data. In this work we have used it to get the data from our csv file in an intuitive manner and also to avoid unnecessary formatting steps. Also Pandas offers functionality to get the data directly from web sources like Yahoo Finance, Google Finance, Google Analytics, etc.. We didn't use this functionality in our program, since our task did not require the up-to-date data and we did want to save the possibility to correct the csv file manually if needed. The following example presents the method we used to read the data and returned it in Data.frame format. The returned data object can be easily sliced or formatted according to the needs of the program.
+As you can see, the NumPy implementation of the function average yields more accurate results and better performance. The run time difference can be already shown on the data list containing 1500 integers.\\
+The third important library used in this work is Pandas. The library is a part of the SciPy source. Pandas provides the high-performance data structures and associated functions for data analysis. This library can be used for generating, accessing and formatting data. In this work we have used it to get the data from our csv file in an intuitive manner and also to avoid an unnecessary formatting step. Pandas offers the functionality to get the data directly from web sources like Yahoo Finance, Google Finance, Google Analytics and other similar sources. We didn't use this functionality in our program since our task did not require the up-to-date data and we did want to save the possibility to correct the csv file manually if needed. Another possible problem using the data directly from the web is the necessity of a more complex program to cut off the data when the trading volume was null.  The following method return data.frame object that is formatted later on for further use.
 \begin{verbatim}
-data = pd.read_csv(str(self.file_name))
-cProfile.run('data = pd.read_csv("../data/LearningSet.csv")'
-    3316 function calls (3238 primitive calls) in 0.024 seconds
+>>> data = pd.read_csv(str(self.file_name))
+>>> cProfile.run('data = pd.read_csv("../data/LearningSet.csv")'
+        3316 function calls (3238 primitive calls) in 0.024 seconds
 \end{verbatim}
-The LearningSet file is a table containing 78 companies with 1240 prices for each company. Its total size is approximately 500KiB.\\
-The library used for drawing and saving graphs is very popular and is a default plotting library for many projects where drawing graphs is needed. Matplotlib is also a part of the SciPy source. It offers different types of graphs and formatting tools. The following example represents the default graph without any further formatting.
+The LearningSet file is a table containing 78 companies with 1240 prices for each company. The total size of the table is approximately 500KiB.\\ The library for drawing graphs is called Matplotlib. It is also a part of the SciPy source. Matplotlib offers different types of graphs and formatting tools. The following example represents the default graph without any additional formatting.
 \begin{verbatim}
-plt.title(3M)
-plt.plot(bin_edges[1:], cdf)
-plt.clf()
+>>> plt.title(3M)
+>>> plt.plot(bin_edges[1:], cdf)
+>>> plt.clf()
 \end{verbatim}
 \includegraphics[scale=0.75]{PythonPlotExample.png} \\
-The last library is Statmodels. This library offers a wide variety of tools and models for statistic purpose. Two main functions of the library used in our program are: Augmented Dickey-Fuller test for unit root and building a multiple linear regression with generalized least squares approach.
+The last library is called Statmodels. This library offers a variety of tools and models for statistic purposes. The main functions of the library used in our program are: Augmented Dickey-Fuller test and building a multiple linear regression with generalized least squares approach.
 \begin{verbatim}
-statistic = statmodel.adfuller(self.dict_data[key], 250, 
+>>> statistic = statmodel.adfuller(self.dict_data[key], 250, 
                         'ctt', 't-stat', False, False)[0] - stationary test
                         
-model_null = sm.GLS(y, smaller_model_list)
-info_small_model = model_null.fit().summary()
+>>> model_null = sm.GLS(y, smaller_model_list)
+>>> info_small_model = model_null.fit().summary()
 \end{verbatim}   
 
 \subsubsection{Documentation quality and quantity}
-The quality and the quantity of the documentation plays a crucial role for the project of every complexity. In this work we will evaluate the documentation of the languages using a score system. Each language will get points for the following criteria described in the table below:
+The quality and the quantity of the documentation plays an important role for the project of every complexity. In this work we will evaluate the documentation of the languages using a score system. Each language will get points for the following criteria described in the table below:
 \begin{enumerate}
     \item The documentation is always available.
     \item The documentation is easy to navigate.
     \item The documentation offers a sufficient amount of examples.
-    \item The examples given in the documentation cover at least two complexity levels (a very simple use and use in an advance context).
-    \item The documentation provide a link to the source code (mainly for non-base packages and libraries).
+    \item The examples given in the documentation cover different complexity levels.
+    \item The documentation provide a link to the source code.
     \item For scientific libraries the theoretical background should be provided.
     \item The documentation is easy to read (formatting, colors, description of the parameters and output).
 \end{enumerate}
-Originally, Python was used a lot for scientific purposes. This is why many libraries have specific formatting and high complexity. As we have already mentioned earlier, in this work we have used Python 3 standard library [12],  SciPy [14] and Statmodels [15]. SciPy is a collection of several packages. In our work we have used three packages from SciPy. These packages are: NumPy, Matplotlib and Pandas.\\
-The Python program was written in Python 3 version, in this work we did not encountered any problems with the version conflicts. But it is possible that some external libraries are build on Python 2 and thus can cause some issues. In this case you can use Six library [16] to guarantee the compatibility of the versions. As we said, our program did not require use of this library, but it is safe to keep it in mind.\\
-According to the provided evaluation table all four libraries will get points and the weighted (approximate weights are based on appearance frequency and importance of the library in the program) score will be added to the python total score.\\
+Originally, Python was used a lot for scientific purposes. This is why many libraries have specific formatting and high complexity. As we have already mentioned earlier, in this work we have used Python 3 standard library [12],  SciPy [14] and Statmodels [15].\\
+The Python program was written in Python 3. In our work we did not encountered any problems with the language versions conflict. Some external libraries can only be compatible with the Python 2. For such conflicts the library called Six [16] can be used.\\
+According to the provided evaluation table all used libraries will get points and the weighted score will be added to the python total score. The weights are approximate and are based on appearance frequency and importance of the library in the program.\\
 The base Python library:
 \begin{enumerate}
     \item 1 Point (the documentation was always available, no delays over period of 6 month were noticed).
-    \item 1 Point (the web site is modern and have a very clear structure).
-    \item 1 Point (each function has one simple example, some functions are explained by "identical function" example, at the end of the class description composite example is given).
+    \item 1 Point (the web site is modern and has a clear structure).
+    \item 1 Point (each function has one simple example, some functions are explained by an "identical function" example, at the end of the class description several composite examples are given).
     \item 1 Point (see above).
-    \item 0 Point (the code is mostly not in a free access, mostly normal for base libraries).
-    \item 1 Point (functions are either explained in the documentation, or provide a link to an external source, for example for math.gamma(x) the description link sends you to the Wikipedia page for gamma function).
-    \item 1 Point (the Structure of the documentation for every class is the same and  mostly intuitive. You can navigate through the documentation using different methods: global index, glossary, etc.).
+    \item 0 Point (the code is can't be accessed freely).
+    \item 1 Point (functions are either explained in the documentation, or provide a link to an external source).
+    \item 1 Point (the documentation structure is same for every class. The Navigation through the documentation is possible using global index, glossary, etc.).
 \end{enumerate}
-From the SciPy source three libraries were used explicitly: NumPy, Matplotlib and Pandas. The documentation of the libraries contain more detailed information and some additional examples, but the structure and the formatting are the same according to python styling trend. So the SciPy documentation will be evaluated.
+From the SciPy source three libraries were used explicitly:
+. These are NumPy, Matplotlib and Pandas. The documentation of the libraries themselves contains more detailed information and some additional examples, but the structure and the formatting are the same according to the Python styling standard. This is why we will evaluate the SciPy documentation instead of evaluating each library.
 \begin{enumerate}
     \item 1 Point.
     \item 1 Point.
@@ -270,36 +276,35 @@ From the SciPy source three libraries were used explicitly: NumPy, Matplotlib an
     \item 1 Point.
     \item 1 Point.
     \item 1 Point.
-    \item 1 Point (similar styling pattern used for all libraries).
+    \item 1 Point.
 \end{enumerate}
-The most important library for our python program was Statmodels, since we used it to build the models. Although the library itself is very powerful, it is not easy to use and to understand.
+The most important library for our Python program was Statmodels since we used it to build the models.
 \begin{enumerate}
-    \item 0 Point (the documentation is hosted on Sourceforge and the server was down for about a week during the program development).
-    \item 0 Point (too many sub classes and sub methods, which importance you can not evaluate from the first view).
+    \item 0 Point (the documentation is hosted on the Sourceforge and the server was down for about a week during the program development phase).
+    \item 0 Point (the structure is not clear, dependencies are not intuitive).
     \item 1 Point.
     \item 0 Point (basic examples are not always provided by the documentation).
-    \item 1 Point (source code is hosted on github, thus no issues with availability, but very hard to read).
+    \item 1 Point (the source code is hosted on GitHub).
     \item 1 Point.
-    \item 0 Point (the explanation order of the input parameters, output parameters and methods is alphabetical and not logical, the explanation is sometimes not sufficient).
+    \item 0 Point (the explanation order of the input parameters, output parameters and methods is alphabetical and not logical).
 \end{enumerate}
-So the final score for the python documentation is:
+The final score for the Python documentation is:
 \[ \frac{(\frac{2}{5}(6) + \frac{1}{5}(7) + \frac{2}{5}(3) )}{7}= 0.71\]
 
 
 \subsubsection{Advantages and disadvantages of the program}
-There are several advantages and disadvantages of the Python language for the statistic task implemented in our work.\\
-The first advantage is the small time investment needed up front. The Python language is intuitive and does not require deep understanding of the programming paradigm for simple programs, thus Python is great for prototyping and checking small hypothesis. However this is a temporary advantage, since for more complex tasks you will have to use complex libraries and structures, which require deeper understanding of the language.\\
-The second really important advantage of the python language is testing. Python has built-in doc-tests [22], that are very easy to use. Another test-possibility are Unit Tests [23]. Python language gives the programmer different ways to test and to debug the program in order to avoid possible computational and logic errors. We will not discuss this theme in details, since the tutorials and the documentation are clear and offer sufficient amount of examples.\\
-Another advantage of the python is its multipurpose nature, although we didn't use it for our program it is still important for the world outside of the analysis field.\\
-There are several disadvantages of the statistic program written in python.\\ 
-The first and the biggest disadvantage is the performance. This disadvantage appears only for beginners by implementing mid-difficult task with mid-size data structures. For large data sets cython might be the right choise.\\
-The main time consumption comes from StatisticTests.py, specifically from stationarity test. 
+During the program development phase we have encountered several langauge specific advantages and disadvantages.\\
+The first advantage is the small time investment needed up front. Python is intuitive and does not require deep understanding of the programming paradigm for a simple program. We consider Python to be suitable for prototyping and checking small hypothesis.\\
+The second advantage of the language is testing. Python has a built-in doc-tests [22]. Another possibility to test a program are Unit Tests [23]. Python provides different ways to test and to debug the program in order to avoid possible computational and logic errors. We will not discuss this theme in details since the tutorials and the documentation are simple and offer sufficient amount of examples.\\
+There are several disadvantages of the statistic program written in Python.\\ 
+The first disadvantage is the performance. This disadvantage can appear mostly for beginners by implementing middle complexity tasks. For large data sets Cython might be used instead of simple Python.\\
+The main time consumption comes from StatisticTests. 
 \begin{verbatim}
 >>> cProfile.run("statistics.stationarity()")
         2898213 function calls (2887173 primitive calls) in 5408.838 seconds
 \end{verbatim}
-Unfortunately in our program we have used Pandas library, which is not compatible with the PyPy3 (faster python implementation), thus we couldn't speed up the program casually.\\
-Another small disadvantage of the program written in python is the time you have to invest into the language investigation for more complex tasks. In order to save memory or make the performance better we had to drop naive implementation and read the documentation more carefully (although the language is intuitive on the surface it is not that simple). For example:
+In order to avoid data formatting difficulties we have used Pandas library. There are some limitations of the library, it is not compatible with the PyPy3. This is why our program couldn't have been sped up easily.\\
+Another disadvantage of the program written in Python is the time you have to invest into the language investigation for more the tasks of the higher complexity. There are several non-intuitive functions and data structure uses.
 \begin{verbatim}
 >>> a = {"a":[1,2,3], "b":[1,2,3], "c":[1,4,9]}
 >>> b = a
@@ -309,7 +314,7 @@ Another small disadvantage of the program written in python is the time you have
 >>> a
 {'b': [1, 2, 3], 'a': [1, 4, 9], 'c': [1, 4, 9]}
 \end{verbatim} 
-Although we haven't expected dictionary to change. Python does not implicitly creates copies. The example above shows how two objects are referred to the same object. Thus during mutating one of the objects, all references will change in order to keep referring to the object in its current state. This can be crucial for the program, since we have used one originally formatted dictionary for different purposes. In order to avoid this error you need to do following thing:     
+Python does not implicitly creates copies. The example above shows how two objects are referred to the same object. During mutating one of the objects all references will change in order to keep referring to the object in its current state. The proper way to use dictionary is described below:     
 \begin{verbatim}
 >>> a = {"a":[1,2,3], "b":[1,2,3], "c":[1,4,9]}
 >>> b = a.copy()
@@ -335,12 +340,18 @@ or
 >>> a
 {'b': [1, 2, 3], 'a': [1, 2, 3], 'c': [1, 4, 9]}
 \end{verbatim}
-Such thing can confuse not only the very beginners, but also advanced programmers, because you need to keep every thing in mind.\\
-The last small disadvantage we want to mention is the unsorted nature of the dictionary. After we have read the csv table and formatted it into dictionary, where keys are the companies names and values are the associated prices lists. The keys appear in dictionary in random order, so we can't iterate over the keys directly and the first key will not be the first company from the table. Additional commands will be needed. But this disadvantage will mostly appear for the very beginners and the very beginning of the program, since the workarounds are mostely intuitive. 
+The last disadvantage we want to mention is the unsorted nature of the dictionary. After the csv table was read and formatted into dictionary with the companies names as the keys and the associated prices lists as the values. The keys appear in dictionary in random order. In order to get the name of the first column in the table following command can be used:
+\begin{verbatim}
+>>> d = {"a":[1,2,3,4], "b":[3,1,2,4], "c":[1,5,1,2]}
+>>> d.keys()
+dict_keys(['a', 'c', 'b'])
+>>> sorted(d.keys())
+['a', 'b', 'c']
+\end{verbatim} 
 
 \subsection{Results}
-The end result is currently printed out to a console. The final message contains the names of the companies used in the final regression, main characteristics of the regression (AIC, BIC, Loglikelihood, coefficients and errors, etc.) and the total run time of the program. 
-The results of the program for the given data, described in the data preparation section are:
+The end result is printed out to a console. The final message contains the names of the companies used in the final regression, main characteristics of the regression (AIC, BIC, Loglikelihood, coefficients and errors) and the total run time of the program. 
+The results of the program for the given data described in the data preparation section are:
 \begin{verbatim}
 The best model contains  6  parameters. And the model is:
 ['STMElectro', 'Olympus', 'St Jude', 'Lenovo', 'MicronTech', 'Google']
@@ -373,26 +384,26 @@ Kurtosis:                       2.827   Cond. No.                         357.
 
 [Finished in 4173.2s]
 \end{verbatim}
-To sum up the objective arguments of using python for writing a small program to compute a linear regression for a given data and restrictions, we will sum up the points from the table from the thesis description section.
+To sum up the objective arguments for Python program computing a linear regression for a given data and restrictions we will sum up the points from the table from the thesis description section.
 The points for the Python program are:
 \begin{enumerate}
     \item Useful sources: 1 Point.
     \item Documentation: 0.71 Point.
     \item Performance: 0 Points.
-    \item Memory: 0 Points (Since the data format for different packages is different, our program have used a combination of different data structures to store all formats).
+    \item Memory: 0 Points.
     \item Uniform Data structures: 0 Points (different libraries uses different shapes).
-    \item Big Data: 1 Point (Python have tools for Big Data analysis, or can be used with known tools like Hadoop, Cassandra, Pig, Hive, etc.).
-    \item Visualization: 1 Point (several libraries also for displaying the chart in web).
-    \item Limitations: 1 Point (accept time to actually learn the language there are no limitations).
-    \item Workarounds: 1 Point (for this particular task there have always been a method or several wrap functions).
+    \item Big Data: 1 Point.
+    \item Visualization: 1 Point.
+    \item Limitations: 1 Point.
+    \item Workarounds: 1 Point.
 \end{enumerate} 
 The Python program gets 5.71 points in total.\\
 The subjective arguments for and against are: 
 \begin{enumerate}
-    \item Code is easy to understand, since syntax is much like simple English.
-    \item The data structures are exactly same as you imagine.
-    \item Slicing of the data arrays is normally intuitive (unless you have a multidimensional custom structure).
-    \item For small data arrays the language is fast enough even without tricks.
+    \item The syntax is simple.
+    \item The data structures are the same as you imagine.
+    \item Slicing of the data arrays is intuitive.
+    \item For small data arrays the performance of the language is sufficient.
     \item Debugging messages are easy to understand.
 \end{enumerate}  
 
@@ -956,5 +967,6 @@ The negative moment can be the development of a bigger program. Prototyping in R
     \item RStudio IDE \url{https://www.rstudio.com/}
     \item OO systems in R \url{http://adv-r.had.co.nz/OO-essentials.html}
     \item Big Data in R \url{http://r-pbd.org/}
+    \item GLS \url{https://en.wikipedia.org/wiki/Generalized_least_squares}
 \end{enumerate}
 \end{document}
