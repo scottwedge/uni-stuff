@@ -410,46 +410,46 @@ The subjective arguments for and against are:
 \newpage
 \section{R}
 \subsection{The structure of the program}
-The program written in R language has the same structure as the Python program. The R program consists of three classes: DataFormatting.r, StatisticTests.r and BiuldModel.r. Their functions are similar to the same functions from the first program. However there are slight differences in the inner functions of the classes. The main class is implemented in the from of two separate functions for easier usage via console. Since we wanted more control over the program flow, all functions and imported classes were called via console in R run time.\\
-The R language is very convenient in terms of data formatting - you don't need it. The object called Data.frame is returned when using read.csv() from the base package. This object has methods that allow the programmer to use the data from different spots in the program and for different purposes directly without extracting it and saving in a proper format. For example the list of all companies from the table was extracted using the function "colnames(data.frame)" as an output we get the list object containing the elements from the first row of the table. The R program does not have inner helpers - converter functions, thus it is a bit easier to understand.\\
-The class StatisticTests.r runs tests to detect statistic characteristics of the data: Kolmogorov-Smirnov goodness of fit distribution test, Augmented Dickey-Fuller test to detect unit root, build cumulative distribution function and kernel density function, find moments (mean, standard deviation, skew, kurtosis).\\
-The third class, called BuildModel.r, creates the multiple linear regression for given data table following the same steps from the step-forward approach that was used in the Python program:
+In this work we have written the R program the same way as the Python program. The R program consists of three classes. These classes are DataFormatting, StatisticTests and BiuldModel. The functions of the classes  are similar to the functions from the Python program. There are several language specific differences. The main class is implemented in the from of two separate functions. Since we wanted to gain more control over the program flow all functions and imported classes were called via console in R run time.\\
+R is a convenient language in terms of data formatting. The native method read.csv() returns an object called data frame. This object has differebt methods allowing to use the data from different spots in the program directly without extracting it and saving in a proper format. For example, the list of all companies from the table was extracted using the function colnames(data.frame). As an output we have got the list object containing the elements from the first row of the table. The R program does not have inner helpers as the Python program.\\
+The class StatisticTests runs tests to detect statistic characteristics of the data. These tests contain Kolmogorov-Smirnov goodness of fit distribution test, Augmented Dickey-Fuller test, building a cumulative distribution function and a kernel density function, finding moments.\\
+The third class called BuildModel creates the multiple linear regression for  the given data table. The procedure of the regression building is the same step-forward approach that was implemented in the Python program:
 \begin{enumerate}
-    \item Cut off all companies with correlation less than 30\%.
+    \item Cut off all companies with the correlation coefficient smaller than 30\%.
     \item Set the limit for the maximum number of parameters in the final regression. 
-    \item Choose the best one parameter model.
-    \item Build all possible tuple-combinations with fixed parameter.
-    \item Choose the best model among the two parameter class.
-    \item Compare the best models from two different classes via Likelihood Ratio Test.
-    \item Repeat until the smaller will be better or/and the maximum number of parameters is reached.
+    \item Choose the best one-parameter model.
+    \item Build all possible combinations consisting of fixed companies from the previous steps and one unused company.
+    \item Choose the best model among the two-parameter model class.
+    \item Compare the best models from two different classes uing the Likelihood Ratio Test.
+    \item Repeat until either the smaller model will be better, or the maximum number of parameters is reached.
 \end{enumerate}
 
 \subsection{The process description}
-In this section the process of the program writing is described in more details: what packages were used, what difficulties appeared, etc..
+In this section we will describe the language specific difficulties we have encountered.
 \subsubsection{Used Libraries}
-For this R program following packages were used:
+For our R program following packages were used:
 \begin{enumerate}
     \item Base package[16].
     \item Stats package[17].
     \item Nlme package[18].
     \item Tseries package[19].
 \end{enumerate}
-The first base library was used for all basic computations like moments, correlation vector, etc.. This package provides many different functions for formatting the data. For example:
+The functions from the base package were used for all basic computations. This package also provides different functions for the data formatting. The following example shows the R specific object called formula:
 \begin{verbatim}
 formula <- as.formula(paste(dep$name,"~", as.character(names(small_model)), collapse=""))
 \end{verbatim}
-This function converts the string object from the brackets into a formula object that is further used as an input parameter for building a linear regression using GLS method. The base package offers basic math operation as well.\\
-The StatisticTests.r class uses both stats and tseries packages to build statistic tests on the data. The tseries package offers many different tests and methods used in computational finances and time series analysis. In this work we have only used Agumented Dickey-Fuller test to test the data for stationarity:
+This function converts the string object from the brackets into a formula object that is further used as an input parameter for building a linear regression. The base package offers basic math operation as well.\\
+The StatisticTests class uses both stats and tseries packages to build the statistic tests on the data. The tseries package offers different tests and methods widely used in the computational finances and time series analysis. In this work we have only used Agumented Dickey-Fuller test to check the data for stationarity:
 \begin{verbatim}
 test <- adf.test(data[[company]])
 \end{verbatim}
-The second package used in StatisticTests class offers functions to run simple statistic tests on the data and build simple characteristics. In our work we have used the stats package to build graphs for each company from the data table and test the data for its distribution. The program has yields the same results as the python program.\\
-The fourth package used in this program offers the the possibility to build linear regression using given parameters. The use of the functions from the library are very intuitive:
+The second package used in StatisticTests class offers functions to run simple statistic tests on the data and build the basic statistic characteristics and provides the possibility to build a graph. In our work we have used the stats package to build graphs for each company from the data table and test the data for its distribution. The program has yielded the same results as the Python program.\\
+The fourth package used in this program offers a possibility to build a linear regression using given parameters. The use of the functions from the library are intuitive:
 \begin{verbatim}
 small <- gls(as.formula(paste(dep$name,"~", as.character(names(small_model)), collapse="")), data)
 \end{verbatim} 
-Where the first parameter is from the class formula looks like string object: "Intel ~ Olympus + St.Jude". The second parameter is the data, where the variables from the formula match the names of the columns from the data frame object.\\
-The graphics is provided by the graphics library, but it comes with the default R set up. The plotting in R is easy to use:
+The first parameter is formula object. The example of the this particular object we have already demonstrated above. The second parameter is the data source. A necessary condition for the data object is actually to contain the variables from the formula.\\
+The following example presents a graph built without additional formatting:
 \begin{verbatim}
 png(path_cdf)
 plot(graph[[name]], verticals = TRUE, do.points = FALSE, main=name)
@@ -458,33 +458,33 @@ dev.off()
 \includegraphics[scale=0.75]{RPlotExample.png}
  
 \subsubsection{Documentation quality and quantity}
-In comparison to the Python language, R was build solely for analytical purposes. The most part of the contributors are scientific institutions and scientists, and thus the R language documentation is written in a scientific style. To evaluate the R language documentation we will use the points system described in Python Documentation section.\\
+In comparison to Python, R was build solely for analytical purposes. Since the language was build for analysis by the scientific community R's documentation is built in a scientific manner. To evaluate the documentation we will use the points system described in the Python Documentation section.\\
 The R Base package:
 \begin{enumerate}
-    \item 1 Point (the documentation is hosted by ETH Zürich and no server downtime was noticed).
-    \item 0 Points (if you don't know exactly for what function you are looking for, alphabetic search not going to be much of a help).
-    \item 0 Points (the native documentation does not provide sufficient amount of examples).
-    \item 0.5 Points (depends on the function).
+    \item 1 Point (the documentation was available during the whole time of the program development).
+    \item 0 Points (the navigation is alphabetic).
+    \item 0 Points (the native documentation does not provide a sufficient amount of examples).
+    \item 0.5 Points.
     \item 0 Points.
-    \item 1 Points (the literature source is given but not in form of the link).
-    \item 0 Points (no styling applied).
+    \item 1 Points.
+    \item 0 Points (no styling was applied).
 \end{enumerate}
-The Stats package is organized similar to the Base package and thus have similar points:
+The Stats package is organized in a similar way to the base R package and have the similar score:
 \begin{enumerate}
-    \item 1 Point (also hosted by ETH Zürich).
+    \item 1 Point.
     \item 0 Point (the alphabetical list with short description).
-    \item 0.5 Points (depends on function, demo files are offered only for some of the functions).
-    \item 0.5 Points (depends on the function).
+    \item 0.5 Points.
+    \item 0.5 Points.
     \item 0 Point.
     \item 1 Point.
     \item 0 Points (no styling applied).
 \end{enumerate} 
-The Nlme package is hosted by the biggest R source called "CRAN". This source offers significant amount of simple and complex demos, test data sets and tutorials, etc.. CRAN is considered to be the central R source.
+The Nlme package is hosted by the biggest R source called "CRAN". This source offers a significant amount of simple and complex demos, test data sets and tutorials. CRAN is considered to be the central R source.
 \begin{enumerate}
-    \item 1 Point (the CRAN servers are constantly monitored, no problems were noticed within a 2 year period).
+    \item 1 Point.
     \item 1 Point (the documentation is organized as a scientific paper with the content provided).
     \item 1 Point.
-    \item 1 Point (examples are sometimes united for different functions).
+    \item 1 Point.
     \item 0 Points.
     \item 1 Point (the theoretical background is provided in the form of the references after the function explanation).
     \item 1 Point (scientific paper formatting).
@@ -496,15 +496,15 @@ The last package used in our program is Tseries:
     \item 1 Points.
     \item 1 Point.
     \item 0 Point.
-    \item 1 Point (in the form of references).
-    \item 1 Point (scientific paper formatting).
+    \item 1 Point.
+    \item 1 Point.
 \end{enumerate}
-The quality of the R documentation is in average on the same level for all sources, but the convenience of the documentation (formatting, navigation) can differ a lot depending on the source. The total score for the R documentation is:
+The quality of the R documentation is on average on the same level for all sources. However the convenience of the documentation differs depending on the source and the development team. The total score for the R documentation is:
 \[ \frac{\frac{3}{10}(2.5)+\frac{1}{10}(3)+\frac{3}{10}(6)+\frac{3}{10}(6)}{7}= 0.66 \] 
 
-\subsubsection{Advantages and disadvantages of the program}
-During writing our second program we have encountered several difficulties assosiated with the language features. Since we have already written our program in Python, we have decided to implement the same structure and thus have escaped difficulties choosing proper classes, structure of the program, functions, etc..\\
-The first and a very important advantage of the R program is the data.frame object and associated functions. This object can be formatted or sliced within very small time from every function, the results of the of the slicing can be assigned needed format. One of the most useful functions during the work with R data objects was str() that shows the structure of the object:
+\subsubsection{Advantages And Disadvantages Of The Program}
+During the development phase of our second program we have encountered several difficulties associated with the language features. Since we have already written our program in Python we have decided to implement the same structure.\\
+The first advantage of the R program is the data frame object and correlated functions. The performance of the slicing and formatting operations is good. One of the most useful functions during the work with R data objects was str(). This function shows the structure of the object:
 \begin{verbatim}
 > str(data)
 'data.frame':   1239 obs. of  69 variables:
@@ -516,16 +516,16 @@ The first and a very important advantage of the R program is the data.frame obje
  $ STMElectro           : num  18.5 18.7 18.6 18.1 18.2 ...
 ...
 \end{verbatim}
-The slicing is very useful, when you know how exactly to handle it. For instance, to get all the companies names from the table you can use colnames():
+There are several language specific functions to extract the sub data from the original data frame. For example, to get all the companies names from the table you can use colnames():
 \begin{verbatim}
-> names<-colnames(data)
+> names <- colnames(data)
 > class(names)
 [1] "character"
 > str(names)
  chr [1:69] "Intel" "AMD" "Qualcomm" "MicronTech" "Infenion" ...
 \end{verbatim} 
-In comparison to the Python program, where we have to store the data into dictionary with the names as the keys and the lists of share prices as the associated values, the names in the data.frame and other formats are coming in exact same order as they appear in the table. This feature make it very easy to extract the dependent variable, also you will have to know only the name of the variable for further computations.\\
-The second advantage of the program is closely connected to the the function we have used to build the regression. As we described in the "Program Structure" and "Used Libraries" sections, for the regression we have used gls function from the nlme package. The use of the function is intuitive: you provide the formula for the regression and the data containing all given names from the formula (optional if the environment already have the data set loaded). Below two examples of the gls use are presented (following examples are not an optimal decision, but a show case):
+In the Python program where we had to store the data into the dictionary with the names as the keys and the lists of share prices as the associated values. In R the names of the companies from the data frame are coming in exact same order as they appear in the csv file.\\
+The second advantage of the R program is connected to the the function we have used for the regression building. As we have described in the Program Structure and Used Libraries sections for the regression we have used gls function from the nlme package. In order to use this function the formula for the regression and the data containing all given names from the formula should be provided. Two examples of the gls use are presented below (the following examples are not the optimal decision):
 \begin{verbatim}
 > model1<-gls(Intel ~ Olympus + Google + AMD + St.Jude, data)
 > model1
@@ -555,11 +555,11 @@ Coefficients:
 Degrees of freedom: 1239 total; 1235 residual
 Residual standard error: 2.451844
 \end{verbatim}
-Another positive moment about gls function is its data use. In comparison to python you don't have to format it and separate the data for chosen variables from the rest of the data object. You can use the data.frame loaded into the environment or use external data source, for example, for predictions.\\
-The third advantage of the R program is its performance. Without explicit multiprocessing or JIT (just in time compiler is not used in this work), the program runs within a very small amount of time.\\
-The first and probably main disadvantage of the R language is its difficulty. The syntax is not intuitive, the data structures and their use are non trivial. In order to begin using R you will have to look through several tutorials and the introduction course. The R background of the author of this work consisted only of the coursera "R programming" course [20], which didn't cover the whole program structure and the course was using RStudio [21]. RStudio is a good IDE for R to begin with, but if you need more control and understanding, you should switch to the console and a simple IDE to write the classes.\\
-The first example of the R complexity is the absence of the classes in their normal understanding. In R there are three type of classes: S3, S4 and Regference Class. The last one is close to normal Python classes. The first two are repsenting the attribute of an object (in R everything considered as an object). In our program we only used the Reference class and didn't dive into the other two classes. For more information on OO systems in R you can visit the source [22]. \\
-The second disadvantage of the R program is connected to Reference Class definition. In R you can not return multiple instances. Following implementation will return an error:
+Another advantage of the gls function is its data use. In comparison to Python the data is not required to be specifically formatted. The data frame previously loaded into the environment will be used by default if no data is specified. If there are more than one data sources loaded into the environment the specification is not optional.\\
+The third advantage of the R program is its performance. Without using the explicit multiprocessing or JIT the program has significantly outperformed the Python program. The actual results will be presented in the following section.\\
+The first disadvantage of the R language is difficulty. The syntax is not as intuitive as the Python syntax. The data structures and their use are non trivial. In order to begin using R significant amount of time invested upfront is needed. The R background of the author of this work consisted of the basic programming course [20] using RStudio [21]. RStudio is a good IDE for R to begin with. However it limits the development freedom for the complex tasks.\\
+The first example of the R complexity is the absence of the classes in their usual understanding. In R there are three type of classes. These are S3, S4 and Reference Class. The reference class is close to the Python class. The first two represent the attribute of an object. In R everything considered as an object. In our program we have used the reference class and didn't dive into the other two class types. For more information on OO systems in R you can visit the following source [22]. \\
+The second disadvantage of the R program is connected to Reference Class definition. In R the return statement with multiple instances is not allowed. Following example shows the wrong implementation. It will return an error:
 \begin{verbatim}
 getData <- setRefClass("getData",
     fields = list( name="character", data="data.frame", companies="character"),
@@ -572,7 +572,7 @@ getData <- setRefClass("getData",
 			return data, companies
 		})
 \end{verbatim}
-In order to be able to return several objects you will have to unite them into list:
+In order to be able to return several objects it is possible to write them down into a list:
 \begin{verbatim}
 getData <- setRefClass("getData",
     fields = list( name="character", result="list"),
@@ -588,7 +588,7 @@ getData <- setRefClass("getData",
             return result            			
 		})
 \end{verbatim}
-The smallest disadvantage of this workaround is additional variables assignment of the returned list in order to get needed values separately:
+The disadvantage of this workaround is the additional formatting of the resulting list:
 \begin{verbatim}
 > d <- getData(name="../data/LearningSet.csv")
 > result <- d$get_data()
@@ -597,7 +597,7 @@ The smallest disadvantage of this workaround is additional variables assignment 
 > data <- result[[1]]
 > companies <- result[[2]]
 \end{verbatim}
-Another disadvantage of the R program in the beginning is the slicing. On one hand, you can get the element or a data object using different approaches. On the other hand, they do not always return what you have expected and does not seem intuitive. For example let's get first 5 prices of Intel:
+Another disadvantage of the R program in is the difficulty of the slicing. Different approaches can be used to get the same result. However there are several difficulties connected with some approaches. The following example shows different approaches to print out the first five prices of the Intel:
 \begin{verbatim}
 > data$Intel[1:5]
 [1] 26.59 26.58 26.37 25.80 25.85
@@ -619,9 +619,9 @@ Another disadvantage of the R program in the beginning is the slicing. On one ha
 > class(data[,1][1:5])
 [1] "numeric"
 \end{verbatim}
-Slicing is a powerful tool in R, but for beginners it might be a problem to use it properly.
+
 \subsection{Results}
-Our R program does not have the main class as in Python program, however main function is implemented, where all libraries are activated, classes are imported and the final calculation is run. The output is printed out to terminal from which the program was started. This is the extended output for gls function: summary.gls:
+The main file implemented in the R program consists of two functions using implemented classes. The first function activates the libraries we have used in the program and calls the implemented classes in a specific order. The output is printed to the terminal. The extended information on the resulting regression is called separately to the result output for the gls function:
 \begin{verbatim}
 > source("main.r")
 > system.time(main())
@@ -666,26 +666,26 @@ Degrees of freedom: 1239 total; 1232 residual
  24.566   0.000  23.461 
 
 \end{verbatim}    
-As you can see, the best model yielded by the R program consist of 6 companies: STMElctro, Olympus, St.Jude, Lenovo, Microntech and Cardinal. It is interesting, that on the last step of the evaluation the algorithm have chosen Cardinal over Google (which have chosen the Python Program). Since the programs are identical this deviation can be caused by the underlying implementation in gls function or llr test, or AIC criterion evaluation. Unfortunately we haven't found the source code for R and thus we couldn't compare the implementations. This is why in the section Results we will compare the predictions of the programs. And add points to the program yielding closer predictions.\\
-To sum up the objective arguments of using R for a small program to compute a linear regression for given data and restrictions we will give the points according to the evaluation table given in the description section. The Points for the R program are:
+The best model returned by the R program consist of 6 companies. These companies are STMElctro, Olympus, St.Jude, Lenovo, Microntech and Cardinal. The R program has chosen Cardinal over Google on the last step of the evaluation algorithm. Since the programs are identical this deviation can be caused by the underlying implementations of the gls function, the llr test, or the AIC criterion evaluation. Since we didn't found the source code for the functions we have used in this work, the cause of the difference in the results can't be explained properly. To compare the results of the programs we have built the predictions for both programs. First the accuracy of the original predictions will be compared. Afterwards the cross results accuracy will be compared. The program yielding the higher accuracy predictions will get an additional point.\\
+To sum up the objective arguments for R we will give the points according to the evaluation table given in the description section. The Points for the R program are:
 \begin{enumerate}
     \item Useful sources: 1 Point.
     \item Documentation: 0.66 Points.
     \item Performance: 1 Point.
-    \item Memory: 1 Point (since no additional formatting was used the memory use for our specific case is less for R).
-    \item Uniform data structures: 1 Point (data.frame object was used everywhere directly).
-    \item Big Data: 1 Point (this is a relatively recent addition to the language, but there are several sources and libraries allowing to work with big data [23]).
-    \item Visualization: 1 Point (on the fly changing the graph makes it easy to work with).
-    \item Limitations: 1 Point (same as by Python language, after investing time into getting into R language there were noticed no limitations).
-    \item Workarounds: 1 Point (the program was build strait forward without having any issues).
+    \item Memory: 1 Point.
+    \item Uniform data structures: 1 Point.
+    \item Big Data: 1 Point (this is a relatively recent addition to the language. There are several sources and libraries offering tools to work with big data [23]).
+    \item Visualization: 1 Point.
+    \item Limitations: 1 Point (high complexity of the language).
+    \item Workarounds: 1 Point.
 \end{enumerate} 
-The total objective score for R language is 7.66 points total.\\
-The subjective arguments are:
+The total objective score for R is 7.66 points total.\\
+The subjective arguments for the language are:
 \begin{enumerate}
     \item Debugging messages are hard to understand.
-    \item Certain amount of time is needed to understand the code, since syntax is not completely intuitive.
-    \item Layered structures can very challenging to work with.
-    \item Slicing is very easy to work with, if you have understood it.
+    \item Certain amount of time is needed to understand the code since the syntax is not intuitive.
+    \item Layered structures were confusing.
+    \item No additional formatting saved time.
     \item More.
 \end{enumerate}
 
