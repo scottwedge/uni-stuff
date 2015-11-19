@@ -691,11 +691,10 @@ The subjective arguments for the language are:
 
 \newpage
 \section{Results}
-In this section the final comparison of the programs written in two languages will be presented.
+In this section we will present the final comparison of the programs written in Python and R.
 
 \subsection{Objective comparison}
-Here we will explain the difference in the scores and also check the accuracy of the predictions both programs yield.\\
-The first difference between programs is the performance. In order to show the difference in the run time of the programs we will use system.time() for R and cProfile for Python (the examples of the code were already given above).
+The first difference between the programs is the performance. In order to show measure the run time of the programs we will use the options that both language offer. These methods are system.time() for R and cProfile() for Python. Additionally to the language specific functions we will use the /bin/time linux utility. Th following example shows us the run time for the R program.
 \begin{verbatim}
 > system.time(data_read())                                                                  
    user  system elapsed                                                                       
@@ -707,7 +706,7 @@ The first difference between programs is the performance. In order to show the d
    user  system elapsed 
   3.837   0.000   3.067 
 \end{verbatim}
-The main function consists of three parts: read the data from the csv table and format it, the second part is the statistic test and the final part is building a model based on the results of the statistic test. And the overall time of the program can be measured via two functions: main and predict:
+The main function consists of three parts. The first part reads the data from the csv table and formats it. The second part runs statistic tests. The third part buildings a model based on the results of the statistic tests. The overall time of the program can be measured via main and predict functions:
 \begin{verbatim}
 > system.time(main())
    user  system elapsed 
@@ -725,7 +724,8 @@ The main function consists of three parts: read the data from the csv table and 
   0.000   0.000   0.117 
 \end{verbatim}
 The run time of the main function is greater than the sum of its parts, since the main function loads needed libraries and also counts the time for the data transfer between the classes as well as the initialization of the classes. The Python program performance in our implementation is 750 times slower. R program runs for 7.41 seconds versus 5564.19 seconds Python program.\\
-The second difference is the memory used by each program. There are several possibilities to measure the memory load of the programs. In R you can use Rprofmem() from the utilities package to determine how much memory was used by the object (in R everything is considered as an object). In Python different tools and built-in classes can be used to do the profiling for example memory\_profile [11]. However in this work we will use the unix time command from the console for both programs in order to get more accurate results. The printed message contains many details, but we will be interested in the Maximum resident set size, which means the amount of memory belogning to the process and currently presented in RAM.\\ 
+\textcolor{red}{rython crofile results}\\
+The second difference between the programs is the memory usage. There are several possibilities to measure the memory load of the program. Since every instance in R is treated as an object the size of all objects can be shown using Rprofmem() function from the utilities package. However, in order to use this function to compute the total memory use the sum of the all ojects size needs to be computed. This approach is complex and does not guarantees the accurate result. Python also offers different tools to do the profiling. On of the possible functions is memory\_profile [11]. In order to measure the memory use uniformly for both languages we will use the unix time command. The printed message contains the information about the called process. Two main characteristics we are interested in are the maximum resident set size and the user time. The maximum resident set size shows the amount of the memory belogning to the process and currently presented in RAM. In aother words it is the maximum memory allocated in the heap by the program.\\ 
 The R memory use looks as following:
 \begin{verbatim}
 [20:32:19 - 15-10-25] 
@@ -754,7 +754,7 @@ The R memory use looks as following:
         Page size (bytes): 4096
         Exit status: 0
 \end{verbatim}
-The maximum memory usage of the R program during running is 78,4 MB.\\
+The maximum memory usage of the R program is 78,4 MB.\\
 The Python memory use looks as following:
 \begin{verbatim}
 [19:11:27 - 15-10-25] 
@@ -783,8 +783,8 @@ The Python memory use looks as following:
         Page size (bytes): 4096
         Exit status: 0
 \end{verbatim}
-The maximum memory usage of the running Python program is 637,0 MB.\\
-Since the final models from two programs differ, we will compare the predictions. Predictions were built on the TestingSet.csv containing 515 Prices for the time period from 1.01.2011 to 31.12.2012. We will show the main characteristics of the predictions row: mean and standard deviation as well as the comparison plot.\\
+The maximum memory usage of the Python program is 637,0 MB.\\
+As we have mentioned earlier, we will compare the predictions of the programs and evaluate the cross results. The predictions were built on the TestingSet file containing 515 prices for the time period from 1.01.2011 to 31.12.2012. We will show the main characteristics of the predictions row: mean and standard deviation as well as the comparison plot.\\
 The R program gives us following results:
 \begin{verbatim}
 > p<-build_predictions()
@@ -813,10 +813,10 @@ the mean absolute error of the prediction is: 2.83819120505
 the root mean squared error is: 3.47169327209
 \end{verbatim}
 \includegraphics[scale=0.75]{PythonPredictions.png}\\
-As you can see, the Python predictions statistically speaking are better, than the R predictions. Both mean absolute error and root mean square error are smaller by the Python results. The Python program gets 1 additional point for the relative accuracy. On the following graph you can see both predictions together, where the R forecasts have green color and blue color belongs to the Python forecasts.\\
+The Python predictions according to the chosen criteria are more accurate than the R predictions. Both mean absolute error (MAE) and root mean square error (RMSE) are smaller for the Python predictions. The Python program gets one additional point for the relative accuracy. On the following graph both original R and Python predictions are shown. The R forecasts have the green line and the blue line presents the Python forecasts.\\
 \includegraphics[scale=0.75]{BothPredictions.png}\\
-As the following step we will force both Python and R programs to show the cross results. The python will yield predictions for the final model from R: ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. And the R program will return the forecast for the Python final model: ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]\\
-The R cross-result is:
+As the following step we will force both Python and R programs to compute the results for the model yielded by the other program. Python will compute predictions for the final model from R: ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. And the R program will return the forecast for the Python final model: ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]\\
+The R cross result is:
 \begin{verbatim}
 > p<-build_predictions()
 [1] "the mean of the y is: "
@@ -846,12 +846,12 @@ Coefficients:
 Degrees of freedom: 1239 total; 1232 residual
 Residual standard error: 0.982245 
 \end{verbatim}
-On the following image you can see the difference in two models forecasts returned by the R program, where the gray line is as above the real values, the green line is the new forecasts and the blue line is the old model forecast.\\
+On the following image the difference in two models forecasts returned by the R program is represented. The gray line shows the real Intel prices, the green line is the new model forecast and the blue line is the old model forecast.\\
 \includegraphics[scale=0.75]{ROriginalVsNew.png}\\
-The R program considers the new model to be better in comparison to it's original suggestion, since the MAE is 0.661 smaller by the new predictions row and the RMSE of the new predictions row is 0.827 smaller. The original model was chosen based on the AIC and the predictions were not taken into account during that step.\\
-On the next image you can see the predictions for the same model but estimated by different program. Same notation as above is used: gray - real values, green - R forecast, blue - Python forecast.\\
+The R program considers the new model to be better than the original suggestion since the new MAE is 0.661 smaller and the new RMSE is 0.827 smaller. The original model was chosen based on the AIC. The forecast was built only for the final model. That means that we never considered the accuracy of the predictions as the criterion for thoosing the best model in the class or among two classes.\\
+The following graph represents the predictions for the same model but estimated by different program. The model is ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. As usual the gray line presents the real values, the green line is the R forecast, the blue line is the Python forecast.\\
 \includegraphics[scale=0.75]{PythonOriginalVsRNew.png}
-The interesting thing that predictions built by the R program for the Python original model are more accurate than the python predictions for the same model. The R  MAE is 0.208 smaller and the R RMSE is 0.166 smaller.
+we have noticed that the predictions built by the R program for the Python original model have higher accuracy than the Python predictions for the same model. The R MAE is 0.208 smaller and the R RMSE is 0.166 smaller than the Pyhton results.
 The Python cross results are:
 \begin{verbatim}
 >>> build_predictions()
@@ -890,14 +890,14 @@ Skew:                           0.114   Prob(JB):                     0.000116
 Kurtosis:                       2.453   Cond. No.                         70.4
 ==============================================================================
 \end{verbatim}
-On the following image you can see the difference in two models forecasts returned by the Python program, where the gray line the real values, the green line is the new forecasts and the blue line is the old model forecast.\\
+The following graph shows the difference between two models forecasts returned by the Python program. The gray line shows the real values, the green line presents the new model forecast and the blue line is the old model forecast.\\
 \includegraphics[scale=0.75]{PythonOriginalVsPythonNew.png}\\
-The Python program considers the new model to be worse in comparison to it's original suggestion, since the MAE is 1.072 smaller by the old predictions row and the RMSE of the old predictions row is 1.4 smaller. The original model was chosen based on the AIC and the predictions were not taken into account during that step.\\
-On the next image you can see the predictions for the same model but estimated by different program (new model for the python program). Same notation as above is used: gray - real values, green - R forecast, blue - Python forecast.\\
+The Python program considers the new model to be worse in comparison to the original suggestion since the MAE is 1.072 smaller and the RMSE is 1.4 smaller than the original results. The first Python model was chosen based on the AIC and the predictions were also not taken into account during the evaluation steps.\\
+The following graph presents the predictions for the same model but estimated by different program. the model is ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. Same color notation is used.\\
 \includegraphics[scale=0.75]{ROriginalVsPythonNew.png}
-Here predictions built by the Python program for the R original model are less accurate than the R predictions for the same model. The R MAE is 0.617 smaller and the R RMSE is 0.684 smaller.\\
-The best prediction is built by the R prediction function for the Python original model. This result can be explained by the fact, that R gls.predict() module is higher accuracy computation process. At the same time Python managed to figure out better regression using AIC. We give Python additional Point for yielding more accurate results.\\
-The final score for both programs is 7.66 Points for R program versus 6.71 Points for Python program. This mean that objectively R is more suitable for beginners to use as the programming language for a small statistic task with small data sets.
+The Python program predictions are less accurate than the R predictions for the same model. The R MAE is 0.617 smaller and the R RMSE is 0.684 smaller.\\
+The higest accuracy forecast was built by the R program for the Python original model. This result can be explained by the fact that R gls.predict() module uses higher accuracy computation algorithm and operates with doubles insaead of floats. At the same time the Python program has returned better regression using the AIC during the evaluation process. Python gets an additional Point for yielding higher accuracy results.\\
+The final score for both programs is 7.66 Points for the R program versus 6.71 Points for the Python program. This mean that objectively R is more suitable for beginners to use as the programming language for a small statistic task with a small data set.
 
 \subsection{Subjective comparison}
 During the process of the program development Both languages have shown their good and bad sides. Good sides of the Python language are:

@@ -34,7 +34,7 @@ def build_model(file_name):
 	if False in stationary.values() and False in log_normal.values():
 		print("choose different model to build, deal with non stationary first")
 	else:
-		# create model and return the information
+		# create model and return the informationb
 		model_raw = BuildModel(dict_data, list_companies, dependent_variable, rest_companies, dict_final)
 		cor_vec = model_raw.correlation_vector(dict_data)
 		cut_off = model_raw.correlational_cutoff(cor_vec)
@@ -104,25 +104,26 @@ if __name__ == '__main__':
 
 	# initialize the data
 	file_name = "../data/LearningSet.csv"
-#	dict_data, list_companies, dependent_variable, rest_companies, dict_final = collect_data(file_name)
+	dict_data, list_companies, dependent_variable, rest_companies, dict_final = collect_data(file_name)
 
-	#build_model(file_name)
+	build_model(file_name)
 
 	#model, predict, diff, av, dev, mae, rmse = build_predictions()
 
 	# build cool graph
-	pred_data = DataFormatting("../data/Predictions.csv")
-	dict_pred = pred_data.keep_dict()	
-	plt.figure()
-	plt.title("Python new vs R original")
-	rl = plt.plot(dict_pred["Intel"], color="grey", linewidth=2.0)
-	ppr = plt.plot(dict_pred["PythonNew"], color="blue", linewidth=1.0)
-	rpr = plt.plot(dict_pred["R_Original"], color="green", linewidth=1.0)
-	plt.savefig("../ROriginalVsPythonNew.png")
-	plt.clf()
+	# pred_data = DataFormatting("../data/Predictions.csv")
+	# dict_pred = pred_data.keep_dict()	
+	# plt.figure()
+	# plt.title("Python new vs R original")
+	# rl = plt.plot(dict_pred["Intel"], color="grey", linewidth=2.0)
+	# ppr = plt.plot(dict_pred["PythonNew"], color="blue", linewidth=1.0)
+	# rpr = plt.plot(dict_pred["R_Original"], color="green", linewidth=1.0)
+	# plt.savefig("../ROriginalVsPythonNew.png")
+	# plt.clf()
 
-	# cProfile.run('collect_data(file_name)')
-	# cProfile.run('collect_statistics(dict_data)')
-	# cProfile.run('build_model(file_name)')
+	cProfile.run('collect_data(file_name)')
+	cProfile.run('collect_statistics(dict_data)')
+	cProfile.run('build_model(file_name)')
 	# cProfile.run('build_predictions()')
 
+s
