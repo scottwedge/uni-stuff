@@ -1,0 +1,38 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{g+gp}{\PYGdefaultZgt{}} \PYGdefault{n+nb}{source}\PYGdefault{o}{(}\PYGdefault{l+s+s2}{\PYGdefaultZdq{}main.r\PYGdefaultZdq{}}\PYGdefault{o}{)}
+\PYGdefault{g+gp}{\PYGdefaultZgt{}} system.time\PYGdefault{o}{(}main\PYGdefault{o}{())}
+\PYGdefault{g+go}{Generalized least squares fit by REML}
+\PYGdefault{g+go}{  Model: as.formula(form[[k1]])}
+\PYGdefault{g+go}{  Data: data}
+\PYGdefault{g+go}{       AIC      BIC    logLik}
+\PYGdefault{g+go}{  3421.976 3462.907 \PYGdefaultZhy{}1702.988}
+
+\PYGdefault{g+go}{Coefficients:}
+\PYGdefault{g+go}{                Value  Std.Error   t\PYGdefaultZhy{}value p\PYGdefaultZhy{}value}
+\PYGdefault{g+go}{(Intercept)  4.588765 0.29835356  15.38029       0}
+\PYGdefault{g+go}{Cardinal    \PYGdefaultZhy{}0.073992 0.00540346 \PYGdefaultZhy{}13.69342       0}
+\PYGdefault{g+go}{Olympus      0.054461 0.01080308   5.04127       0}
+\PYGdefault{g+go}{St.Jude      0.165351 0.00801178  20.63845       0}
+\PYGdefault{g+go}{Lenovo       0.500866 0.01499778  33.39599       0}
+\PYGdefault{g+go}{MicronTech   0.073363 0.01235370   5.93858       0}
+\PYGdefault{g+go}{STMElectro   0.435386 0.02655304  16.39685       0}
+
+\PYGdefault{g+go}{ Correlation:}
+\PYGdefault{g+go}{           (Intr) Cardnl Olymps St.Jud Lenovo McrnTc}
+\PYGdefault{g+go}{Cardinal   \PYGdefaultZhy{}0.208}
+\PYGdefault{g+go}{Olympus    \PYGdefaultZhy{}0.492  0.210}
+\PYGdefault{g+go}{St.Jude    \PYGdefaultZhy{}0.846 \PYGdefaultZhy{}0.113  0.212}
+\PYGdefault{g+go}{Lenovo      0.447 \PYGdefaultZhy{}0.046 \PYGdefaultZhy{}0.834 \PYGdefaultZhy{}0.408}
+\PYGdefault{g+go}{MicronTech \PYGdefaultZhy{}0.421  0.252  0.267  0.273 \PYGdefaultZhy{}0.180}
+\PYGdefault{g+go}{STMElectro  0.494 \PYGdefaultZhy{}0.802 \PYGdefaultZhy{}0.590 \PYGdefaultZhy{}0.203  0.415 \PYGdefaultZhy{}0.614}
+
+\PYGdefault{g+go}{Standardized residuals:}
+\PYGdefault{g+go}{       Min         Q1        Med         Q3        Max}
+\PYGdefault{g+go}{\PYGdefaultZhy{}2.3116653 \PYGdefaultZhy{}0.7048518 \PYGdefaultZhy{}0.0818459  0.6500465  3.5270072}
+
+\PYGdefault{g+go}{Residual standard error: 0.9389829}
+\PYGdefault{g+go}{Degrees of freedom: 1239 total; 1232 residual}
+
+\PYGdefault{g+go}{   user  system elapsed}
+\PYGdefault{g+go}{ 24.566   0.000  23.461}
+\end{Verbatim}

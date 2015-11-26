@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{g+go}{[20:32:19 \PYGdefaultZhy{} 15\PYGdefaultZhy{}10\PYGdefaultZhy{}25]}
+\PYGdefault{g+go}{/home/alisa/uni\PYGdefaultZhy{}stuff/Bachelor/r \PYGdefaultZpc{} /usr/bin/time \PYGdefaultZhy{}v R  main.r}
+\PYGdefault{g+go}{        Command being timed: \PYGdefaultZdq{}R main.r\PYGdefaultZdq{}}
+\PYGdefault{g+go}{        User time (seconds): 7.41}
+\PYGdefault{g+go}{        System time (seconds): 0.05}
+\PYGdefault{g+go}{        Percent of CPU this job got: 18\PYGdefaultZpc{}}
+\PYGdefault{g+go}{        Elapsed (wall clock) time (h:mm:ss or m:ss): 0:41.45}
+\PYGdefault{g+go}{        Average shared text size (kbytes): 0}
+\PYGdefault{g+go}{        Average unshared data size (kbytes): 0}
+\PYGdefault{g+go}{        Average stack size (kbytes): 0}
+\PYGdefault{g+go}{        Average total size (kbytes): 0}
+\PYGdefault{g+go}{        Maximum resident set size (kbytes): 78436}
+\PYGdefault{g+go}{        Average resident set size (kbytes): 0}
+\PYGdefault{g+go}{        Major (requiring I/O) page faults: 0}
+\PYGdefault{g+go}{        Minor (reclaiming a frame) page faults: 17697}
+\PYGdefault{g+go}{        Voluntary context switches: 59}
+\PYGdefault{g+go}{        Involuntary context switches: 2026}
+\PYGdefault{g+go}{        Swaps: 0}
+\PYGdefault{g+go}{        File system inputs: 0}
+\PYGdefault{g+go}{        File system outputs: 2840}
+\PYGdefault{g+go}{        Socket messages sent: 0}
+\PYGdefault{g+go}{        Socket messages received: 0}
+\PYGdefault{g+go}{        Signals delivered: 0}
+\PYGdefault{g+go}{        Page size (bytes): 4096}
+\PYGdefault{g+go}{        Exit status: 0}
+\end{Verbatim}

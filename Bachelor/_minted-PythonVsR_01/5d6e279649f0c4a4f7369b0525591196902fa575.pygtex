@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{g+gp}{\PYGdefaultZgt{}}\PYGdefaultZgt{}\PYGdefaultZgt{} build\PYGdefaultZus{}predictions\PYGdefault{o}{()}
+\PYGdefault{g+go}{the mean of the y is: 23.4646213592}
+\PYGdefault{g+go}{the std of the y is: 2.55283813168}
+\PYGdefault{g+go}{the mean of the prediction is: 21.8848266352}
+\PYGdefault{g+go}{the standard deviation is: 1.35949376438}
+\PYGdefault{g+go}{the mean absolute error of the prediction is: 2.83819120505}
+\PYGdefault{g+go}{the root mean squared error is: 3.47169327209}
+\end{Verbatim}

@@ -27,7 +27,6 @@ def collect_statistics(dict_data):
 
 	return stationary, moments, log_normal
 
-#@profile
 def build_model(file_name):
 	dict_data, list_companies, dependent_variable, rest_companies, dict_final = collect_data(file_name)
 	stationary, moments, log_normal = collect_statistics(dict_data)
@@ -82,13 +81,13 @@ def build_predictions():
 	rmse = numpy.sqrt(sk.mean_squared_error(y, predict))
 
 	# plot predictions and real prices
-	plt.figure()
-	plt.title("Predictions vs Real Prices")
-	rl = plt.plot(y, color="grey", linewidth=2.0)
-	pr = plt.plot(predict, color="blue", linewidth=1.0)
-	#plt.legend([rl, pr],["real prices", "predicted"])
-	plt.savefig("../PythonPredictions.png")
-	plt.clf()
+	# plt.figure()
+	# plt.title("Predictions vs Real Prices")
+	# rl = plt.plot(y, color="grey", linewidth=2.0)
+	# pr = plt.plot(predict, color="blue", linewidth=1.0)
+	# #plt.legend([rl, pr],["real prices", "predicted"])
+	# plt.savefig("../PythonPredictions.png")
+	# plt.clf()
 
 	print("the mean of the y is: " + str(numpy.mean(y)))
 	print("the std of the y is: " + str(numpy.std(y)))
@@ -106,7 +105,7 @@ if __name__ == '__main__':
 	file_name = "../data/LearningSet.csv"
 	dict_data, list_companies, dependent_variable, rest_companies, dict_final = collect_data(file_name)
 
-	build_model(file_name)
+	# build_model(file_name)
 
 	#model, predict, diff, av, dev, mae, rmse = build_predictions()
 
@@ -124,6 +123,5 @@ if __name__ == '__main__':
 	cProfile.run('collect_data(file_name)')
 	cProfile.run('collect_statistics(dict_data)')
 	cProfile.run('build_model(file_name)')
-	# cProfile.run('build_predictions()')
+	cProfile.run('build_predictions()')
 
-s

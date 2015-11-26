@@ -2,3 +2,6 @@
 *.lock
 .swp
 .png
+__pycache__/
+_minted*
+

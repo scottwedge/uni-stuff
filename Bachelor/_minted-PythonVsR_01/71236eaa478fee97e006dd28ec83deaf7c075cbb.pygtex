@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{n}{formula} \PYGdefault{p}{\PYGdefaultZlt{}\PYGdefaultZhy{}} \PYGdefault{n}{as}\PYGdefault{p}{.}\PYGdefault{n}{formula}\PYGdefault{p}{(}\PYGdefault{n}{paste}\PYGdefault{p}{(}\PYGdefault{n}{dep}\PYGdefault{p}{\PYGdefaultZdl{}}\PYGdefault{n}{name}\PYGdefault{p}{,}\PYGdefault{l+s+sc}{\PYGdefaultZsq{}\PYGdefaultZti{}\PYGdefaultZsq{}}\PYGdefault{p}{,} \PYGdefault{n}{as}\PYGdefault{p}{.}\PYGdefault{n}{character}\PYGdefault{p}{(}\PYGdefault{n}{names}\PYGdefault{p}{(}\PYGdefault{n}{small\PYGdefaultZus{}model}\PYGdefault{p}{)),}
+\PYGdefault{n}{collapse}\PYGdefault{p}{=}\PYGdefault{err}{\PYGdefaultZsq{}\PYGdefaultZsq{}}\PYGdefault{p}{))}
+\end{Verbatim}

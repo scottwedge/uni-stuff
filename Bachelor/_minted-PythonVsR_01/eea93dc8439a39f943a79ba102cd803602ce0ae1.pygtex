@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{g+gp}{\PYGdefaultZgt{}} model1\PYGdefaultZlt{}\PYGdefaultZhy{}gls\PYGdefault{o}{(}Intel \PYGdefaultZti{} Olympus + Google + AMD + St.Jude, data\PYGdefault{o}{)}
+\PYGdefault{g+gp}{\PYGdefaultZgt{}} model1
+\PYGdefault{g+go}{Generalized least squares fit by REML}
+\PYGdefault{g+go}{  Model: Intel \PYGdefaultZti{} Olympus + Google + AMD + St.Jude}
+\PYGdefault{g+go}{  Data: data}
+\PYGdefault{g+go}{  Log\PYGdefaultZhy{}restricted\PYGdefaultZhy{}likelihood: \PYGdefaultZhy{}1959.999}
+
+\PYGdefault{g+go}{Coefficients:}
+\PYGdefault{g+go}{(Intercept)     Olympus      Google         AMD     St.Jude}
+\PYGdefault{g+go}{\PYGdefaultZhy{}1.38174717  0.18731627  0.01450565  0.05510854  0.21830586}
+
+\PYGdefault{g+go}{Degrees of freedom: 1239 total; 1234 residual}
+\PYGdefault{g+go}{Residual standard error: 1.158712}
+\end{Verbatim}

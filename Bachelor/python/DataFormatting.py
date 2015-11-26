@@ -68,14 +68,19 @@ class DataFormatting:
 		return self.dependent_variable, self.rest_companies, self.dict_final
 
 
-if __name__ == '__main__':
+def formatData():
 	raw_data = DataFormatting("../data/LearningSet.csv")
 	dict_data = raw_data.keep_dict()
 	list_companies = raw_data.getAllCompanies()
 	dependent_variable, rest_companies, dict_final = raw_data.extract_dependent()
+	return dict_data, list_companies, dependent_variable, rest_companies, dict_final
 
-	print(dict_final)
-	#print(cProfile.run('data = pd.read_csv("../data/LearningSet.csv")'))
+
+if __name__ == '__main__':
+
+
+	# print(dict_final)
+	print(cProfile.run('formatData()'))
 	
 
 

@@ -1,0 +1,26 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{g+go}{The best model contains  6  parameters. And the model is:}
+\PYGdefault{g+go}{[\PYGdefaultZsq{}STMElectro\PYGdefaultZsq{}, \PYGdefaultZsq{}Olympus\PYGdefaultZsq{}, \PYGdefaultZsq{}St Jude\PYGdefaultZsq{}, \PYGdefaultZsq{}Lenovo\PYGdefaultZsq{}, \PYGdefaultZsq{}MicronTech\PYGdefaultZsq{}, \PYGdefaultZsq{}Google\PYGdefaultZsq{}]}
+\PYGdefault{g+go}{                            GLS Regression Results}
+\PYGdefault{g+go}{==========================================================================}
+\PYGdefault{g+go}{Dep. Variable:                      y   R\PYGdefaultZhy{}squared:               0.998}
+\PYGdefault{g+go}{Model:                            GLS   Adj. R\PYGdefaultZhy{}squared:          0.998}
+\PYGdefault{g+go}{Method:                 Least Squares   F\PYGdefaultZhy{}statistic:             8.701e+04}
+\PYGdefault{g+go}{Date:                 Do, 24 Sep 2015   Prob (F\PYGdefaultZhy{}statistic):      0.00}
+\PYGdefault{g+go}{Time:                        20:20:45   Log\PYGdefaultZhy{}Likelihood:          \PYGdefaultZhy{}1753.3}
+\PYGdefault{g+go}{No. Observations:                1239   AIC:                     3519.}
+\PYGdefault{g+go}{Df Residuals:                    1233   BIC:                     3549.}
+\PYGdefault{g+go}{Df Model:                           6}
+\PYGdefault{g+go}{Covariance Type:            nonrobust}
+\PYGdefault{g+go}{==========================================================================}
+\PYGdefault{g+go}{      coef    std err      t      P\PYGdefaultZgt{}|t|    [95.0\PYGdefaultZpc{} Conf. Int.]}
+\PYGdefault{g+go}{\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}\PYGdefaultZhy{}}
+\PYGdefault{g+go}{x1   0.1254   0.016      7.933    0.000      0.094     0.156}
+\PYGdefault{g+go}{x2   0.0609   0.012      5.065    0.000      0.037     0.085}
+\PYGdefault{g+go}{x3   0.3261   0.016     21.029    0.000      0.296     0.357}
+\PYGdefault{g+go}{x4   0.2126   0.004     47.272    0.000      0.204     0.221}
+\PYGdefault{g+go}{x5   0.0083   0.001     12.929    0.000      0.007     0.010}
+\PYGdefault{g+go}{x6   0.1291   0.012     10.536    0.000      0.105     0.153}
+\PYGdefault{g+go}{============================================================}
+\PYGdefault{g+go}{[Finished in 4173.2s]}
+\end{Verbatim}
