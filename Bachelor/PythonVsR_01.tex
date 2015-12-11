@@ -20,9 +20,9 @@ The Structure of the thesis
 \begin{enumerate}
     \item[1.] Motivation
         \begin{enumerate}
-            \item[1.1] Python language overview
-            \item[1.2] R language overview
-            \item[1.3] Python vs R wars
+            \item[1.1] Data analysis market
+            \item[1.2] Python usage 
+            \item[1.3] R usage
             \item[1.4] Thesis description
             \item[1.5] Data preparation 
         \end{enumerate}
@@ -59,9 +59,18 @@ The Structure of the thesis
 
 \newpage
 \section{Motivation}
-Nowadays, with the massive digitalization of the world, statistical analysis is used almost everywhere. Along with the classical fields of data analysis such as production, logistics, marketing and so on, new spheres like e-commerce and video gaming require statistical analysis to succeed. In order to create a professional web site to attract customers and more important to make them purchase things from this particular online shop, a customer behavior analysis is required as well as an analysis of the product. The video gaming industry can be another example of the sphere where data analysis is essential for success. The AI in a game (NPC or event generator) constantly analyzes the incoming data from the players, servers and third party sources to improve its performance. The game play, the enemies, the load distribution on the servers and many other things are adjusted accordingly to the results of the constant data analysis and predictions. These are only several examples where statistical analysis plays an important role but there are many others. Almost every aspect of modern life is connected with data analysis.\vspace{3mm}\\
-Since the computer technologies are way more advanced than they were several decades ago, many different approaches, tools and frameworks are available for automatized computations as well as for an automatized data collection. However, for every purpose, a certain set of tools, languages and libraries should be carefully chosen. In this work we will concentrate our attention on using two very popular languages to solve a simple statistic-econometric task. Almost every modern programming language can be used to build a program for collecting, processing and visualizing data: SCALA, C, C++, .NET, Java, Python, JavaScript.\vspace{3mm}\\
-In this work we will concentrate on two popular programming languages. We will compare Python 3 with R. Both of them are fairly recent (Python is about 25 years old and R is about 22 years old). Both languages are widely used for data analysis and are commonly employed in open source projects. They both have large communities behind them. An important factor for this work was each languages' respective learning curve. Statistic programs in this work will be written in beginner style. Python and R are relatively easy to begin with even for non-programmers. Python has a gradual learning curve due to its simplicity, clear and intuitive syntax. Although R has a steep learning curve, beginners still can use it pretty easy for up to moderately complex projects.
+The analysis of any available data has always played an essential role for the business success. According to the Wikipedia:"Since the mid-1990s, the Internet has had a revolutionary impact on culture and commerce, including the rise of near-instant communication by electronic mail, instant messaging, voice over Internet Protocol (VoIP) telephone calls, two-way interactive video calls, and the World Wide Web with its discussion forums, blogs, social networking, and online shopping sites" [1]. The mass digitalization of the world allowed easier and faster data collection. With the development of the technologies the amount of data stored jumped from 3.75 megabytes capacity disk storage unit presented by IMB in 1956 [2] up to 16TB solid-state drive produced by SAMSUNG [3]. The classical mathematical and statistical tools became unusable on the amount of the data collected since the methods were not optimized for such amount of the information. Most of the algorithms were sequential and thus the performance suffered.\\
+With the rise of the possibilities to collect and store the data new sphere of the analysis appeared to be important for the business. Big Data was known long before it became popular. In 1944 the first estimate to the data growth was given by Fremont Rider [4]. In his work Rider pointed out the problem of the information growth:"... of all the problems which have, of recent years, engaged the attention of educators and librarians, none have been more puzzling than those posed by the astonishing growth of our great research libraries…it seems, as stated, to be a mathematical fact that, ever since college and university libraries started in this country, they have, on the average, doubled in size every sixteen years". Although the main concern of the author was storing and maintaining the science papers in the libraries as well as the according growth of the administration costs, these are already the questions from big data domain. Another prominent work on big data is the "Litle Science, Big Science... and beyond" by Derek Price in 1963 [5]. In this work author discussed the science institution evolution to multi-purpose clusters of different libraries along with the data growth. This work shows the development of the infrastructure along with the data development.\\
+The new level of the accessible data required both new hardware and software technologies as well as new mathematical approaches. The rapid storage systems development started in approximately 1960s. The software development also began with the new hardware possibilities. One of the first papers using the big data term was written in 1999 by Steve Bryson, David Kenwright, Michael Cox, David Ellsworth, and Robert Haimes and called “Visually exploring gigabyte data sets in real time” [6]. It is believed that the term itself at the current understanding was presented by Roger Magoulas [7].\\
+Starting from mid 2000s the need of the experienced data analysts, data scientists and data engineers grew. However the candidates should have certain set of skills allowing to work with huge data sets on a distributed file system like Google distributed file system (GDFS), Hadoop distributed file system (HDFS) or other similar products. The "2015 Data Science Salary Survey" from O'Reilly sums up the current trends in the required skills set for the data processing positions [8]. The key points made stated out in the survey show that SQL, Excel, R, and Python are the most asked skills. The same result appeared by browsing through the three big job search portals for data engineer, scientist and analyst positions. Gigajob, Monster and LinkedIn (not exactly job searching  platform, but it has this functionality and results are representative) show similar results to the O'Reilly survey. The most interesting trends are:
+\begin{enumerate}
+    \item The rise of interest towards Python, R and Scala (Spark).
+    \item Java, C++ and Haskell are asked by very specific industries (financial sectors like banking and stock exchange, heavy industries).
+    \item Hadoop with Hive or Pig is giving up it's position to the Spark language.
+    \item SQL knowledge is substantial.
+    \item Excel knowledge is substantial.
+\end{enumerate}
+We consider the rise of Python and R popularity very interesting since both languages were designed for the data processing but weren't popular among the industry and business in the early 1990s. These two languages can be seen as substitutes or supplements depending on the set of the tasks. In this work we will try to answer the question "what language would be better to start with for a beginner data analyst". We have taken data analyst position since data analysts perform a variety of tasks related to collecting, organizing, and interpreting statistical information but is not responsible for building new data processing tools or creating new approaches to detect patterns in the amount of data. The tasks for a beginner analyst are considered to be data collecting and storing, data cleaning, processing hypothesis testing and visualising the results for further interpretation and use. These tasks require basic programming skills to get the data from the web, server or data base. Also programming skills must be sufficient to visualize the data and port the graphs to the web. Another required skill is the understanding how DFS works and ability to use it. Additionally the candidate should have sufficient knowledge in mathematics and statistics.
 
 \newpage
 \subsection{Python language overview}
@@ -711,7 +720,7 @@ x6             0.1533      0.012     12.533      0.000         0.129     0.177
 The following graph shows the difference between two models forecasts returned by the Python program. The gray line shows the real values, the green line presents the new model forecast and the blue line is the old model forecast.\\
 \includegraphics[scale=0.75]{PythonOriginalVsPythonNew.png}\\
 The Python program considers the new model to be worse in comparison to the original suggestion since the MAE is 1.072 smaller and the RMSE is 1.4 smaller than the original results. The first Python model was chosen based on the AIC and the predictions were also not taken into account during the evaluation steps.\\
-The following graph presents the predictions for the same model but estimated by different program. the model is \mintinline{console}{["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]}. Same color notation is used.\\
+The following graph presents the predictions for the same model but estimated by different program. the model is ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. Same color notation is used.\\
 \includegraphics[scale=0.75]{ROriginalVsPythonNew.png}
 The Python program predictions are less accurate than the R predictions for the same model. The R MAE is 0.617 smaller and the R RMSE is 0.684 smaller.\\
 The higest accuracy forecast was built by the R program for the Python original model. This result can be explained by the fact that R gls.predict() module uses higher accuracy computation algorithm and operates with doubles insaead of floats. At the same time the Python program has returned better regression using the AIC during the evaluation process. Python gets an additional Point for yielding higher accuracy results.\\
@@ -756,11 +765,28 @@ After point to point comparison and collecting the personal opinion, we have dec
     \item The complex functions are easier to use.
 \end{enumerate}
 The R language has a big high-quality community behind it. There are certain standards for the documentation and the code quality, which ensures the quality of the libraries.\\
-The negative moment can be the development of a bigger program. Prototyping in R can be tricky for mid- and very complex programs. You have to think in advance about class connections. Although you can also keep everything in functions form - this will allow you to prototype faster, but will cause some difficulties later on during refactoring.\\
+The negative moment can be the development of a bigger program. Prototyping in R can be tricky for mid- and very complex programs. You have to think in advance about class connections. Although you can also keep everything in functions form - this will allow you to prototype faster, but will cause some difficulties later on during re-factoring.\\
   
 
 \newpage
 \section{Literature}
+proper literature
+\begin{enumerate}
+    \item \url{https://en.wikipedia.org/wiki/History_of_the_Internet} 
+    \item \url{https://www-03.ibm.com/ibm/history/exhibits/storage/storage_350.html}
+    \item \url{http://arstechnica.com/gadgets/2015/08/samsung-unveils-2-5-inch-16tb-ssd-the-worlds-largest-hard-drive/}
+    \item \url{https://en.wikipedia.org/wiki/History_of_hard_disk_drives}
+    \item Rider (1944). The Scholar and the Future of the Research Library. New York City: Hadham Press
+    \item Derek J. de Solla Price (1986). "Little Science, Big Science and Beyond"
+    \item  Steve Bryson, David Kenwright, Michael Cox, David Ellsworth, and Robert Haimes publish “Visually exploring gigabyte data sets in real time”
+    \item \url{https://www.linkedin.com/in/rmagoulass}
+    \item \url{https://www.oreilly.com/ideas/2015-data-science-salary-survey}
+\end{enumerate}
+needed but not included
+\begin{enumerate}
+    \item \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6182574}
+\end{enumerate}
+old version
 \begin{enumerate}
     \item \url{https://en.wikipedia.org/wiki/Python_(programming_language)}
     \item \url{https://www.digitalocean.com/community/tutorials/how-to-package-and-distribute-python-applications}
