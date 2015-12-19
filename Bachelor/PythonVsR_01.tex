@@ -21,8 +21,8 @@ The Structure of the thesis
     \item[1.] Motivation
         \begin{enumerate}
             \item[1.1] Data analysis market
-            \item[1.2] Python usage 
-            \item[1.3] R usage
+            \item[1.2] General information about Python 
+            \item[1.3] General information about R
             \item[1.4] Thesis description
             \item[1.5] Data preparation 
         \end{enumerate}
@@ -70,12 +70,12 @@ Starting from mid 2000s the need of the experienced data analysts, data scientis
     \item SQL knowledge is substantial.
     \item Excel knowledge is substantial.
 \end{enumerate}
-We consider the rise of Python and R popularity very interesting since both languages were designed for the data processing but weren't popular among the industry and business in the early 1990s. These two languages can be seen as substitutes or supplements depending on the set of the tasks. In this work we will try to answer the question "what language would be better to start with for a beginner data analyst". We have taken data analyst position since data analysts perform a variety of tasks related to collecting, organizing, and interpreting statistical information but is not responsible for building new data processing tools or creating new approaches to detect patterns in the amount of data. The tasks for a beginner analyst are considered to be data collecting and storing, data cleaning, processing hypothesis testing and visualising the results for further interpretation and use. These tasks require basic programming skills to get the data from the web, server or data base. Also programming skills must be sufficient to visualize the data and port the graphs to the web. Another required skill is the understanding how DFS works and ability to use it. Additionally the candidate should have sufficient knowledge in mathematics and statistics.
+We consider the rise of Python and R popularity a very interesting tendency since both languages were designed for the data processing but weren't popular among the industry and business in the early 1990s. These two languages can be seen as substitutes or supplements depending on the task context. In this work we will try to answer the question "what language would be better to start with for a beginner data analyst". We have taken data analyst position since data analysts perform a variety of tasks related to collecting, organizing, and interpreting statistical information but is not responsible for building new data processing tools or creating new approaches to detect patterns in the amount of data. The tasks for a beginner analyst are considered to be data collecting and storing, data cleaning, processing hypothesis testing and visualising the results for further interpretation and use. These tasks require basic programming skills to get the data from the web, server or data base. Also programming skills must be sufficient to visualize the data and port the graphs to the web. Another required skill is the understanding how DFS works and ability to use it. Additionally the candidate should have sufficient knowledge in mathematics and statistics.
 
 \newpage
 \subsection{Python language overview}
 Python is a relatively young language. The first public release of the language was announced 24 years ago. According to the official web page in the Wikipedia: "Python is a widely used general-purpose, high-level programming language. Its design philosophy emphasizes code readability, and its syntax allows programmers to express concepts in fewer lines of code than would be possible in languages such as C++ or Java" [9].\\
-Currently Python is widely used in both business and science. There are different application domains for the language like Software development in games, finance, management systems, financial sector [10]. An interesting example of Python use is ForecastWatch [11]. This projects helps to evaluate the accuracy of the weather forecasts. The project is implemented solely on Python. The language was chosen because of existing parsing and statistical libraries as well as back end and front end technologies. The ability of Python to easily work with C++ and C made this language to be the choice for Industrial Light \& Magic (ILM). The company uses unique software to create visual special effects for movies. Their effects were used in such films like Stark Trek, Avengers, Transformers, Indiana Jones series and many others [17].\\
+Currently Python is widely used in both business and science. There are different application domains for the language like Software development in games, finance, management systems, financial sector [10]. An interesting example of Python use is ForecastWatch [11]. This projects helps to evaluate the accuracy of the weather forecasts. The project is implemented solely on Python. The language was chosen because of existing parsing and statistical libraries as well as back end and front end technologies. The ability of Python to easily work with C++ and C made this language to be the choice for Industrial Light & Magic (ILM). The company uses unique software to create visual special effects for movies. Their effects were used in such films like Stark Trek, Avengers, Transformers, Indiana Jones series and many others [17].\\
 The scientific community also uses Python for different purposes: from simulation software to direct programming to checking a hypothesis. The first example we will mention in this work is the Molecular Modelling Toolkit [12]. The scientific publications connected with this open source library can be divided into three categories:
 \begin{enumerate}
     \item Articles about the methods extending MMTK.
@@ -85,12 +85,22 @@ The scientific community also uses Python for different purposes: from simulatio
 A good example of an article from the first group is "Harmonicity in slow protein dynamics" by K Hinsen, A J Petrescu, S Dellerue, M C Bellissent-Funel, and G R Kneller [13]. The example article from the second group is the "Analysis of domain motions in large proteins" by K Hinsen, A Thomas, and M J Field published in 1999 [14]. An example of articles with results gotten with the help of MMTK is "A Molecular Dynamics Investigation of Vinculin Activation" by Javad Golji and Mohammad R Mofrad published in 2010 [15]. There are many other scientific spheres using Python for the research. For example in neural networks and deep learning Python libraries and programs are used heavily. The "Deep Boltzmann Machines and the Centering Trick" by Gregoire Montavon and Klaus-Robert Müller in 2012 [16].\\
 Python offers a variety of tools for both researches and business oriented projects. The one-purpose programs and full stack web applications are built using solely Python or in a combination with other programming languages. 
 
+
 \subsection{R Overview}
-R is a programming language and software environment for statistical computing and graphics. The R language is widely used among statisticians and data miners for developing statistical software and data analysis. Polls, surveys of data miners, and studies of scholarly literature databases show that R's popularity has increased substantially in recent years [5]. R is a successor of the S language, proposed about 39 years ago. R is distributed under GNU General Public license which makes this language a suitable choice for open source analytical projects.\\
-Same as Python, R also uses an interpreter to execute the code. R is a single-purpose language. The main use of R is statistical analysis and visualization. Since R is an open source project, there is also a big community behind it. The community behind R language is of mostly scientific nature.\\
-The disadvantage of R is its single-purpose nature. The use of such project will be reduced, since there are few quick and comfortable ways to integrate the program into a real system.\\
+Same as Python R is a young language. The language was first introduced in 1993. According to the Wikipedia page: "R is a programming language and software environment for statistical computing and graphics supported by the R Foundation for Statistical Computing. The R language is widely used among statisticians and data miners for developing statistical software[4] and data analysis" [18]. It can be seen from the Wikipedia description that R was designed for scientific purposes, for data analysis explicitly. The community behind this language consists as well mostly from universities or scientific teams. \\
+Since the performance of the R programs can be better than Python's programs (without a heavy optimization) and the prototypes can be built faster in comparison to Java, C++ or C languages the language is being used as a part of the software. R scripts can be called inside of the Python program for speeding up certain computations. However this trend is new and the amount of the R programs used in business projects is relatively low.\\
+As it was said earlier R is mostly used for statistic analysis by the scientific community. Similar to the Python articles, scientific papers with R usage can be divided into two categories:
+\begin{enumerate}
+    \item The articles about R extensions and packages.
+    \item Articles using R programs for hypothesis checking.
+\end{enumerate}
+A good example of an article from the first category is "lavaan: An R Package for Structural Equation Modeling" by Yves Rosseel [19]. The package can be useful for social and psychological analysis. In general every package developed by a scientific team from a university can be seen as a scientific engineering work. In this paper we have used several such packages: Tseries [20] and Nlme packages [21]. These packages will be discussed in details in the R section. R is used not only in statistics, but also in biology. Analysis of Phylogenetics and Evolution (APE) is a package written in the R language for use in molecular evolution and phylogenetics [22].
+An example of a scientific paper from the second category is the article "neuralnet: Training of Neural Networks" by Frauke Günther and Stefan Fritsch [23]. In their article the authors have used the data from the R distribution and wrote a multi-layered perceptron trained via supervised algorithm in the context of the regression analysis. Another interesting example of the R usage is the paper "Nonlinear Regression and Nonlinear Least Squares in R" by John Fox and Sanford Weisberg [24]. \\
+Although R is still mostly a scientific language, it is used as a part of the analytical systems due to its performance and simplicity.
+
 
 \subsection{Python vs R wars}
+1. More detailed information with links
 Since both languages offer tons of packages and libraries for analyzing and visualization, people argue about what language is a better fit [6],[7],[8],[9],[10].
 So far nobody has managed to give a satisfactory final answer, since the languages indeed are different. The answer will differ depending on task scale, complexity, requirements. A viable strategy is providing a list of requirements with points for each requirement for every concrete task and scale. This way it is possible to compare the languages more or less objectively without letting the subjective judgment and preferences make the evaluation biased.\\
 In this work we have developed our own list of criteria to compare Python and R. This list contains following points:
@@ -108,6 +118,10 @@ In this work we have developed our own list of criteria to compare Python and R.
 Using this list, both languages can be objectively evaluated. These points were chosen to be appropriate for all small, middle and enterprise-level projects. In the next section we will describe the test-task to compare Python and R languages and define the points system for objective evaluation.\\
 
 \subsection{Thesis Description}
+1. Say again why these two languages were chosen\\
+2. Remind the important set of skills\\
+3. Define the formal criteria based on desried set of skills\\
+4. Describe general functions of the program\\
 The idea of this bachelor thesis is to test which of the languages is more suitable for specific statistic task. Both programs will have similar structure and functions, so that they can be evaluated more properly. The program that will be evaluated consists of four parts:
 \begin{enumerate}
     \item Getting and formatting data - the program should be able to read a prepared file in csv format. Afterwards, the program should format the data into needed structure for further use.
@@ -786,10 +800,28 @@ proper literature
     \item  Steve Bryson, David Kenwright, Michael Cox, David Ellsworth, and Robert Haimes publish “Visually exploring gigabyte data sets in real time”
     \item \url{https://www.linkedin.com/in/rmagoulass}
     \item \url{https://www.oreilly.com/ideas/2015-data-science-salary-survey}
+    \ietm \url{https://en.wikipedia.org/wiki/Python_(programming_language)}
+    \item \url{https://www.python.org/about/success/}
+    \item \url{http://www.forecastwatch.com/}
+    \item \url{http://dirac.cnrs-orleans.fr/MMTK/}
+    \item \url{http://dirac.cnrs-orleans.fr/plone/publications/preprints/all-preprints/harmonicity.pdf}
+    \item \url{http://dirac.cnrs-orleans.fr/plone/publications/preprints/all-preprints/domain_motions.pdf}
+    \item \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2920635/}
+    \item \url{http://gregoire.montavon.name/publications/montavon-lncs12.pdf}
+    \item \url{http://www.ilm.com/}
+    \item \url{https://en.wikipedia.org/wiki/R_(programming_language)}
+    \item Yves Rosseel, "lavaan: An R Package for Structural Equation Modeling". 2012-05-24 Journal of statistical software
+    \item \url{https://journal.r-project.org/archive/2010-1/RJournal_2010-1_Guenther+Fritsch.pdf}
+    \item \url{https://socserv.socsci.mcmaster.ca/jfox/Books/Companion/appendix/Appendix-Nonlinear-Regression.pdf} 
+    
 \end{enumerate}
 needed but not included
 \begin{enumerate}
+    \item \url{https://cran.r-project.org/web/packages/tseries/tseries.pdf}
+    \item \url{https://cran.r-project.org/web/packages/nlme/nlme.pdf}
+    \item \url{https://cran.r-project.org/web/packages/ape/index.html}
     \item \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6182574}
+    \
 \end{enumerate}
 old version
 \begin{enumerate}
