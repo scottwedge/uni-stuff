@@ -20,38 +20,38 @@ The Structure of the thesis
 \begin{enumerate}
     \item[1.] Motivation
         \begin{enumerate}
-            \item[1.1] Data analysis market
-            \item[1.2] General information about Python 
-            \item[1.3] General information about R
-            \item[1.4] Thesis description
-            \item[1.5] Data preparation 
+            \item[1.1] Introduction: The Rise Of The Data Analysis
+            \item[1.2] Python Overview 
+            \item[1.3] R Overview
+            \item[1.4] Thesis Description
+            \item[1.5] Data Preparation 
         \end{enumerate}
     \item[2.] Python
         \begin{enumerate}
-            \item[2.1] The structure of the program
-            \item[2.2] The process description
+            \item[2.1] The Structure Of The Program
+            \item[2.2] The Process Description
             \begin{enumerate}
                 \item[2.2.1] Used Libraries
-                \item[2.2.2] Documentation quality and quantity
-                \item[2.2.3] Advantages and disadvantages of the program 
+                \item[2.2.2] Documentation and The Ecosystem
+                \item[2.2.3] Advantages and Disadvantages Of The Program 
             \end{enumerate}
             \item[2.3] Results
         \end{enumerate}
     \item[3.] R
         \begin{enumerate}
-            \item[3.1] The structure of the program
-            \item[3.2] The process description
+            \item[3.1] The Structure Of The Program
+            \item[3.2] The Process Description
             \begin{enumerate}
                 \item[3.2.1] Used Libraries
-                \item[3.2.2] Documentation quality and quantity
-                \item[3.2.3] Advantages and disadvantages of the program 
+                \item[3.2.2] Documentation and The Ecosystem
+                \item[3.2.3] Advantages and Disadvantages Of The Program 
             \end{enumerate}
             \item[3.3] Results
         \end{enumerate}
     \item[4.] Results
         \begin{enumerate}
-            \item[1.1] Objective comparison
-            \item[1.2] Subjective comparison
+            \item[1.1] Objective Comparison
+            \item[1.2] Subjective Comparison
             \item[1.3] Conclusion
         \end{enumerate}
     \item[5.] Literature
@@ -73,7 +73,7 @@ Starting from mid 2000s the need of the experienced data analysts, data scientis
 We consider the rise of Python and R popularity a very interesting tendency since both languages were designed for the data processing but weren't popular among the industry and business in the early 1990s. These two languages can be seen as substitutes or supplements depending on the task context. In this work we will try to answer the question "what language would be better to start with for a beginner data analyst". We have taken data analyst position since data analysts perform a variety of tasks related to collecting, organizing, and interpreting statistical information but is not responsible for building new data processing tools or creating new approaches to detect patterns in the amount of data. The tasks for a beginner analyst are considered to be data collecting and storing, data cleaning, processing hypothesis testing and visualising the results for further interpretation and use. These tasks require basic programming skills to get the data from the web, server or data base. Also programming skills must be sufficient to visualize the data and port the graphs to the web. Another required skill is the understanding how DFS works and ability to use it. Additionally the candidate should have sufficient knowledge in mathematics and statistics.
 
 \newpage
-\subsection{Python language overview}
+\subsection{Python Overview}
 Python is a relatively young language. The first public release of the language was announced 24 years ago. According to the official web page in the Wikipedia: "Python is a widely used general-purpose, high-level programming language. Its design philosophy emphasizes code readability, and its syntax allows programmers to express concepts in fewer lines of code than would be possible in languages such as C++ or Java" [9].\\
 Currently Python is widely used in both business and science. There are different application domains for the language like Software development in games, finance, management systems, financial sector [10]. An interesting example of Python use is ForecastWatch [11]. This projects helps to evaluate the accuracy of the weather forecasts. The project is implemented solely on Python. The language was chosen because of existing parsing and statistical libraries as well as back end and front end technologies. The ability of Python to easily work with C++ and C made this language to be the choice for Industrial Light \& Magic (ILM). The company uses unique software to create visual special effects for movies. Their effects were used in such films like Stark Trek, Avengers, Transformers, Indiana Jones series and many others [17].\\
 The scientific community also uses Python for different purposes: from simulation software to direct programming to checking a hypothesis. The first example we will mention in this work is the Molecular Modelling Toolkit [12]. The scientific publications connected with this open source library can be divided into three categories:
@@ -98,7 +98,7 @@ A good example of an article from the first category is "lavaan: An R Package fo
 An example of a scientific paper from the second category is the article "neuralnet: Training of Neural Networks" by Frauke Günther and Stefan Fritsch [23]. In their article the authors have used the data from the R distribution and wrote a multi-layered perceptron trained via supervised algorithm in the context of the regression analysis. Another interesting example of the R usage is the paper "Nonlinear Regression and Nonlinear Least Squares in R" by John Fox and Sanford Weisberg [24].\\
 Although R is still mostly a scientific language, it is used as a part of the analytical systems due to its performance and simplicity.
 
-\subsection{Python vs R wars}
+\subsection{Python Vs R Wars}
 As we have already mentioned above, both Python and R are widely used for scientific researches and business projects. Python is used more often for business projects since it is a multipurpose language with a low initial time investment. On the other hand R requires a bit more initial time investment but yields better performance.\\
 For a person without a previous experience in programming it can be hard to decide what language to start with. The discussion of the question whether Python is more suitable for analysis than R takes place since the data analysis boom and still no objective answer was given. All discussions can be roughly divided into three categories:
 \begin{enumerate}
@@ -109,27 +109,18 @@ For a person without a previous experience in programming it can be hard to deci
 Since the theme is being discussed several years already there are many forums and topics with no real answer given. Depending on the domain of the forum or the domain of the language use, different opinions can be seen.
 An example of the general and mostly subjective comparison is the discussion on specialized forum. Most known sources for analysts are Biostars [25], different sub domains of the stackexchange [26] and specific questions on the stackoverflow [27]. The most popular opinion on the forums is to use whatever suits the task and current set of skills. This answer can be seen on specific forums like Biostars very clear [25]. In this case the domains of the tasks are biology, chemistry and simulation. The users of the forum on average say that R is better maintained and have more suitable packages, however they use Python for their analytical purposes. The reason for that conflict is the multipurpose nature of Python, which allows better data collection and direct visualization in web. All of this makes Python easier to use and eliminates the bottleneck among the parts of the project. On the other hand R has more smaller packages for analytical tasks and is faster than average Python program. The obvious disadvantage of the general comparison approach is its biased nature. The results of such discussions are hardly usable.\\
 The benchmarking is a good criterion to compare the performance of the languages. However this method should be used carefully. The performance itself will only show how faster one language can be for the specific task, the specific machine, and specific implementations for languages that are compared. In order to use benchmarking all parameters should be set equally. An interesting example of a benchmarking is given in the paper "A Comparison of Programming Languages in Economics" by S. Boragan Aruoba and Jesus Fernandez-Villaverde [28]. In their paper the researchers have compared several languages implementing the stochastic neoclassical growth model. Among the languages they have chosen were R and Python (CPython and Pypy). All programs were implementing the same algorithm and run the same number of iterations. The programs were implemented on the level of an experienced programmer. The paper yields predictable and unbiased results. However the complexity of the task and according complexity of the programs written play an important role in end results. The languages have different paradigms, concepts and structure, thus there is no guaranty that the chosen code style results in optimal performance for each language.\\
-The third group of comparison methods is comparing the complexity of the code in order to achieve same performance. An interesting example of this approach is the article written in the dataquest blog [29]. For their article the authors have used mainly Pandas and NumPy Python packages and base R package. In their article the clear is not given. However the dataquest team suggests R to be more suitable language for purely statistical tasks. Python will be easier to use for complex systems, where the analysis part does not take the central place.\\
-The goal of this paper is to answer the question: "What language is more suitable for a beginner data analyst?" To answer that question we will need to do create a criteria to evaluate the languages the most unbiased way. The criteria will depend on the tasks common for a data analyst. To evaluate the languages we will consider the criteria listed in the table:
-\begin{enumerate}
-    \item The quality of the documentation. 
-    \item Performance.
-    \item Memory use.
-    \item Big Data tools.
-    \item The quality of the ecosystem of the language.
-\end{enumerate}
-These criteria cover the main tasks of a data analytic: data mining, data visualization, the opportunity to use DFS to process the data. The quality of the documentation and ecosystem is important since a data analyst should have sufficient mathematical background to understand and use different algorithms and approaches, but not to implement them (this is the task of a data scientist).\\
-For each criterion from the table from 0 to 1 points will be given to each language. Objectively the most suitable language for a beginner data analyst will be the language with the highest score.
+The third group of comparison methods is comparing the complexity of the code in order to achieve same performance. An interesting example of this approach is the article written in the Dataquest blog [29]. For their article the authors have used mainly Pandas and NumPy Python packages and base R package. In their article the clear is not given. However the Dataquest team suggests R to be more suitable language for purely statistical tasks. Python will be easier to use for complex systems, where the analysis part does not take the central place.\\
+The goal of this paper is to answer the question: "What language is more suitable for a beginner data analyst?" To answer that question we will need to do create a criteria to evaluate the languages the most unbiased way. The criteria will depend on the tasks common for a data analyst. The common tasks of a data analytic are data mining, data visualization, the opportunity to use DFS to process the data. The quality of the documentation and ecosystem is important since a data analyst should have sufficient mathematical background to understand and use different algorithms and approaches, but not to implement them (this is the task of a data scientist).\\
 
 \subsection{Thesis Description}
 For our work we have chosen Python and R. Both languages are widely used by data scientists, engineers and analysts across all possible domains. The popularity of this languages is rising steadily. Both Python and R offer significant amount of packages for a different complexity projects. However since these two languages are different we will try to answer the question what language is more suitable for beginners.\\
 Comparing two different programming languages is a hard task. In order to get unbiased results we will set several parameters. Fist, the domain of the language use. In this paper we will write a program a beginner data analyst will probably have to write as a part of the job. The main focus is a program solving a mid complexity statistical task, running within acceptable time, without expensive speed up methods. In other words we will compare Python and R based on the programs written in each language to find the best regression from a given data table.\\
 To evaluate the languages objectively we will consider the criteria listed in the table:
 \begin{enumerate}
-    \item The quality of the documentation. 
     \item Performance.
     \item Memory use.
     \item Big Data tools.
+    \item The quality of the documentation. 
     \item The quality of the ecosystem of the language.
 \end{enumerate}
 Each program will get from 0 to 1 Point for each criterion. \\
@@ -150,17 +141,28 @@ The output of the program shows the names of the companies in the final regressi
 \end{enumerate}
 The task for the program is to build a best matching linear regression (if possible) for a company (always the first column in the file) using several limitations on the number of the predictors.\\
 The program will build a simple regression (if possible). In this work we have considered the class of linear regressions to be a simple regression model. This task is considered to be mid complex task. The beginning programming level will allow us to avoid diving into specific of the languages. So we will see the advantages and disadvantages of the languages from the box.\\
-We will not consider data collection as a part of our main task. This is why the learning set and validation data set will be provided upfront. The data will be chosen that why, so that results can be logically checked or checked manually using excel. This option will be used only if the results of the programs will logically be unreal.\\
-The data will be prepared and provided by two files: training set and test set in the csv format.\\
+We will not consider data collection as a part of our main task. This is why the learning set and validation data set will be provided upfront. The data will be chosen that why, so that results can be logically checked or checked manually using excel. This option will be used only if the results of the programs will logically be unreal. The data will be prepared and provided by two files: training set and test set in the csv format.\\
 According to the list for objective evaluation, each point will give a score from 0 to 1 to the language. A score of 0 will be given in negative case and a score of 1 will be given in positive case.
 \begin{enumerate}
     \item Performance comparison will give 1 point to the fastest program and the language accordingly and 0 points to the slowest program.
     \item Memory use comparison will give 1 point to the program and the language accordingly that allocates the least amount of memory and 0 points to the other program.
     \item The possibility to use the language with the Big Data tool or to build a tool of that scale will bring the language with the most possibilities 1 point and 0.5 points to the second language.
+    \item Documentation and the ecosystem.
 \end{enumerate}
+In order to give an accurate estimate to the documentation and the ecosystems of the chosen languages we have developed additional criterion table. The accuracy of the estimate is needed to keep our general estimation unbiased and accurate. The quality of the documentation and the ecosystem plays an important role for the project of every complexity. Each language will get from 0 to 1 point for each criteria described in the table:
+\begin{enumerate}
+    \item Documentation has an intuitive navigation.
+    \item A sufficient amount of examples is given within a library or a package.
+    \item The source code is opened.
+    \item The additional information is provided for complex functions and approaches.
+    \item Acceptable style of the documentation.
+    \item Community size and quality.
+    \item Diversity of the packages.
+\end{enumerate}
+All these criteria cover the main issues like readability of the code and documentation, sufficient and clear information about the code and its use, possibility to get help and the reliability of the code quality. Several criteria like style, examples and navigation through the libraries are mostly important for a beginner programmer. The score system should be sufficient to objectively evaluate the documentation and the ecosystem of the languages from the beginner data analyst stand point.\\
 The results of the programs will be also compared. If they differ, the models will be cross-compared. The program and the language accordingly will get 1 point for the accuracy relative to the accuracy of the second program. The language with the highest total score will be considered more suitable for the beginner data analyst.\\
 
-\subsection{Data preparation}
+\subsection{Data Preparation}
 As we have already said, the data for the processing will be prepared in advance. To be able to logically estimate the results we will have to take transparent dependent variable and the explanatory variables should also have obvious connection that can be explained with a plain logic. For our purpose we have decided to take Intel as a dependent variable in the regression. Predictors will be chosen among the companies from the same market of micro chips, supplier market and customers market. We have chosen Intel because it is a transparent diversified company with clear development trend this company is one of the leaders ob the microchips market and all connected markets are also easy to define. For this paper we will consider only a small amount of companies influencing Intel, since we want to keep the task on a medium complexity.\\
 Intel's competitors can be found on Wikipedia listed in several tables for years from 1998 to 2013. We have used a parser to get the following list of manufacturers for the years 2000-2013 for semiconductors market:
 \begin{verbatim}
@@ -213,7 +215,7 @@ The LearningSet file is a csv table containing 78 companies with 1240 prices for
 
 \newpage
 \section{Python}
-\subsection{The structure of the program}
+\subsection{The Structure Of The Program}
 The program consists of three functional classes, connected with each other in the main class. The first class is called DataFormating and it is responsible for getting the data out of the csv file and writing it into an instance of a proper format for the other two classes. The dependent variable will be extracted from the data set (the dependent variable is always the first company listed in the first column in the csv table).\\
 The second class is called StatisticTests. It runs several tests to find out the main static characteristics in order to choose an appropriate model class for the data. In this work we have focused on the linear regression class.\\
 The third class is called BuildModel. This class builds the multiple linear regression (according to the results of the StatisticTests class) using the step-forward approach:
@@ -229,14 +231,14 @@ The third class is called BuildModel. This class builds the multiple linear regr
 \end{enumerate} 
 At the end the program returns the names of the companies in the final regression and the full information for the best model.
 
-\subsection{The process description}
+\subsection{The Process Description}
 In this section we will describe the language specific difficulties we have encountered.
 \subsubsection{Libraries Used}
 In the course of writing the program several steps were implemented. These steps are: extracting and preparing the data for further use, checking statistic characteristics and building the model based on the results of the statistics. In order to build the program three main libraries were used:
 \begin{enumerate}
-    \item Python Standart Library [12].
-    \item SciPy (unites six different libraries) [13].
-    \item Statmodels [14].
+    \item Python Standart Library [30].
+    \item SciPy (unites six different libraries) [31].
+    \item Statmodels [32].
 \end{enumerate}
 The functions and the data structures defined in the standard Python library were used for every simple task, except some mathematical computations, since the NumPy library offers faster implementations.\\
 The second most used library in this work was NumPy. This library is the part of the SciPy source. NumPy offers many fast multi-dimensional computations and associated multi-dimensional structures. In our work we have used this library to compute several statistics and to build the data for displaying graphs. The functions in the standard library did not show the sufficient performance needed for our program.\\
@@ -245,29 +247,16 @@ The library for drawing graphs is called Matplotlib. It is also a part of the Sc
 \includegraphics[scale=0.75]{img_examples/PythonPlotExample.png} \\
 The last library is called Statmodels. This library offers a variety of tools and models for statistic purposes. The main functions of the library used in our program are Augmented Dickey-Fuller test and building a multiple linear regression with generalized least squares approach.\\
 
-\subsubsection{Documentation quality and quantity}
-The quality and the quantity of the documentation plays an important role for the project of every complexity. In this work we will evaluate the documentation of the languages using a score system. Each language will get points for the following criteria described in the table below:
-\begin{enumerate}
-    \item The documentation is always available.
-    \item The documentation is easy to navigate.
-    \item The documentation offers a sufficient amount of examples.
-    \item The examples given in the documentation cover different complexity levels.
-    \item The documentation provide a link to the source code.
-    \item For scientific libraries the theoretical background should be provided.
-    \item The documentation is easy to read (formatting, colors, description of the parameters and output).
-\end{enumerate}
-Originally, Python was used a lot for scientific purposes. This is why many libraries have specific formatting and high complexity. As we have already mentioned earlier, in this work we have used Python 3 standard library [12],  SciPy [14] and Statmodels [15].\\
-The Python program was written in Python 3. In our work we did not encountered any problems with the language versions conflict. Some external libraries can only be compatible with the Python 2. For such conflicts the library called Six [16] can be used.\\
+\subsubsection{Documentation and The Ecosystem}
+Originally, Python was used a lot for scientific purposes. This is why many libraries have specific formatting and high complexity. As we have already mentioned earlier, in this work we have used Python 3 standard library,  SciPy and Statmodels.\\
 According to the provided evaluation table all used libraries will get points and the weighted score will be added to the python total score. The weights are approximate and are based on appearance frequency and importance of the library in the program.\\
 The base Python library:
 \begin{enumerate}
-    \item 1 Point (the documentation was always available, no delays over period of 6 month were noticed).
-    \item 1 Point (the web site is modern and has a clear structure).
-    \item 1 Point (each function has one simple example, some functions are explained by an "identical function" example, at the end of the class description several composite examples are given).
-    \item 1 Point (see above).
-    \item 0 Point (the code is can't be accessed freely).
-    \item 1 Point (functions are either explained in the documentation, or provide a link to an external source).
-    \item 1 Point (the documentation structure is same for every class. The Navigation through the documentation is possible using global index, glossary, etc.).
+    \item 1 Point.
+    \item 1 Point - each function has one simple example, some functions are explained by an "identical function" example, at the end of the class description several composite examples are given).
+    \item 0 Point - the code can't be accessed freely.
+    \item 1 Point - functions are either explained in the documentation, or provide a link to an external source).
+    \item 1 Point - the documentation structure is similar for every class and has an understandable visual spacing.
 \end{enumerate}
 From the SciPy source three libraries were used explicitly:
 . These are NumPy, Matplotlib and Pandas. The documentation of the libraries themselves contains more detailed information and some additional examples, but the structure and the formatting are the same according to the Python styling standard. This is why we will evaluate the SciPy documentation instead of evaluating each library.
@@ -277,29 +266,27 @@ From the SciPy source three libraries were used explicitly:
     \item 1 Point.
     \item 1 Point.
     \item 1 Point.
-    \item 1 Point.
-    \item 1 Point.
 \end{enumerate}
 The most important library for our Python program was Statmodels since we used it to build the models.
 \begin{enumerate}
-    \item 0 Point (the documentation is hosted on the Sourceforge and the server was down for about a week during the program development phase).
-    \item 0 Point (the structure is not clear, dependencies are not intuitive).
+    \item 0.3 Points.
+    \item 0.75 Points.
     \item 1 Point.
-    \item 0 Point (basic examples are not always provided by the documentation).
-    \item 1 Point (the source code is hosted on GitHub).
     \item 1 Point.
-    \item 0 Point (the explanation order of the input parameters, output parameters and methods is alphabetical and not logical).
+    \item 0 Point.
 \end{enumerate}
+Additionally to the score for the documentation only we will give Python 1 Point for the size and the quality of the community. We give the whole point because there are many serious universities developing Python. One of the interesting examples is the library to place graphs directly into web [33]. Seaborn is developed and maintained by Standford. Another important example is TensorFlow by Google [34]. This tool offers Java and Python APIs to build and train the neural network.\\
+Python also gets 1 point for the diversity of the packages and libraries.
 The final score for the Python documentation is:
-\[ \frac{(\frac{2}{5}(6) + \frac{1}{5}(7) + \frac{2}{5}(3) )}{7}= 0.71\]
+\[ \frac{(\frac{2}{5}(4) + \frac{1}{5}(5) + \frac{2}{5}(3.5) )}{5}= 0.8\]
+The final score for this section is 2.8. 
 
-
-\subsubsection{Advantages and disadvantages of the program}
+\subsubsection{Advantages and Disadvantages Of The Program}
 During the program development phase we have encountered several language specific advantages and disadvantages.\\
 The first advantage is the small time investment needed up front. Python is intuitive and does not require deep understanding of the programming paradigm for a simple program. We consider Python to be suitable for prototyping and checking small hypothesis.\\
-The second advantage of the language is testing. Python has a built-in doc-tests [22]. Another possibility to test a program are Unit Tests [23]. Python provides different ways to test and to debug the program in order to avoid possible computational and logic errors. We will not discuss this theme in details since the tutorials and the documentation are simple and offer sufficient amount of examples.\\
+The second advantage of the language is testing. Python has a built-in doc-tests. Another possibility to test a program are Unit Tests. Python provides different ways to test and to debug the program in order to avoid possible computational and logic errors. We will not discuss this theme in details since the tutorials and the documentation are simple and offer sufficient amount of examples.\\
 There are several disadvantages of the statistic program written in Python.\\ 
-The first disadvantage is the performance. This disadvantage can appear mostly for beginners by implementing middle complexity tasks. For large data sets Cython might be used instead of simple Python.\\
+The first disadvantage is the performance. This disadvantage can appear mostly for beginners by implementing middle complexity tasks. For large data sets Cython might be used instead of a simple Python.\\
 In order to avoid data formatting difficulties we have used Pandas library. There are several limitations associated with the use of this library. For instance Pandas is not compatible with the PyPy. This limitation took a cheap possibility to speed up our program.\\
 Another disadvantage of the program written in Python is the non intuitive function usage. For example, Python does not implicitly creates copies. The expression \mintinline{python}{dict(a) = dict(b)} shows two objects that are referred to the same object. During mutating one of the objects all references will change in order to keep referring to the object in its current state. The correct way to initialize a dictionary using another dictionary is \mintinline{python}{dict(a).copy(dict(b))}. \\
 The last disadvantage we want to mention is the unsorted nature of the dictionary. After the csv table was read and formatted into dictionary with the companies names as the keys and the associated prices lists as the values. The keys appear in dictionary in random order.
@@ -336,17 +323,13 @@ x6   0.1291   0.012     10.536    0.000      0.105     0.153
 To sum up the objective arguments for Python program computing a linear regression for a given data and restrictions we will sum up the points from the table from the thesis description section.
 The points for the Python program are:
 \begin{enumerate}
-    \item Useful sources: 1 Point.
-    \item Documentation: 0.71 Point.
     \item Performance: 0 Points.
     \item Memory: 0 Points.
-    \item Uniform Data structures: 0 Points (different libraries uses different shapes).
     \item Big Data: 1 Point.
-    \item Visualization: 1 Point.
-    \item Limitations: 1 Point.
-    \item Workarounds: 1 Point.
+    \item Documentation: 0.8 Points.
+    \item Ecosystem: 2 Points.
 \end{enumerate} 
-The Python program gets 5.71 points in total.\\
+The Python program gets 3.8 points in total.\\
 The subjective arguments for and against are: 
 \begin{enumerate}
     \item The syntax is simple.
@@ -358,7 +341,7 @@ The subjective arguments for and against are:
 
 \newpage
 \section{R}
-\subsection{The structure of the program}
+\subsection{The Structure Of The Program}
 In this work we have written the R program the same way as the Python program. The R program consists of three classes. These classes are DataFormatting, StatisticTests and BiuldModel. The functions of the classes  are similar to the functions from the Python program. There are several language specific differences. The main class is implemented in the from of two separate functions. All functions and imported classes were called via console in the R run time.\\
 R is a convenient language in terms of data formatting. The native method read.csv() returns an object called data frame. This object has different methods allowing to use the data from different spots in the program directly without extracting it and saving in a proper format. For example, the list of all companies from the table was extracted using the function \textbf{colnames(data.frame)}. As an output we have got the list object containing the elements from the first row of the table. The R program does not have inner helpers as the Python program.\\
 The class StatisticTests runs tests to detect statistic characteristics of the data. These tests contain Kolmogorov-Smirnov goodness of fit distribution test, Augmented Dickey-Fuller test, building a cumulative distribution function and a kernel density function, finding moments.\\
@@ -373,19 +356,19 @@ The third class called BuildModel creates the multiple linear regression for  th
     \item Repeat until either the smaller model will be better, or the maximum number of parameters is reached.
 \end{enumerate}
 
-\subsection{The process description}
+\subsection{The Process Description}
 In this section we will describe the language specific difficulties we have encountered.
 \subsubsection{Used Libraries}
 For our R program following packages were used:
 \begin{enumerate}
-    \item Base package[16].
-    \item Stats package[17].
-    \item Nlme package[18].
-    \item Tseries package[19].
+    \item Base package[35].
+    \item Stats package[36].
+    \item Nlme package[21].
+    \item Tseries package[20].
 \end{enumerate}
 The functions from the base package were used for all basic computations. This package also provides different functions for the data formatting. The following example shows the R specific object called formula:
 \begin{minted}{d}
-formula <- as.formula(paste(dep$name,'~', as.character(names(small_model)),
+formula <- as.formula(paste(dep[name],'~', as.character(names(small_model)),
 collapse=''))
 \end{minted}
 This function converts the string object from the brackets into a formula object that is further used as an input parameter for building a linear regression. The base package offers basic math operation as well.\\
@@ -396,50 +379,43 @@ The first parameter is formula object. The example of the this particular object
 The following example presents a graph with a default formatting style:
 \includegraphics[scale=0.75]{img_examples/RPlotExample.png}
  
-\subsubsection{Documentation quality and quantity}
+\subsubsection{Documentation and The Ecosystem}
 In comparison to Python, R was developed solely for analytical purposes. Since the language was build for analysis by the scientific community R's documentation is presented in a scientific manner. To evaluate the documentation we will use the points system described in the Python Documentation section.\\
 The R Base package:
 \begin{enumerate}
-    \item 1 Point (the documentation was available during the whole time of the program development).
-    \item 0 Points (the navigation is alphabetic).
-    \item 0 Points (the native documentation does not provide a sufficient amount of examples).
-    \item 0.5 Points.
+    \item 1 Point.
+    \item 0.25 Points
     \item 0 Points.
-    \item 1 Points.
+    \item 0 Points.
     \item 0 Points (no styling was applied).
 \end{enumerate}
 The Stats package is organized in a similar way to the base R package and have the similar score:
 \begin{enumerate}
-    \item 1 Point.
-    \item 0 Point (the alphabetical list with short description).
+    \item 0.3 Points.
     \item 0.5 Points.
-    \item 0.5 Points.
-    \item 0 Point.
+    \item 0 Points.
     \item 1 Point.
-    \item 0 Points (no styling applied).
+    \item 0 Points.
 \end{enumerate} 
 The Nlme package is hosted by the biggest R source called "CRAN". This source offers a significant amount of simple and complex demos, test data sets and tutorials. CRAN is considered to be the central R source.
 \begin{enumerate}
     \item 1 Point.
-    \item 1 Point (the documentation is organized as a scientific paper with the content provided).
-    \item 1 Point.
     \item 1 Point.
     \item 0 Points.
-    \item 1 Point (the theoretical background is provided in the form of the references after the function explanation).
+    \item 1 Point.
     \item 1 Point (scientific paper formatting).
 \end{enumerate}
 The last package used in our program is Tseries:
 \begin{enumerate}
-    \item 1 Point (hosted by CRAN).
-    \item 1 Point (scientific paper).
-    \item 1 Points.
     \item 1 Point.
-    \item 0 Point.
+    \item 1 Point.
+    \item 0 Points.
     \item 1 Point.
     \item 1 Point.
 \end{enumerate}
 The quality of the R documentation is on average on the same level for all sources. However the convenience of the documentation differs depending on the source and the development team. The total score for the R documentation is:
-\[ \frac{\frac{3}{10}(2.5)+\frac{1}{10}(3)+\frac{3}{10}(6)+\frac{3}{10}(6)}{7}= 0.66 \] 
+\[ \frac{\frac{3}{10}(1.25)+\frac{1}{10}(1.8)+\frac{3}{10}(4)+\frac{3}{10}(4)}{5}= 0.591 \] 
+The community behind R is more scientific than behind Python. Hoverer there are more scientific domain packages that R community has developed. Additionally, to implement certain algorithm there can be more the one package available. The language gets 1 Point for the community size and quality criterion and 1 Point for the diversity of the packages. The final score for R for this section is 2.591.
 
 \subsubsection{Advantages And Disadvantages Of The Program}
 During the development phase of our second program we have encountered several difficulties associated with the language features. Since we have already written our program in Python we have decided to implement the same structure.\\
@@ -475,8 +451,8 @@ Residual standard error: 1.158712
 \end{minted}
 Another advantage of the gls function is its data use. In comparison to Python the data is not required to be specifically formatted. The data frame previously loaded into the environment will be used by default if no data is specified. If there are more than one data sources loaded into the environment the specification is not optional.\\
 The third advantage of the R program is its performance. Without using the explicit multiprocessing or JIT the program has significantly outperformed the Python program. The actual results will be presented in the following section.\\
-The first disadvantage of the R language is difficulty. The syntax is not as intuitive as the Python syntax. The data structures and their use are non trivial. In order to begin using R significant amount of time invested upfront is needed. The R background of the author of this work consisted of the basic programming course [20] using RStudio [21]. RStudio is a good IDE for R to begin with. However it limits the development freedom for the complex tasks.\\
-The first example of the R complexity is the absence of the classes in their usual understanding. In R there are three type of classes. These are S3, S4 and Reference Class. The reference class is close to the Python class. The first two represent the attribute of an object. In R everything considered as an object. In our program we have used the reference class and didn't dive into the other two class types. For more information on OO systems in R you can visit the following source [22]. \\
+The first disadvantage of the R language is difficulty. The syntax is not as intuitive as the Python syntax. The data structures and their use are non trivial. In order to begin using R significant amount of time invested upfront is needed.\\
+The first example of the R complexity is the absence of the classes in their usual understanding. In R there are three type of classes. These are S3, S4 and Reference Class. The reference class is close to the Python class. The first two represent the attribute of an object. In R everything considered as an object. In our program we have used the reference class and didn't dive into the other two class types. For more information on OO systems in R you can visit the following source [37]. \\
 The second disadvantage of the R program is connected to Reference Class definition. In R the return statement with multiple instances is not allowed. In order to be able to return several objects it is possible to write them down into a list. The disadvantage of this workaround is the additional formatting of the resulting list.\\
 Another disadvantage of the R program is the difficulty of the slicing. Different approaches can be used to get the same result. R provides multiple slicing possibilities in order to simplify the formatting steps. The functions can return the instances of different classes.
 \subsection{Results}
@@ -522,17 +498,13 @@ Degrees of freedom: 1239 total; 1232 residual
 The best model returned by the R program consist of 6 companies. These companies are STMElctro, Olympus, St.Jude, Lenovo, Microntech and Cardinal. The R program has chosen Cardinal over Google on the last step of the evaluation algorithm. Since the programs are identical this deviation can be caused by the underlying implementations of the gls function, the llr test, or the AIC criterion evaluation. Since we didn't found the source code for the functions we have used in this work, the cause of the difference in the results can't be explained properly. To compare the results of the programs we have built the predictions for both programs. First the accuracy of the original predictions will be compared. Afterwards the cross results accuracy will be compared. The program yielding the higher accuracy predictions will get an additional point.\\
 To sum up the objective arguments for R we will give the points according to the evaluation table given in the description section. The Points for the R program are:
 \begin{enumerate}
-    \item Useful sources: 1 Point.
-    \item Documentation: 0.66 Points.
     \item Performance: 1 Point.
     \item Memory: 1 Point.
-    \item Uniform data structures: 1 Point.
-    \item Big Data: 1 Point (this is a relatively recent addition to the language. There are several sources and libraries offering tools to work with big data [23]).
-    \item Visualization: 1 Point.
-    \item Limitations: 1 Point (high complexity of the language).
-    \item Workarounds: 1 Point.
+    \item Big Data tools: 1 Point (this is a relatively recent addition to the language. There are several sources and libraries offering tools to work with big data [38]).
+    \item The quality of the documentation: 0.591 Points.
+    \item The quality of the ecosystem of the language: 2 Points.
 \end{enumerate} 
-The total objective score for R is 7.66 points total.\\
+The total objective score for R is 5.591 points total.\\
 The subjective arguments for the language are:
 \begin{enumerate}
     \item Debugging messages are hard to understand.
@@ -545,8 +517,7 @@ The subjective arguments for the language are:
 \newpage
 \section{Results}
 In this section we will present the final comparison of the programs written in Python and R.
-
-\subsection{Objective comparison}
+\subsection{Objective Comparison}
 The first difference between the programs is the performance. In order to show measure the run time of the programs we will use the options that both language offer. These methods are \mintinline{d}{system.time()} for R and \mintinline{python}{cProfile()} for Python. Additionally to the language specific functions we will use the \mintinline{bash}{/bin/time} Linux utility. The following example shows us the run time for the R program.
 \begin{minted}{console}
 > system.time(data_read())                                                  
@@ -581,7 +552,7 @@ The overall run time of the Python program is:
         6854581 function calls (6853565 primitive calls) in 6.057 seconds
 \end{minted}
 The Python program performance in our implementation is 544 times slower. The R program runs for 7.41 seconds versus 4036.468 seconds of the Python program. Both programs run time may vary depending on the overall CPU load and running background processes. However these time differences are only noticeable for the Python program.\\
-The second difference between the programs is the memory usage. There are several possibilities to measure the memory load of the program. Since every instance in R is treated as an object the size of all objects can be shown using Rprofmem() function from the utilities package. However, in order to use this function to compute the total memory use the sum of the all objects size needs to be computed. This approach is complex and does not guarantees the accurate result. Python also offers different tools to do the profiling. On of the possible functions is memory\_profile [11]. In order to measure the memory use uniformly for both languages we will use the Unix time command. The printed message contains the information about the called process. Two main characteristics we are interested in are the maximum resident set size and the user time. The maximum resident set size shows the amount of the memory belonging to the process and currently presented in RAM. In another words it is the maximum memory allocated in the heap by the program.\\ 
+The second difference between the programs is the memory usage. There are several possibilities to measure the memory load of the program. Since every instance in R is treated as an object the size of all objects can be shown using Rprofmem() function from the utilities package. However, in order to use this function to compute the total memory use the sum of the all objects size needs to be computed. This approach is complex and does not guarantees the accurate result. Python also offers different tools to do the profiling. On of the possible functions is memory\_profile [40]. In order to measure the memory use uniformly for both languages we will use the Unix time command. The printed message contains the information about the called process. Two main characteristics we are interested in are the maximum resident set size and the user time. The maximum resident set size shows the amount of the memory belonging to the process and currently presented in RAM. In another words it is the maximum memory allocated in the heap by the program.\\ 
 The R memory use looks as following:
 \begin{minted}{console}
 [20:32:19 - 15-10-25] 
@@ -708,7 +679,7 @@ On the following image the difference in two models forecasts returned by the R 
 The R program considers the new model to be better than the original suggestion since the new MAE is 0.661 smaller and the new RMSE is 0.827 smaller. The original model was chosen based on the AIC. The forecast was built only for the final model. That means that we never considered the accuracy of the predictions as the criterion for thoosing the best model in the class or among two classes.\\
 The following graph represents the predictions for the same model but estimated by different program. The model is ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. As usual the gray line presents the real values, the green line is the R forecast, the blue line is the Python forecast.\\
 \includegraphics[scale=0.75]{img_examples/PythonOriginalVsRNew.png}
-we have noticed that the predictions built by the R program for the Python original model have higher accuracy than the Python predictions for the same model. The R MAE is 0.208 smaller and the R RMSE is 0.166 smaller than the Pyhton results.
+we have noticed that the predictions built by the R program for the Python original model have higher accuracy than the Python predictions for the same model. The R MAE is 0.208 smaller and the R RMSE is 0.166 smaller than the Python results.
 The Python cross results are:
 \begin{minted}{console}
 >>> build_predictions()
@@ -749,12 +720,12 @@ The following graph presents the predictions for the same model but estimated by
 \includegraphics[scale=0.75]{img_examples/ROriginalVsPythonNew.png}
 The Python program predictions are less accurate than the R predictions for the same model. The R MAE is 0.617 smaller and the R RMSE is 0.684 smaller.\\
 The highest accuracy forecast was built by the R program for the Python original model. This result can be explained by the fact that R gls.predict() module uses higher accuracy computation algorithm and operates with doubles precision floats instead of single precision floats. At the same time the Python program has returned better regression using the AIC during the evaluation process. Python gets an additional Point for yielding higher accuracy results.\\
-The final score for both programs is 7.66 Points for the R program versus 6.71 Points for the Python program. This mean that objectively R is more suitable for beginners to use as the programming language for a small statistic task with a small data set.
+The final score for both programs is 5.591 Points for the R program versus 4.8 Points for the Python program. This mean that objectively R is more suitable for beginners to use as the programming language for a small statistic task with a small data set.
 
-\subsection{Subjective comparison}
+\subsection{Subjective Comparison}
 During the process of the program development both languages have shown some of their advantages and disadvantages. The subjective advantages of the Python are:
 \begin{enumerate}
-    \item Easy code refactoring.
+    \item Easy code re factoring.
     \item Sufficient amount of tutorials and examples for every function used in the program.
     \item Intuitive data structures.
     \item Clear debugging messages.
@@ -782,7 +753,7 @@ Subjectively speaking R is slightly better for the data analysis programs when t
 Python proved to be more suitable for a fast prototyping using a small data set. Another advantage of the Python program is the absence of the integration necessity.
   
 \subsection{Conclusion}
-After point to point comparison and collecting the personal opinion, we have decided, that R programming language is more suitable for pure analytical task.
+After point to point comparison and collecting the personal opinion, we have decided, that R programming language is bit more suitable for a pure analytical task.
 \begin{enumerate}
     \item The language is faster.
     \item The language is not memory hungry.
@@ -791,6 +762,7 @@ After point to point comparison and collecting the personal opinion, we have dec
 \end{enumerate}
 The R language has a big high-quality community behind it. There are certain standards for the documentation and the code quality, which ensures the quality of the libraries.\\
 The negative moment can be the development of a bigger program. Prototyping in R can be tricky for mid- and very complex programs. You have to think in advance about class connections. Although you can also keep everything in functions form - this will allow you to prototype faster, but will cause some difficulties later on during re-factoring.\\
+Our conclusion suits the modern trend which says that R is very popular among the beginners and advanced analysts. However R programmers turn slowly to Python due to its multipurpose nature and according freedom.
   
 
 \newpage
@@ -823,45 +795,20 @@ proper literature
     \item \url{https://journal.r-project.org/archive/2010-1/RJournal_2010-1_Guenther+Fritsch.pdf}
     \item \url{https://socserv.socsci.mcmaster.ca/jfox/Books/Companion/appendix/Appendix-Nonlinear-Regression.pdf} 
     \item \url{https://www.biostars.org/p/72173/}
-        \item \url{http://stats.stackexchange.com/}
+    \item \url{http://stats.stackexchange.com/}
     \item \url{http://stackoverflow.com/questions/tagged/statistics}
     \item \url{http://economics.sas.upenn.edu/~jesusfv/comparison_languages.pdf}
     \item \url{https://www.dataquest.io/blog/python-vs-r/}
-
+    \item \url{https://www.python.org/doc/}
+    \item \url{http://www.scipy.org/}
+    \item \url{http://statsmodels.sourceforge.net/}
+    \item \url{http://stanford.edu/~mwaskom/software/seaborn/}
+    \item \url{https://www.tensorflow.org/}
+    \item \url{https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html}
+    \item \url{https://stat.ethz.ch/R-manual/R-patched/library/stats/html/00Index.html}
+    \item \url{http://adv-r.had.co.nz/OO-essentials.html}
+    \item \url{http://r-pbd.org/}
+    \item \url{https://github.com/fabianp/memory_profiler} 
 \end{enumerate}
 
-
-needed but not included
-\begin{enumerate}
-
-    \item \url{https://cran.r-project.org/web/packages/ape/index.html}
-    \item \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6182574}
-\end{enumerate}
-old version
-\begin{enumerate}
-    \item \url{https://en.wikipedia.org/wiki/Python_(programming_language)}
-    \item \url{https://www.digitalocean.com/community/tutorials/how-to-package-and-distribute-python-applications}
-    \item \url{https://www.r-project.org/about.html}
-    \item \url{http://www.revolutionanalytics.com/what-r}
-    \item \url{https://en.wikipedia.org/wiki/R_(programming_language)}
-    \item \url{http://stackoverflow.com/questions/2770030/r-or-python-for-file-manipulation}
-    \item \url{http://datascience.stackexchange.com/questions/326/python-vs-r-for-machine-learning}
-    \item \url{http://www.kdnuggets.com/2015/05/r-vs-python-data-science.html}
-    \item \url{http://blog.datacamp.com/r-or-python-for-data-analysis/}
-    \item \url{http://101.datascience.community/2015/05/12/data-science-wars-r-vs-python/}
-    \item Memory Profiler for Python \url{https://github.com/fabianp/memory_profiler} 
-    \item Python 3 \url{https://www.python.org/doc/}
-    \item SciPy \url{http://www.scipy.org/}
-    \item Statmodels \url{http://statsmodels.sourceforge.net/}
-    \item Six \url{https://pythonhosted.org/six/}
-    \item Base R library \url{https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html}
-    \item Stats R library \url{https://stat.ethz.ch/R-manual/R-patched/library/stats/html/00Index.html}
-    \item Nlme R library \url{https://cran.r-project.org/web/packages/nlme/nlme.pdf}
-    \item Tseries R library \url{https://cran.r-project.org/web/packages/tseries/tseries.pdf}
-    \item Coursera: "R Programming"\url{https://www.coursera.org/course/rprog}
-    \item RStudio IDE \url{https://www.rstudio.com/}
-    \item OO systems in R \url{http://adv-r.had.co.nz/OO-essentials.html}
-    \item Big Data in R \url{http://r-pbd.org/}
-    \item GLS \url{https://en.wikipedia.org/wiki/Generalized_least_squares}
-\end{enumerate}
 \end{document}
