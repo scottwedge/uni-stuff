@@ -110,8 +110,6 @@ Since the theme is being discussed several years already there are many forums a
 An example of the general and mostly subjective comparison is the discussion on specialized forum. Most known sources for analysts are Biostars [25], different sub domains of the stackexchange [26] and specific questions on the stackoverflow [27]. The most popular opinion on the forums is to use whatever suits the task and current set of skills. This answer can be seen on specific forums like Biostars very clear [25]. In this case the domains of the tasks are biology, chemistry and simulation. The users of the forum on average say that R is better maintained and have more suitable packages, however they use Python for their analytical purposes. The reason for that conflict is the multipurpose nature of Python, which allows better data collection and direct visualization in web. All of this makes Python easier to use and eliminates the bottleneck among the parts of the project. On the other hand R has more smaller packages for analytical tasks and is faster than average Python program. The obvious disadvantage of the general comparison approach is its biased nature. The results of such discussions are hardly usable.\\
 The benchmarking is a good criterion to compare the performance of the languages. However this method should be used carefully. The performance itself will only show how faster one language can be for the specific task, the specific machine, and specific implementations for languages that are compared. In order to use benchmarking all parameters should be set equally. An interesting example of a benchmarking is given in the paper "A Comparison of Programming Languages in Economics" by S. Boragan Aruoba and Jesus Fernandez-Villaverde [28]. In their paper the researchers have compared several languages implementing the stochastic neoclassical growth model. Among the languages they have chosen were R and Python (CPython and Pypy). All programs were implementing the same algorithm and run the same number of iterations. The programs were implemented on the level of an experienced programmer. The paper yields predictable and unbiased results. However the complexity of the task and according complexity of the programs written play an important role in end results. The languages have different paradigms, concepts and structure, thus there is no guaranty that the chosen code style results in optimal performance for each language.\\
 The third group of comparison methods is comparing the complexity of the code in order to achieve same performance. An interesting example of this approach is the article written in the dataquest blog [29]. For their article the authors have used mainly Pandas and NumPy Python packages and base R package. In their article the clear is not given. However the dataquest team suggests R to be more suitable language for purely statistical tasks. Python will be easier to use for complex systems, where the analysis part does not take the central place.\\
-
-3. Give the intro idea that beginner analyst needs to decide what language to start with\\
 The goal of this paper is to answer the question: "What language is more suitable for a beginner data analyst?" To answer that question we will need to do create a criteria to evaluate the languages the most unbiased way. The criteria will depend on the tasks common for a data analyst. To evaluate the languages we will consider the criteria listed in the table:
 \begin{enumerate}
     \item The quality of the documentation. 
@@ -124,12 +122,18 @@ These criteria cover the main tasks of a data analytic: data mining, data visual
 For each criterion from the table from 0 to 1 points will be given to each language. Objectively the most suitable language for a beginner data analyst will be the language with the highest score.
 
 \subsection{Thesis Description}
-1. Say again why these two languages were chosen\\
-2. Remind the important set of skills\\
-3. Define the formal criteria based on desired set of skills\\
-4. Describe general functions of the program to cover the criteria\\
-
-The idea of this bachelor thesis is to test which of the languages is more suitable for specific statistic task. Both programs will have similar structure and functions, so that they can be evaluated more properly. The program that will be evaluated consists of four parts:
+For our work we have chosen Python and R. Both languages are widely used by data scientists, engineers and analysts across all possible domains. The popularity of this languages is rising steadily. Both Python and R offer significant amount of packages for a different complexity projects. However since these two languages are different we will try to answer the question what language is more suitable for beginners.\\
+Comparing two different programming languages is a hard task. In order to get unbiased results we will set several parameters. Fist, the domain of the language use. In this paper we will write a program a beginner data analyst will probably have to write as a part of the job. The main focus is a program solving a mid complexity statistical task, running within acceptable time, without expensive speed up methods. In other words we will compare Python and R based on the programs written in each language to find the best regression from a given data table.\\
+To evaluate the languages objectively we will consider the criteria listed in the table:
+\begin{enumerate}
+    \item The quality of the documentation. 
+    \item Performance.
+    \item Memory use.
+    \item Big Data tools.
+    \item The quality of the ecosystem of the language.
+\end{enumerate}
+Each program will get from 0 to 1 Point for each criterion. \\
+As we have seen earlier, the comparison of the programs written on advanced level can be biased since the languages are different and the same approach can be beneficial in one case but nit the other. This is why the idea of this bachelor thesis is to test which of the languages is more suitable for specific mid complex statistic task. Both programs will have similar structure and functions, so that they can be evaluated more properly. The program that will be evaluated consists of four parts:
 \begin{enumerate}
     \item Getting and formatting data - the program should be able to read a prepared file in csv format. Afterwards, the program should format the data into needed structure for further use.
     \item Analyzing data - the program should be able to run statistical tests to figure out several data characteristics. This step is implemented in order to determine what regression models are allowed for this data set. The following tests will be presented: stationary test, building cdf and kde, finding moments, distribution test (goodness of fit tests).
@@ -144,22 +148,17 @@ The output of the program shows the names of the companies in the final regressi
     \item Visualization - the program should be able to present the results in the form of graphs for needed steps.
     \item The program is able to build predictions for the chosen company and evaluate them using the mean accumulated error (MAE) and or root-mean-square error (RMSE).
 \end{enumerate}
-The program will build a simple regression if possible. In this work we have considered the class of linear regressions to be a simple regression model. This task is considered to be middle-size task, not too easy but at the same time not too time consuming and specific.
+The task for the program is to build a best matching linear regression (if possible) for a company (always the first column in the file) using several limitations on the number of the predictors.\\
+The program will build a simple regression (if possible). In this work we have considered the class of linear regressions to be a simple regression model. This task is considered to be mid complex task. The beginning programming level will allow us to avoid diving into specific of the languages. So we will see the advantages and disadvantages of the languages from the box.\\
+We will not consider data collection as a part of our main task. This is why the learning set and validation data set will be provided upfront. The data will be chosen that why, so that results can be logically checked or checked manually using excel. This option will be used only if the results of the programs will logically be unreal.\\
 The data will be prepared and provided by two files: training set and test set in the csv format.\\
-According to the list for objective evaluation, each point will give either a score of 0 or 1 to the language. A score of 0 will be given in negative case and a score of 1 will be given in positive cases.
+According to the list for objective evaluation, each point will give a score from 0 to 1 to the language. A score of 0 will be given in negative case and a score of 1 will be given in positive case.
 \begin{enumerate}
-    \item[] Useful resources - at least 2 different libraries for one task gives 1 point.
-    \item[] Documentation - examples, clean source code and clear structured APIs give 1 point.
-    \item[] Performance - fastest language gets 1 point
-    \item[] Memory - the program with the smallest memory use gets 1 point.
-    \item[] Data structures - no additional formatting needed gives 1 point.
-    \item[] Big Data - libraries, plugins and frameworks for big data give 1 point.
-    \item[] Visualization - easiness in use and customization gives 1 point.
-    \item[] Limitations - if there are any limitations, the language gets 0 points.
-    \item[] Workarounds - additional time to solve the task gives 0 points (deviation from the time for the naive implementation).
+    \item Performance comparison will give 1 point to the fastest program and the language accordingly and 0 points to the slowest program.
+    \item Memory use comparison will give 1 point to the program and the language accordingly that allocates the least amount of memory and 0 points to the other program.
+    \item The possibility to use the language with the Big Data tool or to build a tool of that scale will bring the language with the most possibilities 1 point and 0.5 points to the second language.
 \end{enumerate}
-The results of the programs will be also compared. If they differ, the models will be cross-compared.\\
-The task is to build a best matching linear regression (if possible) for a company (always the first column in the file) using certain limitations on the number of the predictors.
+The results of the programs will be also compared. If they differ, the models will be cross-compared. The program and the language accordingly will get 1 point for the accuracy relative to the accuracy of the second program. The language with the highest total score will be considered more suitable for the beginner data analyst.\\
 
 \subsection{Data preparation}
 1. Tell that the data set was prepared in advance \\
