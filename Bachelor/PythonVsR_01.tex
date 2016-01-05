@@ -141,7 +141,7 @@
 
     \chapter{Motivation}
         \section{Introduction: The Rise Of The Data Analysis}
-        An analysis of any available data has always played an essential role for business success. According to Wikipedia: "Since the mid-1990s, the Internet has had a revolutionary impact on culture and commerce, including the rise of near-instant communication by electronic mail, instant messaging, voice over Internet Protocol (VoIP) telephone calls, two-way interactive video calls, and the World Wide Web with its discussion forums, blogs, social networking, and on-line shopping sites" [1]. The mass digitalization of the world has allowed for easier and faster data collection. With the advancement of technology the amount of data stored jumped from a 3.75MB disk presented by IBM in 1956 [2] up to a 16TB solid-state drive produced by SAMSUNG [3]. Many different classical econometric and statistic tools became unusable for the amount of the data collected. This happened because the methods were not optimized for such a big amount of information. Most of the algorithms were sequential as opposed to parallel and thus their performance suffered.\\
+        An analysis of any available data has always played an essential role for business success. According to Wikipedia: "Since the mid-1990s, the Internet has had a revolutionary impact on culture and commerce, including the rise of near-instant communication by electronic mail, instant messaging, voice over Internet Protocol (VoIP) telephone calls, two-way interactive video calls, and the World Wide Web with its discussion forums, blogs, social networking, and on-line shopping sites" \cite{}. The mass digitalization of the world has allowed for easier and faster data collection. With the advancement of technology the amount of data stored jumped from a 3.75MB disk presented by IBM in 1956 [2] up to a 16TB solid-state drive produced by SAMSUNG [3]. Many different classical econometric and statistic tools became unusable for the amount of the data collected. This happened because the methods were not optimized for such a big amount of information. Most of the algorithms were sequential as opposed to parallel and thus their performance suffered.\\
         With the rise of opportunities to collect and store the data, a new sphere of analysis appeared to be important for business: Big Data was known long before it became popular. In 1944 the first estimate of data growth was given by Fremont Rider [4]. In his work, Rider pointed out the problem of information growth: "[...] of all the problems which have, of recent years, engaged the attention of educators and librarians, none have been more puzzling than those posed by the astonishing growth of our great research libraries…it seems, as stated, to be a mathematical fact that, ever since college and university libraries started in this country, they have, on the average, doubled in size every sixteen years". Although the main concern of the paper was directed to storing and maintaining science papers in the libraries as well as the respective growth in administration costs, these were already the questions from the Big Data domain. Another prominent work on Big Data is a paper called "Little Science, Big Science... and beyond" by Derek Price written in 1963 [5]. In his work, D. Price discussed the evolution of science institutions from their state to multi-purpose clusters of different libraries along with the data growth. This work shows the development of the infrastructure along with data growth and data transformation.\\
         The new level of the accessible data required both new hardware and software technologies as well as new mathematical approaches. Rapid storage systems development started in the 1960s. New software was developed to take advantage of the new hardware as it became available. One of the first papers using the term 'Big Data' was written in 1999 by Steve Bryson, David Kenwright, Michael Cox, David Ellsworth, and Robert Haimes. The paper was called “Visually exploring gigabyte data sets in real time” [6]. It is believed that the term itself at the current understanding was presented by Roger Magoulas [7].\\
         Starting from the mid 2000s the need for experienced data analysts, data scientists and data engineers grew steadily. However, the candidates should have a certain set of skills for working with huge data sets on a distributed file system like Google distributed file system (GDFS), Hadoop distributed file system (HDFS) or other similar products. The "2015 Data Science Salary Survey" from O'Reilly sums up the current trends in the required skill set for data processing positions [8]. The key points made in the survey show that SQL, Excel, R, and Python are highly demanded skills. The same results appeared by browsing through the three big job search portals for data engineer, scientist and analyst positions. Gigajob, Monster and LinkedIn (not exactly job searching  platform, but it has this functionality and results are representative) show similar results to the O'Reilly survey. The most interesting trends are:
@@ -323,8 +323,15 @@
     The functions and the data structures defined in the standard Python library were used for every simple task, except some mathematical computations, since the NumPy library offers faster implementations.\\
     The second most used library in this work was NumPy. This library is the part of the SciPy source. NumPy offers many fast multi-dimensional computations and associated multi-dimensional structures. In our work we have used this library to compute several statistics and to build the data for displaying graphs. The functions in the standard library did not show the sufficient performance needed for our program.\\
     The third important library used in this work is Pandas. The library is a part of the SciPy source. Pandas provides high-performance data structures and associated functions for data analysis. This library can be used for generating, accessing and formatting data. In this work we have used it to get the data from our csv file in an intuitive manner and also to avoid an unnecessary formatting step. Pandas offers the functionality to get the data directly from web sources like Yahoo Finance, Google Finance, Google Analytics and other similar sources.\\
-    The library for drawing graphs is called Matplotlib. It is also a part of the SciPy source. Matplotlib offers different types of graphs and formatting tools. The following example represents the default graph without any additional formatting.\\
-    \includegraphics[scale=0.75]{PythonPlotExample.png} \\
+    The library for drawing graphs is called Matplotlib. It is also a part of the SciPy source. Matplotlib offers different types of graphs and formatting tools. The following example represents the default graph without any additional formatting.
+    
+    \begin{figure}[H]
+        \includegraphics[scale=0.5]{PythonPlotExample.png}
+        \centering
+        \caption{A basic plot built using Matplotlib library}
+        \label{fig:PythonPlotExample}
+    \end{figure}
+    
     The last library is called Statmodels. This library offers a variety of tools and models for statistic purposes. The main functions of the library used in our program are Augmented Dickey-Fuller test and building a multiple linear regression with generalized least squares approach.\\
     
     \subsection{Documentation and The Ecosystem}
@@ -454,8 +461,15 @@
     The second package used in StatisticTests class offers functions to run simple statistic tests on the data and build the basic statistic characteristics and provides the possibility to build a graph. In our work we have used the stats package to build graphs for each company from the data table and test the data for its distribution. The program has yielded the same results as the Python program.\\
     The fourth package used in this program offers a possibility to build a linear regression using given parameters. The use of the functions from the library are intuitive:
     The first parameter is a formula object. An example of the this particular object was already demonstrated above. The second parameter is the data source. A necessary condition for the data object is actually to contain the variables from the formula.\\
-    The following example presents a graph with a default formatting style:
-    \includegraphics[scale=0.75]{RPlotExample.png}
+    The following example presents a graph with a default formatting style.
+    
+    \begin{figure}[H]
+        \includegraphics[scale=0.5]{RPlotExample.png}
+        \centering
+        \caption{A basic plot built using The R Graphics Package library}
+        \label{fig:RPlotExampl}
+    \end{figure}
+    
      
     \subsection{Documentation and The Ecosystem}
     In comparison to Python, R was developed solely for analytical purposes. Since the language was built for analysis by the scientific community R's documentation is presented in a scientific manner. To evaluate the documentation we will use the points system described in the Python Documentation section.\\
@@ -705,7 +719,14 @@
     [1] "the root mean squared error of the predictions is: "
     [1] 4.132798
     \end{minted}
-    \includegraphics[scale=0.75]{RPredicitions.png}
+    
+    \begin{figure}[H]
+        \includegraphics[scale=0.5]{RPredicitions.png}
+        \centering
+        \caption{Predictions build by the R program.}
+        \label{fig:RPredicitions}
+    \end{figure}
+    
     The Python program results are:
     \begin{minted}{console}
     >>> build_predictions()
@@ -716,9 +737,23 @@
     the mean absolute error of the prediction is: 2.83819120505
     the root mean squared error is: 3.47169327209
     \end{minted}
-    \includegraphics[scale=0.75]{PythonPredictions.png}\\
-    The Python predictions according to the chosen criteria are more accurate than the R predictions. Both mean absolute error (MAE) and root mean square error (RMSE) are smaller for the Python predictions. The Python program gets one additional point for the relative accuracy. On the following graph both original R and Python predictions are shown. The R forecasts have the green line and the blue line presents the Python forecasts.\\
-    \includegraphics[scale=0.75]{BothPredictions.png}\\
+    
+    \begin{figure}[H]
+        \includegraphics[scale=0.5]{PythonPredictions.png}
+        \centering
+        \caption{Predictions build by the Python program.}
+        \label{fig:PythonPredictions}
+    \end{figure}
+
+    The Python predictions according to the chosen criteria are more accurate than the R predictions. Both mean absolute error (MAE) and root mean square error (RMSE) are smaller for the Python predictions. The Python program gets one additional point for the relative accuracy. On the following graph both original R and Python predictions are shown. The R forecasts have the green line and the blue line presents the Python forecasts.
+    
+    \begin{figure}[H]
+        \includegraphics[scale=0.5]{BothPredictions.png}
+        \centering
+        \caption{Predictions build by the both Python and R programs.}
+        \label{fig:BothPredictions}
+    \end{figure}
+    
     As the following step we will force both Python and R programs to compute the results for the model yielded by the other program. Python will compute predictions for the final model from R: ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. And the R program will return the forecast for the Python final model: ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]\\
     The R cross result is:
     \begin{minted}{console}
@@ -751,11 +786,25 @@
     Degrees of freedom: 1239 total; 1232 residual
     Residual standard error: 0.982245 
     \end{minted}
-    On the following image the difference in two models forecasts returned by the R program is represented. The gray line shows the real Intel prices, the green line is the new model forecast and the blue line is the old model forecast.\\
-    \includegraphics[scale=0.75]{ROriginalVsRNew.png}\\
+    On the following image the difference in two models forecasts returned by the R program is represented. The gray line shows the real Intel prices, the green line is the new model forecast and the blue line is the old model forecast.
+    
+    \begin{figure}[H]
+        \includegraphics[scale=0.5]{ROriginalVsRNew.png}
+        \centering
+        \caption{Predictions build by the R program for the original model and new model.}
+        \label{fig:ROriginalVsRNew}
+    \end{figure}
+    
     The R program considers the new model to be better than the original suggestion since the new MAE is 0.661 smaller and the new RMSE is 0.827 smaller. The original model was chosen based on the AIC. The forecast was built only for the final model. That means that we never considered the accuracy of the predictions as the criterion for choosing the best model in the class or among two classes.\\
-    The following graph represents the predictions for the same model but estimated by different program. The model is ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. As usual the gray line presents the real values, the green line is the R forecast, the blue line is the Python forecast.\\
-    \includegraphics[scale=0.75]{PythonOriginalVsRNew.png}
+    The following graph represents the predictions for the same model but estimated by different program. The model is ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. As usual the gray line presents the real values, the green line is the R forecast, the blue line is the Python forecast.
+    
+    \begin{figure}[H]
+        \includegraphics[scale=0.5]{PythonOriginalVsRNew.png}
+        \centering
+        \caption{Predictions build by the Python program for the original model and predictions built by the R program for the new model.}
+        \label{fig:PythonOriginalVsRNew}
+    \end{figure}
+
     We have noticed that the predictions built by the R program for the Python original model have higher accuracy than the Python predictions for the same model. The R MAE is 0.208 smaller and the R RMSE is 0.166 smaller than the Python results.
     The Python cross results are:
     \begin{minted}{console}
@@ -791,11 +840,25 @@
     x6             0.1533      0.012     12.533      0.000         0.129     0.177
     ==============================================================================
     \end{minted}
-    The following graph shows the difference between two model forecasts returned by the Python program. The gray line shows the real values, the green line presents the new model forecast and the blue line is the old model forecast.\\
-    \includegraphics[scale=0.75]{PythonOriginalVsPythonNew.png}\\
+    The following graph shows the difference between two model forecasts returned by the Python program. The gray line shows the real values, the green line presents the new model forecast and the blue line is the old model forecast.
+    
+    \begin{figure}[H]
+        \includegraphics[scale=0.5]{PythonOriginalVsPythonNew.png}
+        \centering
+        \caption{Predictions build by the Python program for the original model and new model.}
+        \label{fig:PythonOriginalVsPythonNew}
+    \end{figure}
+    
     The Python program considers the new model to be worse in comparison to the original suggestion since the MAE is 1.072 smaller and the RMSE is 1.4 smaller than the original results. The first Python model was chosen based on the AIC and the predictions were also not taken into account during the evaluation steps.\\
-    The following graph presents the predictions for the same model but estimated by different program. The model is ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. Same color notation is used.\\
-    \includegraphics[scale=0.75]{ROriginalVsPythonNew.png}
+    The following graph presents the predictions for the same model but estimated by different program. The model is ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. Same color notation is used.
+    
+    \begin{figure}[H]
+        \includegraphics[scale=0.5]{ROriginalVsPythonNew.png}
+        \centering
+        \caption{Predictions build by the R program for the original model and predictions built by the Python program for the new model.}
+        \label{fig:ROriginalVsPythonNew}
+    \end{figure}
+    
     The Python program predictions are less accurate than the R predictions for the same model. The R MAE is 0.617 smaller and the R RMSE is 0.684 smaller.\\
     The highest accuracy forecast was built by the R program for the Python original model. This result can be explained by the fact that the R gls.predict() module uses double precision floats instead of single precision floats. At the same time the Python program has returned better regression using the AIC during the evaluation process. Python gets an additional Point for yielding higher accuracy results.\\
     The final score for both programs is 5.591 Points for the R program versus 4.8 Points for the Python program. This mean that objectively R is more suitable for beginners to use as the programming language for a small statistic task with a small data set.
