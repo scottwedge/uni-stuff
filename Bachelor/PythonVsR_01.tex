@@ -8,15 +8,10 @@
 \usepackage{lipsum}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage{fancyvrb}
-\usepackage{minted}
-\usepackage{color}
 \usepackage{mathtools}
 \usepackage{graphicx}
-
 \usepackage{hyperref}
 \usepackage{url}
-
 \usepackage{listings}
 \usepackage{lmodern}
 \usepackage{float}
@@ -36,45 +31,39 @@
     % title page begin -------------------------------
     \begin{titlepage}
         \begin{center}
+            
+            \vspace{-1.5cm}
+            
+            \includegraphics[scale=0.75]{logo_uhh.jpg}
+           
+            Department of Information Systems\\
+            University of Hamburg\\
+            Germany\\
+    
+            \vspace{2.5cm}
+            
             \LARGE
-            \textbf{Comparing R and Python languages on the example of an econometrie-statistic task }
+            \textbf{Comparing R and Python languages on the example of an econometric-statistic task }
             
-            \vspace{0.5cm}
-    
-            \Large
-            \textit{Or:} What language is more suitable for a beginner data analyst?
-    
-            \vspace{0.5cm}
+            \vspace{2.5cm}
             
-            A thesis submitted for the degree of
-    
-            \vspace{0.5cm}
-    
-            \emph{Bachelor of Science}\\
-            in\\
-            \emph{Information Systems}
+            \normalsize
+            A thesis submitted for the degree of\\
+            Bachelor of Science in Information Systems
+
             
             \vspace{0.6cm}
     
             by
     
-            \vspace{0.3cm}
+            \vspace{0.6cm}
             
+            \large
             \textbf{Alisa Dammer}\\
             {\small Matriculation number: 6325479}
             
-            \vspace{0.5cm}
-            
-            \includegraphics[width=0.4\textwidth]{logo_uhh.jpg}
-            
-        
-            \Large
-            Department of Information Systems\\
-            University of Hamburg\\
-            Germany\\
-    
-            \vspace{0.3cm}
-    
+            \vspace{2.5cm}
+
             \large
             Primary Supervisor: Prof. Dr. Stefan \textsc{Voß}\\
             Secondary Supervisor: Dr. Stefan \textsc{Lessmann}
@@ -86,9 +75,9 @@
 % Abstract begin --------------------------------
     \chapter*{Abstract}
         \onehalfspace
-        Along with a very rapid digitalization of the worls and according software and hardware development, it became possible to accumulate immense amount of data for further analysis. However classical statistical methods and tools appeared to be inefficient for Big Data. This is why highly skilled data scientists, data analysts and data engineers are in demand now. \\
-        There are several highly demanded skills required from a data analyst. Among all the skills very important are programming languages. The most frequently asked programming languages are Python and R. These two languages can be viewed as both substitutes and complement. However, the languages have different concepts and are designed for partially different purposes. \\
-        This study aims to answer the question which language is more suitable for a beginner data analyst. In order to answer this question two things were done. First, an evaluation criteria table was suggested. Second, the author has implemented a mid-complexity program in both Python and R to evaluated the results accordingly to the estimation table.
+        Along with a very rapid digitalization of the world and according software and hardware development, it became possible to accumulate immense amounts of data for further analysis. However, classic statistical methods and tools appeared to be inefficient for Big Data. This is why highly skilled data scientists, data analysts and data engineers are in demand now. \\
+        There are several highly demanded skills required from a data analyst. A deep understanding of high performance programming languages is a requirement for data analysts. The most highly demanded programming languages are Python and R. The languages have different concepts and are designed for different primary purposes. \\
+        This thesis aims to answer the question which language is more suitable for a beginner data analyst. In order to answer this question two things were done: Firstly, an evaluation criterion table was suggested. Secondly, the author has implemented a medium-complexity program in both Python and R to evaluate the results accordingly to the estimation table.
         \singlespace
 % Abstract end ----------------------------------
 
@@ -96,55 +85,12 @@
 \tableofcontents
 % Contents end ----------------------------------
 
-\iffalse
- Contents
-\begin{enumerate}
-    \item[1.] Motivation
-        \begin{enumerate}
-            \item[1.1] Introduction: The Rise Of The Data Analysis
-            \item[1.2] Python Overview 
-            \item[1.3] R Overview
-            \item[1.4] Thesis Description
-            \item[1.5] Data Preparation 
-        \end{enumerate}
-    \item[2.] Python
-        \begin{enumerate}
-            \item[2.1] The Structure Of The Program
-            \item[2.2] The Process Description
-            \begin{enumerate}
-                \item[2.2.1] Used Libraries
-                \item[2.2.2] Documentation and The Ecosystem
-                \item[2.2.3] Advantages and Disadvantages Of The Program 
-            \end{enumerate}
-            \item[2.3] Results
-        \end{enumerate}
-    \item[3.] R
-        \begin{enumerate}
-            \item[3.1] The Structure Of The Program
-            \item[3.2] The Process Description
-            \begin{enumerate}
-                \item[3.2.1] Used Libraries
-                \item[3.2.2] Documentation and The Ecosystem
-                \item[3.2.3] Advantages and Disadvantages Of The Program 
-            \end{enumerate}
-            \item[3.3] Results
-        \end{enumerate}
-    \item[4.] Results
-        \begin{enumerate}
-            \item[1.1] Objective Comparison
-            \item[1.2] Subjective Comparison
-            \item[1.3] Conclusion
-        \end{enumerate}
-    \item[5.] Literature
-\end{enumerate}
-\fi
-
     \chapter{Motivation}
         \section{Introduction: The Rise Of The Data Analysis}
-        An analysis of any available data has always played an essential role for business success. According to Wikipedia: "Since the mid-1990s, the Internet has had a revolutionary impact on culture and commerce, including the rise of near-instant communication by electronic mail, instant messaging, voice over Internet Protocol (VoIP) telephone calls, two-way interactive video calls, and the World Wide Web with its discussion forums, blogs, social networking, and on-line shopping sites" \cite{}. The mass digitalization of the world has allowed for easier and faster data collection. With the advancement of technology the amount of data stored jumped from a 3.75MB disk presented by IBM in 1956 [2] up to a 16TB solid-state drive produced by SAMSUNG [3]. Many different classical econometric and statistic tools became unusable for the amount of the data collected. This happened because the methods were not optimized for such a big amount of information. Most of the algorithms were sequential as opposed to parallel and thus their performance suffered.\\
-        With the rise of opportunities to collect and store the data, a new sphere of analysis appeared to be important for business: Big Data was known long before it became popular. In 1944 the first estimate of data growth was given by Fremont Rider [4]. In his work, Rider pointed out the problem of information growth: "[...] of all the problems which have, of recent years, engaged the attention of educators and librarians, none have been more puzzling than those posed by the astonishing growth of our great research libraries…it seems, as stated, to be a mathematical fact that, ever since college and university libraries started in this country, they have, on the average, doubled in size every sixteen years". Although the main concern of the paper was directed to storing and maintaining science papers in the libraries as well as the respective growth in administration costs, these were already the questions from the Big Data domain. Another prominent work on Big Data is a paper called "Little Science, Big Science... and beyond" by Derek Price written in 1963 [5]. In his work, D. Price discussed the evolution of science institutions from their state to multi-purpose clusters of different libraries along with the data growth. This work shows the development of the infrastructure along with data growth and data transformation.\\
-        The new level of the accessible data required both new hardware and software technologies as well as new mathematical approaches. Rapid storage systems development started in the 1960s. New software was developed to take advantage of the new hardware as it became available. One of the first papers using the term 'Big Data' was written in 1999 by Steve Bryson, David Kenwright, Michael Cox, David Ellsworth, and Robert Haimes. The paper was called “Visually exploring gigabyte data sets in real time” [6]. It is believed that the term itself at the current understanding was presented by Roger Magoulas [7].\\
-        Starting from the mid 2000s the need for experienced data analysts, data scientists and data engineers grew steadily. However, the candidates should have a certain set of skills for working with huge data sets on a distributed file system like Google distributed file system (GDFS), Hadoop distributed file system (HDFS) or other similar products. The "2015 Data Science Salary Survey" from O'Reilly sums up the current trends in the required skill set for data processing positions [8]. The key points made in the survey show that SQL, Excel, R, and Python are highly demanded skills. The same results appeared by browsing through the three big job search portals for data engineer, scientist and analyst positions. Gigajob, Monster and LinkedIn (not exactly job searching  platform, but it has this functionality and results are representative) show similar results to the O'Reilly survey. The most interesting trends are:
+        An analysis of any available data has always played an essential role for business success. According to Wikipedia: "Since the mid-1990s, the Internet has had a revolutionary impact on culture and commerce, including the rise of near-instant communication by electronic mail, instant messaging, voice over Internet Protocol (VoIP) telephone calls, two-way interactive video calls, and the World Wide Web with its discussion forums, blogs, social networking, and on-line shopping sites" \cite{wiki:history}. The mass digitalization of the world has allowed for easier and faster data collection. With the advancement of technology the amount of data stored jumped from a 3.75MB disk presented by IBM in 1956 \cite{ibm:storage} up to a 16TB solid-state drive produced by SAMSUNG \cite{article:largestHardDrive}. Many different classical econometric and statistic tools became unusable for the amount of the data collected. This happened because the methods were not optimized for such a big amount of information. Most of the algorithms were sequential as opposed to parallel and thus their performance suffered.\\
+        With the rise of opportunities to collect and store the data, a new sphere of analysis appeared to be important for business: Big Data was known long before it became popular. In 1944 the first estimate of data growth was given by Fremont Rider \cite{inproceedings:LibraryResearch}. In his work, Rider pointed out the problem of information growth: "[...] of all the problems which have, of recent years, engaged the attention of educators and librarians, none have been more puzzling than those posed by the astonishing growth of our great research libraries…it seems, as stated, to be a mathematical fact that, ever since college and university libraries started in this country, they have, on the average, doubled in size every sixteen years". Although the main concern of the paper was directed to storing and maintaining science papers in the libraries as well as the respective growth in administration costs, these were already the questions from the Big Data domain. Another prominent work on Big Data is a paper called "Little Science, Big Science... and beyond" by Derek Price written in 1963 \cite{inproceedings:SmallToBigScience}. In his work, D. Price discussed the evolution of science institutions from their state to multi-purpose clusters of different libraries along with the data growth. This work shows the development of the infrastructure along with data growth and data transformation.\\
+        The new level of the accessible data required both new hardware and software technologies as well as new mathematical approaches. Rapid storage systems development started in the 1960s. New software was developed to take advantage of the new hardware as it became available. One of the first papers using the term 'Big Data' was written in 1999 by Steve Bryson, David Kenwright, Michael Cox, David Ellsworth, and Robert Haimes. The paper was called “Visually exploring gigabyte data sets in real time” \cite{article:GigabyteDataSets}. It is believed that the term itself at the current understanding was presented by Roger Magoulas \cite{linkedin:RogerMagoulas}.\\
+        Starting from the mid 2000s the need for experienced data analysts, data scientists and data engineers grew steadily. However, the candidates should have a certain set of skills for working with huge data sets on a distributed file system like Google distributed file system (GDFS), Hadoop distributed file system (HDFS) or other similar products. The "2015 Data Science Salary Survey" from O'Reilly sums up the current trends in the required skill set for data processing positions \cite{oreilly:CentralSurvey}. The key points made in the survey show that SQL, Excel, R, and Python are highly demanded skills. The same results appeared by browsing through the three big job search portals for data engineer, scientist and analyst positions. Gigajob, Monster and LinkedIn (not exactly job searching  platform, but it has this functionality and results are representative) show similar results to the O'Reilly survey. The most interesting trends are:
         \begin{enumerate}
             \item The rise of interest towards Python, R and Scala (Spark).
             \item Java, C++ and Haskell are demanded by specific industries (financial sectors, heavy industries).
@@ -155,27 +101,27 @@
         We consider the rise of Python and R popularity a very interesting trend since both languages were designed for the data processing but weren't popular among the industry and business in the early 1990s. These two languages can be seen as substitutes or supplements depending on the task context. In this work we will try to answer the question that is: "What language would be better to start with for a beginner data analyst?". We have taken data analyst position since this position perform a variety of tasks related to collecting, organizing, and interpreting statistical information but is not responsible for building new data processing tools or creating new approaches to detect patterns in the amount of data. The tasks for a beginner analyst are considered to be data collecting and storing, data cleaning and processing, hypothesis testing and visualising the results for further interpretation and use. These tasks require basic programming skills to acquire the data from the web or database. Also, programming skills must be sufficient to visualize the data and port the graphs to the web. Another required skill is the understanding how DFS works and ability to use it. Additionally the candidate should have sufficient knowledge in mathematics and statistics.
         
         \section{Python language overview}
-        Python is a relatively young language. The first public release of the language was announced 24 years ago. According to the official web page in Wikipedia: "Python is a widely used general-purpose, high-level programming language. Its design philosophy emphasizes code readability, and its syntax allows programmers to express concepts in fewer lines of code than would be possible in languages like C++ or Java" [9].\\
-        Currently, Python is widely used in both business and science. There are different application domains for the language like software development in games, management systems and financial sector [10]. An interesting example of Python use is ForecastWatch [11]. This projects helps evaluating the accuracy of weather forecasts. The project is implemented solely in Python. This language was chosen because of existing parsing and statistical libraries as well as back end and front end technologies. The ability of Python to easily work with C++ and C made this language the choice for Industrial Light \& Magic (ILM). The company uses special software to create visual special effects for movies. Their effects were used in such films like Stark Trek, Avengers, Transformers, Indiana Jones series and many others [17].\\
-        The scientific community also uses Python for different purposes: from simulation software to direct programming. The example of such language use the Molecular Modelling Toolkit [12]. The scientific publications connected with this open source library can be divided into three categories:
+        Python is a relatively young language. The first public release of the language was announced 24 years ago. According to the official web page in Wikipedia: "Python is a widely used general-purpose, high-level programming language. Its design philosophy emphasizes code readability, and its syntax allows programmers to express concepts in fewer lines of code than would be possible in languages like C++ or Java" \cite{wiki:Pyhton}.\\
+        Currently, Python is widely used in both business and science. There are different application domains for the language like software development in games, management systems and financial sector \cite{python:Example0}. An interesting example of Python use is ForecastWatch \cite{python:Example1}. This projects helps evaluating the accuracy of weather forecasts. The project is implemented solely in Python. This language was chosen because of existing parsing and statistical libraries as well as back end and front end technologies. The ability of Python to easily work with C++ and C made this language the choice for Industrial Light \& Magic (ILM). The company uses special software to create visual special effects for movies. Their effects were used in such films like Stark Trek, Avengers, Transformers, Indiana Jones series and many others \cite{python:Example7}.\\
+        The scientific community also uses Python for different purposes: from simulation software to direct programming. The example of such language use the Molecular Modelling Toolkit \cite{python:Example2}. The scientific publications connected with this open source library can be divided into three categories:
         \begin{enumerate}
             \item Articles about the methods extending MMTK.
             \item Articles about the software built using MMTK.
             \item Articles about the research using MMTK.
         \end{enumerate}
-        A good example of an article from the first group is "Harmonicity in slow protein dynamics" by K Hinsen, A J Petrescu, S Dellerue, M C Bellissent-Funel, and G R Kneller [13]. The example article from the second group is the "Analysis of domain motions in large proteins" by K Hinsen, A Thomas, and M J Field published in 1999 [14]. An example of articles with results gotten with the help of MMTK is "A Molecular Dynamics Investigation of Vinculin Activation" by Javad Golji and Mohammad R Mofrad published in 2010 [15]. There are many other scientific spheres using Python for research. For example in neural networks and deep learning Python libraries and programs are used heavily. The "Deep Boltzmann Machines and the Centering Trick" by Gregoire Montavon and Klaus-Robert Müller in 2012 [16].\\
+        A good example of an article from the first group is "Harmonicity in slow protein dynamics" by K Hinsen, A J Petrescu, S Dellerue, M C Bellissent-Funel, and G R Kneller \cite{python:Example3}. The example article from the second group is the "Analysis of domain motions in large proteins" by K Hinsen, A Thomas, and M J Field published in 1999 \cite{python:Example4}. An example of articles with results gotten with the help of MMTK is "A Molecular Dynamics Investigation of Vinculin Activation" by Javad Golji and Mohammad R Mofrad published in 2010 \cite{python:Example5}. There are many other scientific spheres using Python for research. For example in neural networks and deep learning Python libraries and programs are used heavily. The "Deep Boltzmann Machines and the Centering Trick" by Gregoire Montavon and Klaus-Robert Müller in 2012 \cite{python:Example6}.\\
         Python offers a variety of tools for both researches and business-oriented projects. The one-purpose programs and full stack web applications are built using solely Python or in a combination with other programming languages. 
         
         \section{R Overview}
-        Similarly to Python, R is a young language. The language was first introduced in 1993. According to the Wikipedia page: "R is a programming language and software environment for statistical computing and graphics supported by the R Foundation for Statistical Computing. The R language is widely used among statisticians and data miners for developing statistical software and data analysis" [18]. From the description it can be seen that R was designed explicitly for scientific purposes as well as for data analysis. The community behind this language consists mostly of universities or scientific teams. \\
+        Similarly to Python, R is a young language. The language was first introduced in 1993. According to the Wikipedia page: "R is a programming language and software environment for statistical computing and graphics supported by the R Foundation for Statistical Computing. The R language is widely used among statisticians and data miners for developing statistical software and data analysis" \cite{r:Basic}. From the description it can be seen that R was designed explicitly for scientific purposes as well as for data analysis. The community behind this language consists mostly of universities or scientific teams. \\
         R programs allow for faster and easier prototyping in comparison to Java, C++ or C. The performance of the prototypes written in R is better than the performance of similar Python prototypes. This is why the modern trend is to use R to build an initial and simple prototype or to use R code as a part of a program solving one or more analytical tasks. For example, R scripts can be called inside of Python programs for speeding up certain computations. However this trend is new and the number of R programs used in business projects is relatively low.\\
         As stated earlier, R is mostly used for statistical analysis by the scientific community. Similarly to the Python articles, scientific papers with R usage can be divided into two categories:
         \begin{enumerate}
             \item The articles about R extensions and packages.
             \item Articles using R programs for hypothesis checking.
         \end{enumerate}
-        A good example of an article from the first category is "lavaan: An R Package for Structural Equation Modeling" by Yves Rosseel [19]. The package can be useful for social and psychological analysis. In general, every package developed by a scientific team from a university can be seen as a scientific engineering work. In this paper we have used several such packages: Tseries [20] and Nlme packages [21]. These packages will be discussed in details in the R section. R is used not only in statistics, but also in biology. Analysis of Phylogenetics and Evolution (APE) is a package written in the R language for use in molecular evolution and phylogenetics [22].
-        An example of a scientific paper from the second category is the article "neuralnet: Training of Neural Networks" by Frauke Günther and Stefan Fritsch [23]. In their article the authors have used the data from the R distribution and wrote a multi-layered perceptron trained via supervised algorithm in the context of the regression analysis. Another interesting example of the R usage is the paper "Nonlinear Regression and Nonlinear Least Squares in R" by John Fox and Sanford Weisberg [24].\\
+        A good example of an article from the first category is "lavaan: An R Package for Structural Equation Modeling" by Yves Rosseel \cite{r:Example0}. The package can be useful for social and psychological analysis. In general, every package developed by a scientific team from a university can be seen as a scientific engineering work. In this paper we have used several such packages: Tseries \cite{r:Tseries} and Nlme packages \cite{r:Nlme}. These packages will be discussed in details in the R section. R is used not only in statistics, but also in biology. Analysis of Phylogenetics and Evolution (APE) is a package written in the R language for use in molecular evolution and phylogenetics \cite{r:Ape}.
+        An example of a scientific paper from the second category is the article "neuralnet: Training of Neural Networks" by Frauke Günther and Stefan Fritsch \cite{r:Example1}. In their article the authors have used the data from the R distribution and wrote a multi-layered perceptron trained via supervised algorithm in the context of the regression analysis. Another interesting example of the R usage is the paper "Nonlinear Regression and Nonlinear Least Squares in R" by John Fox and Sanford Weisberg \cite{r:Example2}.\\
         Although R is still mostly a scientific language, it is used as a part of the analytical systems due to its performance and simplicity.
         
         \section{Python vs R wars}
@@ -186,9 +132,9 @@
             \item Comparison of the languages based on a benchmarking.
             \item Comparison based on the code differences for the same result.
         \end{enumerate}
-        An example of the general and mostly subjective comparison is the discussion on specialized forums. Most known sources for analysts are Biostars [25], different sub domains of stackexchange [26] and specific questions on stackoverflow [27]. The most popular opinion on the forums is to use whatever suits the task and current set of skills. This answer can be seen on specific forums like Biostars very clearly [25]. In this case the domains of the tasks are biology, chemistry and simulation. The users of the forum on average say that R is well-maintained and that is has more suitable packages, however they use Python for their analytical purposes. The reason for that conflict is the multipurpose nature of Python, which allows better data collection and direct visualization in web. All of this makes Python easier to use and eliminates the bottleneck among the parts of the project. On the other hand R, has numerous smaller packages for analytical tasks and is faster than the average Python program. The obvious disadvantage of the general comparison approach is its biased nature. The results of such discussions are hardly usable.\\
-        Benchmarking is a good criterion to compare the performance of the languages. However, this method should be used carefully. The performance itself will only show how much faster one language can be for the specific task, the specific machine and specific implementations for languages that are compared. In order to use benchmarking all parameters should be set equally. An interesting example of a benchmarking is given in the paper "A Comparison of Programming Languages in Economics" by S. Boragan Aruoba and Jesus Fernandez-Villaverde [28]. In their paper the researchers have compared several languages implementing the stochastic neoclassical growth model. Among the languages they have chosen were R and Python (CPython and PyPy). All programs were implementing the same algorithm and run the same number of iterations. The programs were implemented on the level of an experienced programmer. The paper yields predictable and unbiased results. However the complexity of the task and according complexity of the programs written play an important role in end results. The languages have different paradigms, concepts and structure, thus there is no guaranty that the chosen code style results in optimal performance for each language.\\
-        The third group of comparison methods is comparing the complexity of the code in order to achieve same performance. An interesting example of this approach is the article written in the Dataquest blog [29]. In the article the authors have tried to reach same results using Pandas and NumPy packages for the Python program and base R package for the R program. The Dataquest team suggests R to be a more suitable language for purely statistical tasks, while Python being easier to use for complex systems. The answer the authors give can't be sconsidered to be clear and final.\\
+        An example of the general and mostly subjective comparison is the discussion on specialized forums. Most known sources for analysts are Biostars \cite{forum:Biostars}, different sub domains of stackexchange \cite{forum:Stackexcahnge} and specific questions on stackoverflow \cite{forum:Stackoverflow}. The most popular opinion on the forums is to use whatever suits the task and current set of skills. The users of the biological statistics forum on average say that R is well-maintained and that is has more suitable packages, however they use Python for their analytical purposes. The reason for that conflict is the multipurpose nature of Python, which allows better data collection and direct visualization in web. All of this makes Python easier to use and eliminates the bottleneck among the parts of the project. On the other hand R, has numerous smaller packages for analytical tasks and is faster than the average Python program. The obvious disadvantage of the general comparison approach is its biased nature. The results of such discussions are hardly usable.\\
+        Benchmarking is a good criterion to compare the performance of the languages. However, this method should be used carefully. The performance itself will only show how much faster one language can be for the specific task, the specific machine and specific implementations for languages that are compared. In order to use benchmarking all parameters should be set equally. An interesting example of a benchmarking is given in the paper "A Comparison of Programming Languages in Economics" by S. Boragan Aruoba and Jesus Fernandez-Villaverde \cite{article:LanguageComparison}. In their paper the researchers have compared several languages implementing the stochastic neoclassical growth model. Among the languages they have chosen were R and Python (CPython and PyPy). All programs were implementing the same algorithm and run the same number of iterations. The programs were implemented on the level of an experienced programmer. The paper yields predictable and unbiased results. However the complexity of the task and according complexity of the programs written play an important role in end results. The languages have different paradigms, concepts and structure, thus there is no guaranty that the chosen code style results in optimal performance for each language.\\
+        The third group of comparison methods is comparing the complexity of the code in order to achieve same performance. An interesting example of this approach is the article written in the Dataquest blog \cite{dataQuest:LanguageComparison}. In the article the authors have tried to reach same results using Pandas and NumPy packages for the Python program and base R package for the R program. The Dataquest team suggests R to be a more suitable language for purely statistical tasks, while Python being easier to use for complex systems. The answer the authors give can't be sconsidered to be clear and final.\\
         The goal of this paper is to answer the question: "What language is more suitable for a beginner data analyst?" To answer that question we will need to create criteria to evaluate the languages in the most unbiased way. The criteria will depend on the tasks common for a data analyst.\\
         The common tasks of a data analyst are data mining and data visualization. The possibility to use DFS to process the data can be seen as a big advantage and thus is considered to be important for evaluation criteria. A data analyst should have a sufficient mathematical background to understand and use different algorithms and approaches, but not necessarily be able to implement them (that is the task of a data scientist).\\
     
@@ -245,33 +191,35 @@
     \section{Data preparation}
     As we have already said, the data for the processing will be prepared in advance. To be able to subjectively estimate the results, we will have to take transparent dependent variable and transparent explanatory variables. The connections between variables should be easily explained with a plain logic. For our purpose we have decided to take Intel as a dependent variable in the regression. Predictors will be chosen among the companies from the same market of micro chips, supplier market and customers market. We have chosen Intel because it is a transparent diversified company with clear development trend this company is one of the leaders of the microchips market and all connected markets are also easy to define. For this paper we will consider only a small amount of companies influencing Intel, since we want to keep the task on a medium complexity.\\
     Intel's competitors can be found on Wikipedia listed in several tables for years from 1998 to 2013. We have used a parser to get the following list of manufacturers for the years 2000-2013 for semiconductors market:
-    \begin{verbatim}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     ['AMD', 'Qualcomm', 'Micron Technology','Hynix',
     'Infineon Technologies', 'Intel Corporation', 
     'STMicroelectronics', 'Texas Instruments']
-    \end{verbatim}
+    \end{lstlisting}
     Semiconductors are the basic component for different devices, so the potential consumer-markets may vary. In this bachelor thesis we will concentrate on microchips (CPUs) consumers. The following consumer markets are: tablets, smartphones, personal computers, automobiles, video game consoles, medical technologies, engineering technologies, aviation. Tablets and personal computers are united into one market-group.\\
     Automobile market:
-    \begin{verbatim}
+    \vspace{0.5cm}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     ['Toyota', 'GM', 'Volkswagen', 'Ford', 'Nissan', 
     'Fiat Chrysler Automobiles', 'Honda', 'PSA', 'BMW',
     'Daimler AG', 'Mitsubishi', 'Tata', 'Fuji']
-    \end{verbatim}
+    \end{lstlisting}
     The only significant players (manufacturers) on the gaming console market are: Microsoft, Sony and Nintendo.\\ 
     The aviation market is presented by the following companies: 
-    \begin{verbatim}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     ['Boeing', 'United Technologies', 'Lockheed Martin',
     'Honeywell International', 'General Dynamics',
     'BAE Systems', 'Northrop Grumman', 'Raytheon',
-    'Rolls Royce', 'Textron', 'Embraer', 'Spirit AeroSystems Holdings Inc.']
-    \end{verbatim}
+    'Rolls Royce', 'Textron', 'Embraer', 
+    'Spirit AeroSystems Holdings Inc.']
+    \end{lstlisting}
     The next microchips consumer markets are smartphones, tablets and PCs markets. Since many companies are presented on the markets mentioned above and have further production markets, we will put them into "Diversified" category. The diversified companies that may influence Intel are:
-    \begin{verbatim}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     ['Samsung', 'Apple', 'Microsoft', 'Nokia', 'Sony', 'LG',
     'Motorola',  'Lenovo',  'BlackBerry', 'Alcatel', 'Vodafone']
-    \end{verbatim} 
+    \end{lstlisting} 
     Another huge consumer market for Intel is the medical equipment market. The following companies present this sphere:
-    \begin{verbatim}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     ['Johnson & Johnson', 'General Electric Co.', 'Medtronic Inc.',
     'Siemens AG', 'Baxter International Inc.', 
     'Fresenius Medical Care AG & Co.', 'Koninklijke Philips',
@@ -283,12 +231,12 @@
     'CR Bard Inc.', 'Varian Medical Systems Inc.',
     'DENTSPLY International Inc.', 'Hologic Inc.', 
     'Danaher Corp.', 'Edwards Lifesciences', 'Intuitive Surgical Inc.']
-    \end{verbatim}
+    \end{lstlisting}
     Additionally to the companies mentioned above, several big players from the industrial equipment market will be added. These are the following companies:
-    \begin{verbatim} 
+    \begin{lstlisting}[basicstyle=\footnotesize]
     ['ABB Robotics', 'Adept Technology', 'Bosch', 'Caterpillar',
     'Denso Robotics', 'Google', 'Universal Electronics']
-    \end{verbatim}
+    \end{lstlisting}
     After limiting the number of the connected markets, we have limited the number the companies from the chosen markets, because of the lack of  information about some companies. The reason for the lack of information is that some companies have entered the international stock exchange recently (since 2010 earliest). Some companies are still closed to foreign investors (which is the case for giants such as Samsung, Honda and other Asian companies). The last limit on the chosen companies is the trading volume. If the trading volume for the last two years was zero, the company was considered to not have been traded on the stock exchange.\\
     After the companies were chosen, the whole data table was split into two data sets: learning set and validation set. We have obtained daily prices from 2006 to 2015 (31.12.2014 is the last date for all indexes). The training or learning set will be approximately 70\% of the whole data volume: from 2006 to 2010. The validation set is about 30\%: from 2011 to 2012. For this work we use the daily frequency (only opening prices).\\
     The LearningSet file is a csv table containing 78 companies with 1240 prices for each company. The total size of the table is approximately 500KiB. The TestingSet csv file is also a table containing 78 companies with 515 everyday prices. The TestingSet file size is approximately 200KiB.\\
@@ -316,17 +264,17 @@
     \subsection{Libraries Used}
     In the course of writing the program several steps were implemented. These steps are: extracting and preparing the data for further use, checking statistic characteristics and building the model based on the results of the statistics. In order to build the program three main libraries were used:
     \begin{enumerate}
-        \item Python Standard Library [30].
-        \item SciPy (unites six different libraries) [31].
-        \item Statmodels [32].
+        \item Python Standard Library \cite{python:Doc}.
+        \item SciPy (unites six different libraries) \cite{python:SciPy}.
+        \item Statmodels \cite{python:Statsmodels}.
     \end{enumerate}
     The functions and the data structures defined in the standard Python library were used for every simple task, except some mathematical computations, since the NumPy library offers faster implementations.\\
     The second most used library in this work was NumPy. This library is the part of the SciPy source. NumPy offers many fast multi-dimensional computations and associated multi-dimensional structures. In our work we have used this library to compute several statistics and to build the data for displaying graphs. The functions in the standard library did not show the sufficient performance needed for our program.\\
     The third important library used in this work is Pandas. The library is a part of the SciPy source. Pandas provides high-performance data structures and associated functions for data analysis. This library can be used for generating, accessing and formatting data. In this work we have used it to get the data from our csv file in an intuitive manner and also to avoid an unnecessary formatting step. Pandas offers the functionality to get the data directly from web sources like Yahoo Finance, Google Finance, Google Analytics and other similar sources.\\
     The library for drawing graphs is called Matplotlib. It is also a part of the SciPy source. Matplotlib offers different types of graphs and formatting tools. The following example represents the default graph without any additional formatting.
     
-    \begin{figure}[H]
-        \includegraphics[scale=0.5]{PythonPlotExample.png}
+    \begin{figure}[h]
+        \includegraphics[scale=0.5]{img_examples/PythonPlotExample.png}
         \centering
         \caption{A basic plot built using Matplotlib library}
         \label{fig:PythonPlotExample}
@@ -361,7 +309,7 @@
         \item 1 Point.
         \item 0 Point.
     \end{enumerate}
-    Python gets 1 Point for the size and the quality of the community. We give the whole point because there are many universities developing Python as well as the serious core developers team and open source contributors. One of the interesting examples of a library developed by a scientific contributor is the library to place graphs directly into web [33]. Seaborn is developed and maintained by Standford. Another example is TensorFlow by Google [34]. This tool offers Java and Python APIs to build and train the neural network.\\
+    Python gets 1 Point for the size and the quality of the community. We give the whole point because there are many universities developing Python as well as the serious core developers team and open source contributors. One of the interesting examples of a library developed by a scientific contributor is the library to place graphs directly into web \cite{python:Seaborn}. Seaborn is developed and maintained by Standford. Another example is TensorFlow by Google \cite{python:Tensorflow}. This tool offers Java and Python APIs to build and train the neural network.\\
     Python also gets 1 point for the diversity of the packages and libraries.
     The final score for the Python documentation is:
     \[ \frac{(\frac{2}{5}(4) + \frac{1}{5}(5) + \frac{2}{5}(3.5) )}{5}= 0.8\]
@@ -374,13 +322,13 @@
     There are several disadvantages of the statistic program written in Python.\\ 
     The first disadvantage is the performance. This disadvantage can appear mostly for beginners by implementing middle complexity tasks. For large data sets Cython might be used instead of a simple Python.\\
     In order to avoid data formatting difficulties we have used Pandas library. There are several limitations associated with the use of this library. For instance Pandas is not compatible with PyPy. This limitation took a cheap possibility to speed up our program.\\
-    Another disadvantage of the program written in Python is the unintuitive function usage. For example, Python does not implicitly create copies. The expression \mintinline{python}{dict(a) = dict(b)} shows two objects that are referred to the same object. During mutating one of the objects all references will change in order to keep referring to the object in its current state. The correct way to initialize a dictionary using another dictionary is \mintinline{python}{dict(a).copy(dict(b))}. \\
+    Another disadvantage of the program written in Python is the unintuitive function usage. For example, Python does not implicitly create copies. The expression \textit{dict(a) = dict(b)} shows two objects that are referred to the same object. During mutating one of the objects all references will change in order to keep referring to the object in its current state. The correct way to initialize a dictionary using another dictionary is \textit{dict(a).copy(dict(b))}. \\
     The last disadvantage we want to mention is the unsorted nature of the dictionary. After the csv table was read and formatted into dictionary with the companies names as the keys and the associated prices lists as the values. The keys appear in dictionary in random order.
     
     \section{Results}
     The end result is printed out to a console. The final message contains the names of the companies used in the final regression, main characteristics of the regression (AIC, BIC, Loglikelihood, coefficients and errors) and the total run time of the program. 
     The results of the program for the given data described in the data preparation section are:
-    \begin{minted}{console}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     The best model contains 6 parameters. And the model is:
     ['STMElectro', 'Olympus', 'St Jude', 'Lenovo', 'MicronTech', 'Google']
                                 GLS Regression Results                            
@@ -405,7 +353,8 @@
     x6   0.1291   0.012     10.536    0.000      0.105     0.153
     ============================================================
     [Finished in 4173.2s]
-    \end{minted}
+    \end{lstlisting}
+    \clearpage
     To sum up the objective arguments for Python program computing a linear regression for a given data and restrictions we will sum up the points from the table from the thesis description section.
     The points for the Python program are:
     \begin{enumerate}
@@ -446,16 +395,16 @@
     \subsection{Used Libraries}
     For our R program, the following packages were used:
     \begin{enumerate}
-        \item Base package[35].
-        \item Stats package[36].
-        \item Nlme package[21].
-        \item Tseries package[20].
+        \item Base package \cite{r:BasePackage}.
+        \item Stats package \cite{r:Stats}.
+        \item Nlme package \cite{r:Nlme}.
+        \item Tseries package \cite{r:Tseries}.
     \end{enumerate}
     The functions from the base package were used for all basic computations. This package also provides different functions for the data formatting. The following example shows the R specific object called formula:
-    \begin{minted}{console}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     formula <- as.formula(paste(dep[name],'~', as.character(names(small_model)),
     collapse=''))
-    \end{minted}
+    \end{lstlisting}
     This function converts the string object from the brackets into a formula object that is further used as an input parameter for building a linear regression. The base package offers basic math operation as well.\\
     The StatisticTests class uses both stats and Tseries packages to build the statistic tests on the data. The Tseries package offers different tests and methods widely used in the computational finances and time series analysis. In this work we have only used the Augmented Dickey-Fuller test to check the data for stationary behaviour.\\
     The second package used in StatisticTests class offers functions to run simple statistic tests on the data and build the basic statistic characteristics and provides the possibility to build a graph. In our work we have used the stats package to build graphs for each company from the data table and test the data for its distribution. The program has yielded the same results as the Python program.\\
@@ -463,8 +412,8 @@
     The first parameter is a formula object. An example of the this particular object was already demonstrated above. The second parameter is the data source. A necessary condition for the data object is actually to contain the variables from the formula.\\
     The following example presents a graph with a default formatting style.
     
-    \begin{figure}[H]
-        \includegraphics[scale=0.5]{RPlotExample.png}
+    \begin{figure}[h]
+        \includegraphics[scale=0.5]{img_examples/RPlotExample.png}
         \centering
         \caption{A basic plot built using The R Graphics Package library}
         \label{fig:RPlotExampl}
@@ -512,7 +461,7 @@
     \section{Advantages And Disadvantages Of The Program}
     During the development phase of our second program we have encountered several difficulties associated with the language features. Since we have already written our program in Python we have decided to implement the same structure.\\
     The first advantage of the R program is the data frame object and correlated functions. The performance of the slicing and formatting operations is good. One of the most useful functions during the work with R data objects was str(). This function shows the structure of the object:
-    \begin{minted}{console}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     > str(data)
     'data.frame':   1239 obs. of  69 variables:
      $ Intel                : num  26.6 26.6 26.4 25.8 25.9 ...
@@ -522,11 +471,11 @@
      $ Infenion             : num  9.26 9.38 9.41 9.3 9.25  ...
      $ STMElectro           : num  18.5 18.7 18.6 18.1 18.2 ...
     ...
-    \end{minted}
+    \end{lstlisting}
     There are several language specific functions to extract the sub data from the original data frame.\\
     In the Python program where we had to store the data in a dictionary with the names as the keys and the lists of share prices as the associated values. In R the names of the companies from the data frame are coming in exact same order as they appear in the csv file.\\
     The second advantage of the R program is connected to the the function we have used for the regression building. As we have described in the Program Structure and Used Libraries sections for the regression we have used the GLS function from the Nlme package. In order to use this function the formula for the regression and the data containing all given names from the formula should be provided. The examples presented below is not the optimal solution for our task:
-    \begin{minted}{console}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     > model1<-gls(Intel ~ Olympus + Google + AMD + St.Jude, data)
     > model1
     Generalized least squares fit by REML
@@ -540,16 +489,16 @@
     
     Degrees of freedom: 1239 total; 1234 residual
     Residual standard error: 1.158712
-    \end{minted}
+    \end{lstlisting}
     Another advantage of the GLS function is its data use. In comparison to Python the data is not required to be specifically formatted. The data frame previously loaded into the environment will be used by default if no data is specified. If there are multiple data sources loaded into the environment the specification is not optional.\\
     The third advantage of the R program is its performance. Without using the explicit multiprocessing or JIT the program has significantly outperformed the Python program. The actual results will be presented in the following section.\\
     The first disadvantage of the R language is difficulty. The syntax is not as intuitive as the Python syntax. The data structures and their use are non trivial. In order to begin using R, a significant amount of time invested upfront is required.\\
-    The first example of R's complexity is the absence of the classes in their usual understanding. In R there are three type of classes. These are S3, S4 and Reference Class. The reference class is close to the Python class. The first two represent the attribute of an object. In R everything considered as an object. In our program we have used the reference class and didn't dive into the other two class types. For more information on OO systems in R you can visit the following source [37]. \\
+    The first example of R's complexity is the absence of the classes in their usual understanding. In R there are three type of classes. These are S3, S4 and Reference Class. The reference class is close to the Python class. The first two represent the attribute of an object. In R everything considered as an object. In our program we have used the reference class and didn't dive into the other two class types. For more information on OO systems in R you can visit the following source \cite{r:OO}. \\
     The second disadvantage of the R program is connected to Reference Class definition. In R the return statement with multiple instances is not allowed. In order to be able to return several objects it is possible to write them down into a list. The disadvantage of this workaround is the additional formatting of the resulting list.\\
     Another disadvantage of the R program is the difficulty of the slicing. Different approaches can be used to get the same result. R provides multiple slicing possibilities in order to simplify the formatting steps. The functions can return the instances of different classes.
     \section{Results}
     The main file implemented in the R program consists of two functions using implemented classes. The first function activates the libraries we have used in the program and calls the implemented classes in a specific order. The output is printed to the terminal. The extended information on the resulting regression is called separately to the result output for the GLS function:
-    \begin{minted}{console}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     > source("main.r")
     > system.time(main())
     Generalized least squares fit by REML
@@ -586,13 +535,13 @@
     
        user  system elapsed 
      24.566   0.000  23.461 
-    \end{minted}    
+    \end{lstlisting}    
     The best model returned by the R program consist of 6 companies. These companies are STMElctro, Olympus, St.Jude, Lenovo, Microntech and Cardinal. The R program has chosen Cardinal over Google on the last step of the evaluation algorithm. Since the programs are identical this deviation can be caused by the underlying implementations of the GLS function, the LLR-test, or the AIC criterion evaluation. Since we didn't find the source code for the functions we have used in this work, the cause of the difference in the results can't be explained properly. To compare the results of the programs we have built the predictions for both programs. First the accuracy of the original predictions will be compared. Afterwards the cross results accuracy will be compared. The program yielding the higher accuracy predictions will get an additional point.\\
     To sum up the objective arguments for R we will give the points according to the evaluation table given in the description section. The score for the R program is:
     \begin{enumerate}
         \item Performance: 1 Point.
         \item Memory: 1 Point.
-        \item Big Data tools: 1 Point (this is a relatively recent addition to the language. There are several sources and libraries offering tools to work with big data [38]).
+        \item Big Data tools: 1 Point (this is a relatively recent addition to the language. There are several sources and libraries offering tools to work with big data \cite{r:BigData}).
         \item The quality of the documentation: 0.591 Points.
         \item The quality of the ecosystem of the language: 2 Points.
     \end{enumerate} 
@@ -609,8 +558,8 @@
     \chapter{Results}
     In this section we will present the final comparison of the programs written in Python and R.
     \section{Objective comparison}
-    The first difference between the programs is the performance. In order to show measure the run time of the programs we will use the options that both language offer. These methods are \mintinline{d}{system.time()} for R and \mintinline{python}{cProfile()} for Python. Additionally to the language specific functions we will use the \mintinline{bash}{/bin/time} Linux utility. The following example shows us the run time for the R program.
-    \begin{minted}{console}
+    The first difference between the programs is the performance. In order to show measure the run time of the programs we will use the options that both language offer. These methods are \textit{system.time()} for R and \textit{cProfile()} for Python. Additionally to the language specific functions we will use the \textit{/bin/time} Linux utility. The following example shows us the run time for the R program.
+    \begin{lstlisting}[basicstyle=\footnotesize]
     > system.time(data_read())                                                  
        user  system elapsed                                                         
       0.100   0.000   0.085  
@@ -620,32 +569,32 @@
     >> system.time(model(build_data, companies, rest, dependent))
        user  system elapsed 
       3.837   0.000   3.067 
-    \end{minted}
+    \end{lstlisting}
     The main function consists of three parts. The first part reads the data from the csv table and formats it. The second part runs statistic tests. The third part buildings a model based on the results of the statistic tests. The overall time of the program can be measured via main and predict functions:
-    \begin{minted}{console}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     > system.time(main())
        user  system elapsed 
       8.917   0.000   6.546 
     > system.time(build_predictions())
        user  system elapsed 
       0.000   0.000   0.117 
-    \end{minted}
+    \end{lstlisting}
     The run time of the main function is greater than the sum of its parts, since the main function loads needed libraries and also counts the time for the data transfer between the classes as well as the initialization of the classes.\\
     The overall run time of the Python program is:
-    \begin{minted}{console}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     >>> cProfile.run(formatData())
-            4798725 function calls (4798229 primitive calls) in 3.626 seconds
+        4798725 function calls (4798229 primitive calls) in 3.626 seconds
     >>> cProfile.run(getStatistics())
-            32502787 function calls (31887367 primitive calls) in 2312.703 seconds
+        32502787 function calls (31887367 primitive calls) in 2312.703 seconds
     >>> cProfile.run(buildModel())
-            9856742 function calls (79238036 primitive calls) in 4026.785 seconds
+        9856742 function calls (79238036 primitive calls) in 4026.785 seconds
     >>> cProfile.run('build_predictions()')
-            6854581 function calls (6853565 primitive calls) in 6.057 seconds
-    \end{minted}
+        6854581 function calls (6853565 primitive calls) in 6.057 seconds
+    \end{lstlisting}
     The Python program performance in our implementation is 544 times slower. The R program runs for 7.41 seconds versus 4036.468 seconds of the Python program. Both programs run time may vary depending on the overall CPU load and running background processes. However these time differences are only noticeable for the Python program.\\
-    The second difference between the programs is the memory usage. There are several possibilities to measure the memory load of the program. Since every instance in R is treated as an object the size of all objects can be shown using Rprofmem() function from the utilities package. However, in order to use this function to compute the total memory use the sum of the all objects size needs to be computed. This approach is complex and does not guarantees the accurate result. Python also offers different tools to do the profiling. On of the possible functions is memory\_profile [40]. In order to measure the memory use uniformly for both languages we will use the Unix time command. The printed message contains the information about the called process. Two main characteristics we are interested in are the maximum resident set size and the user time. The maximum resident set size shows the amount of the memory belonging to the process and currently presented in RAM. In another words it is the maximum memory allocated in the heap by the program.\\ 
+    The second difference between the programs is the memory usage. There are several possibilities to measure the memory load of the program. Since every instance in R is treated as an object the size of all objects can be shown using Rprofmem() function from the utilities package. However, in order to use this function to compute the total memory use the sum of the all objects size needs to be computed. This approach is complex and does not guarantees the accurate result. Python also offers different tools to do the profiling. On of the possible functions is memory\_profile \cite{python:MemoryProfiler}. In order to measure the memory use uniformly for both languages we will use the Unix time command. The printed message contains the information about the called process. Two main characteristics we are interested in are the maximum resident set size and the user time. The maximum resident set size shows the amount of the memory belonging to the process and currently presented in RAM. In another words it is the maximum memory allocated in the heap by the program.\\ 
     The R memory use looks as following:
-    \begin{minted}{console}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     [20:32:19 - 15-10-25] 
     /home/alisa/uni-stuff/Bachelor/r % /usr/bin/time -v R  main.r
             Command being timed: "R main.r"
@@ -671,10 +620,10 @@
             Signals delivered: 0
             Page size (bytes): 4096
             Exit status: 0
-    \end{minted}
+    \end{lstlisting}
     The maximum memory usage of the R program is 78,4 MB.\\
     The Python memory use looks as following:
-    \begin{minted}{console}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     [19:11:27 - 15-10-25] 
     /home/alisa/uni-stuff/Bachelor/python % /usr/bin/time -v python main.py
             Command being timed: "python __main___.py"
@@ -700,46 +649,46 @@
             Signals delivered: 0
             Page size (bytes): 4096
             Exit status: 0
-    \end{minted}
+    \end{lstlisting}
     The maximum memory usage of the Python program is 637,0 MB.\\
     As we have mentioned earlier, we will compare the predictions of the programs and evaluate the cross results. The predictions were built on the TestingSet file containing 515 prices for the time period from 1.01.2011 to 31.12.2012. We will show the main characteristics of the predictions row: mean and standard deviation as well as the comparison plot.\\
     The R program gives us following results:
-    \begin{minted}{console}
-    > p<-build_predictions()
-    [1] "the mean of the y is: "
-    [1] 23.46462
-    [1] "the std of the y is: "
-    [1] 2.55532
-    [1] "the mean of the predictions is: "
-    [1] 20.86923
-    [1] "the std of the predictions is: "
-    [1] 1.544088
-    [1] "the mean absolute error of the predictions is: "
-    [1] 3.29319
-    [1] "the root mean squared error of the predictions is: "
-    [1] 4.132798
-    \end{minted}
-    
-    \begin{figure}[H]
-        \includegraphics[scale=0.5]{RPredicitions.png}
+    \begin{lstlisting}[basicstyle=\footnotesize]
+        > p<-build_predictions()
+        [1] "the mean of the y is: "
+        [1] 23.46462
+        [1] "the std of the y is: "
+        [1] 2.55532
+        [1] "the mean of the predictions is: "
+        [1] 20.86923
+        [1] "the std of the predictions is: "
+        [1] 1.544088
+        [1] "the mean absolute error of the predictions is: "
+        [1] 3.29319
+        [1] "the root mean squared error of the predictions is: "
+        [1] 4.132798
+    \end{lstlisting}
+
+    \begin{figure}[h]
+        \includegraphics[scale=0.5]{img_examples/RPredicitions.png}
         \centering
         \caption{Predictions build by the R program.}
         \label{fig:RPredicitions}
     \end{figure}
-    
     The Python program results are:
-    \begin{minted}{console}
-    >>> build_predictions()
-    the mean of the y is: 23.4646213592
-    the std of the y is: 2.55283813168
-    the mean of the prediction is: 21.8848266352
-    the standard deviation is: 1.35949376438
-    the mean absolute error of the prediction is: 2.83819120505
-    the root mean squared error is: 3.47169327209
-    \end{minted}
+    \vspace{0.8cm}
+    \begin{lstlisting}[basicstyle=\footnotesize]
+        >>> build_predictions()
+        the mean of the y is: 23.4646213592
+        the std of the y is: 2.55283813168
+        the mean of the prediction is: 21.8848266352
+        the standard deviation is: 1.35949376438
+        the mean absolute error of the prediction is: 2.83819120505
+        the root mean squared error is: 3.47169327209
+    \end{lstlisting}
     
-    \begin{figure}[H]
-        \includegraphics[scale=0.5]{PythonPredictions.png}
+    \begin{figure}[h]
+        \includegraphics[scale=0.5]{img_examples/PythonPredictions.png}
         \centering
         \caption{Predictions build by the Python program.}
         \label{fig:PythonPredictions}
@@ -747,16 +696,16 @@
 
     The Python predictions according to the chosen criteria are more accurate than the R predictions. Both mean absolute error (MAE) and root mean square error (RMSE) are smaller for the Python predictions. The Python program gets one additional point for the relative accuracy. On the following graph both original R and Python predictions are shown. The R forecasts have the green line and the blue line presents the Python forecasts.
     
-    \begin{figure}[H]
-        \includegraphics[scale=0.5]{BothPredictions.png}
+    \begin{figure}[h]
+        \includegraphics[scale=0.5]{img_examples/BothPredictions.png}
         \centering
         \caption{Predictions build by the both Python and R programs.}
         \label{fig:BothPredictions}
     \end{figure}
     
-    As the following step we will force both Python and R programs to compute the results for the model yielded by the other program. Python will compute predictions for the final model from R: ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. And the R program will return the forecast for the Python final model: ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]\\
+    As the following step we will force both Python and R programs to compute the results for the model yielded by the other program. Python will compute predictions for the final model from R: ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. And the R program will return the forecast for the Python final model: ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"].\\
     The R cross result is:
-    \begin{minted}{console}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     > p<-build_predictions()
     [1] "the mean of the y is: "
     [1] 23.46462
@@ -785,11 +734,11 @@
     
     Degrees of freedom: 1239 total; 1232 residual
     Residual standard error: 0.982245 
-    \end{minted}
+    \end{lstlisting}
     On the following image the difference in two models forecasts returned by the R program is represented. The gray line shows the real Intel prices, the green line is the new model forecast and the blue line is the old model forecast.
     
-    \begin{figure}[H]
-        \includegraphics[scale=0.5]{ROriginalVsRNew.png}
+    \begin{figure}[h]
+        \includegraphics[scale=0.5]{img_examples/ROriginalVsRNew.png}
         \centering
         \caption{Predictions build by the R program for the original model and new model.}
         \label{fig:ROriginalVsRNew}
@@ -798,8 +747,8 @@
     The R program considers the new model to be better than the original suggestion since the new MAE is 0.661 smaller and the new RMSE is 0.827 smaller. The original model was chosen based on the AIC. The forecast was built only for the final model. That means that we never considered the accuracy of the predictions as the criterion for choosing the best model in the class or among two classes.\\
     The following graph represents the predictions for the same model but estimated by different program. The model is ["Google", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. As usual the gray line presents the real values, the green line is the R forecast, the blue line is the Python forecast.
     
-    \begin{figure}[H]
-        \includegraphics[scale=0.5]{PythonOriginalVsRNew.png}
+    \begin{figure}[h]
+        \includegraphics[scale=0.5]{img_examples/PythonOriginalVsRNew.png}
         \centering
         \caption{Predictions build by the Python program for the original model and predictions built by the R program for the new model.}
         \label{fig:PythonOriginalVsRNew}
@@ -807,7 +756,7 @@
 
     We have noticed that the predictions built by the R program for the Python original model have higher accuracy than the Python predictions for the same model. The R MAE is 0.208 smaller and the R RMSE is 0.166 smaller than the Python results.
     The Python cross results are:
-    \begin{minted}{console}
+    \begin{lstlisting}[basicstyle=\footnotesize]
     >>> build_predictions()
     the mean of the y is: 23.4646213592
     the std of the y is: 2.55283813168
@@ -819,31 +768,31 @@
     the model is: ['STMElectro', 'Olympus', 'St Jude', 'Lenovo', 'MicronTech',
     'Cardinal']
                                 GLS Regression Results                            
-    ==============================================================================
-    Dep. Variable:                      y   R-squared:                       0.998
-    Model:                            GLS   Adj. R-squared:                  0.998
-    Method:                 Least Squares   F-statistic:                 8.261e+04
-    Date:                Mon, 26 Oct 2015   Prob (F-statistic):               0.00
-    Time:                        14:34:25   Log-Likelihood:                -1785.4
-    No. Observations:                1239   AIC:                             3583.
-    Df Residuals:                    1233   BIC:                             3613.
+    ========================================================================
+    Dep. Variable:                      y   R-squared:                 0.998
+    Model:                            GLS   Adj. R-squared:            0.998
+    Method:                 Least Squares   F-statistic:           8.261e+04
+    Date:                Mon, 26 Oct 2015   Prob (F-statistic):         0.00
+    Time:                        14:34:25   Log-Likelihood:          -1785.4
+    No. Observations:                1239   AIC:                        3583.
+    Df Residuals:                    1233   BIC:                        3613.
     Df Model:                           6                                         
     Covariance Type:            nonrobust                                         
-    ==============================================================================
-                     coef    std err          t      P>|t|      [95.0% Conf. Int.]
-    ------------------------------------------------------------------------------
-    x1             0.2337      0.025      9.273      0.000         0.184     0.283
-    x2             0.1363      0.010     13.277      0.000         0.116     0.156
-    x3             0.3977      0.015     27.166      0.000         0.369     0.426
-    x4            -0.0567      0.006     -9.826      0.000        -0.068    -0.045
-    x5             0.2696      0.005     57.903      0.000         0.261     0.279
-    x6             0.1533      0.012     12.533      0.000         0.129     0.177
-    ==============================================================================
-    \end{minted}
+    ========================================================================
+              coef    std err          t      P>|t|      [95.0% Conf. Int.]
+    ------------------------------------------------------------------------
+    x1      0.2337      0.025      9.273      0.000         0.184     0.283
+    x2      0.1363      0.010     13.277      0.000         0.116     0.156
+    x3      0.3977      0.015     27.166      0.000         0.369     0.426
+    x4     -0.0567      0.006     -9.826      0.000        -0.068    -0.045
+    x5      0.2696      0.005     57.903      0.000         0.261     0.279
+    x6      0.1533      0.012     12.533      0.000         0.129     0.177
+    ========================================================================
+    \end{lstlisting}
     The following graph shows the difference between two model forecasts returned by the Python program. The gray line shows the real values, the green line presents the new model forecast and the blue line is the old model forecast.
     
-    \begin{figure}[H]
-        \includegraphics[scale=0.5]{PythonOriginalVsPythonNew.png}
+    \begin{figure}[h]
+        \includegraphics[scale=0.5]{img_examples/PythonOriginalVsPythonNew.png}
         \centering
         \caption{Predictions build by the Python program for the original model and new model.}
         \label{fig:PythonOriginalVsPythonNew}
@@ -852,8 +801,8 @@
     The Python program considers the new model to be worse in comparison to the original suggestion since the MAE is 1.072 smaller and the RMSE is 1.4 smaller than the original results. The first Python model was chosen based on the AIC and the predictions were also not taken into account during the evaluation steps.\\
     The following graph presents the predictions for the same model but estimated by different program. The model is ["Cardinal", "Olympus", "St.Jude", "Lenovo", "MicronTech", "STMElectro"]. Same color notation is used.
     
-    \begin{figure}[H]
-        \includegraphics[scale=0.5]{ROriginalVsPythonNew.png}
+    \begin{figure}[h]
+        \includegraphics[scale=0.5]{img_examples/ROriginalVsPythonNew.png}
         \centering
         \caption{Predictions build by the R program for the original model and predictions built by the Python program for the new model.}
         \label{fig:ROriginalVsPythonNew}
@@ -906,51 +855,11 @@
     Our conclusion suits the modern trend which says that R is very popular among the beginners and advanced analysts. However R programmers are slowly beginning to turn to Python due to its multipurpose nature and freedom.
 
     \bibliographystyle{unsrt}
-    \bibliography{main}
-\iffalse
-\section{Literature}
-proper literature
-\begin{enumerate}
-    \item \url{https://en.wikipedia.org/wiki/History_of_the_Internet} 
-    \item \url{https://www-03.ibm.com/ibm/history/exhibits/storage/storage_350.html}
-    \item \url{http://arstechnica.com/gadgets/2015/08/samsung-unveils-2-5-inch-16tb-ssd-the-worlds-largest-hard-drive/}
-    \item \url{https://en.wikipedia.org/wiki/History_of_hard_disk_drives}
-    \item Rider (1944). The Scholar and the Future of the Research Library. New York City: Hadham Press
-    \item Derek J. de Solla Price (1986). "Little Science, Big Science and Beyond"
-    \item  Steve Bryson, David Kenwright, Michael Cox, David Ellsworth, and Robert Haimes publish “Visually exploring gigabyte data sets in real time”
-    \item \url{https://www.linkedin.com/in/rmagoulass}
-    \item \url{https://www.oreilly.com/ideas/2015-data-science-salary-survey}
-    \ietm \url{https://en.wikipedia.org/wiki/Python_(programming_language)}
-    \item \url{https://www.python.org/about/success/}
-    \item \url{http://www.forecastwatch.com/}
-    \item \url{http://dirac.cnrs-orleans.fr/MMTK/}
-    \item \url{http://dirac.cnrs-orleans.fr/plone/publications/preprints/all-preprints/harmonicity.pdf}
-    \item \url{http://dirac.cnrs-orleans.fr/plone/publications/preprints/all-preprints/domain_motions.pdf}
-    \item \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2920635/}
-    \item \url{http://gregoire.montavon.name/publications/montavon-lncs12.pdf}
-    \item \url{http://www.ilm.com/}
-    \item \url{https://en.wikipedia.org/wiki/R_(programming_language)}
-    \item Yves Rosseel, "lavaan: An R Package for Structural Equation Modeling". 2012-05-24 Journal of statistical software
-    \item \url{https://cran.r-project.org/web/packages/tseries/tseries.pdf}
-    \item \url{https://cran.r-project.org/web/packages/nlme/nlme.pdf}
-    \item \url{https://cran.r-project.org/web/packages/ape/ape.pdf}
-    \item \url{https://journal.r-project.org/archive/2010-1/RJournal_2010-1_Guenther+Fritsch.pdf}
-    \item \url{https://socserv.socsci.mcmaster.ca/jfox/Books/Companion/appendix/Appendix-Nonlinear-Regression.pdf} 
-    \item \url{https://www.biostars.org/p/72173/}
-    \item \url{http://stats.stackexchange.com/}
-    \item \url{http://stackoverflow.com/questions/tagged/statistics}
-    \item \url{http://economics.sas.upenn.edu/~jesusfv/comparison_languages.pdf}
-    \item \url{https://www.dataquest.io/blog/python-vs-r/}
-    \item \url{https://www.python.org/doc/}
-    \item \url{http://www.scipy.org/}
-    \item \url{http://statsmodels.sourceforge.net/}
-    \item \url{http://stanford.edu/~mwaskom/software/seaborn/}
-    \item \url{https://www.tensorflow.org/}
-    \item \url{https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html}
-    \item \url{https://stat.ethz.ch/R-manual/R-patched/library/stats/html/00Index.html}
-    \item \url{http://adv-r.had.co.nz/OO-essentials.html}
-    \item \url{http://r-pbd.org/}
-    \item \url{https://github.com/fabianp/memory_profiler} 
-\end{enumerate}
-\fi
+    \bibliography{literature}
+    
+    \chapter*{Eidesstattliche Erklärung}
+        \onehalfspace
+        „Hiermit versichere ich an Eides statt, dass ich die vorliegende Arbeit im Studiengang Informatik selbstständig verfasst und keine anderen als die angegebenen Hilfsmittel – insbesondere keine im Quellenverzeichnis nicht benannten Internet-Quellen – benutzt habe. Alle Stellen, die wörtlich oder sinngemäß aus Veröffentlichungen entnommen wurden, sind als solche kenntlich gemacht. Ich versichere weiterhin, dass ich die Arbeit vorher nicht in einem anderen Prüfungsverfahren eingereicht habe und die eingereichte schriftliche Fassung der auf dem elektronischen Speichermedium entspricht.“
+        \singlespace
+    
 \end{document}
