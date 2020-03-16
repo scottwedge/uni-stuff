@@ -26,7 +26,7 @@ class TestGrayCodeProperties(TestCase):
                 yield delay(10)
                 diffcode = bin(G^G_Z)
                 print diffcode.count('1') +" and " + '1'
-                self.asertEqual(diffcode.count('1'), 1)
+                self.assertEqual(diffcode.count('1'), 1)
 
         for width in range(1, MAX_WIDTH):
             B = Signal(intbv(-1))
